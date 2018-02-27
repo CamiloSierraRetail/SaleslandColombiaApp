@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Modelo;
 
 import javax.persistence.Column;
@@ -21,7 +16,7 @@ public class Area {
     private int IdCargo;
     
     @Column(name = "NombreArea")
-    private String NombreCargo;
+    private String NombreArea;
     
     @Column(name = "Descripcion")
     private String Descripcion;
@@ -33,9 +28,9 @@ public class Area {
     public Area() {
     }
 
-    public Area(int IdCargo, String NombreCargo, String Descripcion, Canal Canal) {
+    public Area(int IdCargo, String NombreArea, String Descripcion, Canal Canal) {
         this.IdCargo = IdCargo;
-        this.NombreCargo = NombreCargo;
+        this.NombreArea = NombreArea;
         this.Descripcion = Descripcion;
         this.Canal = Canal;
     }
@@ -48,12 +43,12 @@ public class Area {
         this.IdCargo = IdCargo;
     }
 
-    public String getNombreCargo() {
-        return NombreCargo;
+    public String getNombreArea() {
+        return NombreArea;
     }
 
-    public void setNombreCargo(String NombreCargo) {
-        this.NombreCargo = NombreCargo;
+    public void setNombreArea(String NombreArea) {
+        this.NombreArea = NombreArea;
     }
 
     public String getDescripcion() {

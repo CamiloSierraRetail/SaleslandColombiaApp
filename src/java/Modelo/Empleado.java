@@ -1,4 +1,3 @@
-
 package Modelo;
 
 import javax.persistence.Column;
