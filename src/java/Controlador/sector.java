@@ -1,11 +1,12 @@
 package Controlador;
 
+import Modelo.Sector;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.hibernate.Session;
 
 
 public class sector extends HttpServlet {
@@ -14,7 +15,6 @@ public class sector extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        //Modelo para el manejo de todos los controladores
         String url[] = request.getRequestURI().split("/");
         
         if (url.length >= 3) {
@@ -22,13 +22,40 @@ public class sector extends HttpServlet {
             switch (url[3]){
             
                 //Usar y crear cada caso para cada una de las acciones que se vayan a realizar
-                /*case "registrar":
+                case "registrar":
+                    
+                    registrarsector(request, response);
                     
                     break;
-                */
+                
             }
             
         }
+        
+    }
+    
+    protected void registrarsector(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        try{
+            
+            String nombreSector = request.getParameter("NombreSector");
+            String descripcionSector = request.getParameter("DescripcionSector");
+            
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Sector objSector = new Sector(nombreSector, descripcionSector);
+            sesion.beginTransaction();
+            sesion.save(objSector);
+            sesion.getTransaction().commit();
+            sesion.close();
+            response.getWriter().write("200");
+        
+        }catch(Exception e){
+        
+            System.err.println(e);
+            response.getWriter().write("500");
+        }
+        
         
     }
 
