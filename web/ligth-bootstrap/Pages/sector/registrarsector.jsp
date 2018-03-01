@@ -23,45 +23,39 @@
                 <div class="content">
                     <div class="container-fluid">
                         <div class="row">
-                            
                             <div class="col-md-10 mr-auto ml-auto">
                                 <div class="card">
-                                    <div class="card-header">
-                                        <h4 class="card-title">Ingrese los datos</h4>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="card-body col-md-10 mr-auto ml-auto">
-                                            <form class="form-horizontal">
-
-                                                <fieldset>
-                                                    <div class="form-group">
-                                                        <div class="row">
-                                                            <label class="control-label">Nombre del sector</label>
-                                                            <input id="txtNombreSector" type="text" class="form-control">                                                        
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-                                                <fieldset>
-                                                    <div class="form-group">
-                                                        <div class="row">
-                                                            <label class="control-label">Descripción</label>
-                                                            <textarea id="txtDescripcionSector" class="form-control textArea"></textarea>                                                       
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-
-
-                                            </form>
+                                    <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmRegistrarSector" name="frmRegistrarSector">
+                                        <div class="card-header">
+                                            <h4 class="card-title">Ingrese los datos</h4>
                                         </div>
-                                    </div>
-                                    <div class="card-footer text-right card-body col-md-10 mr-auto ml-auto">
-                                        <button class="btn btn-info btn-fill pull-right registrarSector">Confirmar</button>
-                                        <div class="clearfix"></div>
-                                    </div>                                    
+                                        <div class="card-body">
+                                            <div class="card-body col-md-10 mr-auto ml-auto">
+                                                <fieldset>
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <label class="control-label">Nombre del sector *</label>
+                                                            <input id="txtNombreSector" name="NombreSector" type="text" class="form-control">                                                        
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                                <fieldset>
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <label class="control-label">Descripción *</label>
+                                                            <textarea id="txtDescripcionSector" name="DescripcionSector" class="form-control textArea"></textarea>                                                       
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer text-right card-body col-md-10 mr-auto ml-auto">
+                                            <button type="submit" class="btn btn-info btn-fill pull-right">Confirmar</button>
+                                            <div class="clearfix"></div>
+                                        </div>   
+                                    </form>
                                 </div>
-                            </div>
-                            
-                                                                                
+                            </div>                                                                                                            
                         </div>
                     </div>
                 </div>

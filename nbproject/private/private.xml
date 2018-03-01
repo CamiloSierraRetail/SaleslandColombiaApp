@@ -5,13 +5,10 @@
         <group>
             <file>file:/C:/Users/Bryan%20Ossa/Desktop/REPO/SaleslandColombiaApp/web/ligth-bootstrap/Pages/sector/registrarsector.jsp</file>
             <file>file:/C:/Users/Bryan%20Ossa/Desktop/REPO/SaleslandColombiaApp/web/ligth-bootstrap/Pages/includes/cssInclude.jsp</file>
-            <file>file:/C:/Users/Bryan%20Ossa/Desktop/REPO/SaleslandColombiaApp/web/ligth-bootstrap/Pages/includes/navLateral.jsp</file>
-            <file>file:/C:/Users/Bryan%20Ossa/Desktop/REPO/SaleslandColombiaApp/web/ligth-bootstrap/Pages/includes/footer.jsp</file>
+            <file>file:/C:/Users/Bryan%20Ossa/Desktop/REPO/SaleslandColombiaApp/web/ligth-bootstrap/Pages/sector/listarsectores.jsp</file>
             <file>file:/C:/Users/Bryan%20Ossa/Desktop/REPO/SaleslandColombiaApp/web/ligth-bootstrap/Pages/includes/jsInclude.jsp</file>
-            <file>file:/C:/Users/Bryan%20Ossa/Desktop/REPO/SaleslandColombiaApp/web/ligth-bootstrap/Pages/includes/navSuperior.jsp</file>
-            <file>file:/C:/Users/Bryan%20Ossa/Desktop/REPO/SaleslandColombiaApp/web/ligth-bootstrap/Pages/App/index.jsp</file>
+            <file>file:/C:/Users/Bryan%20Ossa/Desktop/REPO/SaleslandColombiaApp/web/ligth-bootstrap/Pages/sector/test.jsp</file>
             <file>file:/C:/Users/Bryan%20Ossa/Desktop/REPO/SaleslandColombiaApp/web/ligth-bootstrap/assets/js/main.js</file>
-            <file>file:/C:/Users/Bryan%20Ossa/Desktop/REPO/SaleslandColombiaApp/web/ligth-bootstrap/assets/js/plugins/sweetalert2.min.js</file>
             <file>file:/C:/Users/Bryan%20Ossa/Desktop/REPO/SaleslandColombiaApp/src/java/Controlador/sector.java</file>
         </group>
     </open-files>

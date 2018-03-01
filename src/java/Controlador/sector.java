@@ -2,10 +2,12 @@ package Controlador;
 
 import Modelo.Sector;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 
@@ -27,6 +29,9 @@ public class sector extends HttpServlet {
                     registrarsector(request, response);
                     
                     break;
+                case "versectores":
+                    versectores(request, response);
+                    break;
                 
             }
             
@@ -43,7 +48,7 @@ public class sector extends HttpServlet {
             String descripcionSector = request.getParameter("DescripcionSector");
             
             Session sesion = HibernateUtil.getSessionFactory().openSession();
-            Sector objSector = new Sector(nombreSector, descripcionSector);
+            Sector objSector = new Sector(nombreSector, descripcionSector, "Activo");
             sesion.beginTransaction();
             sesion.save(objSector);
             sesion.getTransaction().commit();
@@ -59,6 +64,26 @@ public class sector extends HttpServlet {
         
     }
 
+    protected void versectores(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+    
+        
+        try{
+        
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Query query = sesion.createQuery("FROM Sector");
+            
+            List<Sector> listaEquipo = query.list();
+            System.out.println(listaEquipo);
+            response.getWriter().write("sdd");
+        
+        }catch(Exception e){
+        
+            System.err.println(e);
+            response.getWriter().write("500");
+        }
+    
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

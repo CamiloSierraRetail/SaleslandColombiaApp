@@ -18,13 +18,17 @@ public class Sector {
     
     @Column(name = "Descripcion")
     private String DescripcionSector;
+    
+    @Column(name = "Estado")
+    private String Estado;
 
     public Sector() {
     }
 
-    public Sector(String NombreSector, String DescripcionSector) {
+    public Sector(String NombreSector, String DescripcionSector, String Estado) {
         this.NombreSector = NombreSector;
         this.DescripcionSector = DescripcionSector;
+        this.Estado = Estado;
     }
 
     public int getIdSector() {
@@ -50,7 +54,12 @@ public class Sector {
     public void setDescripcionSector(String DescripcionSector) {
         this.DescripcionSector = DescripcionSector;
     }
-    
-    
-    
+
+    public String getEstado() {
+        return Estado;
+    }
+
+    public void setEstado(String Estado) {
+        this.Estado = Estado;
+    }
 }

@@ -21,6 +21,9 @@ public class Canal {
     
     @Column(name = "Descripcion")
     private String Descripcion;
+    
+    @Column(name = "Estado")
+    private String Estado;
         
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Sector")
@@ -29,10 +32,10 @@ public class Canal {
     public Canal() {
     }
 
-    public Canal(int IdCargo, String NombreCargo, String Descripcion, Sector Sector) {
-        this.IdCargo = IdCargo;
+    public Canal(String NombreCargo, String Descripcion, String Estado, Sector Sector) {
         this.NombreCargo = NombreCargo;
         this.Descripcion = Descripcion;
+        this.Estado = Estado;
         this.Sector = Sector;
     }
 
@@ -60,6 +63,14 @@ public class Canal {
         this.Descripcion = Descripcion;
     }
 
+    public String getEstado() {
+        return Estado;
+    }
+
+    public void setEstado(String Estado) {
+        this.Estado = Estado;
+    }
+
     public Sector getSector() {
         return Sector;
     }
@@ -67,5 +78,5 @@ public class Canal {
     public void setSector(Sector Sector) {
         this.Sector = Sector;
     }
-    
+
 }

@@ -20,6 +20,9 @@ public class Area {
     
     @Column(name = "Descripcion")
     private String Descripcion;
+    
+    @Column(name = "Estado")
+    private String Estado;
         
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Canal")
@@ -28,10 +31,10 @@ public class Area {
     public Area() {
     }
 
-    public Area(int IdCargo, String NombreArea, String Descripcion, Canal Canal) {
-        this.IdCargo = IdCargo;
+    public Area(String NombreArea, String Descripcion, String Estado, Canal Canal) {
         this.NombreArea = NombreArea;
         this.Descripcion = Descripcion;
+        this.Estado = Estado;
         this.Canal = Canal;
     }
 
@@ -59,6 +62,14 @@ public class Area {
         this.Descripcion = Descripcion;
     }
 
+    public String getEstado() {
+        return Estado;
+    }
+
+    public void setEstado(String Estado) {
+        this.Estado = Estado;
+    }
+
     public Canal getCanal() {
         return Canal;
     }
@@ -66,6 +77,4 @@ public class Area {
     public void setCanal(Canal Canal) {
         this.Canal = Canal;
     }
-    
-    
 }

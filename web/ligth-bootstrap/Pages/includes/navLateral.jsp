@@ -53,7 +53,7 @@
                         <a class="nav-link" data-toggle="collapse" href="#Examples">
                             <i class="material-icons">card_travel</i>
                             <p>
-                                Div dxdxdxdxdxddx
+                                Empresa
                                 <b class="caret"></b>
                             </p>
                         </a>

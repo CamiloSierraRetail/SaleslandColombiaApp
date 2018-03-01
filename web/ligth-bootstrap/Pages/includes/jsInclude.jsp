@@ -40,23 +40,23 @@
 <script src="../../assets/js/light-bootstrap-dashboard.js?v=2.0.1" type="text/javascript"></script>
 <!-- Light Dashboard DEMO methods, don't include it in your project! -->
 <script src="../../assets/js/demo.js"></script>
-<!-- MAIN JS -->
-<script src="../../assets/js/main.js" type="text/javascript"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
-        // Javascript method's body can be found in assets/js/demos.js
-        demo.initDashboardPageCharts();
-
-        demo.showNotification();
-
-        demo.initVectorMap();
-
-    });
+$(document).ready(function() {
+    // Init Sliders
+    demo.initSliders();
+});
 </script>
 
 
 
-<script src="sweetalert2/dist/sweetalert2.all.min.js"></script>
 
-<!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+<%--<!-- ||||||||||||||||||||||||||||||||같같같같같같같같같같같같같같같||||||||||||||||||같같같같같같같같같같같같같같같같� -->
+<script src="../../assets/js/plugins/jquery.validate.min_1.js" type="text/javascript"></script>
+
+<!-- MAIN JS -->
+<script src="../../assets/js/main.js" type="text/javascript"></script>
+
+<!-- sewwt alert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js" type="text/javascript"></script>
+
+<script src="../../assets/js/plugins/light-bootstrap-dashboard.js" type="text/javascript"></script>--%>
