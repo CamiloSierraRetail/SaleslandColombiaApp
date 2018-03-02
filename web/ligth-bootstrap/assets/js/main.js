@@ -8,7 +8,8 @@ $('#frmRegistrarSector').validate({
         DescripcionSector:{
             
             required:true,
-            minlength:15
+            minlength:15,
+            maxlength:80
         }
     },messages:{
         
@@ -19,7 +20,8 @@ $('#frmRegistrarSector').validate({
         },
         DescripcionSector:{
             required:"Este campo es requerido",
-            minlength:"Ingresa 15 caracteres como minimo"            
+            minlength:"Ingresa 15 caracteres como minimo",
+            maxlength:"Ingresa 80 caracteres como maximo"
         }
     },errorElement : 'div',
     errorPlacement: function(error, element) {
@@ -70,15 +72,11 @@ function listarSectores(){
         
        if(responseText == "500"){
            
-            swal("Ocurrio un error", "Lo sentimos tus datos no fueron registrados, por favor intentalo nuevamente.", "error").then((willDelete) => {
-                if (willDelete) {                          
-                  //window.location = "/FutPlay/GaiaTemplate/index.html";
-                }
-            });   
+            swal("Ocurrio un error", "Lo sentimos tus datos no fueron registrados, por favor intentalo nuevamente.", "error");
             
         }else{
-            
-            
+            $("#listadoSectores").html("");
+            $("#listadoSectores").append(responseText);
             
             swal("Ok","sdfdsfsdfsd","success");
             
@@ -88,3 +86,4 @@ function listarSectores(){
     });
     
 }
+

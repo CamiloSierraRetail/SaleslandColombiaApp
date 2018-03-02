@@ -25,9 +25,9 @@
                 <div class="content">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-md-10 mr-auto ml-auto">
+                            <div class="col-md-12 mr-auto ml-auto">
                                 <div class="card">
-                                    <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmRegistrarSector" name="frmRegistrarSector">                                                                                
+                                    <form class="form-horizontal" action="" novalidate="novalidate" id="frmRegistrarSector" name="frmRegistrarSector">                                                                                
                                         <div class="card-header ">
                                             <h4 class="card-title">Table with Links</h4>
                                             <p class="card-category">Here is a subtitle for this table</p>
@@ -37,13 +37,13 @@
                                                 <thead>
                                                     <tr>
                                                         <th class="text-center">#</th>
-                                                        <th>Name</th>
-                                                        <th>Job Position</th>
-                                                        <th class="text-right">Salary</th>
-                                                        <th class="text-right">Actions</th>
+                                                        <th>Nombre</th>
+                                                        <th>Descripción</th>
+                                                        <th class="text-right">Estado</th>
+                                                        <th class="text-right">Acciones</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody id="listadoSectores">
                                                     <tr>
                                                         <td class="text-center">1</td>
                                                         <td>Andrew Mike</td>
@@ -158,5 +158,5 @@
         </div>        
     </body>        
     <%@include file="../includes/jsInclude.jsp" %>
-    <script> //listarSectores(); </script>
+    <script> listarSectores(); </script>
 </html>

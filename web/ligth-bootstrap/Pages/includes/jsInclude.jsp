@@ -50,7 +50,7 @@ $(document).ready(function() {
 
 
 
-<%--<!-- ||||||||||||||||||||||||||||||||같같같같같같같같같같같같같같같||||||||||||||||||같같같같같같같같같같같같같같같같� -->
+<!-- ||||||||||||||||||||||||||||||||같같같같같같같같같같같같같같같||||||||||||||||||같같같같같같같같같같같같같같같같� -->
 <script src="../../assets/js/plugins/jquery.validate.min_1.js" type="text/javascript"></script>
 
 <!-- MAIN JS -->
@@ -59,4 +59,4 @@ $(document).ready(function() {
 <!-- sewwt alert -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js" type="text/javascript"></script>
 
-<script src="../../assets/js/plugins/light-bootstrap-dashboard.js" type="text/javascript"></script>--%>
+<script src="../../assets/js/plugins/light-bootstrap-dashboard.js" type="text/javascript"></script>

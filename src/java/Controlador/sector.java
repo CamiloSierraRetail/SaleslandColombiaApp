@@ -1,6 +1,7 @@
 package Controlador;
 
 import Modelo.Sector;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -31,6 +32,10 @@ public class sector extends HttpServlet {
                     break;
                 case "versectores":
                     versectores(request, response);
+                    break;
+                    
+                case "cargardatossector":
+                    cargardatossector(request, response, url[4]);
                     break;
                 
             }
@@ -66,16 +71,46 @@ public class sector extends HttpServlet {
 
     protected void versectores(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    
         
         try{
         
+            int countRows = 1;
             Session sesion = HibernateUtil.getSessionFactory().openSession();
-            Query query = sesion.createQuery("FROM Sector");
-            
+            Query query = sesion.createQuery("FROM Sector");                        
             List<Sector> listaEquipo = query.list();
-            System.out.println(listaEquipo);
-            response.getWriter().write("sdd");
+            
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("text/plain");
+            for(Sector sector : listaEquipo){
+            
+                response.getWriter().write("<tr>"
+                                              + "<td class='text-center'>"+countRows+"</td>"
+                                              + "<td>"+sector.getNombreSector()+"</td>"
+                                              + "<td>"+sector.getDescripcionSector()+"</td>"
+                                              + "<td>"+sector.getEstado()
+                                                      
+                                                   /*+ "<div class='row'>"
+                                                      + "<div class='col-md-12'>"
+                                                        + "<input type='checkbox' checked='' data-toggle='switch' data-on-color='info' data-off-color='info'>"
+                                                        + "<span class='toggle'></span>"
+                                                      + "</div>"
+                                                   + "</div>"*/
+                                              + "</td>"
+                                              + "<td class='td-actions text-right'>"
+                                                + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='View Profile'>"
+                                                    + "<i class='fa fa-user'></i>"
+                                                + "</a>"   
+                                                + "<a href='/SaleslandColombiaApp/sector/cargardatossector/"+sector.getIdSector()+"' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Edit Profile'>"
+                                                    + "<i class='fa fa-edit'></i>"
+                                                + "</a>"
+                                                + "<a href='#' rel='tooltip' title='' class='btn btn-danger btn-link btn-xs' data-original-title='Remove'>"
+                                                    + "<i class='fa fa-times'></i>"
+                                                + "</a>"
+                                              + "</td>"
+                                         + "</tr>");
+                countRows++;
+                
+            }
         
         }catch(Exception e){
         
@@ -83,6 +118,35 @@ public class sector extends HttpServlet {
             response.getWriter().write("500");
         }
     
+    }
+    protected void cargardatossector(HttpServletRequest request, HttpServletResponse response, String idSector)
+            throws ServletException, IOException {        
+        try{
+            System.out.println("°°°°°°°°°°°°°°°°°°°°°°°°|||||||||||||||||||||||||||°°°°°°°°°°°°°°°°°°°°°°°°");
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Query query = sesion.createQuery("FROM Sector WHERE IdSector="+idSector+"");
+            List<Sector> listaSector = query.list();
+            for(Sector sector : listaSector){
+            
+                System.out.println("********************************************"+sector.getNombreSector());
+                Sector objSector = new Sector(sector.getNombreSector(), sector.getDescripcionSector(), sector.getEstado());
+                //objSector.setIdSector(sector.getIdSector());
+                
+                request.getSession().setAttribute("EditarSector", objSector);
+                response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/editarsector.jsp");
+                
+            }
+            //Ejemplo de convercion de una lista a formato JSON
+//            Gson gson = new Gson();
+//            String json = gson.toJson(listaSector);
+//            response.getWriter().write(json);
+            
+        }catch(Exception e){
+        
+            System.err.println(e);
+            response.getWriter().write("500");
+        }
+        
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
