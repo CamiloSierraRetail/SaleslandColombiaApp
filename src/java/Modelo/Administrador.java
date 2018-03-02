@@ -27,8 +27,7 @@ public class Administrador {
     @JoinColumn(name = "Sector")
     private Sector Sector;
 
-    public Administrador(int IdAdministrador) {
-        this.IdAdministrador = IdAdministrador;
+    public Administrador() {
     }
 
     public Administrador(String Tipo, Usuario Usuario, Sector Sector) {
@@ -68,5 +67,7 @@ public class Administrador {
     public void setSector(Sector Sector) {
         this.Sector = Sector;
     }
+    
+    
     
 }

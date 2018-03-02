@@ -1,5 +1,6 @@
 package Controlador;
 
+import Modelo.Canal;
 import Modelo.Sector;
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -35,7 +36,10 @@ public class sector extends HttpServlet {
                     break;
                     
                 case "cargardatossector":
-                    cargardatossector(request, response, url[4]);
+                    cargardatossector(request, response);
+                    break;
+                case "editarsector":
+                    editarsector(request, response);                    
                     break;
                 
             }
@@ -49,6 +53,7 @@ public class sector extends HttpServlet {
         
         try{
             
+            System.out.println("EEEEEEEERRRRRRRRRROOOOOOOOOORRRRRRRRRRRRRRRRRRRRRRRR");
             String nombreSector = request.getParameter("NombreSector");
             String descripcionSector = request.getParameter("DescripcionSector");
             
@@ -77,17 +82,21 @@ public class sector extends HttpServlet {
             int countRows = 1;
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             Query query = sesion.createQuery("FROM Sector");                        
-            List<Sector> listaEquipo = query.list();
+            List<Sector> listaSector = query.list();
             
+//            Gson gson = new Gson();
+//            String json = gson.toJson(listaSector);
+//            response.getWriter().write(json);
+//            
             response.setCharacterEncoding("UTF-8");
             response.setContentType("text/plain");
-            for(Sector sector : listaEquipo){
+            for(Sector sector : listaSector){
             
                 response.getWriter().write("<tr>"
                                               + "<td class='text-center'>"+countRows+"</td>"
                                               + "<td>"+sector.getNombreSector()+"</td>"
                                               + "<td>"+sector.getDescripcionSector()+"</td>"
-                                              + "<td>"+sector.getEstado()
+                                              + "<td class='text-right'>"+sector.getEstado()
                                                       
                                                    /*+ "<div class='row'>"
                                                       + "<div class='col-md-12'>"
@@ -97,13 +106,13 @@ public class sector extends HttpServlet {
                                                    + "</div>"*/
                                               + "</td>"
                                               + "<td class='td-actions text-right'>"
-                                                + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='View Profile'>"
+                                                + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='Ver Sector'>"
                                                     + "<i class='fa fa-user'></i>"
                                                 + "</a>"   
-                                                + "<a href='/SaleslandColombiaApp/sector/cargardatossector/"+sector.getIdSector()+"' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Edit Profile'>"
+                                                + "<a href='/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/editarsector.jsp?_"+sector.getIdSector()+"' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
                                                     + "<i class='fa fa-edit'></i>"
                                                 + "</a>"
-                                                + "<a href='#' rel='tooltip' title='' class='btn btn-danger btn-link btn-xs' data-original-title='Remove'>"
+                                                + "<a href='#' rel='tooltip' title='' class='btn btn-danger btn-link btn-xs' data-original-title='Eliminar'>"
                                                     + "<i class='fa fa-times'></i>"
                                                 + "</a>"
                                               + "</td>"
@@ -119,32 +128,48 @@ public class sector extends HttpServlet {
         }
     
     }
-    protected void cargardatossector(HttpServletRequest request, HttpServletResponse response, String idSector)
-            throws ServletException, IOException {        
+    protected void cargardatossector(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         try{
-            System.out.println("°°°°°°°°°°°°°°°°°°°°°°°°|||||||||||||||||||||||||||°°°°°°°°°°°°°°°°°°°°°°°°");
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
-            Query query = sesion.createQuery("FROM Sector WHERE IdSector="+idSector+"");
-            List<Sector> listaSector = query.list();
-            for(Sector sector : listaSector){
             
-                System.out.println("********************************************"+sector.getNombreSector());
-                Sector objSector = new Sector(sector.getNombreSector(), sector.getDescripcionSector(), sector.getEstado());
-                //objSector.setIdSector(sector.getIdSector());
-                
-                request.getSession().setAttribute("EditarSector", objSector);
-                response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/editarsector.jsp");
-                
-            }
-            //Ejemplo de convercion de una lista a formato JSON
-//            Gson gson = new Gson();
-//            String json = gson.toJson(listaSector);
-//            response.getWriter().write(json);
+            String idSector = request.getParameter("idSector");
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Query query = sesion.createQuery("FROM Sector WHERE IdSector = "+idSector+"");
+            
+            List<Sector> listaSector = query.list();
+            Gson gson = new Gson();
+            String json = gson.toJson(listaSector);
+            response.getWriter().write(json);
+            
+        
+        }catch(Exception e){
+            System.err.println(e);
+        }    
+    }
+    protected void editarsector(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+    
+        try{
+            String id = request.getParameter("IdSector");
+            
+            int idEstado = Integer.parseInt(id);
+            System.out.println(idEstado);
+            String estado = request.getParameter("EstadoSector");
+            String nombre = request.getParameter("NombreSector");
+            String descripcion = request.getParameter("DescripcionSector");
+            
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+            Query query = sesion.createSQLQuery("UPDATE sector SET Estado='"+estado+"', NombreSector='"+nombre+"', Descripcion='"+descripcion+"' WHERE idSector="+idEstado+"");
+            query.executeUpdate();
+            sesion.getTransaction().commit();
+            sesion.close();
+           
+            response.getWriter().write("200");
             
         }catch(Exception e){
-        
-            System.err.println(e);
             response.getWriter().write("500");
+            System.err.println(e);
         }
         
     }

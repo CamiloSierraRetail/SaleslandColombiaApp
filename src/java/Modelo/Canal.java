@@ -17,7 +17,7 @@ public class Canal {
     private int IdCargo;
     
     @Column(name = "NombreCanal")
-    private String NombreCargo;
+    private String NombreCanal;
     
     @Column(name = "Descripcion")
     private String Descripcion;
@@ -32,8 +32,8 @@ public class Canal {
     public Canal() {
     }
 
-    public Canal(String NombreCargo, String Descripcion, String Estado, Sector Sector) {
-        this.NombreCargo = NombreCargo;
+    public Canal(String NombreCanal, String Descripcion, String Estado, Sector Sector) {
+        this.NombreCanal = NombreCanal;
         this.Descripcion = Descripcion;
         this.Estado = Estado;
         this.Sector = Sector;
@@ -47,12 +47,12 @@ public class Canal {
         this.IdCargo = IdCargo;
     }
 
-    public String getNombreCargo() {
-        return NombreCargo;
+    public String getNombreCanal() {
+        return NombreCanal;
     }
 
     public void setNombreCargo(String NombreCargo) {
-        this.NombreCargo = NombreCargo;
+        this.NombreCanal = NombreCargo;
     }
 
     public String getDescripcion() {

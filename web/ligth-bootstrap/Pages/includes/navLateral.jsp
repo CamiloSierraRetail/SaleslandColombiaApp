@@ -1,3 +1,5 @@
+           
+                
             <div class="sidebar-wrapper">
                 <div class="logo">
                     <a href="http://www.creative-tim.com" class="simple-text logo-mini">
@@ -60,7 +62,7 @@
                         <div class="collapse " id="Examples">
                             <ul class="nav">
                                 <li class="nav-item ">
-                                    <a class="nav-link" href="../sector/listarsectores.jsp">
+                                    <a class="nav-link" href="/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/listarsectores.jsp">
                                         <span class="sidebar-mini">S</span>
                                         <span class="sidebar-normal">Sectores</span>
                                     </a>
@@ -305,4 +307,4 @@
                         </div>
                     </li>
                 </ul>
-            </div>
+            </div>                    

@@ -1,9 +1,3 @@
-<%@page import="Modelo.Sector"%>
-<%
-
-    Sector objSector = (Sector)request.getSession().getAttribute("EditarSector");
-    
-%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -31,17 +25,30 @@
                         <div class="row">
                             <div class="col-md-10 mr-auto ml-auto">
                                 <div class="card">
-                                    <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmRegistrarSector" name="frmRegistrarSector">
+                                    <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmEditarSector" name="frmEditarSector">
                                         <div class="card-header">
                                             <h4 class="card-title">Ingrese los datos</h4>
                                         </div>
                                         <div class="card-body">
                                             <div class="card-body col-md-10 mr-auto ml-auto">
+                                                <fieldset>  
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <label class="control-label">Estado *</label>
+                                                            <div class="col-md-12 mr-auto ml-auto">
+                                                                <select id="cmbEditarEstadoSector" name="EditarEstadoSector" class="selectpicker" data-title="Seleccionar Estado" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                                                    <option value="Activo">Activo</option>
+                                                                    <option value="Inactivo">Inactivo</option>                                                                                                                                
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
                                                 <fieldset>
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <label class="control-label">Nombre del sector *</label>
-                                                            <input id="txtNombreSector" name="NombreSector" type="text" class="form-control" value="<%=objSector.getNombreSector()%>">                                                        
+                                                            <input id="txtEditarNombreSector" name="EditarNombreSector" type="text" class="form-control">                                                        
                                                         </div>
                                                     </div>
                                                 </fieldset>
@@ -49,14 +56,14 @@
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <label class="control-label">Descripción *</label>
-                                                            <textarea id="txtDescripcionSector" name="DescripcionSector" class="form-control textArea"><%=objSector.getDescripcionSector()%></textarea>                                                       
+                                                            <textarea id="txtEditarDescripcionSector" name="EditarDescripcionSector" class="form-control textArea"></textarea>                                                       
                                                         </div>
                                                     </div>
-                                                </fieldset>
+                                                </fieldset>                                                
                                             </div>
                                         </div>
                                         <div class="card-footer text-right card-body col-md-10 mr-auto ml-auto">
-                                            <button type="submit" class="btn btn-info btn-fill pull-right">Confirmar</button>
+                                            <button type="submit" class="btn btn-info btn-fill pull-right">Confirmar Cambios</button>
                                             <div class="clearfix"></div>
                                         </div>   
                                     </form>
@@ -72,8 +79,6 @@
     </body>
     <%@include file="../includes/jsInclude.jsp" %>
     <script>
-        
-        mostrarDatosSector();
-        
+        verDatosSector();
     </script>
 </html>
