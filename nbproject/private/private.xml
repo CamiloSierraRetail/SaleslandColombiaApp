@@ -3,10 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Andres/Desktop/SaleslandColombiaApp/web/ligth-bootstrap/Pages/sector/listarsectores.jsp</file>
-            <file>file:/C:/Users/Andres/Desktop/SaleslandColombiaApp/web/ligth-bootstrap/assets/js/main.js</file>
-            <file>file:/C:/Users/Andres/Desktop/SaleslandColombiaApp/src/java/Controlador/sector.java</file>
-            <file>file:/C:/Users/Andres/Desktop/SaleslandColombiaApp/web/ligth-bootstrap/Pages/sector/editarsector.jsp</file>
+            <file>file:/C:/Users/JOHAN%20NIETO/Desktop/SALESLAND/SaleslandColombiaApp/src/java/Controlador/sector.java</file>
+            <file>file:/C:/Users/JOHAN%20NIETO/Desktop/SALESLAND/SaleslandColombiaApp/web/ligth-bootstrap/Pages/cargo/registrarcargo.jsp</file>
+            <file>file:/C:/Users/JOHAN%20NIETO/Desktop/SALESLAND/SaleslandColombiaApp/src/java/Controlador/cargo.java</file>
+            <file>file:/C:/Users/JOHAN%20NIETO/Desktop/SALESLAND/SaleslandColombiaApp/web/ligth-bootstrap/Pages/sector/listarsectores.jsp</file>
+            <file>file:/C:/Users/JOHAN%20NIETO/Desktop/SALESLAND/SaleslandColombiaApp/web/ligth-bootstrap/assets/js/main.js</file>
+            <file>file:/C:/Users/JOHAN%20NIETO/Desktop/SALESLAND/SaleslandColombiaApp/web/ligth-bootstrap/Pages/cargo/listarcargo.jsp</file>
         </group>
     </open-files>
 </project-private>

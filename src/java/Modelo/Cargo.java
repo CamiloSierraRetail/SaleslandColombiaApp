@@ -20,12 +20,12 @@ public class Cargo {
     private String Descripcion;
     
     @Column(name = "Salario")
-    private double Salario;
+    private String Salario;
 
     public Cargo() {
     }
 
-    public Cargo(String NombreCargo, String Descripcion, double Salario) {
+    public Cargo(String NombreCargo, String Descripcion, String Salario) {
         this.NombreCargo = NombreCargo;
         this.Descripcion = Descripcion;
         this.Salario = Salario;
@@ -55,13 +55,12 @@ public class Cargo {
         this.Descripcion = Descripcion;
     }
 
-    public double getSalario() {
+    public String getSalario() {
         return Salario;
     }
 
-    public void setSalario(double Salario) {
+    public void setSalario(String Salario) {
         this.Salario = Salario;
     }
-    
-    
+   
 }

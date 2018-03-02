@@ -50,8 +50,7 @@ public class sector extends HttpServlet {
         try{
             
             String nombreSector = request.getParameter("NombreSector");
-            String descripcionSector = request.getParameter("DescripcionSector");
-            
+            String descripcionSector = request.getParameter("DescripcionSector");      
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             Sector objSector = new Sector(nombreSector, descripcionSector, "Activo");
             sesion.beginTransaction();

@@ -4,8 +4,7 @@
     <head>
         <%@include file="../includes/cssInclude.jsp" %>
         
-        <title>Listado de sectores - SaleslandColombia</title>
-        
+        <title>Listado de sectores - SaleslandColombia</title>       
     </head>
     <body>
         
@@ -138,14 +137,7 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                        </div>
-
-
-
-
-
-                                       
-                                        
+                                        </div>                                   
                                     </form>
                                 </div>
                             </div>                                                                                                            
@@ -159,4 +151,5 @@
     </body>        
     <%@include file="../includes/jsInclude.jsp" %>
     <script> listarSectores(); </script>
+</html>
 </html>
