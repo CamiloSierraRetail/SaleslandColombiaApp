@@ -620,6 +620,27 @@ $('#frmEditarCanal').validate({
         });                        
     }        
 });
+////////////////////Funciones para validar password email y telefono////////////////7
+    $.validator.addMethod("pwcheck1", function(value) {
+       return /^[A-Za-z0-9\d=!\-@._*]*$/.test(value) 
+           && /[a-z]/.test(value) // evalua que tenga una minuscula como minimo
+    });
+    $.validator.addMethod("pwcheck2", function(value) {
+       return /^[A-Za-z0-9\d=!\-@._*]*$/.test(value) 
+           && /\d/.test(value) // evalua que tenga un digito como minimo
+    });
+    $.validator.addMethod("pwcheck3", function(value) {
+       return /^[A-Za-z0-9\d=!\-@._*]*$/.test(value) 
+           && /[A-Z]/.test(value) // evalua que tenga una mayuscula como minimo
+    });
+    $.validator.addMethod("validarEmail", function(value){
+       var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+       return pattern.test(value);
+    });
+    $.validator.addMethod("validarTelefono", function(value){
+       var pattern = /^3[0,1,2,3,5][0-9]{8}$/;
+       return pattern.test(value);
+    });
 //////////////////////////////// REGISTRAR USUARIO ///////////////////////////////////
 $("#frmRegistrarUsuario").validate({
     
@@ -628,6 +649,115 @@ $("#frmRegistrarUsuario").validate({
         TipoDocumentoUsuario:{
             
             required:true
-        },
-    }
+        },DocumentoUsuario:{
+            required:true,
+            maxlength:15,
+            minlength:10
+        },NombreUsuario:{
+            required:true,
+            minlength:3,
+            text:true
+        },ApellidoUsuario:{
+            required: true,
+            minlength:3
+        },EmailUsuario:{
+            email:true,
+            required:true,
+            validarEmail:true
+            
+        },ContrseniaUsuario:{
+            
+            required:true,
+            minlength:8,
+            pwcheck1:true,
+            pwcheck2:true,
+            pwcheck3:true
+            
+        },ConfirmarContraseniaUsuario:{
+            
+            equalTo:"#txtConfirmarContraseniaUsuario"
+        }
+    },messages:{
+        
+        TipoDocumentoUsuario:{
+            
+            required:"Este campo es requerido"
+            
+        },DocumentoUsuario:{
+            required:"Este campo es requerido",
+            maxlength:"Ingresa 15 caracteres como maximo",
+            minlength:"Ingresa 10 caracteres como minimo"
+            
+        },NombreUsuario:{
+            required:"Este campo es requerido",
+            minlength:"Ingresa 3 caracteres como minimo",
+            text:"Solo se admite texto en este campo"
+        },ApellidoUsuario:{
+            required: "Este campo es requerido",
+            minlength:"Ingresa como minimo 3 caracteres"
+        },EmailUsuario:{
+            email:"Ingresa una direccion de correo electronico valida",
+            required:"Este campo es requerido",
+            validarEmail:"Ingresa una direccion de correo electronico valida"
+            
+        },ContrseniaUsuario:{
+            
+            required:"Este campo es requerido",
+            minlength:"Ingresa 8 caracteres como minimo",
+            pwcheck1:"La contraseña debe contener una minuscula como minimo",
+            pwcheck2:"La contraseña debe contener un digito como minimo",
+            pwcheck3:"La contraseña debe contener una mayuscula como minimo"
+            
+        },ConfirmarContraseniaUsuario:{
+            
+            equalTo:"La contraseña no coincide"
+        }
+    }, errorElement: 'div',
+    errorPlacement: function (error, element) {
+        var placement = $(element).data('error');
+        if (placement) {
+            $(placement).append(error);
+        } else {
+            error.insertAfter(element);
+        }
+    }, submitHandler: function () {
+
+
+          alert("Validacion correcta (._.)");
+//        swal({
+//
+//        title: "Editar Canal",
+//        text: "¿Está seguro que desea reemplazar los datos del canal?",
+//        icon: "info",
+//        buttons: true,
+//        closeonconfirm: false,
+//        buttons: ["No, Cancelar", "Sí"]
+//        })
+//        .then((willDelete) => {
+//            if (willDelete) {
+//
+//              var url = ""+window.location+"";
+//              var idCanal = url.split("_");
+//              var nombreCanal = $("#txtEditarNombreCanal").val();
+//              var descripcionCanal = $("#txtEditarDescripcionCanal").val();
+//              var estadoCanal = $("#cmbEditarEstadoCanal").val();
+//              var sectorCanal = $("#cmbSector").val();
+//              $.post("/SaleslandColombiaApp/canal/editarcanal",{IdCanal:idCanal[1],NombreCanal:nombreCanal,DescripcionCanal:descripcionCanal,EstadoCanal:estadoCanal,SectorCanal:sectorCanal},function (responsetext) {
+//                   if(responsetext == "200"){
+//
+//                        swal("Cambios Guardados", "Los cambios del sector han guardado exitosamente", "success").then((willDelete) => {
+//                          if (willDelete) {                          
+//                            window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/canal/listarcanal.jsp";
+//                          }
+//                        });
+//
+//                    }else{                    
+//                        swal("Ocurrio un error", "Lo sentimos tus datos no fueron registrados, por favor intentalo nuevamente.", "error").then((willDelete) => {
+//                         
+//                        });                                        
+//                    }                        
+//                });          
+//            }
+//        });                        
+    }  
 });
