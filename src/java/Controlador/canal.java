@@ -48,6 +48,9 @@ public class canal extends HttpServlet {
                 case "editarcanal":
                     editarCanal(request, response);
                     break;
+                case "cargacombocanal":
+                    cargacomboCanal(request, response);
+                    break;
             }
             
         }
@@ -188,6 +191,33 @@ public class canal extends HttpServlet {
         }
     
     }
+      private void cargacomboCanal(HttpServletRequest request, HttpServletResponse response)   
+        throws ServletException, IOException {
+    
+        try{
+        
+            System.out.println("Combo asas Canal");
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            
+            Query query = sesion.createQuery("FROM Canal WHERE Estado='Activo'");
+            JSONArray  canalJson = new JSONArray();
+
+            List<Canal> listaCanal = query.list();
+            for(Canal canal : listaCanal){
+            
+                canalJson.add(canal.getIdCanal());
+                canalJson.add(canal.getNombreCanal());            
+            }
+            response.getWriter().write(canalJson.toJSONString());    
+        }catch(Exception e){
+        
+            System.err.println(e);
+            response.getWriter().write("500");
+        
+        }
+        
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -227,4 +257,5 @@ public class canal extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+  
 }

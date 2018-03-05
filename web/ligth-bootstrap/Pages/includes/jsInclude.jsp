@@ -55,7 +55,8 @@ $(document).ready(function() {
 
 <!-- MAIN JS -->
 <script src="../../assets/js/main.js" type="text/javascript"></script>
-
+<!-- MAIN 2 JS -->
+<script src="../../assets/js/main2.js" type="text/javascript"></script>
 <!-- sewwt alert -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js" type="text/javascript"></script>
 
