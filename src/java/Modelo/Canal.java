@@ -14,7 +14,7 @@ public class Canal {
     
     @Id
     @Column(name = "idCanal")
-    private int IdCargo;
+    private int IdCanal;
     
     @Column(name = "NombreCanal")
     private String NombreCanal;
@@ -39,12 +39,12 @@ public class Canal {
         this.Sector = Sector;
     }
 
-    public int getIdCargo() {
-        return IdCargo;
+    public int getIdCanal() {
+        return IdCanal;
     }
 
-    public void setIdCargo(int IdCargo) {
-        this.IdCargo = IdCargo;
+    public void setIdCanal(int IdCanal) {
+        this.IdCanal = IdCanal;
     }
 
     public String getNombreCanal() {

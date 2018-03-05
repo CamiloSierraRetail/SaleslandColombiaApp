@@ -41,6 +41,8 @@ public class sector extends HttpServlet {
                 case "editarsector":
                     editarsector(request, response);                    
                     break;
+                case "cargarcombosector":
+                    cargarcombosector(request, response);
                 
             }
             
@@ -53,7 +55,6 @@ public class sector extends HttpServlet {
         
         try{
             
-            System.out.println("EEEEEEEERRRRRRRRRROOOOOOOOOORRRRRRRRRRRRRRRRRRRRRRRR");
             String nombreSector = request.getParameter("NombreSector");
             String descripcionSector = request.getParameter("DescripcionSector");      
             Session sesion = HibernateUtil.getSessionFactory().openSession();
@@ -143,6 +144,7 @@ public class sector extends HttpServlet {
         
         }catch(Exception e){
             System.err.println(e);
+            response.getWriter().write("500");
         }    
     }
     protected void editarsector(HttpServletRequest request, HttpServletResponse response)
@@ -171,6 +173,29 @@ public class sector extends HttpServlet {
             System.err.println(e);
         }
         
+    }
+    
+    protected void cargarcombosector(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+    
+        try{
+        
+            System.out.println("asdasdas combo sector");
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Query query = sesion.createQuery("FROM Sector WHERE Estado='Activo'");
+            List<Sector> listaSector = query.list();
+            
+            Gson gson = new Gson();
+            String json = gson.toJson(listaSector);
+            response.getWriter().write(json);
+            
+        }catch(Exception e){
+        
+            System.err.println(e);
+            response.getWriter().write("500");
+        
+        }
+    
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

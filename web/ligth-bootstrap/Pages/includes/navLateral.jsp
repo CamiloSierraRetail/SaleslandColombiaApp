@@ -3,10 +3,10 @@
             <div class="sidebar-wrapper">
                 <div class="logo">
                     <a href="http://www.creative-tim.com" class="simple-text logo-mini">
-                        SC
+                        SL
                     </a>
                     <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-                        Salesland<small>Colombia</small>
+                        <strong>Sales</strong>land
                     </a>
                 </div>
                 <div class="user">
@@ -68,7 +68,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item ">
-                                    <a class="nav-link" href="./components/grid.html">
+                                    <a class="nav-link" href="/SaleslandColombiaApp/ligth-bootstrap/Pages/canal/listarcanal.jsp">
                                         <span class="sidebar-mini">C</span>
                                         <span class="sidebar-normal">Canales</span>
                                     </a>

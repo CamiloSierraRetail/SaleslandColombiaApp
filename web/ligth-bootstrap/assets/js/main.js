@@ -1,13 +1,10 @@
-$('#frmRegistrarSector').validate({
+    $('#frmRegistrarSector').validate({
     rules: {
         NombreSector: {
-
-
             required: true,
             minlength: 5
         },
         DescripcionSector: {
-
             required: true,
             minlength: 15,
             maxlength: 80
@@ -15,7 +12,6 @@ $('#frmRegistrarSector').validate({
     }, messages: {
 
         NombreSector: {
-
             required: "Este campo es requerido",
             minlength: "Ingresa 5 caracteres como minimo"
         },
@@ -52,14 +48,12 @@ $('#frmRegistrarSector').validate({
 
                                 swal("Registro exitoso", "El sector ha sido registrado exitosamente", "success").then((willDelete) => {
                                     if (willDelete) {
-                                        //window.location = "/FutPlay/GaiaTemplate/index.html";
+                                        window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/listarsectores.jsp";
                                     }
                                 });
 
                             } else {
-                                swal("Ocurrio un error", "Lo sentimos tus datos no fueron registrados, por favor intentalo nuevamente.", "error").then((willDelete) => {
-
-                                });
+                                swal("Ocurrio un error", "Lo sentimos tus datos no fueron registrados, por favor intentalo nuevamente.", "error");
                             }
                         });
                     }
@@ -101,7 +95,6 @@ $('#frmRegistrarCargo').validate({
             required: true,
             min: 781.242
         }
-     
         
         
     }, messages: {
@@ -323,10 +316,6 @@ function listarSectores() {
         } else {
             $("#listadoSectores").html("");
             $("#listadoSectores").append(responseText);
-
-            swal("Ok", "sdfdsfsdfsd", "success");
-
-
         }
 
     });
@@ -427,4 +416,226 @@ function listarCargos() {
         }
     });
 }
+///////////////// CARGAR COMBO DE SECTORES /////////////////////////////////
+function cargarSectores(){
+    
+    $.post("/SaleslandColombiaApp/sector/cargarcombosector",function (responseText){
+        
+        if (responseText == 500) {
+            swal("Ocurrio un error", "Lo ocuttió un error al intentar cargar los sectores.", "error");
+        }else{
+            
+            var dt = JSON.parse(responseText);   
+            for (var key in dt) {
+                if (dt.hasOwnProperty(key)) {
+                  var val = dt[key];
+                    
+                    $("#cmbSector").append("<option value='"+val['IdSector']+"'>"+val['NombreSector']+"</option>")
+                    
+                }
+            }
+        } 
+        
+    });
+}
+///////////////////////// REGISTRAR CANAL ///////////////////////////////////////
+$('#frmRegistrarCanal').validate({
+    rules: {
+        NombreCanal: {
+            required: true,
+            minlength: 5
+        },
+        DescripcionCanal: {
+            required: true,
+            minlength: 15,
+            maxlength: 80
+        },
+        Sector:{
+            required: true
+        }
+    }, messages: {
 
+        NombreCanal: {
+            required: "Este campo es requerido",
+            minlength: "Ingresa 5 caracteres como minimo"
+        },
+        DescripcionCanal: {
+            required: "Este campo es requerido",
+            minlength: "Ingresa 15 caracteres como minimo",
+            maxlength: "Ingresa 80 caracteres como maximo"
+        },
+        Sector:{
+            required: "Este campo es requerido"
+        }
+    }, errorElement: 'div',
+    errorPlacement: function (error, element) {
+        var placement = $(element).data('error');
+        if (placement) {
+            $(placement).append(error);
+        } else {
+            error.insertAfter(element);
+        }
+    }, submitHandler: function () {
+
+        swal({
+            title: "Confirmar Datos",
+            text: "¿Está seguro que desea realizar el registro?",
+            icon: "info",
+            buttons: true,
+            closeonconfirm: false,
+            buttons: ["Cancelar", "Sí"]
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                
+                var sectorCanal = $("#cmbSector").val();
+                var nombreCanal = $("#txtNombreCanal").val();
+                var descripcionCanal = $("#txtDescripcionCanal").val();
+                $.post("/SaleslandColombiaApp/canal/registrar",{SectorCanal:sectorCanal,NombreCanal:nombreCanal,DescripcionCanal:descripcionCanal},function (responsetext) {
+                    if(responsetext == "200"){
+
+                        swal("Registro exitoso", "El canal ha sido registrado exitosamente", "success").then((willDelete) => {
+                            if (willDelete) {
+                                //window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/listarsectores.jsp";
+                            }
+                        });
+
+                    } else {
+                        swal("Ocurrio un error", "Lo sentimos tus datos no fueron registrados, por favor intentalo nuevamente.", "error");
+                    }
+                });
+            }
+        });
+    }
+});
+////////////////// LISTAR TODOS LOS CANALES ////////////////////////////
+function listarCanales() {
+
+    $.post("/SaleslandColombiaApp/canal/varcanales", function (responseText) {
+
+        if (responseText == "500") {
+
+            swal("Ocurrio un error", "Lo sentimos tus datos no fueron registrados, por favor intentalo nuevamente.", "error");
+            
+        }else{
+             
+            $("#listadoSectores").html("");           
+            $("#listadoCanales").append(responseText);            
+        } 
+        
+    });
+}
+///////////////////// VER DATOS CANAL ///////////////////////////////
+function verDatosCanal(){
+    
+    var url = ""+window.location+"";
+    var IdCanal = url.split("_");
+    $.post("/SaleslandColombiaApp/canal/cargardatoscanal",{idCanal:IdCanal[1]},function(responseText){
+       
+        if (responseText == "500") {
+            swal("Ocurrio un error", "Lo sentimos, ocurrió un erro en el servidor, por favor intentalo nuevamente", "error");
+        }else{
+            
+            var dt = JSON.parse(responseText);
+            console.log(dt);
+            if (dt[3] == "Activo") {
+                $("#cmbEditarEstadoCanal").val('Activo');
+            }else{
+                
+                $("#cmbEditarEstadoCanal").val('Inactivo');
+            }
+            $("#txtEditarNombreCanal").val(dt[1]);
+            $("#txtEditarDescripcionCanal").val(dt[2]);
+            $("#cmbSector").val(""+dt[4]+"");
+        }
+        
+    });
+    
+}
+/////////////////////////// EDITAR CANAL //////////////////////////////////////////////
+$('#frmEditarCanal').validate({
+    rules:{
+        EditarEstadoCanal:{
+            
+          required:true  
+        },
+        EditarNombreCanal:{
+            required:true,
+            minlength:5
+        },
+        EditarDescripcionCanal:{
+            
+            required:true,
+            minlength:15,
+            maxlength:80
+        },
+        EditarEstadoSectorCanal:{
+            
+            required:true,
+            
+        }
+    },messages:{
+        EditarEstadoCanal:{
+            
+          required:"Este campo es requerido"  
+        },
+        EditarNombreCanal:{
+            required:"Este campo es requerido",
+            minlength:"Ingresa 5 caracteres como minimo"
+        },
+        EditarDescripcionCanal:{
+            required:"Este campo es requerido",
+            minlength:"Ingresa 15 caracteres como minimo",
+            maxlength:"Ingresa 80 caracteres como maximo"
+        },
+        EditarEstadoSectorCanal:{
+            required:"Este campo es requerido",          
+
+        }
+    }, errorElement: 'div',
+    errorPlacement: function (error, element) {
+        var placement = $(element).data('error');
+        if (placement) {
+            $(placement).append(error);
+        } else {
+            error.insertAfter(element);
+        }
+    }, submitHandler: function () {
+
+        swal({
+
+        title: "Editar Canal",
+        text: "¿Está seguro que desea reemplazar los datos del canal?",
+        icon: "info",
+        buttons: true,
+        closeonconfirm: false,
+        buttons: ["No, Cancelar", "Sí"]
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+
+              var url = ""+window.location+"";
+              var idCanal = url.split("_");
+              var nombreCanal = $("#txtEditarNombreCanal").val();
+              var descripcionCanal = $("#txtEditarDescripcionCanal").val();
+              var estadoCanal = $("#cmbEditarEstadoCanal").val();
+              var sectorCanal = $("#cmbSector").val();
+              $.post("/SaleslandColombiaApp/canal/editarcanal",{IdCanal:idCanal[1],NombreCanal:nombreCanal,DescripcionCanal:descripcionCanal,EstadoCanal:estadoCanal,SectorCanal:sectorCanal},function (responsetext) {
+                   if(responsetext == "200"){
+
+                        swal("Cambios Guardados", "Los cambios del sector han guardado exitosamente", "success").then((willDelete) => {
+                          if (willDelete) {                          
+                            window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/canal/listarcanal.jsp";
+                          }
+                        });
+
+                    }else{                    
+                        swal("Ocurrio un error", "Lo sentimos tus datos no fueron registrados, por favor intentalo nuevamente.", "error").then((willDelete) => {
+                         
+                        });                                        
+                    }                        
+                });          
+            }
+        });                        
+    }        
+});

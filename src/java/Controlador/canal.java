@@ -1,11 +1,19 @@
 package Controlador;
 
+import Modelo.Canal;
+import Modelo.Sector;
+import com.google.gson.Gson;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 
 public class canal extends HttpServlet {
@@ -13,7 +21,11 @@ public class canal extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        /*Convertir a json
+            En caso de necesitar ver codigo completo en buscarEquipoEncuentroFutPlayFinal (._.)
+            String json = new Gson().toJson(listaEquipo);
+            response.getWriter().write(json);
+        */
         //Modelo para el manejo de todos los controladores
         String url[] = request.getRequestURI().split("/");
         
@@ -22,15 +34,160 @@ public class canal extends HttpServlet {
             switch (url[3]){
             
                 //Usar y crear cada caso para cada una de las acciones que se vayan a realizar
-                /*case "registrar":
-                    
+                case "registrar":
+                    registrarCanal(request, response);
                     break;
-                */
+                    
+                case "varcanales":
+                     verCanales(request, response);
+                    break;
+                    
+                case "cargardatoscanal":
+                    cargaDatosCanal(request, response);
+                    break;
+                case "editarcanal":
+                    editarCanal(request, response);
+                    break;
             }
             
         }
     }
 
+    protected void registrarCanal(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+    
+        try{
+        
+            String SectorCanal = request.getParameter("SectorCanal");
+            String NombreCanal = request.getParameter("NombreCanal");
+            String DescripcionCanal = request.getParameter("DescripcionCanal");
+            
+            Sector objSector = new Sector();
+            objSector.setIdSector(Integer.parseInt(SectorCanal));
+            
+            
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Canal objCanal = new Canal(NombreCanal, DescripcionCanal, "Activo", objSector);
+            sesion.beginTransaction();
+            sesion.save(objCanal);
+            sesion.getTransaction().commit();
+            sesion.close();
+            response.getWriter().write("200");
+        
+        }catch(Exception e){
+        
+            System.err.println(e);
+            response.getWriter().write("500");
+        }
+        
+    }
+    protected void verCanales(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+    
+        try{
+            int countRows = 1;
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Query query = sesion.createQuery("FROM Canal");
+            List<Canal> listaCanal = query.list();
+            for(Canal canal : listaCanal){
+            
+                response.getWriter().write("<tr>"
+                                              + "<td class='text-center'>"+countRows+"</td>"
+                                              + "<td>"+canal.getNombreCanal()+"</td>"
+                                              + "<td>"+canal.getDescripcion()+"</td>"
+                                              + "<td>"+canal.getSector().getNombreSector()+"</td>"
+                                              + "<td class='text-right'>"+canal.getEstado()
+                                                      
+                                                   /*+ "<div class='row'>"
+                                                      + "<div class='col-md-12'>"
+                                                        + "<input type='checkbox' checked='' data-toggle='switch' data-on-color='info' data-off-color='info'>"
+                                                        + "<span class='toggle'></span>"
+                                                      + "</div>"
+                                                   + "</div>"*/
+                                              + "</td>"
+                                              + "<td class='td-actions text-right'>"
+                                                + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='Ver Sector'>"
+                                                    + "<i class='fa fa-user'></i>"
+                                                + "</a>"   
+                                                + "<a href='/SaleslandColombiaApp/ligth-bootstrap/Pages/canal/editarcanal.jsp?_"+canal.getIdCanal()+"' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
+                                                    + "<i class='fa fa-edit'></i>"
+                                                + "</a>"
+                                                + "<a href='#' rel='tooltip' title='' class='btn btn-danger btn-link btn-xs' data-original-title='Eliminar'>"
+                                                    + "<i class='fa fa-times'></i>"
+                                                + "</a>"
+                                              + "</td>"
+                                         + "</tr>");
+                countRows++;
+                
+            }
+            
+        }catch(Exception e){
+            System.err.println(e);
+            response.getWriter().write("500");
+        }
+    
+    }
+    
+    protected void cargaDatosCanal(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try{
+            System.out.println("...............................................");
+            String idCanal = request.getParameter("idCanal");
+            System.out.println("----------------> "+idCanal);
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Query query = sesion.createQuery("FROM Canal WHERE idCanal="+idCanal+"");
+            JSONArray  canalJson = new JSONArray();
+            List<Canal> listaCanal = query.list();
+            for(Canal canal : listaCanal){
+            
+                canalJson.add(canal.getIdCanal());
+                canalJson.add(canal.getNombreCanal());
+                canalJson.add(canal.getDescripcion());
+                canalJson.add(canal.getEstado());
+                canalJson.add(canal.getSector().getIdSector());
+                canalJson.add(canal.getSector().getNombreSector());
+                
+            }
+            response.getWriter().write(canalJson.toJSONString());
+            
+        }catch(Exception e){
+        
+            System.err.println(e);
+            response.getWriter().write("500");
+        }
+    
+    }
+    protected void editarCanal(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+    
+        try{
+            
+            String idCanal = request.getParameter("IdCanal");
+            String Estado = request.getParameter("EstadoCanal");
+            String Nombre = request.getParameter("NombreCanal");
+            String Descripcion = request.getParameter("DescripcionCanal");
+            String Sector = request.getParameter("SectorCanal");
+            
+            Sector objSector = new Sector();
+            objSector.setIdSector(Integer.parseInt(Sector));
+            Canal objCanal = new Canal(Nombre, Descripcion, Estado, objSector);
+            objCanal.setIdCanal(Integer.parseInt(idCanal));
+            
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+            sesion.update(objCanal);
+            sesion.getTransaction().commit();
+            sesion.close();
+            
+            response.getWriter().write("200");
+            
+        }catch(Exception e){
+        
+            System.err.println(e);
+            response.getWriter().write("500");
+        }
+    
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

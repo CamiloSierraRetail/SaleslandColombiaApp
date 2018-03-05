@@ -4,7 +4,7 @@
     <head>
         <%@include file="../includes/cssInclude.jsp" %>
         
-        <title>Listado de sectores - SaleslandColombia</title>       
+        <title>Listado de canales - SaleslandColombia</title>       
     </head>
     <body>
         
@@ -37,11 +37,12 @@
                                                     <th class="text-center">#</th>
                                                     <th>Nombre</th>
                                                     <th>Descripción</th>
+                                                    <th>Sector</th>
                                                     <th class="text-right">Estado</th>
                                                     <th class="text-right">Acciones</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="listadoSectores">
+                                            <tbody id="listadoCanales">
 
                                             </tbody>
                                         </table>
@@ -58,7 +59,7 @@
         </div>
     </body>        
     <%@include file="../includes/jsInclude.jsp" %>
-    <script> listarSectores(); </script>
+    <script>listarCanales();</script>
     <script type="text/javascript">
     var $table = $('#bootstrap-table');
 
@@ -133,7 +134,6 @@
         $(window).resize(function() {
             $table.bootstrapTable('resetView');
         });
-
 
     });
 </script>
