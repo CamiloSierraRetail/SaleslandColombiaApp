@@ -234,29 +234,12 @@ $('#frmEditarSector').validate({
         },
         EditarEstadoSector:{
             required:"Este campo es requerido",          
-
-
-            required: true,
-            minlength: 5
+            
         },
         DescripcionSector: {
 
-            required: true,
-            minlength: 15,
-            maxlength: 80
-        }
-    }, messages: {
-
-        NombreSector: {
-
-            required: "Este campo es requerido",
-            minlength: "Ingresa 5 caracteres como minimo"
-        },
-        DescripcionSector: {
-            required: "Este campo es requerido",
-            minlength: "Ingresa 15 caracteres como minimo",
-            maxlength: "Ingresa 80 caracteres como maximo"
-
+            required: "Este campo es requerido"
+            
         }
     }, errorElement: 'div',
     errorPlacement: function (error, element) {
@@ -424,12 +407,10 @@ function cargarSectores(){
         if (responseText == 500) {
             swal("Ocurrio un error", "Lo ocuttió un error al intentar cargar los sectores.", "error");
         }else{
-            
             var dt = JSON.parse(responseText);   
             for (var key in dt) {
                 if (dt.hasOwnProperty(key)) {
                   var val = dt[key];
-                    
                     $("#cmbSector").append("<option value='"+val['IdSector']+"'>"+val['NombreSector']+"</option>")
                     
                 }
@@ -638,4 +619,15 @@ $('#frmEditarCanal').validate({
             }
         });                        
     }        
+});
+//////////////////////////////// REGISTRAR USUARIO ///////////////////////////////////
+$("#frmRegistrarUsuario").validate({
+    
+    rules:{
+        
+        TipoDocumentoUsuario:{
+            
+            required:true
+        },
+    }
 });

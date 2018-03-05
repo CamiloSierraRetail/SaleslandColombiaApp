@@ -2,7 +2,10 @@ package Modelo;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,14 +24,19 @@ public class Cargo {
     
     @Column(name = "Salario")
     private String Salario;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Sector")
+    private Canal Sector;
 
     public Cargo() {
     }
 
-    public Cargo(String NombreCargo, String Descripcion, String Salario) {
+    public Cargo(String NombreCargo, String Descripcion, String Salario, Canal Sector) {
         this.NombreCargo = NombreCargo;
         this.Descripcion = Descripcion;
         this.Salario = Salario;
+        this.Sector = Sector;
     }
 
     public int getIdCargo() {
@@ -62,5 +70,13 @@ public class Cargo {
     public void setSalario(String Salario) {
         this.Salario = Salario;
     }
-   
+
+    public Canal getSector() {
+        return Sector;
+    }
+
+    public void setSector(Canal Sector) {
+        this.Sector = Sector;
+    }
+    
 }

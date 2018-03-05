@@ -17,6 +17,9 @@ public class Usuario {
     @Column(name = "idUsuario")
     private int IdUsuario;
     
+    @Column(name = "TipoDocumento")
+    private String TipoDocumento;
+    
     @Column(name = "Documento")
     private String Documento;
     
@@ -60,7 +63,8 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String Documento, String Nombre, String Apellido, String Direccion, String Telefono, String Celular, String Genero, String Email, Date FechaNacimiento, String Contrasenia, String Foto, String Estado, Cargo Cargo) {
+    public Usuario(String TipoDocumento, String Documento, String Nombre, String Apellido, String Direccion, String Telefono, String Celular, String Genero, String Email, Date FechaNacimiento, String Contrasenia, String Foto, String Estado, Cargo Cargo) {
+        this.TipoDocumento = TipoDocumento;
         this.Documento = Documento;
         this.Nombre = Nombre;
         this.Apellido = Apellido;
@@ -82,6 +86,14 @@ public class Usuario {
 
     public void setIdUsuario(int IdUsuario) {
         this.IdUsuario = IdUsuario;
+    }
+
+    public String getTipoDocumento() {
+        return TipoDocumento;
+    }
+
+    public void setTipoDocumento(String TipoDocumento) {
+        this.TipoDocumento = TipoDocumento;
     }
 
     public String getDocumento() {
@@ -187,5 +199,5 @@ public class Usuario {
     public void setCargo(Cargo Cargo) {
         this.Cargo = Cargo;
     }
-    
+
 }

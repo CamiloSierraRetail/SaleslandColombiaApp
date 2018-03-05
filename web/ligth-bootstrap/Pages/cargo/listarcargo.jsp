@@ -9,15 +9,10 @@
     <body>
         
         <div class="wrapper">   
-            <div class="sidebar" data-color="green" data-image="../assets/img/sidebar-5.jpg">
-                <!--
-                    Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
-
-                    Tip 2: you can also add an image using data-image tag
-                -->
-                <!-- Include Nav Lateral  -->
-                <%@include file="../includes/navLateral.jsp" %>
-            </div>
+            
+            <!-- Include Nav Lateral  -->
+            <%@include file="../includes/navLateral.jsp" %>
+           
             <div class="main-panel">
                 <!-- Include Nav Superior -->
                 <%@include file="../includes/navSuperior.jsp" %>

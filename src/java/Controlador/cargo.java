@@ -45,16 +45,16 @@ public class cargo extends HttpServlet {
         
         try{
             
-            String nombreCargo = request.getParameter("NombreCargo");
-            String descripcionCargo = request.getParameter("DescripcionCargo");
-            String salario = request.getParameter("Salario");
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
-            Cargo objSector = new Cargo(nombreCargo, descripcionCargo, salario);
-            sesion.beginTransaction();
-            sesion.save(objSector);
-            sesion.getTransaction().commit();
-            sesion.close();
-            response.getWriter().write("200");
+//            String nombreCargo = request.getParameter("NombreCargo");
+//            String descripcionCargo = request.getParameter("DescripcionCargo");
+//            String salario = request.getParameter("Salario");
+//            Session sesion = HibernateUtil.getSessionFactory().openSession();
+//            Cargo objSector = new Cargo(nombreCargo, descripcionCargo, salario);
+//            sesion.beginTransaction();
+//            sesion.save(objSector);
+//            sesion.getTransaction().commit();
+//            sesion.close();
+//            response.getWriter().write("200");
         
         }catch(Exception e){
         
