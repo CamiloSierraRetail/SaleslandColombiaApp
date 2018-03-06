@@ -8,10 +8,9 @@
     </head>
     <body>
         <div class="wrapper">
-            
+           
             <!-- Include Nav Lateral  -->
             <%@include file="../includes/navLateral.jsp" %>
-
             <div class="main-panel">
                 <!-- Include Nav Superior -->
                 <%@include file="../includes/navSuperior.jsp" %>

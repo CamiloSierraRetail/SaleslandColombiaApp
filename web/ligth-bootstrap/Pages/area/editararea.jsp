@@ -4,21 +4,13 @@
     <head>
         <%@include file="../includes/cssInclude.jsp" %>
         <title>Editar Area- SaleslandColombia</title>
-        
     </head>
     <body>
-        <div class="wrapper">
-            <div class="sidebar" data-color="red" data-image="../../assets/img/sidebar-5.jpg">
-                <!--
-                    Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
-
-                    Tip 2: you can also add an image using data-image tag
-                -->
-                <!-- Include Nav Lateral  -->
-                <%@include file="../includes/navLateral.jsp" %>
-            </div>
+        <div class="wrapper">  
+            <!-- INCLUEDE NAV LATERAL -->
+            <%@include file="../includes/navLateral.jsp" %>
             <div class="main-panel">
-                <!-- Include Nav Superior -->
+                <!-- INCLUEDE NAV SUPERIOR -->
                 <%@include file="../includes/navSuperior.jsp" %>
                 <div class="content">
                     <div class="container-fluid">
@@ -88,6 +80,7 @@
             </div>
         </div>
     </body>
+    <!-- INCLUDE JAVA SCRIPT -->
     <%@include file="../includes/jsInclude.jsp" %>
     <script>
         cargarCanal();

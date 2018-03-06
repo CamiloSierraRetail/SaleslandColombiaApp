@@ -12,8 +12,8 @@ import javax.persistence.Table;
 @Table(name = "Area")
 public class Area {
     @Id
-    @Column(name = "idArea")
-    private int IdCargo;
+    @Column(name = "IdArea")
+    private int IdArea;
     
     @Column(name = "NombreArea")
     private String NombreArea;
@@ -38,12 +38,12 @@ public class Area {
         this.Canal = Canal;
     }
 
-    public int getIdCargo() {
-        return IdCargo;
+    public int getIdArea() {
+        return IdArea;
     }
 
-    public void setIdCargo(int IdCargo) {
-        this.IdCargo = IdCargo;
+    public void setIdArea(int IdCargo) {
+        this.IdArea = IdCargo;
     }
 
     public String getNombreArea() {

@@ -1,6 +1,6 @@
-function botstrapTable(tamanioPagina){
+function mostrartablabootstrap() {
     
-    var $table = $('#bootstrap-table');
+    var $table = $("#bootstrap-table");
 
     function operateFormatter(value, row, index) {
         return [
