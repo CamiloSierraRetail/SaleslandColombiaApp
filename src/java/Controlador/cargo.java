@@ -36,6 +36,9 @@ public class cargo extends HttpServlet {
                 case "cargardatossector":
                     cargardatossector(request, response, url[4]);
                     break;
+                case "getallcargosregistrousuario":
+                    getAllCargosRegistrousuario(request, response);
+                    break;
                 
             }           
         }          
@@ -106,13 +109,27 @@ public class cargo extends HttpServlet {
         }
     
     }
-
+    protected void getAllCargosRegistrousuario(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        try{
+            String idSector = request.getParameter("IdSector");
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Query query = sesion.createQuery("FROM Cargo WHERE Sector='"+idSector+"' AND Estado='Activo'");
+            List<Cargo> listaCargo = query.list();            
+            String json = new Gson().toJson(listaCargo);
+            response.getWriter().write(json);
+            
+        }catch(Exception e){
+            System.err.println(e);
+            response.getWriter().write("500");
+        }
+    
+    }
     private void cargardatossector(HttpServletRequest request, HttpServletResponse response, String string) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -152,8 +169,5 @@ public class cargo extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-   
-   
 
 }

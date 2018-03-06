@@ -97,6 +97,9 @@ $(document).ready(function() {
         // En caso de necesitar alguno de los componentes que necesiten de inicializacion hacer la inicializacion en cada una de las paginas
         //demo.initLBDWizard();
         //demo.initCharts();
+        //demo.initDashboardPageCharts();
+        //demo.showNotification();
+        //demo.initVectorMap()        
         
     });
 </script>

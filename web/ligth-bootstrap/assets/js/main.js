@@ -77,102 +77,6 @@ function listarSectores() {
     });
 
 }
-//REGISTRAR CARGOS EN LA EMPRESA//
-$('#frmRegistrarCargo').validate({
-    rules: {
-        NombreCargo: {
-
-            required: true,
-            minlength: 5
-        },
-        DescripcionCargo: {
-
-            required: true,
-            minlength: 15,
-            maxlength: 80
-        },
-        Salario:{
-            required: true,
-            min: 781.242
-        }
-        
-        
-    }, messages: {
-
-        NombreCargo: {
-
-            required: "Este campo es requerido",
-            minlength: "Ingresa 5 caracteres como minimo"
-        },
-        DescripcionCargo: {
-            required: "Este campo es requerido",
-            minlength: "Ingresa 15 caracteres como minimo",
-            maxlength: "Ingresa 80 caracteres como maximo"
-        },
-        Salario: {
-            required: "Este campo es requerido",
-            min: "El valor minimo es de 781.242"
-            
-        }
-       
-        
-    }, errorElement: 'div',
-    errorPlacement: function (error, element) {
-        var placement = $(element).data('error');
-        if (placement) {
-            $(placement).append(error);
-        } else {
-            error.insertAfter(element);
-        }
-    }, submitHandler: function () {
-
-        swal({
-            title: "Confirmar Datos",
-            text: "¿Está seguro que desea realizar el registro?",
-            icon: "info",
-            buttons: true,
-            closeonconfirm: false,
-            buttons: ["Cancelar", "Sí"]
-        })
-                .then((willDelete) => {
-                    if (willDelete) {
-
-                        var nombreCargo = $("#txtNombreCargo").val();
-                        var descripcionCargo = $("#txtDescripcionCargo").val();
-                        var salario = $("#txtSalario").val();
-                        $.post("../../../cargo/registrar", {NombreCargo: nombreCargo, DescripcionCargo: descripcionCargo, Salario: salario}, function (responsetext) {
-                            if (responsetext == "200") {
-
-                                swal("Registro exitoso", "El sector ha sido registrado exitosamente", "success").then((willDelete) => {
-                                    if (willDelete) {
-                                        //window.location = "/FutPlay/GaiaTemplate/index.html";
-                                    }
-                                });
-
-                            } else {
-                                swal("Ocurrio un error", "Lo sentimos tus datos no fueron registrados, por favor intentalo nuevamente.", "error").then((willDelete) => {
-
-                                });
-                            }
-                        });
-                    }
-                });
-    }
-});
-////////////////// LISTAR TODOS LOS CARGOS ////////////////////////////
-function listarCargos() {
-    $.post("/SaleslandColombiaApp/cargo/vercargos", function (responseText) {
-        if (responseText == "500") {
-            swal("Ocurrio un error", "Lo sentimos tus datos no fueron cargados.", "error");
-        } else {
-            $("#listadoCargos").html("");
-            $("#listadoCargos").append(responseText);
-            swal("Ok", "Listado", "success");
-        }
-    });
-}
-
-
 ////////////////////////////// CARGAR DATOS SECTOR ////////////////////////////
 function verDatosSector(){
     
@@ -620,6 +524,37 @@ $('#frmEditarCanal').validate({
         });                        
     }        
 });
+///////////////////////// CARGAR COMBO CARGO //////////////////////
+function cargarCargoOOOOOO(idSector){
+    alert("combo cargo functio ---> "+idSector);
+    $.post("/SaleslandColombiaApp/cargo/getallcargosregistrousuario",{IdSector:idSector},function (responseText){
+       
+        if (responseText == "500") {
+            swal("Ocurrio un error", "Lo sentimos tus datos no fueron registrados, por favor intentalo nuevamente.", "error");
+        }else{
+            
+            alert(responseText);
+            var dt = JSON.parse(responseText);
+            for (var key in dt) {
+                if (dt.hasOwnProperty(key)) {
+                    var val = dt[key];
+                    alert("INGRESANDO LA DATA AL COMBO");
+                    //CONTINUAR REPARANDO
+                    //$("#cmbCargoUsuarioRegistro").append("<option value='"+val['IdCargo']+"'>"+val['NombreCargo']+"</option>");                    
+                    $('#lolComboCargo').append(new Option("text", 54654));
+                    //$("#lolComboCargo").append("<option value='jsjsjsj'>jsjsjsjs</option>");
+                    $("#txtLol").val("------------> "+val['NombreCargo']);
+                    alert("FINISH DATA INGRESADA ---> " + val['IdCargo'] +" ------> "+val['NombreCargo']);
+                }
+            }
+            
+        }
+        
+    });
+    
+}
+
+
 ////////////////////Funciones para validar password email y telefono////////////////7
     $.validator.addMethod("pwcheck1", function(value) {
        return /^[A-Za-z0-9\d=!\-@._*]*$/.test(value) 
@@ -641,28 +576,53 @@ $('#frmEditarCanal').validate({
        var pattern = /^3[0,1,2,3,5][0-9]{8}$/;
        return pattern.test(value);
     });
+    
+    //Validar fecha: https://stackoverflow.com/questions/43276378/jquery-validate-date-between-a-date-range
+    $.validator.addMethod("dateRange", function(value, element, params) {
+        
+       try {           
+            var date = new Date(value);
+            if (date >= params.from && date <= params.to) {
+              return true;
+            }
+        } catch (e) {}
+      return false;
+    }, 'message');
+
+    var fromDate = new Date("2017-02-01");
+    
+    var toDate = new Date("2017-12-31");
+    $.validator.addClassRules({
+      myDateFieldRangeValidate: {
+        dateRange: {
+          from: fromDate,
+          to: toDate
+        }
+      }
+    });
 //////////////////////////////// REGISTRAR USUARIO ///////////////////////////////////
-$("#frmRegistrarUsuario").validate({    
+/*$("#frmRegistrarUsuario").validate({    
     rules:{
         TipoDocumentoUsuario:{
             required:true
         },DocumentoUsuario:{
             required:true,
             maxlength:15,
-            minlength:10
+            minlength:10            
         },NombreUsuario:{
             required:true,
             minlength:3,
-            text:true
+            maxlength:50            
         },ApellidoUsuario:{
             required: true,
-            minlength:3
+            minlength:3,
+            maxlength:50
         },EmailUsuario:{
             email:true,
             required:true,
             validarEmail:true
 
-        },ContrseniaUsuario:{
+        },ContraseniaUsuario:{
 
             required:true,
             minlength:8,
@@ -671,8 +631,28 @@ $("#frmRegistrarUsuario").validate({
             pwcheck3:true
 
         },ConfirmarContraseniaUsuario:{
-
-            equalTo:"#txtConfirmarContraseniaUsuario"
+            
+            required:true,
+            equalTo:"#txtContraseniaUsuario"
+        },DireccionUsuario:{
+            
+            required:true,
+            minlength:10,
+            maxlength:35
+        },GeneroUsuario:{            
+            required:true
+        },CelularUsuario:{
+            
+            required:true,
+            validarTelefono:true
+        },TelefonoUsuario:{
+            
+            required:true
+            
+        },FechaNacimientoUsuario:{
+            
+            required:true
+            
         }
     },messages:{
 
@@ -688,26 +668,43 @@ $("#frmRegistrarUsuario").validate({
         },NombreUsuario:{
             required:"Este campo es requerido",
             minlength:"Ingresa 3 caracteres como minimo",
-            text:"Solo se admite texto en este campo"
+            maxlength:"Ingresa 50 caracteres como maximo"
         },ApellidoUsuario:{
             required: "Este campo es requerido",
-            minlength:"Ingresa como minimo 3 caracteres"
+            minlength:"Ingresa como minimo 3 caracteres",
+            maxlength:"Ingresa como maximo 50 caracteres"
         },EmailUsuario:{
             email:"Ingresa una direccion de correo electronico valida",
             required:"Este campo es requerido",
             validarEmail:"Ingresa una direccion de correo electronico valida"
 
-        },ContrseniaUsuario:{
+        },ContraseniaUsuario:{
 
             required:"Este campo es requerido",
             minlength:"Ingresa 8 caracteres como minimo",
             pwcheck1:"La contraseña debe contener una minuscula como minimo",
-            pwcheck2:"La contraseña debe contener un digito como minimo",
+            pwcheck2:"La contraseña debe contener un número como minimo",
             pwcheck3:"La contraseña debe contener una mayuscula como minimo"
 
         },ConfirmarContraseniaUsuario:{
-
-            equalTo:"La contraseña no coincide"
+            required:"Este campo es requerido",
+            equalTo:"Las contraseñas no coinciden"
+        },DireccionUsuario:{
+            
+            required:"Este campo es requerido",
+            minlength:"Ingresa 10 caracteres como minimo",
+            maxlength:"Ingresa 35 caracteres como maximo"
+        },GeneroUsuario:{            
+            required:"Este campo es requerido"
+        },CelularUsuario:{            
+            required:"Este campo es requerido",
+            validarTelefono:"Ingresa un número de celular valido"
+        },TelefonoUsuario:{            
+            required:"Este campo es requerido"
+        },FechaNacimientoUsuario:{
+            
+            required:"Este campo es requerido"
+            
         }
     }, errorElement: 'div',
     errorPlacement: function (error, element) {
@@ -757,12 +754,10 @@ $("#frmRegistrarUsuario").validate({
 //            }
 //        });                        
     }  
-});
+});*/
 
 
-function InicializarFormularioRegistro() {
-    alert("yes formulario");
-    
+function InicializarFormularioRegistro() {   
     // Wizard Initialization
     $('.card-wizard').bootstrapWizard({
         'tabClass': 'nav nav-pills',

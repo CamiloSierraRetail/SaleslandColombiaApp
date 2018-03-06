@@ -45,8 +45,7 @@
                                                         <div class="row justify-content-center">
                                                             <div class="col-md-5 ">
                                                                 <div class="form-group">
-                                                                    <label class="control-label">Tipo de Documento <star>*</star></label>
-                                                                    
+                                                                    <label class="control-label">Tipo de Documento <star>*</star></label>                                    
                                                                     <select id="cmbTipoDocumentoUsuario" name="TipoDocumentoUsuario" class="selectpicker" data-title="Seleccionar Estado" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
                                                                         <option value="T.I">Tarjeta de indentidad (T.I)</option>
                                                                         <option value="C.C">Cedula de ciudadanía (C.C)</option> 
@@ -62,7 +61,7 @@
                                                             <div class="col-md-5">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Documento <star>*</star></label>
-                                                                    <input class="form-control" type="text" id="txtDocumentoUsuario" name="DocumentoUsuario" required="true" placeholder="ej: Perez Perez">
+                                                                    <input class="form-control" type="text" id="txtDocumentoUsuario" name="DocumentoUsuario" placeholder="ej: Perez Perez">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -76,7 +75,7 @@
                                                             <div class="col-md-5">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Apellidos <star>*</star></label>
-                                                                    <input class="form-control" type="text" id="txtApellidoUsuario" name="ApellidoUsuario" required="true" placeholder="ej: Perez Perez">
+                                                                    <input class="form-control" type="text" id="txtApellidoUsuario" name="ApellidoUsuario" placeholder="ej: Perez Perez">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -100,7 +99,7 @@
                                                             <div class="col-md-5">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Confirmar Contraseña<star>*</star></label>
-                                                                    <input class="form-control" type="password" id="txtConfirmarContraseniaUsuario" name="ConfirmarContraseniaUsuario" required="true" placeholder="ej: ****************">
+                                                                    <input class="form-control" type="password" id="txtConfirmarContraseniaUsuario" name="ConfirmarContraseniaUsuario" placeholder="ej: ****************">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -111,13 +110,13 @@
                                                             <div class="col-md-5 ">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Direccion <star>*</star></label>
-                                                                    <input class="form-control" type="password" name="first_name" placeholder="ej: carrera 16A # 85-64 Bogotá">
+                                                                    <input class="form-control" type="text" id="txtDireccionUsuario" name="DireccionUsuario" placeholder="ej: carrera 16A # 85-64 Bogotá">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Genero<star>*</star></label>
-                                                                    <select name="cities" class="selectpicker" data-title="Selecciona el genero" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                                                    <select id="txtGeneroUsuario" name="GeneroUsuario" class="selectpicker"  data-title="Selecciona el genero" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
                                                                         <option value="Masculino">Masculino</option>
                                                                         <option value="Femenino">Femenino</option>
                                                                         <option value="Otro">Otro</option>
@@ -129,13 +128,13 @@
                                                             <div class="col-md-5 ">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Celular <star>*</star></label>
-                                                                    <input class="form-control" type="text" name="first_name" placeholder="ej: 315 8921655">
+                                                                    <input class="form-control" type="tel" id="txtCelularUsuario" name="CelularUsuario" placeholder="ej: 315 8921655">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Telefono <star>*</star></label>
-                                                                    <input class="form-control" type="text" name="last_name" required="true" placeholder="ej: 7435596">
+                                                                    <input class="form-control" type="tel" id="txtTelefonoUSuario" name="TelefonoUsuario" placeholder="ej: 7435596">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -143,7 +142,9 @@
                                                             <div class="col-md-5 ">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Fecha de nacimiento <star>*</star></label>
-                                                                    <input type="text" class="form-control datepicker" placeholder="Selecciona la fecha de nacimiento">                                                                    
+                                                                    <div class="form-group">
+                                                                        <input id="datetimepicker" type="text" class="form-control datepicker" placeholder="Selecciona la fecha de nacimiento" />
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-5">
@@ -164,7 +165,7 @@
                                                                     </div>-->
                                                                     
                                                                     <label class="control-label">Imagen de perfil <star>*</star></label>
-                                                                    <input class="form-control" type="file" name="last_name" required="true" placeholder="ej: 7435596">
+                                                                    <input class="form-control" type="file" id="fileImagenUsuario" name="ImagenUsuario" placeholder="ej: 7435596">
                                                                     
                                                                 </div>
                                                             </div>
@@ -173,49 +174,25 @@
                                                     <div class="tab-pane fade" id="tab3" role="tabpanel">
                                                         <h5 class="text-center">solo faltan algunos campos (>_<)</h5>
                                                         <div class="row justify-content-center">
-                                                            <div class="col-md-5">                                                            
+                                                            <div class="col-md-7">                                                                
                                                                 <div class="form-group">
-                                                                    <label class="control-label">Sector<star>*</star></label>
-                                                                    <select name="cities" class="selectpicker" data-title="Selecciona el sector" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
-                                                                        <option value="id">Sector 1</option>
-                                                                        <option value="ms">Sector 2</option>
-                                                                        <option value="ca">Sector 3</option>
-                                                                    </select>
-                                                                </div>                                                            
-                                                            </div>
-                                                            <div class="col-md-5">
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Canal<star>*</star></label>
-                                                                    <select name="cities" class="selectpicker" data-title="Selecciona el canal" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
-                                                                        <option value="Masculino">Canal 1</option>
-                                                                        <option value="Femenino">Canal 2</option>
-                                                                        <option value="Otro">Canal 3</option>
+                                                                    <h6 class="control-label text-center">Selecciona el Sector</h6>
+                                                                    <select id="cmbSector" name="SectorUsuario"  class="selectpicker" data-title="Selecciona el sector" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                                                        
                                                                     </select>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="row justify-content-center">
-                                                            <div class="col-md-5">                                                            
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Area<star>*</star></label>
-                                                                    <select name="cities" class="selectpicker" data-title="Selecciona el area" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
-                                                                        <option value="id">Area 1</option>
-                                                                        <option value="ms">Area 2</option>
-                                                                        <option value="ca">Area 3</option>
-                                                                    </select>
-                                                                </div>                                                            
-                                                            </div>
-                                                            <div class="col-md-5">
+                                                        <!-- este combo no sirve, continuar reparandolo -->
+                                                        <div class="col-md-5">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Cargo<star>*</star></label>
-                                                                    <select name="cities" class="selectpicker" data-title="Selecciona el cargo" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
-                                                                        <option value="Masculino">Cargo 1</option>
-                                                                        <option value="Femenino">Cargo 2</option>
-                                                                        <option value="Otro">Cargo 3</option>
+                                                                    <select id="lolComboCargo" name="lolCargo" data-title="Selecciona el cargo">
+                                                                        <option value="ssss">jsjsjs</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        <input type="text" id="txtLol">
                                                     </div>
                                                 </div>
                                             </div>
@@ -240,8 +217,16 @@
     <%@include file="../includes/jsInclude.jsp" %>    
     <script>
         $(document).ready(function (){
-
-           InicializarFormularioRegistro(); 
+            InicializarFormularioRegistro();  
+            cargarSectores();
+            
+            $("#cmbSector").change(function (){
+                cargarCargoOOOOOO($("#cmbSector").val());
+                alert("cambio" + $("#cmbSector").val());
+            });
+            
+            
+            
         });
     </script>
 </html>
