@@ -239,91 +239,9 @@
     </body>
     <%@include file="../includes/jsInclude.jsp" %>    
     <script>
-        /*
-         * Conclusion: Crear un nuevo archivo e ir haciendo test de los cambios en las variables del formulario
-         * que pueden estar fallando. En el nuevo archivo no borrar el id del formulario.
-         * Buscar el upload file y agregar a el formulario, ademas revisar la funcion del upload file el 
-         * FutPlay y tomar como referencia. Good Look
-         * 
-         * @type type
-         * 
-         */
-        // Wizard Initialization
-        $('.card-wizard').bootstrapWizard({
-            'tabClass': 'nav nav-pills',
-            'nextSelector': '.btn-next',
-            'previousSelector': '.btn-previous',
+        $(document).ready(function (){
 
-            onNext: function(tab, navigation, index) {
-                var $valid = $('#frmRegistrarUsuario').valid();
-                if (!$valid) {
-                    $validator.focusInvalid();
-                    return false;
-                }
-            },
-
-            onInit: function(tab, navigation, index) {
-                //check number of tabs and fill the entire row
-                var $total = navigation.find('li').length;
-                var $wizard = navigation.closest('.card-wizard');
-
-                $first_li = navigation.find('li:first-child a').html();
-                $moving_div = $('<div class="moving-tab">' + $first_li + '</div>');
-                $('.card-wizard .wizard-navigation').append($moving_div);
-
-                refreshAnimation($wizard, index);
-
-                $('.moving-tab').css('transition', 'transform 0s');
-            },
-
-            onTabClick: function(tab, navigation, index) {
-                var $valid = $('#frmRegistrarUsuario').valid();
-
-                if (!$valid) {
-                    return false;
-                } else {
-                    return true;
-                }
-            },
-
-            onTabShow: function(tab, navigation, index) {
-                var $total = navigation.find('li').length;
-                var $current = index + 1;
-
-                var $wizard = navigation.closest('.card-wizard');
-
-                // If it's the last tab then hide the last button and show the finish instead
-                if ($current >= $total) {
-                    $($wizard).find('.btn-next').hide();
-                    $($wizard).find('.btn-finish').show();
-                } else {
-                    $($wizard).find('.btn-next').show();
-                    $($wizard).find('.btn-finish').hide();
-                }
-
-                button_text = navigation.find('li:nth-child(' + $current + ') a').html();
-
-                setTimeout(function() {
-                    $('.moving-tab').text(button_text);
-                }, 150);
-
-                var checkbox = $('.footer-checkbox');
-
-                if (!index == 0) {
-                    $(checkbox).css({
-                        'opacity': '0',
-                        'visibility': 'hidden',
-                        'position': 'absolute'
-                    });
-                } else {
-                    $(checkbox).css({
-                        'opacity': '1',
-                        'visibility': 'visible'
-                    });
-                }
-
-                refreshAnimation($wizard, index);
-            }
+           InicializarFormularioRegistro(); 
         });
     </script>
 </html>
