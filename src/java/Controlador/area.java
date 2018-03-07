@@ -47,6 +47,8 @@ public class area extends HttpServlet {
                 case "editararea":
                     editarArea(request, response);
                     break;
+                case "cargarcomboarea":
+                    cargarcomboarea(request, response);
              
             }
             
@@ -224,5 +226,33 @@ public class area extends HttpServlet {
             response.getWriter().write("500");
         }
     }
+
+    private void cargarcomboarea(HttpServletRequest request, HttpServletResponse response)     
+            throws ServletException, IOException {
+    
+        try{
+        
+            System.out.println("Combo asas Area");
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            
+            Query query = sesion.createQuery("FROM Area WHERE Estado='Activo'");
+            JSONArray  areaJson = new JSONArray();
+
+            List<Area> listaArea = query.list();
+            for(Area area : listaArea){
+            
+                areaJson.add(area.getIdArea());
+                areaJson.add(area.getNombreArea());            
+            }
+            response.getWriter().write(areaJson.toJSONString());    
+        }catch(Exception e){
+        
+            System.err.println(e);
+            response.getWriter().write("500");
+        
+        }
+        
+    }
+
 
 }

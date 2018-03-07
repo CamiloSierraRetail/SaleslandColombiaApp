@@ -1,5 +1,6 @@
 package Controlador;
 
+import Modelo.Area;
 import Modelo.Cargo;
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -45,7 +46,7 @@ public class cargo extends HttpServlet {
 
     private void registrarcargo(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+            System.out.println("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
         try {
             String NombreCargo = request.getParameter("NombreCargo");
             String Descripcion = request.getParameter("Descripcion");
@@ -89,6 +90,7 @@ public class cargo extends HttpServlet {
                         + "<td>" + cargo.getDescripcion() + "</td>"
                         + "<td>" + cargo.getSalario() + "</td>"
                         + "<td>" + cargo.getTipo() + "</td>"
+                        + "<td>" + cargo.getEstado() + "</td>"
                         + "<td>" + cargo.getSector() + "</td>"
                         + "<td>" + cargo.getCanal() + "</td>"
                         + "<td>" + cargo.getArea() + "</td>"
@@ -154,17 +156,17 @@ public class cargo extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void cargaDatosCargo(HttpServletRequest request, HttpServletResponse response)   throws ServletException, IOException {
-        try{
+    private void cargaDatosCargo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
             System.out.println("...............................................");
-            String idCargo = request.getParameter("idArea");
-            System.out.println("----------------> "+idCargo);
+            String idCargo = request.getParameter("idCargo");
+            System.out.println("----------------> " + idCargo);
             Session sesion = HibernateUtil.getSessionFactory().openSession();
-            Query query = sesion.createQuery("FROM Area WHERE idCargo="+idCargo+"");
-            JSONArray  canalJson = new JSONArray();
+            Query query = sesion.createQuery("FROM Area WHERE idCargo=" + idCargo + "");
+            JSONArray canalJson = new JSONArray();
             List<Cargo> listaCargo = query.list();
-            for(Cargo cargo : listaCargo){
-            
+            for (Cargo cargo : listaCargo) {
+
                 canalJson.add(cargo.getIdCargo());
                 canalJson.add(cargo.getNombreCargo());
                 canalJson.add(cargo.getDescripcion());
@@ -173,46 +175,75 @@ public class cargo extends HttpServlet {
                 canalJson.add(cargo.getEstado());
                 canalJson.add(cargo.getSector());
                 canalJson.add(cargo.getCanal());
-                canalJson.add(cargo.getArea());     
+                canalJson.add(cargo.getArea());
             }
             response.getWriter().write(canalJson.toJSONString());
-            
-        }catch(Exception e){
-        
+
+        } catch (Exception e) {
+
             System.err.println(e);
             response.getWriter().write("500");
         }
-       
+
     }
 
-    private void editarCargo(HttpServletRequest request, HttpServletResponse response) 
+    private void editarCargo(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    
-        try{
-            
+
+        try {
+
             String NombreCargo = request.getParameter("NombreCargo");
             String Descripcion = request.getParameter("Descripcion");
             String Salario = request.getParameter("Salario");
             String Tipo = request.getParameter("Tipo");
+            String Estado = request.getParameter("Estado");
             String Sector = request.getParameter("Sector");
             String Canal = request.getParameter("Canal");
             String Area = request.getParameter("Area");
-            
+
             Session sesion = HibernateUtil.getSessionFactory().openSession();
-            Cargo objCargo = new Cargo(NombreCargo, Descripcion, Salario, Tipo, "Activo", Sector, Canal, Area);
-            
+            Cargo objCargo = new Cargo(NombreCargo, Descripcion, Salario, Tipo, Estado, Sector, Canal, Area);
+
             sesion.beginTransaction();
             sesion.update(objCargo);
             sesion.getTransaction().commit();
             sesion.close();
-            
+
             response.getWriter().write("200");
-            
-        }catch(Exception e){
-        
+
+        } catch (Exception e) {
+
             System.err.println(e);
             response.getWriter().write("500");
         }
     }
+
+    private void cargacomboSector(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        try {
+
+            System.out.println("Combo asas Canal");
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+
+            Query query = sesion.createQuery("FROM Sector WHERE Estado='Activo'");
+            JSONArray canalJson = new JSONArray();
+
+            List<Cargo> listaCargo = query.list();
+            for (Cargo cargo : listaCargo) {
+
+                canalJson.add(cargo.getIdCargo());
+                canalJson.add(cargo.getNombreCargo());
+            }
+            response.getWriter().write(canalJson.toJSONString());
+        } catch (Exception e) {
+
+            System.err.println(e);
+            response.getWriter().write("500");
+
+        }
+    }
+
+   
 
 }

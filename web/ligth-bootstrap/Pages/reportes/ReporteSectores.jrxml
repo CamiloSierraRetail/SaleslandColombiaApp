@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5c848a0f-1a08-4fb1-b4b2-85205ddadbbe">
+	<property name="ireport.zoom" value="1.2100000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     sector.`idSector` AS sector_idSector,
+     sector.`NombreSector` AS sector_NombreSector,
+     sector.`Descripcion` AS sector_Descripcion,
+     sector.`Estado` AS sector_Estado
+FROM
+     `sector` sector]]>
+	</queryString>
+	<field name="sector_idSector" class="java.lang.Integer"/>
+	<field name="sector_NombreSector" class="java.lang.String"/>
+	<field name="sector_Descripcion" class="java.lang.String"/>
+	<field name="sector_Estado" class="java.lang.String"/>
+	<variable name="sector_idSector_SUM" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{sector_idSector}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="101" splitType="Stretch">
+			<staticText>
+				<reportElement style="SubTitle" x="38" y="69" width="257" height="32" uuid="f40610c2-166a-49d2-98b3-9a9ac6a98769"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[REPORTE SECTORES]]></text>
+			</staticText>
+			<image>
+				<reportElement x="315" y="15" width="238" height="70" uuid="3d43f818-177f-4158-a5ae-c9a193536d1f"/>
+				<imageExpression><![CDATA["C:\\Users\\JOHAN NIETO\\Pictures\\Imagen1.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="11" y="4" width="257" height="65" uuid="df79ddb6-f35d-482a-ad52-be56e8f460e6"/>
+				<imageExpression><![CDATA["C:\\Users\\JOHAN NIETO\\Downloads\\IMAGENES SALESLAND\\salesland.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="46" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="7d169b28-96f2-4fab-adaf-2f3f710bf07e"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="19" width="138" height="15" uuid="5c29a266-e2ff-4ecc-b803-90d1a5cf914e"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="5" y="19" width="138" height="15" uuid="7d301550-084f-4bf6-8147-cdb44a2a3764"/>
+				<text><![CDATA[NOMBRE SECTOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="191" y="19" width="138" height="15" uuid="a6203408-ab10-4d4c-9f2d-0cfaddfb9728"/>
+				<text><![CDATA[DESCRIPCIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="372" y="19" width="138" height="15" uuid="b37e6720-53fd-41ce-ac20-a9abceb35dda"/>
+				<text><![CDATA[ESTADO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="8c8b22c1-9a3b-408c-94c3-27e2f9e0783e"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement style="Detail" x="1" y="0" width="138" height="15" uuid="3857563b-addd-4d08-8eaa-264c92b8c285"/>
+				<textFieldExpression><![CDATA[$F{sector_NombreSector}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="188" y="0" width="138" height="15" uuid="a9a1fbb5-2734-4ed2-b5f2-6e582cbd120c"/>
+				<textFieldExpression><![CDATA[$F{sector_Descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="369" y="0" width="138" height="15" uuid="de85cb67-8dd8-4968-90e7-b3dda31d7922"/>
+				<textFieldExpression><![CDATA[$F{sector_Estado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="4" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="742d1863-d0b5-4278-9de7-4861599c2596"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="32" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="12" width="552" height="15" forecolor="#FFFFFF" backcolor="#04667E" uuid="c7f35b32-af9b-46b2-8bb0-6bd40052443d"/>
+			</rectangle>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="5" y="12" width="197" height="20" forecolor="#FFFFFF" uuid="eb3917de-9048-454a-9137-eecaf9827426"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="279" y="12" width="196" height="20" forecolor="#FFFFFF" uuid="8aaed14c-217d-4690-9f7c-8f50aa22dc0d"/>
+				<text><![CDATA[Powered By Salesland Colombia]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="Column header" x="425" y="12" width="80" height="20" forecolor="#FFFFFF" uuid="e3a8dff7-e625-40f8-9aeb-af3734dd73f9"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="510" y="12" width="40" height="20" forecolor="#FFFFFF" uuid="eaeeedde-ec64-4ea3-8d4b-d98fa0ddb2f0"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

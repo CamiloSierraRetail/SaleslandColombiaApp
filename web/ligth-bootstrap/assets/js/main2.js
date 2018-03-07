@@ -237,7 +237,7 @@ function cargarCanal() {
 
     });
 }
-///////////////////////////////METODO REGISTRAR CARTGOS ///////////////////////////////////////////
+///////////////////////////////METODO REGISTRAR CARGOS ///////////////////////////////////////////
 $('#frmRegistrarCargos').validate({
     rules: {
         NombreCargo: {
@@ -316,7 +316,7 @@ $('#frmRegistrarCargos').validate({
                         var nombreCargo = $("#txtNombreCargo").val();
                         var descripcionCargo = $("#txtDescripcionCargo").val();
                         var salario = $("#txtSalario").val();
-                        var tipo = $("#cmbtipo").val();
+                        var tipo = $("#cmbTipo").val();
                         var sector = $("#cmbsector").val();
                         var canal = $("#cmbcanal").val();
                         var area = $("#cmbarea").val();
@@ -329,7 +329,7 @@ $('#frmRegistrarCargos').validate({
                                 });
 
                             } else {
-                                swal("Ocurrio un error", "Lo sentimos tus datos no fueron registrados, por favor intentalo nuevamente.", "error");
+                                swal("Ocurrio un error", "Lo sentimos tus datos de REGISTRO no fueron registrados, por favor intentalo nuevamente.", "error");
                             }
                         });
                     }
@@ -339,5 +339,44 @@ $('#frmRegistrarCargos').validate({
 
 
 
+///////////////// CARGAR COMBO DE AREAS /////////////////////////////////
+function cargarAreas(){
+    
+     $.post("/SaleslandColombiaApp/area/cargarcomboarea", function (responseText) {
+
+        if (responseText == 500) {
+            swal("Ocurrio un error", "Lo ocuttió un error al intentar cargar la información.", "error");
+        } else {
+
+            var dt = JSON.parse(responseText);
+
+
+            var counta = 0;
+            for (var i = 0, max = dt.length; i < max; i++) {
+
+                if (counta == 1) {
+                    counta = 0;
+
+                } else {
+
+                    $("#cmbArea").append("<option value='" + dt[i] + "'>" + dt[i + 1] + "</option>")
+                    counta++;
+                }
+
+
+            }
+
+            /*for (var key in dt) {
+             if (dt.hasOwnProperty(key)) {
+             var val = dt[key];
+             
+             $("#cmbCanal").append("<option value='"+val['IdCanal']+"'>"+val['NombreCanal']+"</option>")
+             
+             }
+             }*/
+        }
+
+    });
+}
 
 

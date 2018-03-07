@@ -18,7 +18,7 @@
                         <div class="row">
                             <div class="col-md-10 mr-auto ml-auto">
                                 <div class="card">
-                                    <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmRegistrarCargo" name="frmRegistrarCargo">
+                                    <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmRegistrarCargos" name="frmRegistrarCargo">
                                         <div class="card-header">
                                             <h4 class="card-title">Ingrese los datos</h4>
                                         </div>
@@ -51,48 +51,46 @@
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <label class="control-label">Selecciona tipo de Usuario*</label>
-                                                        <select name="opciones" id="select" class="selectpicker" data-title="Seleccionar Tipo" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" onchange="habilitar(this.value);">                                                      
-                                                            <option value='segundo'>Director</option>
-                                                            <option value='tercero'>Jefe Canal</option>
-                                                            <option value='cuarto'>Coordinador Canal</option>
-                                                            <option value='segundo'>Jefe Area</option>
-                                                            <option value='5'>Empleado </option>
+                                                        <select name="opciones" id="cmbTipo" class="selectpicker" onChange="pagoOnChange(this)" data-title="Seleccionar Tipo" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" >                                                      
+                                                        <OPTION VALUE="director">Director</OPTION>                                                       
+                                                        <OPTION VALUE="jefecanal">Jefe Canal</OPTION>
+                                                        <OPTION VALUE="coordinador">Coordinador</OPTION>                                                       
+                                                        <OPTION VALUE="jefearea">Jefe Area</OPTION>
+                                                        <OPTION VALUE="empleado">Empleado</OPTION>
                                                         </select>
                                                     </div>
-                                                </div>
-                                                <div id="mielemento">
-                                                    Contenido del elemento...
-                                                </div>
-                                                <div class="form-group">                                                
+                                                </div>                                                                                                             
+                                                <div id="nsector" style="display:none;">
+                                                     <div class="form-group">                                                
                                                     <div class="row">
                                                         <label class="control-label">Sector*</label>
-                                                        <select name="Sector" id="segundo" class="selectpicker" data-title="Seleccionar" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" >
-                                                            <option value=''>seleccion 1</option>
-                                                            <option value=''>seleccion 2</option>
+                                                        <select name="Sector" id="cmbSector" class="selectpicker" data-title="Seleccionar" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" >                                                           
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
+                                                </div>
+                                                <div id="ncanal" style="display:none;">
+                                                     <div class="form-group">
                                                     <div class="row">
                                                         <label class="control-label">Canal*</label>
-                                                        <select name="Canal" id="tercero" class="selectpicker" data-title="Seleccionar" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" >
-                                                            <option value=''>seleccion 1</option>
-                                                            <option value=''>seleccion 2</option>
+                                                        <select name="Canal" id="cmbCanal" class="selectpicker" data-title="Seleccionar" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" >
+                                                           
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
+                                                </div>
+                                                <div id="narea" style="display:none;">
+                                                     <div class="form-group">
                                                     <div class="row">
                                                         <label class="control-label">Area*</label>
-                                                        <select name="Area" id="cuarto" class="selectpicker" data-title="Seleccionar" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" >
-                                                            <option value=''>seleccion 1</option>
-                                                            <option value=''>seleccion 2</option>
+                                                        <select name="Area" id="cmbArea" class="selectpicker" data-title="Seleccionar" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" >
+                                                           
                                                         </select>
                                                     </div>
                                                 </div>
-                                                
-
+                                                </div>
                                             </div>
+
 
                                         </div>
                                         <div class="card-footer text-right card-body col-md-10 mr-auto ml-auto">
@@ -110,8 +108,85 @@
             </div>
         </div>
     </body>
-    <script type="text/javascript" src="jquery-1.4.2.min.js"></script>
-
-
     <%@include file="../includes/jsInclude.jsp" %>
+    <script>
+        
+          $(document).ready(function (){
+             alert("registrar dodo ready");
+            cargarSectores();        
+            cargarCanal();
+            cargarAreas();
+        });
+        </script>
+    <script>
+       
+        function pagoOnChange(sel) {
+            if (sel.value == "director") {
+                divC = document.getElementById("nsector");
+                divC.style.display = "";
+
+                divC = document.getElementById("ncanal");
+                divC.style.display = "none";
+
+                divT = document.getElementById("narea");
+                divT.style.display = "none";
+
+            } else if (sel.value == "jefecanal") {
+                divC = document.getElementById("nsector");
+                divC.style.display = "";
+
+                divC = document.getElementById("ncanal");
+                divC.style.display = "";
+
+                divT = document.getElementById("narea");
+                divT.style.display = "none";
+                
+            }else if (sel.value == "coordinador") {
+                divC = document.getElementById("nsector");
+                divC.style.display = "none";
+
+                divC = document.getElementById("ncanal");
+                divC.style.display = "";
+
+                divT = document.getElementById("narea");
+                divT.style.display = "none";
+                
+            }else if (sel.value == "jefearea") {
+                divC = document.getElementById("nsector");
+                divC.style.display = "";
+
+                divC = document.getElementById("ncanal");
+                divC.style.display = "";
+
+                divT = document.getElementById("narea");
+                divT.style.display = "";
+                
+            } else if (sel.value == "empleado") {
+                divC = document.getElementById("nsector");
+                divC.style.display = "";
+
+                divC = document.getElementById("ncanal");
+                divC.style.display = "";
+
+                divT = document.getElementById("narea");
+                divT.style.display = "";
+                
+            }else{
+
+                divC = document.getElementById("nsector");
+                divC.style.display = "none";
+
+                divC = document.getElementById("ncanal");
+                divC.style.display = "none";
+
+                divT = document.getElementById("narea");
+                divT.style.display = "none";
+            }
+            ;
+
+
+        }
+    </script>
+
+    
 </html>
