@@ -208,89 +208,6 @@ function listarSectores() {
     });
 
 }
-//REGISTRAR CARGOS EN LA EMPRESA//
-$('#frmRegistrarCargo').validate({
-    rules: {
-        NombreCargo: {
-
-            required: true,
-            minlength: 5
-        },
-        DescripcionCargo: {
-
-            required: true,
-            minlength: 15,
-            maxlength: 80
-        },
-        Salario:{
-            required: true,
-            min: 781.242
-        }
-     
-        
-        
-    }, messages: {
-
-        NombreCargo: {
-
-            required: "Este campo es requerido",
-            minlength: "Ingresa 5 caracteres como minimo"
-        },
-        DescripcionCargo: {
-            required: "Este campo es requerido",
-            minlength: "Ingresa 15 caracteres como minimo",
-            maxlength: "Ingresa 80 caracteres como maximo"
-        },
-        Salario: {
-            required: "Este campo es requerido",
-            min: "El valor minimo es de 781.242"
-            
-        }
-       
-        
-    }, errorElement: 'div',
-    errorPlacement: function (error, element) {
-        var placement = $(element).data('error');
-        if (placement) {
-            $(placement).append(error);
-        } else {
-            error.insertAfter(element);
-        }
-    }, submitHandler: function () {
-
-        swal({
-            title: "Confirmar Datos",
-            text: "¿Está seguro que desea realizar el registro?",
-            icon: "info",
-            buttons: true,
-            closeonconfirm: false,
-            buttons: ["Cancelar", "Sí"]
-        })
-                .then((willDelete) => {
-                    if (willDelete) {
-
-                        var nombreCargo = $("#txtNombreCargo").val();
-                        var descripcionCargo = $("#txtDescripcionCargo").val();
-                        var salario = $("#txtSalario").val();
-                        $.post("../../../cargo/registrar", {NombreCargo: nombreCargo, DescripcionCargo: descripcionCargo, Salario: salario}, function (responsetext) {
-                            if (responsetext == "200") {
-
-                                swal("Registro exitoso", "El sector ha sido registrado exitosamente", "success").then((willDelete) => {
-                                    if (willDelete) {
-                                        //window.location = "/FutPlay/GaiaTemplate/index.html";
-                                    }
-                                });
-
-                            } else {
-                                swal("Ocurrio un error", "Lo sentimos tus datos no fueron registrados, por favor intentalo nuevamente.", "error").then((willDelete) => {
-
-                                });
-                            }
-                        });
-                    }
-                });
-    }
-});
 ////////////////// LISTAR TODOS LOS CARGOS ////////////////////////////
 function listarCargos() {
     $.post("/SaleslandColombiaApp/cargo/vercargos", function (responseText) {
@@ -524,12 +441,11 @@ $('#frmEditarCanal').validate({
         });                        
     }        
 });
-///////////////////////// CARGAR COMBO CARGO //////////////////////
+///////////////////////// CARGAR COMBO CARGO ////////////////////// BORRAR
 function cargarCargoOOOOOO(idSector){
     alert("combo cargo functio ---> "+idSector);
     $.post("/SaleslandColombiaApp/cargo/getallcargosregistrousuario",{IdSector:idSector},function (responseText){
-       
-        if (responseText == "500") {
+        if (responseText.equals("500")) {
             swal("Ocurrio un error", "Lo sentimos tus datos no fueron registrados, por favor intentalo nuevamente.", "error");
         }else{
             
@@ -539,11 +455,7 @@ function cargarCargoOOOOOO(idSector){
                 if (dt.hasOwnProperty(key)) {
                     var val = dt[key];
                     alert("INGRESANDO LA DATA AL COMBO");
-                    //CONTINUAR REPARANDO
-                    //$("#cmbCargoUsuarioRegistro").append("<option value='"+val['IdCargo']+"'>"+val['NombreCargo']+"</option>");                    
                     $('#lolComboCargo').append(new Option("text", 54654));
-                    //$("#lolComboCargo").append("<option value='jsjsjsj'>jsjsjsjs</option>");
-                    $("#txtLol").val("------------> "+val['NombreCargo']);
                     alert("FINISH DATA INGRESADA ---> " + val['IdCargo'] +" ------> "+val['NombreCargo']);
                 }
             }
@@ -553,7 +465,20 @@ function cargarCargoOOOOOO(idSector){
     });
     
 }
-
+//////////////////////// CARGAR TABLA PARA EL REGISTRO /////////////////////////////
+function cargarCargosSectores(){
+    
+    $.post("/SaleslandColombiaApp/usuario/cargartablaregistro",function (responseText){
+        if (responseText == "500") {
+            swal("Ocurrio un error", "Lo sentimos tus datos no fueron registrados, por favor intentalo nuevamente.", "error");
+        }else{
+            
+            $("#listadoCargosSectores").append(responseText);
+            putaTabla();
+        }
+        
+    });
+}
 
 ////////////////////Funciones para validar password email y telefono////////////////7
     $.validator.addMethod("pwcheck1", function(value) {
@@ -601,7 +526,7 @@ function cargarCargoOOOOOO(idSector){
       }
     });
 //////////////////////////////// REGISTRAR USUARIO ///////////////////////////////////
-/*$("#frmRegistrarUsuario").validate({    
+$("#frmRegistrarUsuario").validate({    
     rules:{
         TipoDocumentoUsuario:{
             required:true
@@ -651,8 +576,7 @@ function cargarCargoOOOOOO(idSector){
             
         },FechaNacimientoUsuario:{
             
-            required:true
-            
+            required:true            
         }
     },messages:{
 
@@ -701,10 +625,8 @@ function cargarCargoOOOOOO(idSector){
             validarTelefono:"Ingresa un número de celular valido"
         },TelefonoUsuario:{            
             required:"Este campo es requerido"
-        },FechaNacimientoUsuario:{
-            
-            required:"Este campo es requerido"
-            
+        },FechaNacimientoUsuario:{            
+            required:"Este campo es requerido"            
         }
     }, errorElement: 'div',
     errorPlacement: function (error, element) {
@@ -716,47 +638,62 @@ function cargarCargoOOOOOO(idSector){
         }
     }, submitHandler: function () {
 
+        var cargo = $('input[name = CargoUsuario]:checked').val();
+        if (cargo) {
+            
+            swal({
+            title: "Confirmar Datos",
+            text: "¿Estas seguro de que los datos del usuario son correctos?",
+            icon: "info",
+            buttons: true,
+            closeonconfirm: false,
+            buttons: ["No, Cancelar", "Sí"]
+            })
+            .then((willDelete) => {
+                if (willDelete) {
 
-          alert("Validacion correcta (._.)");
-//        swal({
-//
-//        title: "Editar Canal",
-//        text: "¿Está seguro que desea reemplazar los datos del canal?",
-//        icon: "info",
-//        buttons: true,
-//        closeonconfirm: false,
-//        buttons: ["No, Cancelar", "Sí"]
-//        })
-//        .then((willDelete) => {
-//            if (willDelete) {
-//
-//              var url = ""+window.location+"";
-//              var idCanal = url.split("_");
-//              var nombreCanal = $("#txtEditarNombreCanal").val();
-//              var descripcionCanal = $("#txtEditarDescripcionCanal").val();
-//              var estadoCanal = $("#cmbEditarEstadoCanal").val();
-//              var sectorCanal = $("#cmbSector").val();
-//              $.post("/SaleslandColombiaApp/canal/editarcanal",{IdCanal:idCanal[1],NombreCanal:nombreCanal,DescripcionCanal:descripcionCanal,EstadoCanal:estadoCanal,SectorCanal:sectorCanal},function (responsetext) {
-//                   if(responsetext == "200"){
-//
-//                        swal("Cambios Guardados", "Los cambios del sector han guardado exitosamente", "success").then((willDelete) => {
-//                          if (willDelete) {                          
-//                            window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/canal/listarcanal.jsp";
-//                          }
-//                        });
-//
-//                    }else{                    
-//                        swal("Ocurrio un error", "Lo sentimos tus datos no fueron registrados, por favor intentalo nuevamente.", "error").then((willDelete) => {
-//                         
-//                        });                                        
-//                    }                        
-//                });          
-//            }
-//        });                        
+                  var TipoDocumento = $("#cmbTipoDocumentoUsuario").val();
+                  var Documento = $("#txtDocumentoUsuario").val();
+                  var Nombres = $("#txtNombreUsuario").val();
+                  var Apellidos = $("#txtApellidoUsuario").val();
+                  var Email = $("#txtEmailUsuario").val();
+                  var Contrasenia = $("#txtConfirmarContraseniaUsuario").val();
+                  var Direccion = $("#txtDireccionUsuario").val();
+                  var Genero = $("#cmbGeneroUsuario").val();
+                  var Celular = $("#txtCelularUsuario").val();
+                  var Telefono = $("#txtTelefonoUSuario").val();
+                  var FechaNacnimiento = $("#datetimepicker").val();
+                  var ImagenPerfil = $("#fileImagenUsuario").val();
+                  //Agregar el CARGO
+                  $.post("/SaleslandColombiaApp/usuario/registrar",{TipoDocumentoUsuario:TipoDocumento,DocumentoUsuario:Documento,NombreUsuario:Nombres,ApellidoUsuario:Apellidos,EmailUsuario:Email,ContraseniaUsuario:Contrasenia,DireccionUsuario:Direccion,GeneroUsuario:Genero,CelularUsuario:Celular,TelefonoUsuario:Telefono,FechaNacimientoUsuario:FechaNacnimiento,ImagenPerfilUsuario:ImagenPerfil,CargoUsuario:cargo},function (responsetext) {                                
+                        if(responsetext == "200"){
+
+                            swal("Cambios Guardados", "El usuario ha sido registrado exitosamente", "success").then((willDelete) => {
+                              if (willDelete) {                          
+                                //window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/canal/listarcanal.jsp";
+                              }
+                            });
+
+                        }else if(responsetext == "226"){
+                            
+                            swal("Usuario no registrado", "Los datos del usuario ya se encuentran registrados.", "warning");
+
+                        }else{                    
+                            swal("Ocurrio un error", "Lo sentimos, tus datos no fueron registrados por favor intentalo nuevamente.", "error");                                        
+                        }                        
+                    });          
+                }
+            });
+        }else{
+            
+            swal("Selecciona el cargo", "Por favor selecciona el cargo para poder finalizar el registro.", "warning");
+            
+        }
+                                
     }  
-});*/
+});
 
-
+///////////////// FUNCION PARA INICIALIZAR LOS FORMULARIOS DEL REGISTRO //////////////////////
 function InicializarFormularioRegistro() {   
     // Wizard Initialization
     $('.card-wizard').bootstrapWizard({
@@ -931,3 +868,51 @@ function InicializarFormularioRegistro() {
         });
     }
 }
+
+////////////////////////////////// INICIO DE SECION //////////////////////////////////////////////
+$("#frmIniciarSesion").validate({
+   
+    rules:{
+        
+        UsuarioSesion:{            
+            required:true            
+        },ContraseniaSesion:{            
+            required:true
+        }
+    },messages:{
+        
+        UsuarioSesion:{            
+            required:"Introduce tu correo electronico o número de documento"            
+        },ContraseniaSesion:{            
+            required:"Introduce tu contraseña"
+        }
+        
+    },errorElement: 'div',
+        errorPlacement: function (error, element) {
+            var placement = $(element).data('error');
+            if (placement) {
+                $(placement).append(error);
+            } else {
+                error.insertAfter(element);
+            }
+    }, submitHandler: function () {
+
+        var usuario = $("#txtUsuarioSesion").val();
+        var contrasenia = $("#txtContraseniaSesion").val();    
+        $.post("/SaleslandColombiaApp/usuario/IniciarSesion",{Usuario:usuario,Contrasenia:contrasenia},function (responsetext) {
+            
+            if (responsetext == "Empleado") {
+                alert("pto empleado");
+            }else if (responsetext == "Administrador") {
+                alert("pto administrador");
+            }else if (responsetext == "404") {
+                swal("Error en el ingreso", "Usuario o contraseña incorrectos, por favor verifica tus datos e intentalo de nuevo.", "warning");
+            }else if (responsetext == 500) {
+                swal("Ocurrio un error", "Lo sentimos tus datos no fueron registrados, por favor intentalo nuevamente.", "error");
+            }
+            
+        });
+
+    }
+    
+});

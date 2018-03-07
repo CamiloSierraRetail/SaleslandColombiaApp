@@ -9,3 +9,216 @@ div.error{
     max-height: 100px;
     
 }
+
+/*//////////////// ESTILOS DEL PRELOADER /////////////////////////*/          
+/** sass/scss/less code */
+#container {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding-top: 84px;
+    box-sizing: border-box;
+}
+
+#loader {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 58px;
+    height: 86px;
+    margin-top: -43px;
+    margin-left: -29px;
+    font-family: 'Montserrat Alternates', sans-serif;
+    line-height: 42px;
+    overflow: hidden;
+    opacity: 0;
+    animation: Loader 5s ease-in-out infinite;
+
+}
+
+#loader * {
+    display: block;
+    position: absolute;
+}
+
+@keyframes Loader {
+    5%, 100% {
+        opacity: 1;
+    }
+    30% {
+        width: 58px;
+        margin-left: -29px;
+    }
+    40%, 82% {
+        width: 282px;
+        margin-left: -172px;
+    }
+    86%, 100% {
+        width: 4px;
+        margin-left: 2px;
+    }
+}
+
+#loader .rectangle {
+    left: 0;
+    bottom: 20px;
+    width: 58px;
+    height: 66px;
+    border: 2px solid #8D8E8F;
+    overflow: hidden;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+#loader .rectangle span {
+    left: 24px;
+    bottom: 3px;
+    font-size: 36px;
+    font-weight: 700;
+    color: #8D8E8F;
+    animation: FillSpan 5s ease-in-out infinite;
+}
+
+#loader .rectangle.outlines {
+    animation: Outlines 5s ease-in-out infinite;
+}
+
+#loader .rectangle.fill {
+    height: 4px;
+    border-color: transparent;
+    background-color: #8D8E8F;
+    animation: Fill 5s ease-in-out infinite;
+}
+
+#loader .rectangle.fill span {
+    color: #fff;
+}
+
+@keyframes Outlines {
+    82% {
+        width: 58px;
+        height: 66px;
+        bottom: 20px;
+    }
+    85%, 100% {
+        width: 4px;
+        bottom: 0;
+    }
+    85%, 86% {
+        height: 86px;
+        border-width: 2px;
+    }
+    89%, 100% {
+        height: 0;
+        border-width: 0;
+    }
+}
+
+@keyframes Fill {
+    30%, 100% {
+        height: 66px;
+    }
+    30% {
+        background-color: #e79723;
+    }
+    40%, 100% {
+        background-color: #00ACC0;
+    }
+    82% {
+        width: 58px;
+        height: 66px;
+        bottom: 20px;
+    }
+    85%, 100% {
+        width: 4px;
+        bottom: 0;
+    }
+    85%, 86% {
+        height: 86px;
+        border-width: 2px;
+    }
+    89%, 100% {
+        height: 0;
+        border-width: 0;
+    }
+}
+
+@keyframes FillSpan {
+    80% {
+        left: 24px;
+    }
+    84%, 100% {
+        left: -34px;
+    }
+    82% {
+        bottom: 3px;
+    }
+    85%, 100% {
+        bottom: 9px;
+    }
+}
+
+#loader .rinkin_coffee {
+    left: -220px;
+    top: 19px;
+    width: 220px;
+    animation: rinkinCoffee 5s ease-in-out infinite;
+}
+
+#loader .rinkin_coffee span {
+    display: inline-block;
+    position: static;
+    color: #FFFFFF;
+}
+
+#loader .rinkin_coffee span.rinkin {
+    font-size: 36px;
+    font-weight: 700;
+}
+
+#loader .rinkin_coffee span.coffee {
+    font-family: 'Eczar', serif;
+    font-size: 41px;
+    font-weight: 400;
+}
+
+@keyframes rinkinCoffee {
+    30% {
+        left: -220px;
+    }
+    40%, 82% {
+        left: 62px;
+    }
+    86%, 100% {
+        left: -260px;
+    }
+}
+
+#loader .slogan {
+    right: 2px;
+    bottom: 0;
+    width: 165px;
+    font-size: 12px;
+    line-height: 16px;
+    color: #FFFFFF;
+    opacity: 0;
+    animation: Slogan 5s ease-in-out infinite;
+}
+
+@keyframes Slogan {
+    42% {
+        opacity: 0;
+    }
+    48%, 100% {
+        opacity: 1;
+    }
+    81% {
+        right: 2px;
+    }
+    86%, 100% {
+        right: 58px;
+    }
+}
+
+

@@ -116,7 +116,7 @@
                                                             <div class="col-md-5">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Genero<star>*</star></label>
-                                                                    <select id="txtGeneroUsuario" name="GeneroUsuario" class="selectpicker"  data-title="Selecciona el genero" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                                                    <select id="cmbGeneroUsuario" name="GeneroUsuario" class="selectpicker"  data-title="Selecciona el genero" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
                                                                         <option value="Masculino">Masculino</option>
                                                                         <option value="Femenino">Femenino</option>
                                                                         <option value="Otro">Otro</option>
@@ -174,36 +174,45 @@
                                                     <div class="tab-pane fade" id="tab3" role="tabpanel">
                                                         <h5 class="text-center">solo faltan algunos campos (>_<)</h5>
                                                         <div class="row justify-content-center">
-                                                            <div class="col-md-7">                                                                
-                                                                <div class="form-group">
-                                                                    <h6 class="control-label text-center">Selecciona el Sector</h6>
-                                                                    <select id="cmbSector" name="SectorUsuario"  class="selectpicker" data-title="Selecciona el sector" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
-                                                                        
-                                                                    </select>
-                                                                </div>
+                                                            <div class="col-md-12">
+
+
+
+                                                                <div class="card bootstrap-table">
+                                                                    <div class="card-body table-full-width">
+                                                                        <div class="toolbar">
+                                                                            <!--        Here you can write extra buttons/actions for the toolbar              -->
+                                                                        </div>
+                                                                        <table id="bootstrap-table" class="table">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Select</th>
+                                                                                    <th>Nombre</th>
+                                                                                    <th>Descripción</th>
+                                                                                    <th>Sector</th> 
+                                                                                    <th>Tipo</th> 
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody id="listadoCargosSectores">
+                                                                                
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>                                                                                                                            
                                                             </div>
-                                                        </div>
-                                                        <!-- este combo no sirve, continuar reparandolo -->
-                                                        <div class="col-md-5">
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Cargo<star>*</star></label>
-                                                                    <select id="lolComboCargo" name="lolCargo" data-title="Selecciona el cargo">
-                                                                        <option value="ssss">jsjsjs</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        <input type="text" id="txtLol">
+                                                        </div>                                                        
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="card-footer text-center">
                                                 <button type="button" class="btn btn-default btn-wd btn-back pull-left">Volver</button>
                                                 <button type="button" class="btn btn-info btn-wd btn-next pull-right">Siguiente</button>
-                                                <button type="button" class="btn btn-info btn-wd btn-finish pull-right" onclick="onFinishWizard()" style="display: none;">Finalizar</button>
+                                                <button type="submit" class="btn btn-info btn-wd btn-finish pull-right" style="display: none;">Finalizar</button>
                                                 <div class="clearfix"></div>
                                             </div>
                                         </div>
                                     </form>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -214,19 +223,91 @@
             </div>
         </div>
     </body>
-    <%@include file="../includes/jsInclude.jsp" %>    
+    <%@include file="../includes/jsInclude.jsp" %>  
     <script>
-        $(document).ready(function (){
-            InicializarFormularioRegistro();  
-            cargarSectores();
-            
-            $("#cmbSector").change(function (){
-                cargarCargoOOOOOO($("#cmbSector").val());
-                alert("cambio" + $("#cmbSector").val());
-            });
-            
-            
-            
+        $(document).ready(function (){            
+            cargarCargosSectores();
+            InicializarFormularioRegistro();
         });
     </script>
+    <script type="text/javascript">
+        function putaTabla(){
+    var $table = $('#bootstrap-table');
+
+    function operateFormatter(value, row, index) {
+        return [
+            '<a rel="tooltip" title="View" class="btn btn-link btn-info table-action view" href="javascript:void(0)">',
+            '<i class="fa fa-image"></i>',
+            '</a>',
+            '<a rel="tooltip" title="Edit" class="btn btn-link btn-warning table-action edit" href="javascript:void(0)">',
+            '<i class="fa fa-edit"></i>',
+            '</a>',
+            '<a rel="tooltip" title="Remove" class="btn btn-link btn-danger table-action remove" href="javascript:void(0)">',
+            '<i class="fa fa-remove"></i>',
+            '</a>'
+        ].join('');
+    }
+
+    $().ready(function() {
+        window.operateEvents = {
+            'click .view': function(e, value, row, index) {
+                info = JSON.stringify(row);
+
+                swal('You click view icon, row: ', info);
+                console.log(info);
+            },
+            'click .edit': function(e, value, row, index) {
+                info = JSON.stringify(row);
+
+                swal('You click edit icon, row: ', info);
+                console.log(info);
+            },
+            'click .remove': function(e, value, row, index) {
+                console.log(row);
+                $table.bootstrapTable('remove', {
+                    field: 'id',
+                    values: [row.id]
+                });
+            }
+        };
+
+        $table.bootstrapTable({
+            toolbar: ".toolbar",
+            clickToSelect: true,
+            showRefresh: false,
+            search: true,
+            showToggle: false,
+            showColumns: false,
+            pagination: true,
+            searchAlign: 'left',
+            pageSize: 4,
+            clickToSelect: false,
+            pageList: [8, 10, 25, 50, 100],
+
+            formatShowingRows: function(pageFrom, pageTo, totalRows) {
+                //do nothing here, we don't want to show the text "showing x of y from..."
+            },
+            formatRecordsPerPage: function(pageNumber) {
+                return pageNumber + " rows visible";
+            },
+            icons: {
+                refresh: 'fa fa-refresh',
+                toggle: 'fa fa-th-list',
+                columns: 'fa fa-columns',
+                detailOpen: 'fa fa-plus-circle',
+                detailClose: 'fa fa-minus-circle'
+            }
+        });
+
+        //activate the tooltips after the data table is initialized
+        $('[rel="tooltip"]').tooltip();
+
+        $(window).resize(function() {
+            $table.bootstrapTable('resetView');
+        });
+
+
+    });
+        }
+</script>    
 </html>
