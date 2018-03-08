@@ -24,7 +24,7 @@ public class cargo extends HttpServlet {
             switch (url[3]) {
 
                 //USAR Y CREAR CADA CASO SEGUN CORRESPONDA .
-                case "registrar":
+                case "registrarcargo":
 
                     registrarcargo(request, response);
 
@@ -43,34 +43,6 @@ public class cargo extends HttpServlet {
             }
         }
     }
-
-    private void registrarcargo(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-            System.out.println("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-        try {
-            String NombreCargo = request.getParameter("NombreCargo");
-            String Descripcion = request.getParameter("Descripcion");
-            String Salario = request.getParameter("Salario");
-            String Tipo = request.getParameter("Tipo");
-            String Sector = request.getParameter("Sector");
-            String Canal = request.getParameter("Canal");
-            String Area = request.getParameter("Area");
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
-            Cargo objCargo = new Cargo(NombreCargo, Descripcion, Salario, Tipo, "Activo", Sector, Canal, Area);
-            sesion.beginTransaction();
-            sesion.save(objCargo);
-            sesion.getTransaction().commit();
-            sesion.close();
-            response.getWriter().write("200");
-
-        } catch (Exception e) {
-
-            System.err.println(e);
-            response.getWriter().write("500");
-        }
-
-    }
-
     private void vercargos(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -90,15 +62,12 @@ public class cargo extends HttpServlet {
                         + "<td>" + cargo.getDescripcion() + "</td>"
                         + "<td>" + cargo.getSalario() + "</td>"
                         + "<td>" + cargo.getTipo() + "</td>"
-                        + "<td>" + cargo.getEstado() + "</td>"
                         + "<td>" + cargo.getSector() + "</td>"
                         + "<td>" + cargo.getCanal() + "</td>"
                         + "<td>" + cargo.getArea() + "</td>"
+                        + "<td>" + cargo.getEstado() + "</td>"
                         + "<td class='td-actions text-right'>"
-                        + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='View Profile'>"
-                        + "<i class='fa fa-user'></i>"
-                        + "</a>"
-                        + "<a href='/SaleslandColombiaApp/sector/cargardatossector/" + cargo.getIdCargo() + "' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Edit Profile'>"
+                        + "<a href='/SaleslandColombiaApp/sector/cargardatoscargos/" + cargo.getIdCargo() + "' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Edit Profile'>"
                         + "<i class='fa fa-edit'></i>"
                         + "</a>"
                         + "<a href='#' rel='tooltip' title='' class='btn btn-danger btn-link btn-xs' data-original-title='Remove'>"
@@ -216,34 +185,31 @@ public class cargo extends HttpServlet {
             System.err.println(e);
             response.getWriter().write("500");
         }
-    }
+    } 
 
-    private void cargacomboSector(HttpServletRequest request, HttpServletResponse response)
+    private void registrarcargo(HttpServletRequest request, HttpServletResponse response)  
             throws ServletException, IOException {
-
         try {
-
-            System.out.println("Combo asas Canal");
+            String NombreCargo = request.getParameter("NombreCargo");
+            String Descripcion = request.getParameter("Descripcion");
+            String Salario = request.getParameter("Salario");
+            String Tipo = request.getParameter("Tipo");
+            String Sector = request.getParameter("Sector");
+            String Canal = request.getParameter("Canal");
+            String Area = request.getParameter("Area");
             Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Cargo objCargo = new Cargo(NombreCargo, Descripcion, Salario, Tipo, "Activo", Sector, Canal, Area);
+            sesion.beginTransaction();
+            sesion.save(objCargo);
+            sesion.getTransaction().commit();
+            sesion.close();
+            response.getWriter().write("200");
 
-            Query query = sesion.createQuery("FROM Sector WHERE Estado='Activo'");
-            JSONArray canalJson = new JSONArray();
-
-            List<Cargo> listaCargo = query.list();
-            for (Cargo cargo : listaCargo) {
-
-                canalJson.add(cargo.getIdCargo());
-                canalJson.add(cargo.getNombreCargo());
-            }
-            response.getWriter().write(canalJson.toJSONString());
         } catch (Exception e) {
 
             System.err.println(e);
             response.getWriter().write("500");
-
         }
+
     }
-
-   
-
 }

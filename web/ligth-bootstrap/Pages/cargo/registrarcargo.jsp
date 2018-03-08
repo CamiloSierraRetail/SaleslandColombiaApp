@@ -52,11 +52,11 @@
                                                     <div class="row">
                                                         <label class="control-label">Selecciona tipo de Usuario*</label>
                                                         <select name="opciones" id="cmbTipo" class="selectpicker" onChange="pagoOnChange(this)" data-title="Seleccionar Tipo" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" >                                                      
-                                                        <OPTION VALUE="director">Director</OPTION>                                                       
-                                                        <OPTION VALUE="jefecanal">Jefe Canal</OPTION>
-                                                        <OPTION VALUE="coordinador">Coordinador</OPTION>                                                       
-                                                        <OPTION VALUE="jefearea">Jefe Area</OPTION>
-                                                        <OPTION VALUE="empleado">Empleado</OPTION>
+                                                        <option value="director">Director</option>                                                       
+                                                        <option value="jefecanal">Jefe Canal</option>
+                                                        <option value="coordinador">Coordinador</option>                                                       
+                                                        <option VALUE="jefearea">Jefe Area</option>
+                                                        <option VALUE="empleado">Empleado</option>
                                                         </select>
                                                     </div>
                                                 </div>                                                                                                             
@@ -112,7 +112,6 @@
     <script>
         
           $(document).ready(function (){
-             alert("registrar dodo ready");
             cargarSectores();        
             cargarCanal();
             cargarAreas();
@@ -186,6 +185,22 @@
 
 
         }
+    </script>
+    <script type="text/javascrpt">
+       $(document).ready(function (){
+          $('#cmbSector').change(function (){
+             SeleccionandoCombo(this,'idCanal') 
+          }); 
+        });
+        function SeleccionandoCombo(combo1, combo2){
+            combo2 = document.getElementById(combo2);
+            LimpiarCombo(combo2);
+            if(combo1.options [combo1,SelectedIndex].value 1= ""){
+            combo2.disable = true;
+            }
+        }
+        
+        
     </script>
 
     

@@ -216,7 +216,6 @@ function listarCargos() {
         } else {
             $("#listadoCargos").html("");
             $("#listadoCargos").append(responseText);
-            swal("Ok", "Listado", "success");
         }
     });
 }
@@ -301,7 +300,6 @@ $('#frmRegistrarCanal').validate({
                                 //window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/listarsectores.jsp";
                             }
                         });
-
                     } else {
                         swal("Ocurrio un error", "Lo sentimos tus datos no fueron registrados, por favor intentalo nuevamente.", "error");
                     }

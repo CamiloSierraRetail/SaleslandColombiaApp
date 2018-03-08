@@ -28,21 +28,21 @@ FROM
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="101" splitType="Stretch">
+		<band height="120" splitType="Stretch">
 			<staticText>
-				<reportElement style="SubTitle" x="38" y="69" width="257" height="32" uuid="f40610c2-166a-49d2-98b3-9a9ac6a98769"/>
+				<reportElement style="SubTitle" x="28" y="83" width="257" height="32" uuid="9015eca4-fbda-42ef-afe6-ebf11eb70d92"/>
 				<textElement>
 					<font fontName="Calibri" size="14"/>
 				</textElement>
 				<text><![CDATA[REPORTE SECTORES]]></text>
 			</staticText>
 			<image>
-				<reportElement x="315" y="15" width="238" height="70" uuid="3d43f818-177f-4158-a5ae-c9a193536d1f"/>
-				<imageExpression><![CDATA["C:\\Users\\JOHAN NIETO\\Pictures\\Imagen1.png"]]></imageExpression>
+				<reportElement x="305" y="13" width="239" height="101" uuid="5c801127-2ebe-4f96-8549-614ea2e72611"/>
+				<imageExpression><![CDATA["C:\\Users\\JOHAN NIETO\\Desktop\\WEB SL\\SaleslandColombiaApp\\web\\ligth-bootstrap\\assets\\img\\reportes\\Imagen1.png"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="11" y="4" width="257" height="65" uuid="df79ddb6-f35d-482a-ad52-be56e8f460e6"/>
-				<imageExpression><![CDATA["C:\\Users\\JOHAN NIETO\\Downloads\\IMAGENES SALESLAND\\salesland.png"]]></imageExpression>
+				<reportElement x="5" y="1" width="267" height="83" uuid="43a97dab-2a44-48bd-8854-ef158eac151b"/>
+				<imageExpression><![CDATA["C:\\Users\\JOHAN NIETO\\Desktop\\WEB SL\\SaleslandColombiaApp\\web\\ligth-bootstrap\\assets\\img\\reportes\\salesland.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -108,34 +108,34 @@ FROM
 		</band>
 	</columnFooter>
 	<pageFooter>
-		<band height="32" splitType="Stretch">
+		<band height="33" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="12" width="552" height="15" forecolor="#FFFFFF" backcolor="#04667E" uuid="c7f35b32-af9b-46b2-8bb0-6bd40052443d"/>
+				<reportElement x="7" y="10" width="552" height="15" forecolor="#FFFFFF" backcolor="#04667E" uuid="23ab92c4-e48c-4662-b0a8-0064ca95cedc"/>
 			</rectangle>
-			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement style="Column header" x="5" y="12" width="197" height="20" forecolor="#FFFFFF" uuid="eb3917de-9048-454a-9137-eecaf9827426"/>
+			<staticText>
+				<reportElement x="235" y="13" width="196" height="17" forecolor="#FFFFFF" uuid="e9fd35ea-e62a-42d4-aba3-fc45eb7f8807"/>
+				<text><![CDATA[Powered By Salesland Colombia]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="518" y="13" width="40" height="17" forecolor="#FFFFFF" uuid="0afcbc5c-1a2e-48a1-9f02-174a1ed924cb"/>
 				<textElement>
 					<font size="10" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="279" y="12" width="196" height="20" forecolor="#FFFFFF" uuid="8aaed14c-217d-4690-9f7c-8f50aa22dc0d"/>
-				<text><![CDATA[Powered By Salesland Colombia]]></text>
-			</staticText>
 			<textField>
-				<reportElement style="Column header" x="425" y="12" width="80" height="20" forecolor="#FFFFFF" uuid="e3a8dff7-e625-40f8-9aeb-af3734dd73f9"/>
+				<reportElement style="Column header" x="430" y="13" width="80" height="17" forecolor="#FFFFFF" uuid="a41a2870-4305-4fbd-a363-8a2723ab49eb"/>
 				<textElement textAlignment="Right">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report">
-				<reportElement style="Column header" x="510" y="12" width="40" height="20" forecolor="#FFFFFF" uuid="eaeeedde-ec64-4ea3-8d4b-d98fa0ddb2f0"/>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="17" y="10" width="197" height="20" forecolor="#FFFFFF" uuid="6740a9d0-1a69-49e4-8107-27c249e398c1"/>
 				<textElement>
 					<font size="10" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

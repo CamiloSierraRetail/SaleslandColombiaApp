@@ -36,20 +36,20 @@
 	</background>
 	<title>
 		<band height="101" splitType="Stretch">
-			<image>
-				<reportElement x="316" y="15" width="238" height="70" uuid="13d89bda-70db-4a6c-a206-8b57da086459"/>
-				<imageExpression><![CDATA["C:\\Users\\JOHAN NIETO\\Pictures\\Imagen1.png"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement style="SubTitle" x="39" y="69" width="257" height="32" uuid="88d12315-0801-47bf-a445-d264cc328e58"/>
 				<textElement>
 					<font fontName="Calibri" size="14"/>
 				</textElement>
-				<text><![CDATA[REPORTE SECTORES]]></text>
+				<text><![CDATA[REPORTE USUARIOS]]></text>
 			</staticText>
 			<image>
-				<reportElement x="12" y="4" width="257" height="65" uuid="e87dd3c0-59fc-494a-aa48-b397663d8c21"/>
-				<imageExpression><![CDATA["C:\\Users\\JOHAN NIETO\\Downloads\\IMAGENES SALESLAND\\salesland.png"]]></imageExpression>
+				<reportElement x="16" y="-14" width="267" height="83" uuid="2be6b4fc-8cb3-4d08-b2f0-9e354d2997e7"/>
+				<imageExpression><![CDATA["C:\\Users\\JOHAN NIETO\\Desktop\\WEB SL\\SaleslandColombiaApp\\web\\ligth-bootstrap\\assets\\img\\reportes\\salesland.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="316" y="0" width="239" height="101" uuid="8e04b8be-14ec-4c35-9efc-05bb8c7dea49"/>
+				<imageExpression><![CDATA["C:\\Users\\JOHAN NIETO\\Desktop\\WEB SL\\SaleslandColombiaApp\\web\\ligth-bootstrap\\assets\\img\\reportes\\Imagen1.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -73,23 +73,19 @@
 				<text><![CDATA[Nombre]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="158" y="19" width="79" height="15" uuid="70e6d35d-9003-4f12-8ed0-dee49aa76605"/>
+				<reportElement style="Column header" x="179" y="19" width="79" height="15" uuid="70e6d35d-9003-4f12-8ed0-dee49aa76605"/>
 				<text><![CDATA[Apellido]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="237" y="19" width="79" height="15" uuid="eec50a48-9ce3-4a9a-b512-506b48ee7fa2"/>
+				<reportElement style="Column header" x="275" y="19" width="79" height="15" uuid="eec50a48-9ce3-4a9a-b512-506b48ee7fa2"/>
 				<text><![CDATA[Celular]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="316" y="19" width="79" height="15" uuid="2b880095-d1a9-43db-ad28-36d3c8b1f485"/>
+				<reportElement style="Column header" x="360" y="19" width="79" height="15" uuid="2b880095-d1a9-43db-ad28-36d3c8b1f485"/>
 				<text><![CDATA[Email]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="395" y="19" width="79" height="15" uuid="121f4237-0755-4cbe-966b-8a7b6fb5fcdb"/>
-				<text><![CDATA[Contrasenia]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="474" y="19" width="79" height="15" uuid="11f2f05f-8470-4532-9949-43c859029606"/>
+				<reportElement style="Column header" x="484" y="19" width="72" height="15" uuid="11f2f05f-8470-4532-9949-43c859029606"/>
 				<text><![CDATA[Estado]]></text>
 			</staticText>
 		</band>
@@ -111,60 +107,64 @@
 				<textFieldExpression><![CDATA[$F{Nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="158" y="0" width="79" height="15" uuid="248896ed-e9f0-4d0c-baa0-538864e70d44"/>
+				<reportElement style="Detail" x="179" y="0" width="79" height="15" uuid="248896ed-e9f0-4d0c-baa0-538864e70d44"/>
 				<textFieldExpression><![CDATA[$F{Apellido}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="237" y="0" width="79" height="15" uuid="745cc285-417c-49a2-99d5-b7846f3f6603"/>
+				<reportElement style="Detail" x="275" y="0" width="79" height="15" uuid="745cc285-417c-49a2-99d5-b7846f3f6603"/>
 				<textFieldExpression><![CDATA[$F{Celular}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="316" y="0" width="79" height="15" uuid="989fc3b0-98ce-46c3-8aa0-80eca9250506"/>
+				<reportElement style="Detail" x="359" y="0" width="79" height="15" uuid="989fc3b0-98ce-46c3-8aa0-80eca9250506"/>
 				<textFieldExpression><![CDATA[$F{Email}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="395" y="0" width="79" height="15" uuid="b03251d0-cbc2-4205-93d7-ee04a616e666"/>
-				<textFieldExpression><![CDATA[$F{Contrasenia}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement style="Detail" x="474" y="0" width="79" height="15" uuid="47185ce6-7f8d-4852-849b-13c028495a5f"/>
+				<reportElement style="Detail" x="484" y="0" width="71" height="15" uuid="47185ce6-7f8d-4852-849b-13c028495a5f"/>
 				<textFieldExpression><![CDATA[$F{Estado}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch">
+		<band height="46" splitType="Stretch">
 			<line>
 				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="3a725d22-a8bf-4918-be73-389bc58dd7b5"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
 			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<rectangle>
+				<reportElement x="-3" y="5" width="552" height="15" forecolor="#FFFFFF" backcolor="#04667E" uuid="c7f35b32-af9b-46b2-8bb0-6bd40052443d"/>
+			</rectangle>
 			<staticText>
-				<reportElement x="279" y="56" width="196" height="20" forecolor="#FFFFFF" uuid="178cee78-3dbd-42cd-9931-16e6452d1bcb"/>
+				<reportElement x="225" y="6" width="196" height="17" forecolor="#FFFFFF" uuid="e40445f1-a7be-4564-aef0-aa9525e07305"/>
 				<text><![CDATA[Powered By Salesland Colombia]]></text>
 			</staticText>
-			<rectangle>
-				<reportElement x="0" y="56" width="552" height="15" forecolor="#FFFFFF" backcolor="#04667E" uuid="612820a9-771b-472c-80da-460f43cf8e62"/>
-			</rectangle>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement style="Column header" x="5" y="56" width="197" height="20" forecolor="#FFFFFF" uuid="93306724-79f9-4ce3-b845-f6013648fb52"/>
+				<reportElement style="Column header" x="7" y="5" width="197" height="20" forecolor="#FFFFFF" uuid="9d2b8cf3-e5cb-4dc6-8826-4c84ab9d6028"/>
 				<textElement>
 					<font size="10" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="508" y="8" width="40" height="17" forecolor="#FFFFFF" uuid="4d00b8b6-824f-40c8-8806-994e07b1da42"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
 			<textField>
-				<reportElement style="Column header" x="425" y="56" width="80" height="20" forecolor="#FFFFFF" uuid="978c5d12-05db-45fb-b10a-4a7c75ece2c3"/>
+				<reportElement style="Column header" x="420" y="8" width="80" height="17" forecolor="#FFFFFF" uuid="da61817d-49e1-405e-aedb-fba57d457fd9"/>
 				<textElement textAlignment="Right">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 		</band>
-	</columnFooter>
-	<pageFooter>
-		<band height="25" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
 		<band splitType="Stretch"/>

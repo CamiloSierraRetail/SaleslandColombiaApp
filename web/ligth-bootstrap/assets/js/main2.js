@@ -55,7 +55,7 @@ $('#frmRegistrarArea').validate({
                             if (responsetext == "200") {
                                 swal("Registro exitoso", "El canal ha sido registrado exitosamente", "success").then((willDelete) => {
                                     if (willDelete) {
-                                        //window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/listarsectores.jsp";
+                                        window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/area/listararea.jsp";
                                     }
                                 });
 
@@ -317,14 +317,14 @@ $('#frmRegistrarCargos').validate({
                         var descripcionCargo = $("#txtDescripcionCargo").val();
                         var salario = $("#txtSalario").val();
                         var tipo = $("#cmbTipo").val();
-                        var sector = $("#cmbsector").val();
-                        var canal = $("#cmbcanal").val();
-                        var area = $("#cmbarea").val();
+                        var sector = $("#cmbSector").val();
+                        var canal = $("#cmbCanal").val();
+                        var area = $("#cmbArea").val();
                         $.post("/SaleslandColombiaApp/cargo/registrarcargo", {NombreCargo: nombreCargo, Descripcion: descripcionCargo, Salario: salario, Tipo: tipo, Sector: sector, Canal: canal, Area: area }, function (responsetext) {
                             if (responsetext == "200") {
                                 swal("Registro exitoso", "El canal ha sido registrado exitosamente", "success").then((willDelete) => {
                                     if (willDelete) {
-                                        //window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/listarsectores.jsp";
+                                        window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/cargo/listarcargo.jsp";
                                     }
                                 });
 
