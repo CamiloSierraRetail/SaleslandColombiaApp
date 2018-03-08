@@ -70,8 +70,8 @@
                                     <a class="dropdown-item" href="#">
                                         <i class="material-icons">lock</i> Lock Screen
                                     </a>
-                                    <a href="#" class="dropdown-item text-danger">
-                                        <i class="material-icons">exit_to_app</i> Log out
+                                    <a href="#" class="dropdown-item text-danger cerrarSesion">
+                                        <i class="material-icons">exit_to_app</i> Cerrar Sesión
                                     </a>
                                 </div>
                             </li>

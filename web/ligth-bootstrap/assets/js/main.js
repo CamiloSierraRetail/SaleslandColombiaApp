@@ -869,7 +869,7 @@ function InicializarFormularioRegistro() {
     }
 }
 
-////////////////////////////////// INICIO DE SECION //////////////////////////////////////////////
+////////////////////////////////// INICIO DE SESION //////////////////////////////////////////////
 $("#frmIniciarSesion").validate({
    
     rules:{
@@ -902,9 +902,11 @@ $("#frmIniciarSesion").validate({
         $.post("/SaleslandColombiaApp/usuario/IniciarSesion",{Usuario:usuario,Contrasenia:contrasenia},function (responsetext) {
             
             if (responsetext == "Empleado") {
-                alert("pto empleado");
+                window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/empleado/indexempleado.jsp";
+                
             }else if (responsetext == "Administrador") {
-                alert("pto administrador");
+                window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/administrador/indexadministrador.jsp";
+                
             }else if (responsetext == "404") {
                 swal("Error en el ingreso", "Usuario o contraseña incorrectos, por favor verifica tus datos e intentalo de nuevo.", "warning");
             }else if (responsetext == 500) {
@@ -916,3 +918,56 @@ $("#frmIniciarSesion").validate({
     }
     
 });
+//////////////////////////////// CERRAR SESION//////////////////////////////
+$(".cerrarSesion").click(function (){
+    swal({
+        title: "Cerrar Sesión",
+        text: "¿Estas seguro que deseas cerrar sesión?",
+        icon: "info",
+        buttons: true,
+        closeonconfirm: false,
+        buttons: ["No, Cancelar", "Sí"]
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+              
+                $.post("/SaleslandColombiaApp/usuario/CerrarSesion",function (responsetext) {
+                    if(responsetext == "200"){
+                        
+                        window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/login.jsp";
+
+                    }else{
+
+                        swal("Usuario no registrado", "Los datos del usuario ya se encuentran registrados.", "warning");
+
+                    }
+                });          
+            }
+        });
+    
+});
+////////////////////// INGRESO Y SALIDA DEL USUARIO ////////////////////////
+function ingreso(){
+    
+    alert("funcion ingreso");
+    var dt = new Date();
+    var hora = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+    alert(hora);
+    var UsuarioID = $("#txtUsuarioIngreso").val();
+    $.post("/SaleslandColombiaApp/ingreso/ingresousuario",{UsuarioID:UsuarioID},function (responseText) {
+        alert(responseText);
+        if (responseText == "500") {
+            swal("Error", "Ocurrió un error mientras estabamos tratando de ingresa tus datos", "error");
+        }else if (responseText == "302") {
+            alert("Se hace el registro de la entrada o la salida");
+        }else if (responseText == "406"){
+            alert("Más de un suauario registrado");
+        }else if (responseText == "404") {
+            alert("Usuario no encontrado");
+        }
+        
+    });
+    
+    $("#txtUsuarioIngreso").val("");
+
+}

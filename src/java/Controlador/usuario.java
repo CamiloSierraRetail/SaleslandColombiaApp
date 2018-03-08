@@ -1,15 +1,19 @@
 package Controlador;
 
 import Modelo.Cargo;
+import Modelo.Ingreso;
 import Modelo.Sector;
 import Modelo.Usuario;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -37,6 +41,9 @@ public class usuario extends HttpServlet {
                     break;
                 case "IniciarSesion":
                     iniciarSesion(request, response);
+                    break;
+                case "CerrarSesion":
+                    cerrarSesion(request, response);
                     break;
                 
             }
@@ -174,6 +181,22 @@ public class usuario extends HttpServlet {
         }
     
     }
+    protected void cerrarSesion(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        try{
+        
+            HttpSession logout = request.getSession();            
+            logout.removeAttribute("UsuarioIngresado");
+            logout.invalidate();
+            response.getWriter().write("200");
+        }catch(Exception e){
+            System.err.println(e);
+            response.getWriter().write("500");
+        }
+    
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

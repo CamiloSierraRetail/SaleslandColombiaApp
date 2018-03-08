@@ -80,7 +80,7 @@
                                                 <label class="form-check-label">
                                                     <input class="form-check-input" type="checkbox" value="" checked>
                                                     <span class="form-check-sign"></span>
-                                                    Subscribe to newsletter
+                                                    Recuerdame
                                                 </label>
                                             </div>
                                         </div>

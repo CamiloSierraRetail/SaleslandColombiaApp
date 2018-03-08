@@ -17,14 +17,17 @@ public class Ingreso {
     @Column(name = "idIngreso")
     private int IdIngreso;
     
-    @Column(name = "FechaIngreso")
-    private Date FechaIngreso;
+    @Column(name = "Fecha")
+    private Date Fecha;
     
-    @Column(name = "FechaSalida")
-    private Date FechaSalida;
+    @Column(name = "Hora")
+    private Date Hora;
     
     @Column(name = "Tipo")
     private String Tipo;
+    
+    @Column(name = "Modalidad")
+    private String Modalidad;
     
     @Column(name = "Observacion")
     private String Observacion;
@@ -36,10 +39,11 @@ public class Ingreso {
     public Ingreso() {
     }
 
-    public Ingreso(Date FechaIngreso, Date FechaSalida, String Tipo, String Observacion, Usuario Usuario) {
-        this.FechaIngreso = FechaIngreso;
-        this.FechaSalida = FechaSalida;
+    public Ingreso(Date Fecha, Date Hora, String Tipo, String Modalidad, String Observacion, Usuario Usuario) {
+        this.Fecha = Fecha;
+        this.Hora = Hora;
         this.Tipo = Tipo;
+        this.Modalidad = Modalidad;
         this.Observacion = Observacion;
         this.Usuario = Usuario;
     }
@@ -52,20 +56,20 @@ public class Ingreso {
         this.IdIngreso = IdIngreso;
     }
 
-    public Date getFechaIngreso() {
-        return FechaIngreso;
+    public Date getFecha() {
+        return Fecha;
     }
 
-    public void setFechaIngreso(Date FechaIngreso) {
-        this.FechaIngreso = FechaIngreso;
+    public void setFecha(Date Fecha) {
+        this.Fecha = Fecha;
     }
 
-    public Date getFechaSalida() {
-        return FechaSalida;
+    public Date getHora() {
+        return Hora;
     }
 
-    public void setFechaSalida(Date FechaSalida) {
-        this.FechaSalida = FechaSalida;
+    public void setHora(Date Hora) {
+        this.Hora = Hora;
     }
 
     public String getTipo() {
@@ -74,6 +78,14 @@ public class Ingreso {
 
     public void setTipo(String Tipo) {
         this.Tipo = Tipo;
+    }
+
+    public String getModalidad() {
+        return Modalidad;
+    }
+
+    public void setModalidad(String Modalidad) {
+        this.Modalidad = Modalidad;
     }
 
     public String getObservacion() {
@@ -91,5 +103,5 @@ public class Ingreso {
     public void setUsuario(Usuario Usuario) {
         this.Usuario = Usuario;
     }
-    
+
 }
