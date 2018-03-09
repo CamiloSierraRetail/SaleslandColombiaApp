@@ -81,7 +81,8 @@ public class usuario extends HttpServlet {
                 Cargo objCargo = new Cargo();
                 objCargo.setIdCargo(Integer.parseInt(idCargo));
 
-                Usuario objUsuario = new Usuario(TipoDocumento, Documento, Nombre, Apellido, Direccion, Telefono, Celular, Genero, Email, new Date(), Contrasenia, ImagenPerfil, "Activo", objCargo);
+                // TENER EN CUENTA QUE HAY QUE AGREGAR EL HORARIO YA QUE ESTÁ POR DEFECTO
+                Usuario objUsuario = new Usuario(TipoDocumento, Documento, Nombre, Apellido, Direccion, Telefono, Celular, Genero, Email, new Date(), Contrasenia, ImagenPerfil, "Activo", "A", objCargo);
 
                 sesion.beginTransaction();
                 sesion.save(objUsuario);
@@ -168,7 +169,7 @@ public class usuario extends HttpServlet {
                         
                     }
                     
-                    Usuario objUsuario = new Usuario(usuario.getTipoDocumento(), usuario.getDocumento(), usuario.getNombre(), usuario.getApellido(), usuario.getDireccion(), usuario.getTelefono(), usuario.getCelular(), usuario.getGenero(), usuario.getEmail(), usuario.getFechaNacimiento(), "", usuario.getFoto(), "Activo", usuario.getCargo());
+                    Usuario objUsuario = new Usuario(usuario.getTipoDocumento(), usuario.getDocumento(), usuario.getNombre(), usuario.getApellido(), usuario.getDireccion(), usuario.getTelefono(), usuario.getCelular(), usuario.getGenero(), usuario.getEmail(), usuario.getFechaNacimiento(), "", usuario.getFoto(), "Activo", usuario.getHorario() , usuario.getCargo());
                     request.getSession().setAttribute("UsuarioIngresado", objUsuario);                    
                 }
                 

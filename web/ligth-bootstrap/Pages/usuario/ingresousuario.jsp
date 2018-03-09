@@ -4,6 +4,11 @@
 <head>
     <%@include file="../includes/cssInclude.jsp" %>
     <title>Ingreso de personal - SaleslandColombia</title>
+    <!--     Fonts and icons     -->
+    
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
 </head>
 
 <body>
@@ -60,7 +65,7 @@
                             <div class="card-body ">
                                 <h4 class="card-title">INGRESO DE PERSONAL</h4>
                                 <div class="form-group">
-                                    <input id="txtUsuarioIngreso" name="UsuarioIngreso" type="text" placeholder="Acerca tu carnet al lector (>_<)" class="form-control">
+                                    <input id="txtUsuarioIngreso" name="UsuarioIngreso" type="password" placeholder="Acerca tu carnet al lector (>_<)" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -73,8 +78,21 @@
 </body>
 <%@include file="../includes/jsInclude.jsp" %>
 <script>
+    
     $(document).ready(function() {
-        demo.checkFullPageBackgroundImage();
+        demo.checkFullPageBackgroundImage();       
+        $.notify({
+            icon: "nc-icon nc-spaceship",
+            message: "No puedes fichar a  porque hacen parte del mismo equipo."
+
+        },{
+            type: 'danger',
+            timer: 3000,
+            placement: {
+                from: 'bottom',
+                align: 'right'
+            }
+        });
         
         $("#txtUsuarioIngreso").focus();
         
@@ -84,7 +102,9 @@
         }, 700)
     });
     $("#txtUsuarioIngreso").change(function (){
-        alert("vamos a la funcion ingreso");
+        //alert("Veces key" + keyPress)
+        alert("vamos a la funcion ingresooooooooooooooooooooooaaaaaaaaaaaaaaaaaaaaaa");
+        
         ingreso();
     });
 </script>

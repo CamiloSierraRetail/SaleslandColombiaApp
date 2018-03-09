@@ -4,6 +4,7 @@ import Modelo.Ingreso;
 import Modelo.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -43,9 +44,11 @@ public class ingreso extends HttpServlet {
         throws ServletException, IOException {
     
         try{
-            System.out.println("7777777777777777");
             
             String UsuarioID = request.getParameter("UsuarioID");
+            String Fecha = request.getParameter("Fecha");
+            String hora = request.getParameter("Hora");
+            String Minutos = request.getParameter("Minutos");
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             Query query = sesion.createQuery("FROM Usuario WHERE Documento='"+UsuarioID+"'");
             List<Usuario> listaUsuario = query.list();
@@ -54,48 +57,113 @@ public class ingreso extends HttpServlet {
                 for (Usuario usuario : listaUsuario){            
                     if (usuario.getEstado().equals("Activo")) {
                
-                        Query queryIngresos = sesion.createQuery("FROM Ingreso WHERE Usuario="+usuario.getIdUsuario()+" AND Fecha='"+new Date()+"'");
+                        Query queryIngresos = sesion.createQuery("FROM Ingreso WHERE Usuario="+usuario.getIdUsuario()+" AND Fecha='"+Fecha+"'");
                         List<Ingreso> listaIngreso = queryIngresos.list();
                         
                         Usuario objUsuario = new Usuario();
                         objUsuario.setIdUsuario(usuario.getIdUsuario());
                         
+                        
+                        System.out.println("listaIngreso .size --------------------------> "+listaIngreso.size());
+                        
                         if (listaIngreso.size() == 0) {
+                            System.out.println("Tipo de horario ---------> " + usuario.getHorario() + "   Hora ----------> "+hora + "          Minutos----------> "+Minutos);
+                            String observacionIngreso = "";
+                            if (usuario.getHorario().equals("A")) {
+                                
+                                if (Integer.parseInt(hora) > 8 && Integer.parseInt(Minutos) > 5) {
+                                
+                                    observacionIngreso = "Tarde";
+
+                                }else if (Integer.parseInt(hora) < 8 && Integer.parseInt(Minutos) < 55) {
+
+                                    observacionIngreso = "Temprano";
+
+                                }else{
+
+                                    observacionIngreso = "Justo";
+                                }
+                                
+                            }else if (usuario.getHorario().equals("B")) {
+                                
+                                if (Integer.parseInt(hora) > 7 && Integer.parseInt(Minutos) > 5) {
+                                
+                                    observacionIngreso = "Tarde";
+
+                                }else if (Integer.parseInt(hora) < 7 && Integer.parseInt(Minutos) < 55) {
+
+                                    observacionIngreso = "Temprano";
+
+                                }else{
+
+                                    observacionIngreso = "Justo";
+                                }
+                                
+                            }
                             
-                            Ingreso objIngreso = new Ingreso(new Date(), new Date(), "Ingreso", "Lector", "", objUsuario);
+                            
+                            Ingreso objIngreso = new Ingreso(new Date(), new Date(), "Ingreso", "Lector", observacionIngreso, objUsuario);
                             sesion.beginTransaction();
                             sesion.save(objIngreso);
                             sesion.getTransaction().commit();
                             sesion.close();
 
 
-                            response.getWriter().write("302");
+                            response.getWriter().write("Ingreso");
                             
-                        }else{
+                        }else if(listaIngreso.size() == 1){
                             
                             for(Ingreso ingreso : listaIngreso){
                                 
-                                if (ingreso.getTipo().equals("Entrada")) {
+                                String observacionIngreso = "";
+                                if (usuario.getHorario().equals("A")) {
+                                
+                                    if (Integer.parseInt(hora) > 18 && Integer.parseInt(Minutos) > 5) {
+
+                                        observacionIngreso = "Tarde";
+
+                                    }else if (Integer.parseInt(hora) < 18 && Integer.parseInt(Minutos) < 55) {
+
+                                        observacionIngreso = "Temprano";
+
+                                    }else{
+
+                                        observacionIngreso = "Justo";
+                                    }
+
+                                }else if (usuario.getHorario().equals("B")) {
+
+                                    if (Integer.parseInt(hora) > 17 && Integer.parseInt(Minutos) > 5) {
+
+                                        observacionIngreso = "Tarde";
+
+                                    }else if (Integer.parseInt(hora) < 17 && Integer.parseInt(Minutos) < 55) {
+
+                                        observacionIngreso = "Temprano";
+
+                                    }else{
+
+                                        observacionIngreso = "Justo";
+                                    }
+
+                                }
+                                
+                                if (ingreso.getTipo().equals("Ingreso")) {
                                     
-                                    Ingreso objIngreso = new Ingreso(new Date(), new Date(), "Salida", "Lector", "", objUsuario);
+                                    Ingreso objIngreso = new Ingreso(new Date(), new Date(), "Salida", "Lector", observacionIngreso, objUsuario);
                                     sesion.beginTransaction();
                                     sesion.save(objIngreso);
                                     sesion.getTransaction().commit();
                                     sesion.close();
 
 
-                                    response.getWriter().write("302");
+                                    response.getWriter().write("Salida");
                                     
                                 }
                             
                             }
                             
-                            
-                            
                         }
-                        
-                        
-                        
                         
                     }
                 }                

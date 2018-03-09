@@ -950,11 +950,20 @@ $(".cerrarSesion").click(function (){
 function ingreso(){
     
     alert("funcion ingreso");
-    var dt = new Date();
-    var hora = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
-    alert(hora);
+//    var dt = new Date();
+//    var hora = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+
+
+    var fullDate = new Date();
+    var hora = fullDate.getHours();
+    var minutos = fullDate.getMinutes();
+    //convert month to 2 digits
+    var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
+    var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
+    console.log(currentDate);
+
     var UsuarioID = $("#txtUsuarioIngreso").val();
-    $.post("/SaleslandColombiaApp/ingreso/ingresousuario",{UsuarioID:UsuarioID},function (responseText) {
+    $.post("/SaleslandColombiaApp/ingreso/ingresousuario",{UsuarioID:UsuarioID,Fecha:currentDate,Hora:hora,Minutos:minutos},function (responseText) {
         alert(responseText);
         if (responseText == "500") {
             swal("Error", "Ocurrió un error mientras estabamos tratando de ingresa tus datos", "error");
