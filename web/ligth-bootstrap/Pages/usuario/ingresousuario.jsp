@@ -80,19 +80,7 @@
 <script>
     
     $(document).ready(function() {
-        demo.checkFullPageBackgroundImage();       
-        $.notify({
-            icon: "nc-icon nc-spaceship",
-            message: "No puedes fichar a  porque hacen parte del mismo equipo."
-
-        },{
-            type: 'danger',
-            timer: 3000,
-            placement: {
-                from: 'bottom',
-                align: 'right'
-            }
-        });
+        demo.checkFullPageBackgroundImage();               
         
         $("#txtUsuarioIngreso").focus();
         

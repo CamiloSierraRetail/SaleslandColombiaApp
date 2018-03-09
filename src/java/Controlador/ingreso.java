@@ -109,7 +109,7 @@ public class ingreso extends HttpServlet {
                             sesion.close();
 
 
-                            response.getWriter().write("Ingreso");
+                            response.getWriter().write("Ingreso"+observacionIngreso);
                             
                         }else if(listaIngreso.size() == 1){
                             
@@ -157,7 +157,7 @@ public class ingreso extends HttpServlet {
                                     sesion.close();
 
 
-                                    response.getWriter().write("Salida");
+                                    response.getWriter().write("Salida"+observacionIngreso);
                                     
                                 }
                             

@@ -973,6 +973,96 @@ function ingreso(){
             alert("Más de un suauario registrado");
         }else if (responseText == "404") {
             alert("Usuario no encontrado");
+        }else if(responseText == "IngresoTarde"){
+            
+            
+            $.notify({
+                icon: "nc-icon nc-spaceship",
+                message: "Usuario ingresado con retardo."
+            },{
+                type: 'danger',
+                timer: 3000,
+                placement: {
+                    from: 'bottom',
+                    align: 'right'
+                }
+            });
+            
+        }else if(responseText == "IngresoTemprano"){
+            
+            
+            $.notify({
+                icon: "nc-icon nc-spaceship",
+                message: "Usuario ingresado temprano"
+            },{
+                type: 'success',
+                timer: 3000,
+                placement: {
+                    from: 'bottom',
+                    align: 'right'
+                }
+            });
+            
+        }else if(responseText == "IngresoJusto"){
+            
+            
+            $.notify({
+                icon: "nc-icon nc-spaceship",
+                message: "Usuario ingresado a tiempo"
+            },{
+                type: 'warning',
+                timer: 3000,
+                placement: {
+                    from: 'bottom',
+                    align: 'right'
+                }
+            });
+            
+        }else if(responseText == "SalidaTarde"){
+            
+            
+            $.notify({
+                icon: "nc-icon nc-spaceship",
+                message: "Salida registrada."
+            },{
+                type: 'success',
+                timer: 3000,
+                placement: {
+                    from: 'bottom',
+                    align: 'right'
+                }
+            });
+            
+        }else if(responseText == "SalidaTemprano"){
+            
+            
+            $.notify({
+                icon: "nc-icon nc-spaceship",
+                message: "Salida temprana."
+            },{
+                type: 'danger',
+                timer: 3000,
+                placement: {
+                    from: 'bottom',
+                    align: 'right'
+                }
+            });
+            
+        }else if(responseText == "SalidaJusto"){
+            
+            
+            $.notify({
+                icon: "nc-icon nc-spaceship",
+                message: "Salida justo a tiempo."
+            },{
+                type: 'warning',
+                timer: 3000,
+                placement: {
+                    from: 'bottom',
+                    align: 'right'
+                }
+            });
+            
         }
         
     });
