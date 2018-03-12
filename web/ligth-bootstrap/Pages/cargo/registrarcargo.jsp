@@ -90,8 +90,6 @@
                                                 </div>
                                                 </div>
                                             </div>
-
-
                                         </div>
                                         <div class="card-footer text-right card-body col-md-10 mr-auto ml-auto">
                                             <button type="submit" class="btn btn-info btn-fill pull-right">Confirmar</button>
