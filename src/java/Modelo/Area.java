@@ -13,7 +13,7 @@ import javax.persistence.Table;
 public class Area {
     @Id
     @Column(name = "idArea")
-    private int IdCargo;
+    private int IdArea;
     
     @Column(name = "NombreArea")
     private String NombreArea;
@@ -31,19 +31,12 @@ public class Area {
     public Area() {
     }
 
-    public Area(String NombreArea, String Descripcion, String Estado, Canal Canal) {
-        this.NombreArea = NombreArea;
-        this.Descripcion = Descripcion;
-        this.Estado = Estado;
-        this.Canal = Canal;
+    public int getIdArea() {
+        return IdArea;
     }
 
-    public int getIdCargo() {
-        return IdCargo;
-    }
-
-    public void setIdCargo(int IdCargo) {
-        this.IdCargo = IdCargo;
+    public void setIdArea(int IdArea) {
+        this.IdArea = IdArea;
     }
 
     public String getNombreArea() {
@@ -77,4 +70,12 @@ public class Area {
     public void setCanal(Canal Canal) {
         this.Canal = Canal;
     }
+
+    public Area(String NombreArea, String Descripcion, String Estado, Canal Canal) {
+        this.NombreArea = NombreArea;
+        this.Descripcion = Descripcion;
+        this.Estado = Estado;
+        this.Canal = Canal;
+    }
+
 }

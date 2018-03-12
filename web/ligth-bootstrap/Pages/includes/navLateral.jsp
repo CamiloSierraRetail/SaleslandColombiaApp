@@ -98,7 +98,7 @@
                                                 </a>
                                             </li>
                                             <li class="nav-item ">
-                                                <a class="nav-link" href="./components/grid.html">
+                                                <a class="nav-link" href="../area/listararea.jsp">
                                                     <span class="sidebar-mini">A</span>
                                                     <span class="sidebar-normal">Areas</span>
                                                 </a>

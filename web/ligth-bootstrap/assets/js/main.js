@@ -1079,7 +1079,7 @@ function ingreso(){
     $("#txtUsuarioIngreso").val("");
 
 }
-/////////////////////////// KISTAR TODOS LOS USUARIOS REGISTRADOS ///////////////////////////////
+/////////////////////////// LISTAR TODOS LOS USUARIOS REGISTRADOS ///////////////////////////////
 function listarUsuarios(){
     
     
