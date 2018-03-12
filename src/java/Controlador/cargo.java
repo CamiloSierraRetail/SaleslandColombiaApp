@@ -67,7 +67,7 @@ public class cargo extends HttpServlet {
                         + "<td>" + cargo.getArea() + "</td>"
                         + "<td>" + cargo.getEstado() + "</td>"
                         + "<td class='td-actions text-right'>"
-                        + "<a href='/SaleslandColombiaApp/sector/cargardatoscargos/" + cargo.getIdCargo() + "' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Edit Profile'>"
+                        + "<a href='/SaleslandColombiaApp/ligth-bootstrap/Pages/cargo/editarcargo.jsp?_"+cargo.getIdCargo()+"' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
                         + "<i class='fa fa-edit'></i>"
                         + "</a>"
                         + "<a href='#' rel='tooltip' title='' class='btn btn-danger btn-link btn-xs' data-original-title='Remove'>"
@@ -128,10 +128,10 @@ public class cargo extends HttpServlet {
     private void cargaDatosCargo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             System.out.println("...............................................");
-            String idCargo = request.getParameter("idCargo");
-            System.out.println("----------------> " + idCargo);
+            String IdCargo = request.getParameter("idCargo");
+            System.out.println("----------------> " + IdCargo);
             Session sesion = HibernateUtil.getSessionFactory().openSession();
-            Query query = sesion.createQuery("FROM Area WHERE idCargo=" + idCargo + "");
+            Query query = sesion.createQuery("FROM Cargo WHERE idCargo=" + IdCargo + "");
             JSONArray canalJson = new JSONArray();
             List<Cargo> listaCargo = query.list();
             for (Cargo cargo : listaCargo) {
@@ -155,35 +155,36 @@ public class cargo extends HttpServlet {
         }
 
     }
-
+    
     private void editarCargo(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        try {
-
-            String NombreCargo = request.getParameter("NombreCargo");
-            String Descripcion = request.getParameter("Descripcion");
-            String Salario = request.getParameter("Salario");
-            String Tipo = request.getParameter("Tipo");
-            String Estado = request.getParameter("Estado");
-            String Sector = request.getParameter("Sector");
-            String Canal = request.getParameter("Canal");
-            String Area = request.getParameter("Area");
-
+         throws ServletException, IOException {
+                 System.out.println("ENTRasdasdasdsadsadsadassdOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        try{
+            String id = request.getParameter("IdCargo");
+             System.out.println("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+            int IdCargo = Integer.parseInt(id);
+            System.out.println(IdCargo);
+            String estado = request.getParameter("Estado");
+             String nombreCargo = request.getParameter("NombreCargo");
+            String descripcion = request.getParameter("Descripcion");
+            String salario = request.getParameter("Salario");
+            String tipo = request.getParameter("Tipo");
+            String sector = request.getParameter("Sector");
+            String canal = request.getParameter("Canal");
+            String area = request.getParameter("Area");
+            
             Session sesion = HibernateUtil.getSessionFactory().openSession();
-            Cargo objCargo = new Cargo(NombreCargo, Descripcion, Double.parseDouble(Salario), Tipo, Estado, Sector, Canal, Area);
-
             sesion.beginTransaction();
-            sesion.update(objCargo);
+            Query query = sesion.createSQLQuery("UPDATE cargo SET Estado='"+estado+"', NombreCargo='"+nombreCargo+"', Descripcion='"+descripcion+"', Salario='"+salario+"', Tipo='"+tipo+"', Sector='"+sector+"', Canal='"+canal+"', Area='"+area+"' WHERE idCargo="+IdCargo+"");
+            query.executeUpdate();
             sesion.getTransaction().commit();
             sesion.close();
-
+           
             response.getWriter().write("200");
-
-        } catch (Exception e) {
-
-            System.err.println(e);
+            
+        }catch(Exception e){
             response.getWriter().write("500");
+            System.err.println(e);
         }
     } 
 
