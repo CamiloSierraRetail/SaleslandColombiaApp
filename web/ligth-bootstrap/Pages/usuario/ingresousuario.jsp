@@ -33,7 +33,7 @@
                         </li>
                         <li class="nav-item ">
                             <a href="register.html" class="nav-link">
-                                <i class="nc-icon nc-badge"></i> Register
+                                <i class="nc-icon nc-badge"></i> Registrar
                             </a>
                         </li>
                         <li class="nav-item ">
@@ -43,7 +43,7 @@
                         </li>
                         <li class="nav-item ">
                             <a href="ingresousuario.jsp" class="nav-link">
-                                <i class="nc-icon nc-key-25"></i> Lock
+                                <i class="nc-icon nc-key-25"></i> Ingreso
                             </a>
                         </li>
                     </ul>
@@ -65,7 +65,7 @@
                             <div class="card-body ">
                                 <h4 class="card-title">INGRESO DE PERSONAL</h4>
                                 <div class="form-group">
-                                    <input id="txtUsuarioIngreso" name="UsuarioIngreso" type="password" placeholder="Acerca tu carnet al lector (>_<)" class="form-control">
+                                    <input id="txtUsuarioIngreso" name="UsuarioIngreso" type="password" placeholder="Acerca tu carnet al lector" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -87,9 +87,11 @@
         setTimeout(function() {
             // after 1000 ms we add the class animated to the login/register card
             $('.card').removeClass('card-hidden');
-        }, 700)
+        }, 700);
     });
-    $("#txtUsuarioIngreso").change(function (){
+    $("#txtUsuarioIngreso").change(function (){        
+        //document.getElementById("txtUsuarioIngreso").disabled = true;
+        $("#txtUsuarioIngreso").attr("disabled", "disabled");
         ingreso();
     });
 </script>

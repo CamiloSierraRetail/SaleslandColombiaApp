@@ -115,3 +115,6 @@ $(document).ready(function() {
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js" type="text/javascript"></script>
 
 <script src="../../assets/js/plugins/light-bootstrap-dashboard.js" type="text/javascript"></script>
+
+<!-- TABLAS -->
+<script src="../../assets/js/tablas.js"></script>

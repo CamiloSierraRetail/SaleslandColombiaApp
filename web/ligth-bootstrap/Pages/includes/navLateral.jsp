@@ -71,7 +71,7 @@
                                 <li class="nav-item ">
                                     <a class="nav-link" href="../empleado/indexempleado.jsp">
                                         <i class="material-icons">dashboard</i>
-                                        <p>Dashboard (Empleado)</p>
+                                        <p>Inicio (Empleado)</p>
                                     </a>
                                 </li>                                
                                 <!-- Div xdxdxdxddxddxdxdxdxdx -->
@@ -171,7 +171,7 @@
                                 <li class="nav-item ">
                                     <a class="nav-link" href="../administrador/indexadministrador.jsp">
                                         <i class="material-icons">dashboard</i>
-                                        <p>Dashboard (Administrador)</p>
+                                        <p>Inicio (Administrador)</p>
                                     </a>
                                 </li>
                                 <!-- Div xdxdxdxddxddxdxdxdxdx -->
@@ -242,30 +242,44 @@
                                 
                                 
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="collapse" href="#ExamplesCargo">
+                                    <a class="nav-link" data-toggle="collapse" href="#ExamplesCargos">
                                         <i class="material-icons">business_center</i>
                                         <p>
                                             Cargos
                                             <b class="caret"></b>
                                         </p>
                                     </a>
-                                    <div class="collapse " id="ExamplesCargo">
+                                    <div class="collapse " id="ExamplesCargos">
                                         <ul class="nav">
                                             <li class="nav-item ">
-                                                <a class="nav-link" href="../cargo/listarcargo.jsp">
+                                                <a class="nav-link" href="../usuario/listadousuarios.jsp">
                                                     <span class="sidebar-mini">L</span>
-                                                    <span class="sidebar-normal">Listado de cargos</span>
+                                                    <span class="sidebar-normal">Listado</span>
                                                 </a>
                                             </li>
                                             <li class="nav-item ">
-                                                <a class="nav-link" href="../cargo/registrarcargo.jsp">
-                                                    <span class="sidebar-mini">A</span>
-                                                    <span class="sidebar-normal">Agregar Cargo</span>
+                                                <a class="nav-link" href="../usuario/registrarusuario.jsp">
+                                                    <span class="sidebar-mini">R</span>
+                                                    <span class="sidebar-normal">Registrar</span>
                                                 </a>
-                                            </li>                           
+                                            </li>
+                                            <li class="nav-item ">
+                                                <a class="nav-link" href="../area/listararea.jsp">
+                                                    <span class="sidebar-mini">M</span>
+                                                    <span class="sidebar-normal">Monitorear</span>
+                                                </a>
+                                            </li>                                
                                         </ul>
                                     </div>
-                                </li>                  
+                                </li>     
+                                
+                                <li class="nav-item ">
+                                    <a class="nav-link" href="../administrador/indexadministrador.jsp">
+                                        <i class="material-icons">dashboard</i>
+                                        <p>Inicio (Administrador)</p>
+                                    </a>
+                                </li>
+                                
                             </ul>
                         </div>        
                     </div>

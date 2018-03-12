@@ -44,7 +44,8 @@ public class ingreso extends HttpServlet {
         throws ServletException, IOException {
     
         try{
-            
+            String Dia = request.getParameter("Dia");
+            System.out.println(Dia);
             String UsuarioID = request.getParameter("UsuarioID");
             String Fecha = request.getParameter("Fecha");
             String hora = request.getParameter("Hora");
@@ -71,11 +72,11 @@ public class ingreso extends HttpServlet {
                             String observacionIngreso = "";
                             if (usuario.getHorario().equals("A")) {
                                 
-                                if (Integer.parseInt(hora) > 8 && Integer.parseInt(Minutos) > 5) {
+                                if (Integer.parseInt(hora) >= 8 && Integer.parseInt(Minutos) > 5) {
                                 
                                     observacionIngreso = "Tarde";
 
-                                }else if (Integer.parseInt(hora) < 8 && Integer.parseInt(Minutos) < 55) {
+                                }else if (Integer.parseInt(hora) <= 7 && Integer.parseInt(Minutos) < 55) {
 
                                     observacionIngreso = "Temprano";
 
@@ -86,11 +87,11 @@ public class ingreso extends HttpServlet {
                                 
                             }else if (usuario.getHorario().equals("B")) {
                                 
-                                if (Integer.parseInt(hora) > 7 && Integer.parseInt(Minutos) > 5) {
+                                if (Integer.parseInt(hora) >= 7 && Integer.parseInt(Minutos) > 5) {
                                 
                                     observacionIngreso = "Tarde";
 
-                                }else if (Integer.parseInt(hora) < 7 && Integer.parseInt(Minutos) < 55) {
+                                }else if (Integer.parseInt(hora) <= 6 && Integer.parseInt(Minutos) < 55) {
 
                                     observacionIngreso = "Temprano";
 
@@ -102,7 +103,7 @@ public class ingreso extends HttpServlet {
                             }
                             
                             
-                            Ingreso objIngreso = new Ingreso("Lunes", new Date(), new Date(), "Ingreso", "Lector", observacionIngreso, objUsuario);
+                            Ingreso objIngreso = new Ingreso(Dia, new Date(), new Date(), "Ingreso", "Lector", observacionIngreso, objUsuario);
                             sesion.beginTransaction();
                             sesion.save(objIngreso);
                             sesion.getTransaction().commit();
@@ -118,11 +119,11 @@ public class ingreso extends HttpServlet {
                                 String observacionIngreso = "";
                                 if (usuario.getHorario().equals("A")) {
                                 
-                                    if (Integer.parseInt(hora) > 18 && Integer.parseInt(Minutos) > 5) {
+                                    if (Integer.parseInt(hora) >= 18 && Integer.parseInt(Minutos) > 5) {
 
                                         observacionIngreso = "Tarde";
 
-                                    }else if (Integer.parseInt(hora) < 18 && Integer.parseInt(Minutos) < 55) {
+                                    }else if (Integer.parseInt(hora) <= 17 && Integer.parseInt(Minutos) < 55 || Integer.parseInt(hora) < 17) {
 
                                         observacionIngreso = "Temprano";
 
@@ -133,11 +134,11 @@ public class ingreso extends HttpServlet {
 
                                 }else if (usuario.getHorario().equals("B")) {
 
-                                    if (Integer.parseInt(hora) > 17 && Integer.parseInt(Minutos) > 5) {
+                                    if (Integer.parseInt(hora) >= 17 && Integer.parseInt(Minutos) > 5) {
 
                                         observacionIngreso = "Tarde";
 
-                                    }else if (Integer.parseInt(hora) < 17 && Integer.parseInt(Minutos) < 55) {
+                                    }else if (Integer.parseInt(hora) <= 16 && Integer.parseInt(Minutos) < 55 || Integer.parseInt(hora) < 16) {
 
                                         observacionIngreso = "Temprano";
 
@@ -150,7 +151,7 @@ public class ingreso extends HttpServlet {
                                 
                                 if (ingreso.getTipo().equals("Ingreso")) {
                                     
-                                    Ingreso objIngreso = new Ingreso("Lunes",new Date(), new Date(), "Salida", "Lector", observacionIngreso, objUsuario);
+                                    Ingreso objIngreso = new Ingreso(Dia,new Date(), new Date(), "Salida", "Lector", observacionIngreso, objUsuario);
                                     sesion.beginTransaction();
                                     sesion.save(objIngreso);
                                     sesion.getTransaction().commit();
@@ -163,6 +164,9 @@ public class ingreso extends HttpServlet {
                             
                             }
                             
+                        }else{
+                        
+                            response.getWriter().write("407");
                         }
                         
                     }

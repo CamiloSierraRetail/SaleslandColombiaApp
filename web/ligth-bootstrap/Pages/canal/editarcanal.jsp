@@ -29,13 +29,11 @@
                                                 <fieldset>  
                                                     <div class="form-group">
                                                         <div class="row">
-                                                            <label class="control-label">Estado *</label>
-                                                            <div class="col-md-12 mr-auto ml-auto">
-                                                                <select id="cmbEditarEstadoCanal" name="EditarEstadocanal" class="selectpicker" data-title="Seleccionar Estado" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
-                                                                    <option value="Activo">Activo</option>
-                                                                    <option value="Inactivo">Inactivo</option>                                                                                                                                
-                                                                </select>
-                                                            </div>
+                                                            <label class="control-label">Estado *</label>                                                            
+                                                            <select id="cmbEditarEstadoCanal" name="EditarEstadocanal" class="selectpicker" data-title="Seleccionar Estado" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                                                <option value="Activo">Activo</option>
+                                                                <option value="Inactivo">Inactivo</option>                                                                                                                                
+                                                            </select>                                                            
                                                         </div>
                                                     </div>
                                                 </fieldset>
@@ -70,6 +68,7 @@
                                             </div>
                                         </div>
                                         <div class="card-footer text-right card-body col-md-10 mr-auto ml-auto">
+                                            <a href="listarcanal.jsp"class="btn btn-fill pull-left">Volver</a>
                                             <button type="submit" class="btn btn-info btn-fill pull-right">Confirmar Cambios</button>
                                             <div class="clearfix"></div>
                                         </div>   

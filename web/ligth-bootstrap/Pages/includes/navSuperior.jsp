@@ -8,7 +8,7 @@
                                 <i class="fa fa-navicon visible-on-sidebar-mini"></i>
                             </button>
                         </div>
-                        <a class="navbar-brand" href="#pablo"> Dashboard PRO </a>
+                        <p class="navbar-brand" id="tituloPagina"> Dashboard PRO </p>
                     </div>
                     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-bar burger-lines"></span>

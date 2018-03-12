@@ -157,9 +157,9 @@ $('#frmEditarSector').validate({
 
         swal({
 
-        title: "Editar Sector",
+        title: "Actualizar Sector",
         text: "¿Está seguro que desea reemplazar los datos del sector?",
-        icon: "info",
+        icon: "warning",
         buttons: true,
         closeonconfirm: false,
         buttons: ["No, Cancelar", "Sí"]
@@ -175,7 +175,7 @@ $('#frmEditarSector').validate({
               $.post("/SaleslandColombiaApp/sector/editarsector",{IdSector:idSector[1],NombreSector:nombreSector,DescripcionSector:descripcionSector,EstadoSector:estadoSector},function (responsetext) {
                    if(responsetext == "200"){
 
-                        swal("Cambios Guardados", "Los cambios del sector han guardado exitosamente", "success").then((willDelete) => {
+                        swal("Sector Actualizado", "Los datos del sector se han actualizado satisfactoriamente.", "success").then((willDelete) => {
                           if (willDelete) {                          
                             window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/listarsectores.jsp";
                           }
@@ -193,7 +193,7 @@ $('#frmEditarSector').validate({
 });
 ////////////////// LISTAR TODOS LOS SECTORES ////////////////////////////
 function listarSectores() {
-
+    
     $.post("/SaleslandColombiaApp/sector/versectores", function (responseText) {
 
         if (responseText == "500") {
@@ -204,7 +204,10 @@ function listarSectores() {
             $("#listadoSectores").html("");
             $("#listadoSectores").append(responseText);
         }
-
+        // orden de datos tamaño,showRefresh, search, showToggle, showColumns, alineacion, texto
+        //tamanio,showRefresh, search, showToggle, showColumns, alineacion, texto
+        botstrapPaginacionTabla(5, false, true, true, true, 'right');
+       
     });
 
 }
@@ -323,8 +326,10 @@ function listarCanales() {
              
             $("#listadoSectores").html("");           
             $("#listadoCanales").append(responseText);            
-        } 
-        
+        }
+        // orden de datos tamaño,showRefresh, search, showToggle, showColumns, alineacion, texto
+        //tamanio,showRefresh, search, showToggle, showColumns, alineacion, texto
+        botstrapPaginacionTabla(5, false, true, true, true, 'right');
     });
 }
 ///////////////////// VER DATOS CANAL ///////////////////////////////
@@ -952,8 +957,17 @@ function ingreso(){
 //    var dt = new Date();
 //    var hora = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
 
-
     var fullDate = new Date();
+    var weekday = new Array(7);
+    weekday[0] = "Domingo";
+    weekday[1] = "Lunes";
+    weekday[2] = "Martes";
+    weekday[3] = "Miercoles";
+    weekday[4] = "Jueves";
+    weekday[5] = "Viernes";
+    weekday[6] = "Sabado";
+    var n = weekday[fullDate.getDay()];
+    
     var hora = fullDate.getHours();
     var minutos = fullDate.getMinutes();
     //convert month to 2 digits
@@ -961,14 +975,26 @@ function ingreso(){
     var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
     
     var UsuarioID = $("#txtUsuarioIngreso").val();
-    $.post("/SaleslandColombiaApp/ingreso/ingresousuario",{UsuarioID:UsuarioID,Fecha:currentDate,Hora:hora,Minutos:minutos},function (responseText) {
-        alert(responseText);
+    $.post("/SaleslandColombiaApp/ingreso/ingresousuario",{UsuarioID:UsuarioID,Fecha:currentDate,Hora:hora,Minutos:minutos, Dia:n},function (responseText) {
+        //alert(responseText);
         if (responseText == "500") {
             swal("Error", "Ocurrió un error mientras estabamos tratando de ingresa tus datos", "error");
         }else if (responseText == "302") {
             alert("Se hace el registro de la entrada o la salida");
         }else if (responseText == "406"){
             alert("Más de un suauario registrado");
+        }else if (responseText == "407") {
+            $.notify({
+                icon: "nc-icon nc-spaceship",
+                message: "El usuario ya registro entrada y salida en el dia de hoy."
+            },{
+                type: 'danger',
+                timer: 3000,
+                placement: {
+                    from: 'bottom',
+                    align: 'right'
+                }
+            });
         }else if (responseText == "404") {
             //alert("Usuario no encontrado");
             $.notify({
@@ -1075,7 +1101,8 @@ function ingreso(){
         }
         
     });
-    
+    $("#txtUsuarioIngreso").removeAttr("disabled"); 
+    $("#txtUsuarioIngreso").focus();
     $("#txtUsuarioIngreso").val("");
 
 }
@@ -1101,8 +1128,9 @@ function listarUsuarios(){
             
             $("#listadoUsuario").append(responseText);
         }
-        
+        // orden de datos tamaño,showRefresh, search, showToggle, showColumns
+        botstrapPaginacionTabla(5, false, true, true, true);
     });
     
-    tabla();
+    
 }

@@ -36,7 +36,7 @@
                         </li>
                         <li class="nav-item ">
                             <a href="register.html" class="nav-link">
-                                <i class="nc-icon nc-badge"></i> Register
+                                <i class="nc-icon nc-badge"></i> Registrar
                             </a>
                         </li>
                         <li class="nav-item ">
@@ -46,7 +46,7 @@
                         </li>
                         <li class="nav-item ">
                             <a href="../usuario/ingresousuario.jsp" class="nav-link">
-                                <i class="nc-icon nc-key-25"></i> Lock
+                                <i class="nc-icon nc-key-25"></i> Ingreso
                             </a>
                         </li>
                     </ul>
