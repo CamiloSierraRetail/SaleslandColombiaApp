@@ -949,7 +949,6 @@ $(".cerrarSesion").click(function (){
 ////////////////////// INGRESO Y SALIDA DEL USUARIO ////////////////////////
 function ingreso(){
     
-    alert("funcion ingreso");
 //    var dt = new Date();
 //    var hora = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
 
@@ -960,8 +959,7 @@ function ingreso(){
     //convert month to 2 digits
     var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
     var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
-    console.log(currentDate);
-
+    
     var UsuarioID = $("#txtUsuarioIngreso").val();
     $.post("/SaleslandColombiaApp/ingreso/ingresousuario",{UsuarioID:UsuarioID,Fecha:currentDate,Hora:hora,Minutos:minutos},function (responseText) {
         alert(responseText);
@@ -972,7 +970,18 @@ function ingreso(){
         }else if (responseText == "406"){
             alert("Más de un suauario registrado");
         }else if (responseText == "404") {
-            alert("Usuario no encontrado");
+            //alert("Usuario no encontrado");
+            $.notify({
+                icon: "nc-icon nc-spaceship",
+                message: "El ingreso del usuario no ha sido registrado, por favor confirme que este registrado."
+            },{
+                type: 'danger',
+                timer: 3000,
+                placement: {
+                    from: 'bottom',
+                    align: 'right'
+                }
+            });
         }else if(responseText == "IngresoTarde"){
             
             
@@ -1069,4 +1078,31 @@ function ingreso(){
     
     $("#txtUsuarioIngreso").val("");
 
+}
+/////////////////////////// KISTAR TODOS LOS USUARIOS REGISTRADOS ///////////////////////////////
+function listarUsuarios(){
+    
+    
+    $.post("/SaleslandColombiaApp/usuario/listarUsuarios",function (responseText){
+        
+        if (responseText == 500) {
+            $.notify({
+                icon: "nc-icon nc-spaceship",
+                message: "Error el al cargar los usuarios"
+            },{
+                type: 'danger',
+                timer: 3000,
+                placement: {
+                    from: 'bottom',
+                    align: 'right'
+                }
+            });
+        }else{
+            
+            $("#listadoUsuario").append(responseText);
+        }
+        
+    });
+    
+    tabla();
 }

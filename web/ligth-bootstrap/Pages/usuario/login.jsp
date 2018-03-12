@@ -31,22 +31,22 @@
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a href="../dashboard.html" class="nav-link">
-                                <i class="material-icons" style="font-size: 25px;">dashboard</i>Dashboard                                
+                                <i class="nc-icon nc-chart-pie-35"></i> Dashboard
                             </a>
                         </li>
                         <li class="nav-item ">
                             <a href="register.html" class="nav-link">
-                                <i class="material-icons" style="font-size: 25px;">person_add</i>Register
-                            </a>
-                        </li>
-                        <li class="nav-item  active ">
-                            <a href="login.html" class="nav-link">
-                                <i class="material-icons" style="font-size: 25px;">fingerprint</i>Login
+                                <i class="nc-icon nc-badge"></i> Register
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a href="lock.html" class="nav-link">
-                                <i class="material-icons" style="font-size: 25px;">lock</i>Lock
+                            <a href="../usuario/login.jsp" class="nav-link">
+                                <i class="nc-icon nc-mobile"></i> Login
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a href="../usuario/ingresousuario.jsp" class="nav-link">
+                                <i class="nc-icon nc-key-25"></i> Lock
                             </a>
                         </li>
                     </ul>

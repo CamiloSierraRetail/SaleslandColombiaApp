@@ -45,6 +45,9 @@ public class usuario extends HttpServlet {
                 case "CerrarSesion":
                     cerrarSesion(request, response);
                     break;
+                case "listarUsuarios":
+                    listarUSuarios(request, response);
+                    break;
                 
             }
             
@@ -197,7 +200,55 @@ public class usuario extends HttpServlet {
         }
     
     }
-
+    protected void listarUSuarios(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        try{
+            int countRows = 1;
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Query query = sesion.createQuery("FROM Usuario");
+            List<Usuario>listaUsuario = query.list();
+            for(Usuario usuario : listaUsuario){
+            
+                response.getWriter().write("<tr>"
+                                              + "<td class='text-center'>"+countRows+"</td>"
+                                              + "<td>"+usuario.getDocumento()+"</td>"
+                                              + "<td>"+usuario.getNombre()+" "+usuario.getApellido()+"</td>"
+                                              + "<td>"+usuario.getCelular()+"</td>"
+                                              + "<td>"+usuario.getEmail()+"</td>"
+                                              + "<td class='text-right'>"+usuario.getEstado()
+                                                      
+                                                   /*+ "<div class='row'>"
+                                                      + "<div class='col-md-12'>"
+                                                        + "<input type='checkbox' checked='' data-toggle='switch' data-on-color='info' data-off-color='info'>"
+                                                        + "<span class='toggle'></span>"
+                                                      + "</div>"
+                                                   + "</div>"*/
+                                              + "</td>"
+                                              + "<td class='td-actions text-right'>"
+                                                + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='Ver Sector'>"
+                                                    + "<i class='fa fa-user'></i>"
+                                                + "</a>"   
+                                                + "<a href='/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/editarsector.jsp?_' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
+                                                    + "<i class='fa fa-edit'></i>"
+                                                + "</a>"
+                                                + "<a href='#' rel='tooltip' title='' class='btn btn-danger btn-link btn-xs' data-original-title='Eliminar'>"
+                                                    + "<i class='fa fa-times'></i>"
+                                                + "</a>"
+                                              + "</td>"
+                                         + "</tr>");
+                countRows++;
+                
+                
+            }
+            
+        }catch(Exception e){
+        
+            System.err.println(e);
+            response.getWriter().write("500");
+        }
+    
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

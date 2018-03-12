@@ -52,7 +52,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="profile-dropdown" href="#pablo">
+                                                <a class="profile-dropdown" href="../usuario/editarperfilusuario.jsp">
                                                     <span class="sidebar-mini">EP</span>
                                                     <span class="sidebar-normal">Editar Perfil</span>
                                                 </a>
@@ -69,7 +69,7 @@
                             </div>
                             <ul class="nav">
                                 <li class="nav-item ">
-                                    <a class="nav-link" href="./dashboard.html">
+                                    <a class="nav-link" href="../empleado/indexempleado.jsp">
                                         <i class="material-icons">dashboard</i>
                                         <p>Dashboard (Empleado)</p>
                                     </a>

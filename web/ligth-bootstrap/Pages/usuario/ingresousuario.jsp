@@ -37,12 +37,12 @@
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a href="login.html" class="nav-link">
+                            <a href="../usuario/login.jsp" class="nav-link">
                                 <i class="nc-icon nc-mobile"></i> Login
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a href="lock.html" class="nav-link">
+                            <a href="ingresousuario.jsp" class="nav-link">
                                 <i class="nc-icon nc-key-25"></i> Lock
                             </a>
                         </li>
@@ -90,9 +90,6 @@
         }, 700)
     });
     $("#txtUsuarioIngreso").change(function (){
-        //alert("Veces key" + keyPress)
-        alert("vamos a la funcion ingresooooooooooooooooooooooaaaaaaaaaaaaaaaaaaaaaa");
-        
         ingreso();
     });
 </script>
