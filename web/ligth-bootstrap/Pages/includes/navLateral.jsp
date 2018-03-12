@@ -34,15 +34,15 @@
                                 </a>
                             </div>
                             <div class="user">
-                                <div class="photo" style="height: 45px;width: 45px;">
-                                    <img src="../../assets/img/imagenesDePerfil/<%=objUsuario.getFoto()%>" />
+                                <div class="photo">
+                                    <img src="../../assets/img/imagenesDePerfil/<%=objUsuario.getFoto()%>"/>
                                 </div>
                                 <div class="info ">
                                     <a data-toggle="collapse" href="#collapseExample" class="collapsed">
                                         <span><%= nombreUSuario[0] +" "+ apellidoUsuario[0]%>
                                             <b class="caret"></b>
                                         </span>
-                                    </a><br>
+                                    </a>
                                     <div class="collapse" id="collapseExample">
                                         <ul class="nav">
                                             <li>
@@ -73,13 +73,13 @@
                                         <i class="material-icons">dashboard</i>
                                         <p>Dashboard (Empleado)</p>
                                     </a>
-                                </li>
+                                </li>                                
                                 <!-- Div xdxdxdxddxddxdxdxdxdx -->
                                 <li class="nav-item">
                                     <a class="nav-link" data-toggle="collapse" href="#Examples">
-                                        <i class="material-icons">card_travel</i>
+                                        <i class="material-icons">date_range</i>
                                         <p>
-                                            Empresa
+                                            Permisos
                                             <b class="caret"></b>
                                         </p>
                                     </a>
@@ -106,63 +106,12 @@
                                         </ul>
                                     </div>
                                 </li>
-
-
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="collapse" href="#componentsExamples">
-                                        <i class="material-icons">card_travel</i>
-                                        <p>
-                                            Components
-                                            <b class="caret"></b>
-                                        </p>
+                                <li class="nav-item ">
+                                    <a class="nav-link" href="../empleado/indexempleado.jsp">
+                                        <i class="material-icons">picture_in_picture</i>
+                                        <p>Publicaciones</p>
                                     </a>
-                                    <div class="collapse " id="componentsExamples">
-                                        <ul class="nav">
-                                            <li class="nav-item ">
-                                                <a class="nav-link" href="./components/buttons.html">
-                                                    <span class="sidebar-mini">B</span>
-                                                    <span class="sidebar-normal">Buttons</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item ">
-                                                <a class="nav-link" href="./components/grid.html">
-                                                    <span class="sidebar-mini">GS</span>
-                                                    <span class="sidebar-normal">Grid System</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item ">
-                                                <a class="nav-link" href="./components/panels.html">
-                                                    <span class="sidebar-mini">P</span>
-                                                    <span class="sidebar-normal">Panels</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item ">
-                                                <a class="nav-link" href="./components/sweet-alert.html">
-                                                    <span class="sidebar-mini">SA</span>
-                                                    <span class="sidebar-normal">Sweet Alert</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item ">
-                                                <a class="nav-link" href="./components/notifications.html">
-                                                    <span class="sidebar-mini">N</span>
-                                                    <span class="sidebar-normal">Notifications</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item ">
-                                                <a class="nav-link" href="./components/icons.html">
-                                                    <span class="sidebar-mini">I</span>
-                                                    <span class="sidebar-normal">Icons</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item ">
-                                                <a class="nav-link" href="./components/typography.html">
-                                                    <span class="sidebar-mini">T</span>
-                                                    <span class="sidebar-normal">Typography</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>                    
+                                </li>                                                  
                             </ul>
                         </div>        
                     </div>
@@ -203,7 +152,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="profile-dropdown" href="#pablo">
+                                                <a class="profile-dropdown" href="../usuario/editarperfilusuario.jsp">
                                                     <span class="sidebar-mini">EP</span>
                                                     <span class="sidebar-normal">Editar Perfil</span>
                                                 </a>
@@ -220,7 +169,7 @@
                             </div>
                             <ul class="nav">
                                 <li class="nav-item ">
-                                    <a class="nav-link" href="./dashboard.html">
+                                    <a class="nav-link" href="../administrador/indexadministrador.jsp">
                                         <i class="material-icons">dashboard</i>
                                         <p>Dashboard (Administrador)</p>
                                     </a>
@@ -228,7 +177,7 @@
                                 <!-- Div xdxdxdxddxddxdxdxdxdx -->
                                 <li class="nav-item">
                                     <a class="nav-link" data-toggle="collapse" href="#Examples">
-                                        <i class="material-icons">card_travel</i>
+                                        <i class="material-icons">location_city</i>
                                         <p>
                                             Empresa
                                             <b class="caret"></b>
@@ -249,7 +198,7 @@
                                                 </a>
                                             </li>
                                             <li class="nav-item ">
-                                                <a class="nav-link" href="./components/grid.html">
+                                                <a class="nav-link" href="../area/listararea.jsp">
                                                     <span class="sidebar-mini">A</span>
                                                     <span class="sidebar-normal">Areas</span>
                                                 </a>
@@ -257,63 +206,66 @@
                                         </ul>
                                     </div>
                                 </li>
-
-
+                                
+                                
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="collapse" href="#componentsExamples">
-                                        <i class="material-icons">card_travel</i>
+                                    <a class="nav-link" data-toggle="collapse" href="#ExamplesEmpleado">
+                                        <i class="material-icons">supervisor_account</i>
                                         <p>
-                                            Components
+                                            Empleados
                                             <b class="caret"></b>
                                         </p>
                                     </a>
-                                    <div class="collapse " id="componentsExamples">
+                                    <div class="collapse " id="ExamplesEmpleado">
                                         <ul class="nav">
                                             <li class="nav-item ">
-                                                <a class="nav-link" href="./components/buttons.html">
-                                                    <span class="sidebar-mini">B</span>
-                                                    <span class="sidebar-normal">Buttons</span>
+                                                <a class="nav-link" href="../usuario/listadousuarios.jsp">
+                                                    <span class="sidebar-mini">L</span>
+                                                    <span class="sidebar-normal">Listado</span>
                                                 </a>
                                             </li>
                                             <li class="nav-item ">
-                                                <a class="nav-link" href="./components/grid.html">
-                                                    <span class="sidebar-mini">GS</span>
-                                                    <span class="sidebar-normal">Grid System</span>
+                                                <a class="nav-link" href="../usuario/registrarusuario.jsp">
+                                                    <span class="sidebar-mini">R</span>
+                                                    <span class="sidebar-normal">Registrar</span>
                                                 </a>
                                             </li>
                                             <li class="nav-item ">
-                                                <a class="nav-link" href="./components/panels.html">
-                                                    <span class="sidebar-mini">P</span>
-                                                    <span class="sidebar-normal">Panels</span>
+                                                <a class="nav-link" href="../area/listararea.jsp">
+                                                    <span class="sidebar-mini">M</span>
+                                                    <span class="sidebar-normal">Monitorear</span>
                                                 </a>
-                                            </li>
-                                            <li class="nav-item ">
-                                                <a class="nav-link" href="./components/sweet-alert.html">
-                                                    <span class="sidebar-mini">SA</span>
-                                                    <span class="sidebar-normal">Sweet Alert</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item ">
-                                                <a class="nav-link" href="./components/notifications.html">
-                                                    <span class="sidebar-mini">N</span>
-                                                    <span class="sidebar-normal">Notifications</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item ">
-                                                <a class="nav-link" href="./components/icons.html">
-                                                    <span class="sidebar-mini">I</span>
-                                                    <span class="sidebar-normal">Icons</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item ">
-                                                <a class="nav-link" href="./components/typography.html">
-                                                    <span class="sidebar-mini">T</span>
-                                                    <span class="sidebar-normal">Typography</span>
-                                                </a>
-                                            </li>
+                                            </li>                                
                                         </ul>
                                     </div>
-                                </li>                    
+                                </li>
+                                
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="collapse" href="#ExamplesCargo">
+                                        <i class="material-icons">business_center</i>
+                                        <p>
+                                            Cargos
+                                            <b class="caret"></b>
+                                        </p>
+                                    </a>
+                                    <div class="collapse " id="ExamplesCargo">
+                                        <ul class="nav">
+                                            <li class="nav-item ">
+                                                <a class="nav-link" href="../cargo/listarcargo.jsp">
+                                                    <span class="sidebar-mini">L</span>
+                                                    <span class="sidebar-normal">Listado de cargos</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item ">
+                                                <a class="nav-link" href="../cargo/registrarcargo.jsp">
+                                                    <span class="sidebar-mini">A</span>
+                                                    <span class="sidebar-normal">Agregar Cargo</span>
+                                                </a>
+                                            </li>                           
+                                        </ul>
+                                    </div>
+                                </li>                  
                             </ul>
                         </div>        
                     </div>

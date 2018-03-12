@@ -102,7 +102,7 @@ public class ingreso extends HttpServlet {
                             }
                             
                             
-                            Ingreso objIngreso = new Ingreso(new Date(), new Date(), "Ingreso", "Lector", observacionIngreso, objUsuario);
+                            Ingreso objIngreso = new Ingreso("Lunes", new Date(), new Date(), "Ingreso", "Lector", observacionIngreso, objUsuario);
                             sesion.beginTransaction();
                             sesion.save(objIngreso);
                             sesion.getTransaction().commit();
@@ -150,7 +150,7 @@ public class ingreso extends HttpServlet {
                                 
                                 if (ingreso.getTipo().equals("Ingreso")) {
                                     
-                                    Ingreso objIngreso = new Ingreso(new Date(), new Date(), "Salida", "Lector", observacionIngreso, objUsuario);
+                                    Ingreso objIngreso = new Ingreso("Lunes",new Date(), new Date(), "Salida", "Lector", observacionIngreso, objUsuario);
                                     sesion.beginTransaction();
                                     sesion.save(objIngreso);
                                     sesion.getTransaction().commit();

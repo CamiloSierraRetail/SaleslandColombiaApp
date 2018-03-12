@@ -17,6 +17,9 @@ public class Ingreso {
     @Column(name = "idIngreso")
     private int IdIngreso;
     
+    @Column(name = "Dia")
+    private String Dia;
+    
     @Column(name = "Fecha")
     private Date Fecha;
     
@@ -39,7 +42,8 @@ public class Ingreso {
     public Ingreso() {
     }
 
-    public Ingreso(Date Fecha, Date Hora, String Tipo, String Modalidad, String Observacion, Usuario Usuario) {
+    public Ingreso(String Dia, Date Fecha, Date Hora, String Tipo, String Modalidad, String Observacion, Usuario Usuario) {
+        this.Dia = Dia;
         this.Fecha = Fecha;
         this.Hora = Hora;
         this.Tipo = Tipo;
@@ -54,6 +58,14 @@ public class Ingreso {
 
     public void setIdIngreso(int IdIngreso) {
         this.IdIngreso = IdIngreso;
+    }
+
+    public String getDia() {
+        return Dia;
+    }
+
+    public void setDia(String Dia) {
+        this.Dia = Dia;
     }
 
     public Date getFecha() {
@@ -104,4 +116,5 @@ public class Ingreso {
         this.Usuario = Usuario;
     }
 
+    
 }
