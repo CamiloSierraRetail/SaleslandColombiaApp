@@ -24,18 +24,18 @@
                                         <div class="card card-wizard">
                                             <div class="card-header ">
                                                 <h3 class="card-title text-center">Registro de usuario</h3>
-                                                <p class="card-category text-center">Split a complicated flow in multiple steps</p>
+                                                <p class="card-category text-center">Los empleados son lo mas importante para nosotros. #HastaLaLunaNoParamos</p>
                                             </div>
                                             <div class="card-body ">
                                                 <ul class="nav nav-tabs nav-pills">
                                                     <li class="nav-item" style="width: 33.3333%;">
-                                                        <a class="nav-link active" href="#tab1" data-toggle="tab" role="tab" aria-controls="tab1" aria-selected="true">First Tab</a>
+                                                        <a class="nav-link active" href="#tab1" data-toggle="tab" role="tab" aria-controls="tab1" aria-selected="true">Informacion Personal</a>
                                                     </li>
                                                     <li class="nav-item" style="width: 33.3333%;">
-                                                        <a class="nav-link" href="#tab2" data-toggle="tab" role="tab" aria-controls="tab2" aria-selected="true">Second Tab</a>
+                                                        <a class="nav-link" href="#tab2" data-toggle="tab" role="tab" aria-controls="tab2" aria-selected="true">Acerca del empleado</a>
                                                     </li>
                                                     <li class="nav-item" style="width: 33.3333%;">
-                                                        <a class="nav-link" href="#tab3" data-toggle="tab" role="tab" aria-controls="tab3" aria-selected="true">Third Tab</a>
+                                                        <a class="nav-link" href="#tab3" data-toggle="tab" role="tab" aria-controls="tab3" aria-selected="true">Cargo</a>
                                                     </li>
                                                 </ul>
                                                 <div class="tab-content">
