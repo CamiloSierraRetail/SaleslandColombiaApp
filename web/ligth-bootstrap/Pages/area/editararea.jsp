@@ -67,7 +67,7 @@
                                             </div>
                                         </div>
                                         <div class="card-footer text-right card-body col-md-10 mr-auto ml-auto">
-                                            <a href="listarareas.jsp" class="btn btn-fill pull-left">Volver</a>
+                                            <a href="listararea.jsp" class="btn btn-fill pull-left">Volver</a>
                                             <button type="submit" class="btn btn-info btn-fill pull-right">Confirmar Cambios</button>
                                             <div class="clearfix"></div>
                                         </div>   

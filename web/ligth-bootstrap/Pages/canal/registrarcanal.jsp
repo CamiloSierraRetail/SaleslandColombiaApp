@@ -30,12 +30,10 @@
                                                 <fieldset>  
                                                     <div class="form-group">
                                                         <div class="row">
-                                                            <label class="control-label">Sector *</label>
-                                                            <div class="col-md-12 mr-auto ml-auto">
-                                                                <select id="cmbSector" name="Sector" class="selectpicker" data-title="Selecciona el sector" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
-                                                                    
-                                                                </select>
-                                                            </div>
+                                                            <label class="control-label">Sector *</label>                                                            
+                                                            <select id="cmbSector" name="Sector" class="selectpicker" data-title="Selecciona el sector" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+
+                                                            </select>                                                            
                                                         </div>
                                                     </div>
                                                 </fieldset>

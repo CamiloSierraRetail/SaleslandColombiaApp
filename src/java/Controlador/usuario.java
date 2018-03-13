@@ -156,7 +156,7 @@ public class usuario extends HttpServlet {
             String Usuario = request.getParameter("Usuario");
             String Contrasenia = request.getParameter("Contrasenia");
             Session sesion = HibernateUtil.getSessionFactory().openSession();
-            Query query = sesion.createQuery("FROM Usuario WHERE Email='"+Usuario+"' OR Documento='"+Usuario+"' AND Contrasenia='"+Contrasenia+"'");
+            Query query = sesion.createQuery("FROM Usuario WHERE Email='"+Usuario+"' OR Documento='"+Usuario+"' AND Contrasenia='"+Contrasenia+"' AND Estado='Activo'");
             List<Usuario> listaUsuario = query.list();
             if (listaUsuario.size() > 0) {
                 

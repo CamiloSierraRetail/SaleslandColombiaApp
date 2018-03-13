@@ -28,12 +28,10 @@
                                                 <fieldset>  
                                                     <div class="form-group">
                                                         <div class="row">
-                                                            <label class="control-label">Canal *</label>
-                                                            <div class="col-md-12 mr-auto ml-auto">
-                                                                <select id="cmbCanal" name="Canal" class="selectpicker" data-title="Selecciona el Canal" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
-                                                                    
-                                                                </select>
-                                                            </div>
+                                                            <label class="control-label">Canal *</label>                                                            
+                                                            <select id="cmbCanal" name="Canal" class="selectpicker" data-title="Selecciona el Canal" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+
+                                                            </select>                                                            
                                                         </div>
                                                     </div>
                                                 </fieldset>
@@ -56,7 +54,7 @@
                                             </div>
                                         </div>
                                         <div class="card-footer text-right card-body col-md-10 mr-auto ml-auto">
-                                            <a href="listarareas.jsp" class="btn btn-fill pull-left">Volver</a>
+                                            <a href="listararea.jsp" class="btn btn-fill pull-left">Volver</a>
                                             <button type="submit" class="btn btn-info btn-fill pull-right">Confirmar</button>
                                             <div class="clearfix"></div>
                                         </div>   

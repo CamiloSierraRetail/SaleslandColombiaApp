@@ -51,7 +51,7 @@ public class ingreso extends HttpServlet {
             String hora = request.getParameter("Hora");
             String Minutos = request.getParameter("Minutos");
             Session sesion = HibernateUtil.getSessionFactory().openSession();
-            Query query = sesion.createQuery("FROM Usuario WHERE Documento='"+UsuarioID+"'");
+            Query query = sesion.createQuery("FROM Usuario WHERE Documento='"+UsuarioID+"' AND Estado='Activo'");
             List<Usuario> listaUsuario = query.list();
             
             if (listaUsuario.size() == 1) {
