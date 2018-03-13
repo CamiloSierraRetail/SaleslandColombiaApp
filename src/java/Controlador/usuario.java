@@ -72,10 +72,39 @@ public class usuario extends HttpServlet {
             String FechaNacimiento = request.getParameter("FechaNacimientoUsuario");//Check* convertir a date y agregar al objeto
             String ImagenPerfil = request.getParameter("ImagenPerfilUsuario");//Check
             String idCargo = request.getParameter("CargoUsuario");
+            String Horario = request.getParameter("Horario");
             
+            System.out.println("-------------> !!!!!!!!!!!!!!!!!!!! -->   " +ImagenPerfil);
+            String imagenPerfil = "";
+            if (ImagenPerfil.equals("")) {
+                
+                if (Genero.equals("Masculino")) {
+                    
+                    imagenPerfil = "hombreDefaultImagePorfile.png";
+                }else if (Genero.equals("Femenino")) {
+                    imagenPerfil = "mujerDefaultImagePorfile.png";
+                }else if (Genero.equals("Otro")){
+                    imagenPerfil = "otroDefaultImagePorfile.png";
+                
+                }
+            }else{
+            
+                imagenPerfil = ImagenPerfil;
+            
+            }
+            
+            
+            String Fecha[] = FechaNacimiento.split("/");
+            String newFecha = Fecha[1]+"-"+Fecha[0]+"-"+Fecha[2];
+            //////// CONVIERTE LA FECHA DEL FORMULARIO A DATE ////////////////////////
+            DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+            Date date = new Date();
+            date = df.parse(newFecha);
+            DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd");
+
             //INICIALIZA LA SESION
             Session sesion = HibernateUtil.getSessionFactory().openSession();
-            Query query = sesion.createQuery("FROM Usuario WHERE Documento='"+Documento+"' OR Email='"+Email+"'");
+            Query query = sesion.createQuery("FROM Usuario WHERE Documento='"+Documento+"' OR Email='"+Email+"' OR Celular='"+Celular+"'");
             List<Usuario> listaUsuario = query.list();
             if (listaUsuario.size() > 0) {
                 response.getWriter().write("226");
@@ -84,8 +113,7 @@ public class usuario extends HttpServlet {
                 Cargo objCargo = new Cargo();
                 objCargo.setIdCargo(Integer.parseInt(idCargo));
 
-                // TENER EN CUENTA QUE HAY QUE AGREGAR EL HORARIO YA QUE ESTÁ POR DEFECTO
-                Usuario objUsuario = new Usuario(TipoDocumento, Documento, Nombre, Apellido, Direccion, Telefono, Celular, Genero, Email, new Date(), Contrasenia, ImagenPerfil, "Activo", "A", objCargo);
+                Usuario objUsuario = new Usuario(TipoDocumento, Documento, Nombre, Apellido, Direccion, Telefono, Celular, Genero, Email, date, Contrasenia, imagenPerfil, "Activo", Horario, objCargo);
 
                 sesion.beginTransaction();
                 sesion.save(objUsuario);

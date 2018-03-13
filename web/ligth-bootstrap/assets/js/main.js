@@ -486,11 +486,35 @@ function cargarCargosSectores(){
         }else{
             
             $("#listadoCargosSectores").append(responseText);
-            putaTabla();
+            // orden de datos tamaño,showRefresh, search, showToggle, showColumns, alineacion, texto
+            //tamanio,showRefresh, search, showToggle, showColumns, alineacion, texto
+            botstrapPaginacionTabla(4, false, true, false, false, 'left');
         }
         
     });
 }
+////////// FUNCION PARA VALIDAR EL FORMATO DE LA IMAGEN ////////////////////////////
+$("#fileImagenUsuario").change(function(){
+    var fileTypes = ["jpg","jpeg","png"];
+    if (this.files && this.files[0]) {
+        var extension = this.files[0].name.split('.').pop().toLowerCase(),  //file extension from input file
+        isSuccess = fileTypes.indexOf(extension) > -1;  //is extension in acceptable types
+
+        if (isSuccess) { 
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                
+                $("#fileImagenUsuario").val(this.files[0].name);
+            }
+            reader.readAsDataURL(this.files[0]);
+        }
+        else{
+            $("#fileImagenUsuario").val("");
+            swal("Advertencia","El archivo seleccionado no es una imagen, solo puedes subir archivos con extension jpg, jpeg y png.","warning");
+        }
+    }
+    
+});
 
 ////////////////////Funciones para validar password email y telefono////////////////7
     $.validator.addMethod("pwcheck1", function(value) {
@@ -589,6 +613,9 @@ $("#frmRegistrarUsuario").validate({
         },FechaNacimientoUsuario:{
             
             required:true            
+        },HorarioUsuario:{
+            
+            required:true
         }
     },messages:{
 
@@ -639,6 +666,9 @@ $("#frmRegistrarUsuario").validate({
             required:"Este campo es requerido"
         },FechaNacimientoUsuario:{            
             required:"Este campo es requerido"            
+        },HorarioUsuario:{
+            
+            required:"Este campo es requerido"
         }
     }, errorElement: 'div',
     errorPlacement: function (error, element) {
@@ -663,36 +693,52 @@ $("#frmRegistrarUsuario").validate({
             })
             .then((willDelete) => {
                 if (willDelete) {
+                    
+                      var TipoDocumento = $("#cmbTipoDocumentoUsuario").val();
+                      var Documento = $("#txtDocumentoUsuario").val();
+                      var Nombres = $("#txtNombreUsuario").val();
+                      var Apellidos = $("#txtApellidoUsuario").val();
+                      var Email = $("#txtEmailUsuario").val();
+                      var Contrasenia = $("#txtConfirmarContraseniaUsuario").val();
+                      var Direccion = $("#txtDireccionUsuario").val();
+                      var Genero = $("#cmbGeneroUsuario").val();
+                      var Celular = $("#txtCelularUsuario").val();
+                      var Telefono = $("#txtTelefonoUSuario").val();
+                      var FechaNacnimiento = $("#datetimepicker").val();
+                      var ImagenPerfil = $("#fileImagenUsuario").val();
+                      var Horario = $("#cmbHorarioUsuario").val();
+                      //Agregar el CARGO
+                        ////////Subir IMAGEN DE PERFIL/////////
+                        alert("subiendo imagen xd");
+                        var data = new FormData();
+                        $.each($('#fileImagenUsuario')[0].files, function(i, file) {
+                            data.append('file-'+i, file);
+                        });
+                        $.ajax({
+                            url: '/SaleslandColombiaApp/SubirImagenPerfil',
+                            data: data,
+                            dataType: 'text',
+                            processData: false,
+                            contentType: false,
+                            type: 'POST'
+                        });
+                            alert("fINALIZA!!!");
+                      $.post("/SaleslandColombiaApp/usuario/registrar",{TipoDocumentoUsuario:TipoDocumento,DocumentoUsuario:Documento,NombreUsuario:Nombres,ApellidoUsuario:Apellidos,EmailUsuario:Email,ContraseniaUsuario:Contrasenia,DireccionUsuario:Direccion,GeneroUsuario:Genero,CelularUsuario:Celular,TelefonoUsuario:Telefono,FechaNacimientoUsuario:FechaNacnimiento,ImagenPerfilUsuario:ImagenPerfil,CargoUsuario:cargo,Horario:Horario},function (responsetext) {                                
+                            if(responsetext == "200"){
 
-                  var TipoDocumento = $("#cmbTipoDocumentoUsuario").val();
-                  var Documento = $("#txtDocumentoUsuario").val();
-                  var Nombres = $("#txtNombreUsuario").val();
-                  var Apellidos = $("#txtApellidoUsuario").val();
-                  var Email = $("#txtEmailUsuario").val();
-                  var Contrasenia = $("#txtConfirmarContraseniaUsuario").val();
-                  var Direccion = $("#txtDireccionUsuario").val();
-                  var Genero = $("#cmbGeneroUsuario").val();
-                  var Celular = $("#txtCelularUsuario").val();
-                  var Telefono = $("#txtTelefonoUSuario").val();
-                  var FechaNacnimiento = $("#datetimepicker").val();
-                  var ImagenPerfil = $("#fileImagenUsuario").val();
-                  //Agregar el CARGO
-                  $.post("/SaleslandColombiaApp/usuario/registrar",{TipoDocumentoUsuario:TipoDocumento,DocumentoUsuario:Documento,NombreUsuario:Nombres,ApellidoUsuario:Apellidos,EmailUsuario:Email,ContraseniaUsuario:Contrasenia,DireccionUsuario:Direccion,GeneroUsuario:Genero,CelularUsuario:Celular,TelefonoUsuario:Telefono,FechaNacimientoUsuario:FechaNacnimiento,ImagenPerfilUsuario:ImagenPerfil,CargoUsuario:cargo},function (responsetext) {                                
-                        if(responsetext == "200"){
+                                swal("Cambios Guardados", "El usuario ha sido registrado exitosamente", "success").then((willDelete) => {
+                                  if (willDelete) {                          
+                                    window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/listadousuarios.jsp";
+                                  }
+                                });
 
-                            swal("Cambios Guardados", "El usuario ha sido registrado exitosamente", "success").then((willDelete) => {
-                              if (willDelete) {                          
-                                //window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/canal/listarcanal.jsp";
-                              }
-                            });
+                            }else if(responsetext == "226"){
 
-                        }else if(responsetext == "226"){
-                            
-                            swal("Usuario no registrado", "Los datos del usuario ya se encuentran registrados.", "warning");
+                                swal("Usuario no registrado", "Es probable que datos personales del usuario correspondan a los datos personales de un usuario registrado anteriormente", "warning");
 
-                        }else{                    
-                            swal("Ocurrio un error", "Lo sentimos, tus datos no fueron registrados por favor intentalo nuevamente.", "error");                                        
-                        }                        
+                            }else{                    
+                                swal("Ocurrio un error", "Lo sentimos, tus datos no fueron registrados por favor intentalo nuevamente.", "error");                                        
+                            }                        
                     });          
                 }
             });

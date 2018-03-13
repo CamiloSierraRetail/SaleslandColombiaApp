@@ -8,8 +8,8 @@
     <body>
         <div class="wrapper">
             
-            <!-- Include Nav Lateral  -->
-            <%@include file="../includes/navLateral.jsp" %>
+            <!-- Include Nav Lateral  --><%--
+<%@include file="../includes/navLateral.jsp" %>--%>
             
             <div class="main-panel">
                 <!-- Include Nav Superior -->
@@ -24,18 +24,18 @@
                                         <div class="card card-wizard">
                                             <div class="card-header ">
                                                 <h3 class="card-title text-center">Registro de usuario</h3>
-                                                <p class="card-category text-center">Los empleados son lo mas importante para nosotros. #HastaLaLunaNoParamos</p>
+                                                <p class="card-category text-center">Para continuar con el proceso de registro te agradecemos seguir cada uno de estos pasos en el orden establecido <i class="material-icons" style="font-size: 12px; color: orangered;">filter_drama</i></p>
                                             </div>
                                             <div class="card-body ">
                                                 <ul class="nav nav-tabs nav-pills">
                                                     <li class="nav-item" style="width: 33.3333%;">
-                                                        <a class="nav-link active" href="#tab1" data-toggle="tab" role="tab" aria-controls="tab1" aria-selected="true">Informacion Personal</a>
+                                                        <a class="nav-link active" href="#tab1" data-toggle="tab" role="tab" aria-controls="tab1" aria-selected="true">Información Personal</a>
                                                     </li>
                                                     <li class="nav-item" style="width: 33.3333%;">
-                                                        <a class="nav-link" href="#tab2" data-toggle="tab" role="tab" aria-controls="tab2" aria-selected="true">Acerca del empleado</a>
+                                                        <a class="nav-link" href="#tab2" data-toggle="tab" role="tab" aria-controls="tab2" aria-selected="true">Información del empleado</a>
                                                     </li>
                                                     <li class="nav-item" style="width: 33.3333%;">
-                                                        <a class="nav-link" href="#tab3" data-toggle="tab" role="tab" aria-controls="tab3" aria-selected="true">Cargo</a>
+                                                        <a class="nav-link" href="#tab3" data-toggle="tab" role="tab" aria-controls="tab3" aria-selected="true">Asignar cargo</a>
                                                     </li>
                                                 </ul>
                                                 <div class="tab-content">
@@ -61,7 +61,7 @@
                                                             <div class="col-md-5">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Documento <star>*</star></label>
-                                                                    <input class="form-control" type="text" id="txtDocumentoUsuario" name="DocumentoUsuario" placeholder="ej: Perez Perez">
+                                                                    <input class="form-control" type="text" id="txtDocumentoUsuario" name="DocumentoUsuario" placeholder="ej: 1057621548">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -75,7 +75,7 @@
                                                             <div class="col-md-5">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Apellidos <star>*</star></label>
-                                                                    <input class="form-control" type="text" id="txtApellidoUsuario" name="ApellidoUsuario" placeholder="ej: Perez Perez">
+                                                                    <input class="form-control" type="text" id="txtApellidoUsuario" name="ApellidoUsuario" placeholder="ej: Perez Sandoval">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -105,7 +105,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="tab-pane fade" id="tab2" role="tabpanel">
-                                                        <h5 class="text-center">sigue ingresando los datos, ya falta poco (._.)</h5>
+                                                        <h5 class="text-center">Por favor no desistas ya casi lo logras</h5>
                                                         <div class="row justify-content-center">
                                                             <div class="col-md-5 ">
                                                                 <div class="form-group">
@@ -165,19 +165,25 @@
                                                                     </div>-->
                                                                     
                                                                     <label class="control-label">Imagen de perfil <star>*</star></label>
-                                                                    <input class="form-control" type="file" id="fileImagenUsuario" name="ImagenUsuario" placeholder="ej: 7435596">
+                                                                    <input class="form-control" type="file" id="fileImagenUsuario" name="ImagenUsuario">
                                                                     
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-10">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Horario <star>*</star></label>
+                                                                    <select id="cmbHorarioUsuario" name="HorarioUsuario" class="selectpicker"  data-title="Selecciona el horario" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                                                        <option value="A">De 8:00 A.M a 6:00 P.M</option>
+                                                                        <option value="B">De 7:00 A.M a 5:00 P.M</option>                                                                        
+                                                                    </select>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="tab-pane fade" id="tab3" role="tabpanel">
-                                                        <h5 class="text-center">solo faltan algunos campos (>_<)</h5>
+                                                        <h5 class="text-center">ahora selecciona el cargo y dale FINALIZAR.</h5>
                                                         <div class="row justify-content-center">
                                                             <div class="col-md-12">
-
-
-
                                                                 <div class="card bootstrap-table">
                                                                     <div class="card-body table-full-width">
                                                                         <div class="toolbar">
@@ -211,8 +217,7 @@
                                                 <div class="clearfix"></div>
                                             </div>
                                         </div>
-                                    </form>
-                                    
+                                    </form>                                    
                                 </div>
                             </div>
                         </div>
@@ -229,85 +234,5 @@
             cargarCargosSectores();
             InicializarFormularioRegistro();
         });
-    </script>
-    <script type="text/javascript">
-        function putaTabla(){
-    var $table = $('#bootstrap-table');
-
-    function operateFormatter(value, row, index) {
-        return [
-            '<a rel="tooltip" title="View" class="btn btn-link btn-info table-action view" href="javascript:void(0)">',
-            '<i class="fa fa-image"></i>',
-            '</a>',
-            '<a rel="tooltip" title="Edit" class="btn btn-link btn-warning table-action edit" href="javascript:void(0)">',
-            '<i class="fa fa-edit"></i>',
-            '</a>',
-            '<a rel="tooltip" title="Remove" class="btn btn-link btn-danger table-action remove" href="javascript:void(0)">',
-            '<i class="fa fa-remove"></i>',
-            '</a>'
-        ].join('');
-    }
-
-    $().ready(function() {
-        window.operateEvents = {
-            'click .view': function(e, value, row, index) {
-                info = JSON.stringify(row);
-
-                swal('You click view icon, row: ', info);
-                console.log(info);
-            },
-            'click .edit': function(e, value, row, index) {
-                info = JSON.stringify(row);
-
-                swal('You click edit icon, row: ', info);
-                console.log(info);
-            },
-            'click .remove': function(e, value, row, index) {
-                console.log(row);
-                $table.bootstrapTable('remove', {
-                    field: 'id',
-                    values: [row.id]
-                });
-            }
-        };
-
-        $table.bootstrapTable({
-            toolbar: ".toolbar",
-            clickToSelect: true,
-            showRefresh: false,
-            search: true,
-            showToggle: false,
-            showColumns: false,
-            pagination: true,
-            searchAlign: 'left',
-            pageSize: 4,
-            clickToSelect: false,
-            pageList: [8, 10, 25, 50, 100],
-
-            formatShowingRows: function(pageFrom, pageTo, totalRows) {
-                //do nothing here, we don't want to show the text "showing x of y from..."
-            },
-            formatRecordsPerPage: function(pageNumber) {
-                return pageNumber + " rows visible";
-            },
-            icons: {
-                refresh: 'fa fa-refresh',
-                toggle: 'fa fa-th-list',
-                columns: 'fa fa-columns',
-                detailOpen: 'fa fa-plus-circle',
-                detailClose: 'fa fa-minus-circle'
-            }
-        });
-
-        //activate the tooltips after the data table is initialized
-        $('[rel="tooltip"]').tooltip();
-
-        $(window).resize(function() {
-            $table.bootstrapTable('resetView');
-        });
-
-
-    });
-        }
-</script>    
+    </script>         
 </html>
