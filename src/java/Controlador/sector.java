@@ -5,6 +5,7 @@ import Modelo.Area;
 import Modelo.Canal;
 import Modelo.Empleado;
 import Modelo.Sector;
+import Modelo.Usuario;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.List;
@@ -212,11 +213,11 @@ public class sector extends HttpServlet {
                             Query queryEmpleado = sesion.createQuery("FROM Empleado WHERE Area="+area.getIdArea()+"");
                             List<Empleado> ListaEmpleado = queryEmpleado.list();
                             for(Empleado empleado : ListaEmpleado){
-                            
+                                
                                 sesion.beginTransaction();
-                                Query queryActualizarEmpleado = sesion.createSQLQuery("UPDATE Usuario SET Estado='"+estado+"' WHERE idUsuario="+empleado.getUsuario().getIdUsuario()+"");
-                                queryActualizarEmpleado.executeUpdate();
-                                sesion.beginTransaction().commit();
+                                Query queryUsuario = sesion.createSQLQuery("UPDATE usuario SET Estado='"+estado+"' WHERE idUsuario="+empleado.getUsuario().getIdUsuario()+"");
+                                queryUsuario.executeUpdate();
+                                sesion.getTransaction().commit();
                                 
                             }
                         

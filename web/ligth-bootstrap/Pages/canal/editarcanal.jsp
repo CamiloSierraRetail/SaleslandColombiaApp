@@ -23,6 +23,7 @@
                                     <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmEditarCanal" name="frmEditarCanal">
                                         <div class="card-header">
                                             <h4 class="card-title">Ingrese los datos</h4>
+                                            <p class="card-category">Es necesario tener presente que cuanda actualizas un canal los empleados que dependan de este sufriran cambios.</p>
                                         </div>
                                         <div class="card-body">
                                             <div class="card-body col-md-10 mr-auto ml-auto">
@@ -56,12 +57,10 @@
                                                 <fieldset>  
                                                     <div class="form-group">
                                                         <div class="row">
-                                                            <label class="control-label">Sector *</label>
-                                                            <div class="col-md-12 mr-auto ml-auto">
-                                                                <select id="cmbSector" name="EditarSectorCanal" class="selectpicker" data-title="Seleccionar Sector" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
-                                                                                                                                                                                                    
-                                                                </select>
-                                                            </div>
+                                                            <label class="control-label">Sector *</label>                                                            
+                                                            <select id="cmbSector" name="EditarSectorCanal" class="selectpicker" data-title="Seleccionar Sector" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+
+                                                            </select>                                                           
                                                         </div>
                                                     </div>
                                                 </fieldset>

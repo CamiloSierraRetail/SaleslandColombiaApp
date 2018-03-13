@@ -348,8 +348,13 @@ function verDatosCanal(){
             if (dt[3] == "Activo") {
                 $("#cmbEditarEstadoCanal").val('Activo');
             }else{
-                
+                if (dt[6] == "Inactivo") {
+                    
+                    $("#cmbEditarEstadoCanal").attr("disabled", "disabled");
+                }
                 $("#cmbEditarEstadoCanal").val('Inactivo');
+                
+                //$("#cmbEditarEstadoCanal").combobox("option", "disabled", true);
             }
             $("#txtEditarNombreCanal").val(dt[1]);
             $("#txtEditarDescripcionCanal").val(dt[2]);
@@ -376,9 +381,9 @@ $('#frmEditarCanal').validate({
             minlength:15,
             maxlength:80
         },
-        EditarEstadoSectorCanal:{
+        EditarSectorCanal:{
             
-            required:true,
+            required:true
             
         }
     },messages:{
@@ -395,7 +400,7 @@ $('#frmEditarCanal').validate({
             minlength:"Ingresa 15 caracteres como minimo",
             maxlength:"Ingresa 80 caracteres como maximo"
         },
-        EditarEstadoSectorCanal:{
+        EditarSectorCanal:{
             required:"Este campo es requerido",          
 
         }

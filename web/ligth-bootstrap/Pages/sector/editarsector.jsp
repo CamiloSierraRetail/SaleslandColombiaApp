@@ -23,7 +23,7 @@
                                     <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmEditarSector" name="frmEditarSector">
                                         <div class="card-header">
                                             <h4 class="card-title">Actualizar Sector</h4>
-                                            <p class="card-category">Actualiza los datos del sector.</p>
+                                            <p class="card-category">Es necesario tener presente que cuanda actualizas un sector los canales y areas que dependan de este sufriran cambios.</p>
                                         </div>
                                         <div class="card-body">
                                             <div class="card-body col-md-10 mr-auto ml-auto">
