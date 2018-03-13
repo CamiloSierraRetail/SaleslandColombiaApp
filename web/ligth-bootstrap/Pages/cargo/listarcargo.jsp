@@ -3,6 +3,7 @@
 <html>
     <head>
         <%@include file="../includes/cssInclude.jsp" %>
+<<<<<<< HEAD
         
         <title>Listado de canales - SaleslandColombia</title>       
     </head>
@@ -13,6 +14,14 @@
             <!-- Include Nav Lateral  -->
             <%@include file="../includes/navLateral.jsp" %>
 
+=======
+        <title>Listado de Cargos SaleslandColombia</title>       
+    </head>
+    <body>   
+        <div class="wrapper">
+            <!-- Include Nav Lateral  -->
+            <%@include file="../includes/navLateral.jsp" %>
+>>>>>>> master
             <div class="main-panel">
                 <!-- Include Nav Superior -->
                 <%@include file="../includes/navSuperior.jsp" %>
@@ -20,6 +29,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12 mr-auto ml-auto">
+<<<<<<< HEAD
                                 
                                 <div class="card bootstrap-table">
                                     <div class="card-body table-full-width">
@@ -27,12 +37,30 @@
                                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                                         </div>
                                         <table id="bootstrap-table" class="table">
+=======
+                                 <div class="card bootstrap-table">
+                                 <div class="card-header">
+                                        <h4 class="card-title">Nuestros Cargos</h4>
+                                        <p class="card-category">En este listado se muestran todas los cargos registrados en la empresa.</p>
+                                    </div>                                                   
+                                     <div class="toolbar" id="toolbar">
+                                            <a href="registrarcargo.jsp" class="btn btn-outline btn-round">                                                
+                                                Nuevo
+                                                <span class="btn-label">
+                                                    <i class="fa fa-plus"></i>
+                                                </span>
+                                            </a>
+                                            <!--        Here you can write extra buttons/actions for the toolbar              -->
+                                        </div>
+                                        <table id="bootstrap-table" data-toolbar="#toolbar" class="table">
+>>>>>>> master
                                             <thead>
                                                 <tr>
                                                     <th class="text-center">#</th>
                                                     <th>Nombre</th>
                                                     <th>Descripción</th>
                                                     <th>Salario</th>
+<<<<<<< HEAD
                                                     <th class="text-right">Tipo</th>
                                                     <th>Sector</th>
                                                     <th>Canal</th>
@@ -42,11 +70,26 @@
                                             </thead>
                                             <tbody id="listadoCargos">
 
+=======
+                                                    <th>Tipo</th>
+                                                    <th>Sector</th>
+                                                    <th>Canal</th>
+                                                    <th>Area</th>
+                                                    <th>Estado</th>                                                
+                                                    <th class="text-right">Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="listadoCargos">
+>>>>>>> master
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
+<<<<<<< HEAD
                               
+=======
+
+>>>>>>> master
                             </div>
                         </div>                                                                                                            
                     </div>
@@ -57,6 +100,7 @@
         </div>
     </body>        
     <%@include file="../includes/jsInclude.jsp" %>
+<<<<<<< HEAD
     <script>listarCargos()();</script>
     <script type="text/javascript">
     var $table = $('#bootstrap-table');
@@ -129,4 +173,10 @@
 
     });
 </script>
+=======
+    <script>
+        listarCargos();
+         $("#tituloPagina").text("Empresa-Cargos");
+    </script>
+>>>>>>> master
 </html>

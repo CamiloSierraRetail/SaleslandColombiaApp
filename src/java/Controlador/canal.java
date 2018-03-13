@@ -1,8 +1,9 @@
 package Controlador;
 
+import Modelo.Area;
 import Modelo.Canal;
+import Modelo.Empleado;
 import Modelo.Sector;
-import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -12,8 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 
 public class canal extends HttpServlet {
@@ -149,6 +148,7 @@ public class canal extends HttpServlet {
                 canalJson.add(canal.getEstado());
                 canalJson.add(canal.getSector().getIdSector());
                 canalJson.add(canal.getSector().getNombreSector());
+                canalJson.add(canal.getSector().getEstado());
                 
             }
             response.getWriter().write(canalJson.toJSONString());
@@ -177,6 +177,33 @@ public class canal extends HttpServlet {
             objCanal.setIdCanal(Integer.parseInt(idCanal));
             
             Session sesion = HibernateUtil.getSessionFactory().openSession();
+            
+            
+            /// ACTUALIZA EL ESTADO DEL AREA /////////////
+            Query queyBuscarAreas = sesion.createQuery("FROM Area WHERE Canal="+idCanal+"");
+            List<Area> listaAreas = queyBuscarAreas.list();
+            for(Area area : listaAreas){
+            
+                
+                Query queryEmpleado = sesion.createQuery("FROM Empleado WHERE Area = "+area.getIdArea()+"");
+                List<Empleado> listaEmpleado = queryEmpleado.list();
+                for(Empleado empleado : listaEmpleado){
+                
+                    /// ACTUALIZA EL ESTADO DE LOS USUARIOS QUE PERTENESCAN A ESTA AREA ///////////////
+                    sesion.beginTransaction();
+                    Query queryUsuario = sesion.createSQLQuery("UPDATE usuario SET Estado='"+Estado+"' WHERE idUsuario="+empleado.getUsuario().getIdUsuario()+"");
+                    queryUsuario.executeUpdate();
+                    sesion.getTransaction().commit();
+                }
+                
+            }
+            
+            sesion.beginTransaction();
+            Query queryAreas = sesion.createSQLQuery("UPDATE area SET Estado='"+Estado+"' WHERE Canal="+idCanal+"");
+            queryAreas.executeUpdate();
+            sesion.getTransaction().commit();
+            
+            
             sesion.beginTransaction();
             sesion.update(objCanal);
             sesion.getTransaction().commit();

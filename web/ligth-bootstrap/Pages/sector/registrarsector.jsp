@@ -18,10 +18,11 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-10 mr-auto ml-auto">
-                                <div class="card">
+                                <div class="card">                                    
                                     <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmRegistrarSector" name="frmRegistrarSector">
                                         <div class="card-header">
-                                            <h4 class="card-title">Ingrese los datos</h4>
+                                            <h4 class="card-title">Registro de Sector</h4>
+                                            <p class="card-category">Ingresa los datos</p>
                                         </div>
                                         <div class="card-body">
                                             <div class="card-body col-md-10 mr-auto ml-auto">
@@ -44,6 +45,7 @@
                                             </div>
                                         </div>
                                         <div class="card-footer text-right card-body col-md-10 mr-auto ml-auto">
+                                            <a href="listarsectores.jsp" class="btn btn-fill pull-left">Volver</a>
                                             <button type="submit" class="btn btn-info btn-fill pull-right">Confirmar</button>
                                             <div class="clearfix"></div>
                                         </div>   
@@ -59,4 +61,5 @@
         </div>
     </body>
     <%@include file="../includes/jsInclude.jsp" %>
+    <script>$("#tituloPagina").text("Empresa-Sectores");</script>
 </html>

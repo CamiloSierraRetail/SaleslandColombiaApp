@@ -31,6 +31,7 @@ public class Area {
     public Area() {
     }
 
+<<<<<<< HEAD
     public Area(String NombreArea, String Descripcion, String Estado, Canal Canal) {
         this.NombreArea = NombreArea;
         this.Descripcion = Descripcion;
@@ -38,12 +39,19 @@ public class Area {
         this.Canal = Canal;
     }
 
+=======
+>>>>>>> master
     public int getIdArea() {
         return IdArea;
     }
 
+<<<<<<< HEAD
     public void setIdArea(int IdCargo) {
         this.IdArea = IdCargo;
+=======
+    public void setIdArea(int IdArea) {
+        this.IdArea = IdArea;
+>>>>>>> master
     }
 
     public String getNombreArea() {
@@ -77,4 +85,12 @@ public class Area {
     public void setCanal(Canal Canal) {
         this.Canal = Canal;
     }
+
+    public Area(String NombreArea, String Descripcion, String Estado, Canal Canal) {
+        this.NombreArea = NombreArea;
+        this.Descripcion = Descripcion;
+        this.Estado = Estado;
+        this.Canal = Canal;
+    }
+
 }

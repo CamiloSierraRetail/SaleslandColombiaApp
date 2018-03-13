@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 function mostrartablabootstrap() {
     
     var $table = $("#bootstrap-table");
 
+=======
+function botstrapPaginacionTabla(tamanio,showRefresh, search, showToggle, showColumns, alineacion){
+    var $table = $('#bootstrap-table');
+    
+>>>>>>> master
     function operateFormatter(value, row, index) {
         return [
             '<a rel="tooltip" title="View" class="btn btn-link btn-info table-action view" href="javascript:void(0)">',
@@ -42,13 +48,13 @@ function mostrartablabootstrap() {
         $table.bootstrapTable({
             toolbar: ".toolbar",
             clickToSelect: true,
-            showRefresh: true,
-            search: true,
-            showToggle: true,
-            showColumns: true,
+            showRefresh: showRefresh,
+            search: search,
+            showToggle: showToggle,
+            showColumns: showColumns,
             pagination: true,
-            searchAlign: 'left',
-            pageSize: tamanioPagina,
+            searchAlign: alineacion,
+            pageSize: tamanio,
             clickToSelect: false,
             pageList: [8, 10, 25, 50, 100],
 
@@ -56,7 +62,7 @@ function mostrartablabootstrap() {
                 //do nothing here, we don't want to show the text "showing x of y from..."
             },
             formatRecordsPerPage: function(pageNumber) {
-                return pageNumber + " rows visible";
+                return pageNumber + 'Elementos visibles';
             },
             icons: {
                 refresh: 'fa fa-refresh',

@@ -1,540 +1,347 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <%@include file="../includes/cssInclude.jsp" %>
-        <title>Inicio - SaleslandColombia</title>
-        
-    </head>
-    <body>
-        <div class="wrapper">
-            <div class="sidebar" data-color="green" data-image="../assets/img/sidebar-5.jpg">
-                <!--
-                    Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
+<!doctype html>
+<html lang="en">
 
-                    Tip 2: you can also add an image using data-image tag
-                -->
-                <!-- Include Nav Lateral  -->
-                <%@include file="../includes/navLateral.jsp" %>
+<head>
+    <%@include file="../../Pages/includes/cssInclude.jsp" %>
+    <title>Inicio de sesion - SaleslandColombia</title>
+    
+    <style>        
+            @import url(https://fonts.googleapis.com/css?family=Montserrat+Alternates:400,700);
+            @import url(https://fonts.googleapis.com/css?family=Eczar);
+            
+            /** sass/scss/less code */
+
+            #container {
+                display: block;
+                width: 100%;
+                height: 100%;
+                padding-top: 84px;
+                box-sizing: border-box;
+            }
+
+            #loader {
+                display: block;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 58px;
+                height: 86px;
+                margin-top: -43px;
+                margin-left: -29px;
+                font-family: 'Montserrat Alternates', sans-serif;
+                line-height: 42px;
+                overflow: hidden;
+                opacity: 0;
+                animation: Loader 5s ease-in-out infinite;
+
+            }
+
+            #loader * {
+                display: block;
+                position: absolute;
+            }
+
+            @keyframes Loader {
+                5%, 100% {
+                    opacity: 1;
+                }
+                30% {
+                    width: 58px;
+                    margin-left: -29px;
+                }
+                40%, 82% {
+                    width: 282px;
+                    margin-left: -172px;
+                }
+                86%, 100% {
+                    width: 4px;
+                    margin-left: 2px;
+                }
+            }
+
+            #loader .rectangle {
+                left: 0;
+                bottom: 20px;
+                width: 58px;
+                height: 66px;
+                border: 2px solid #8D8E8F;
+                overflow: hidden;
+                box-sizing: border-box;
+                background-color: #fff;
+            }
+
+            #loader .rectangle span {
+                left: 24px;
+                bottom: 3px;
+                font-size: 36px;
+                font-weight: 700;
+                color: #8D8E8F;
+                animation: FillSpan 5s ease-in-out infinite;
+            }
+
+            #loader .rectangle.outlines {
+                animation: Outlines 5s ease-in-out infinite;
+            }
+
+            #loader .rectangle.fill {
+                height: 4px;
+                border-color: transparent;
+                background-color: #8D8E8F;
+                animation: Fill 5s ease-in-out infinite;
+            }
+
+            #loader .rectangle.fill span {
+                color: #fff;
+            }
+
+            @keyframes Outlines {
+                82% {
+                    width: 58px;
+                    height: 66px;
+                    bottom: 20px;
+                }
+                85%, 100% {
+                    width: 4px;
+                    bottom: 0;
+                }
+                85%, 86% {
+                    height: 86px;
+                    border-width: 2px;
+                }
+                89%, 100% {
+                    height: 0;
+                    border-width: 0;
+                }
+            }
+
+            @keyframes Fill {
+                30%, 100% {
+                    height: 66px;
+                }
+                30% {
+                    background-color: #e79723;
+                }
+                40%, 100% {
+                    background-color: #00ACC0;
+                }
+                82% {
+                    width: 58px;
+                    height: 66px;
+                    bottom: 20px;
+                }
+                85%, 100% {
+                    width: 4px;
+                    bottom: 0;
+                }
+                85%, 86% {
+                    height: 86px;
+                    border-width: 2px;
+                }
+                89%, 100% {
+                    height: 0;
+                    border-width: 0;
+                }
+            }
+
+            @keyframes FillSpan {
+                80% {
+                    left: 24px;
+                }
+                84%, 100% {
+                    left: -34px;
+                }
+                82% {
+                    bottom: 3px;
+                }
+                85%, 100% {
+                    bottom: 9px;
+                }
+            }
+
+            #loader .rinkin_coffee {
+                left: -220px;
+                top: 19px;
+                width: 220px;
+                animation: rinkinCoffee 5s ease-in-out infinite;
+            }
+
+            #loader .rinkin_coffee span {
+                display: inline-block;
+                position: static;
+                color: #FFFFFF;
+            }
+
+            #loader .rinkin_coffee span.rinkin {
+                font-size: 36px;
+                font-weight: 700;
+            }
+
+            #loader .rinkin_coffee span.coffee {
+                font-family: 'Eczar', serif;
+                font-size: 41px;
+                font-weight: 400;
+            }
+
+            @keyframes rinkinCoffee {
+                30% {
+                    left: -220px;
+                }
+                40%, 82% {
+                    left: 62px;
+                }
+                86%, 100% {
+                    left: -260px;
+                }
+            }
+
+            #loader .slogan {
+                right: 2px;
+                bottom: 0;
+                width: 165px;
+                font-size: 12px;
+                line-height: 16px;
+                color: #FFFFFF;
+                opacity: 0;
+                animation: Slogan 5s ease-in-out infinite;
+            }
+
+            @keyframes Slogan {
+                42% {
+                    opacity: 0;
+                }
+                48%, 100% {
+                    opacity: 1;
+                }
+                81% {
+                    right: 2px;
+                }
+                86%, 100% {
+                    right: 58px;
+                }
+            }
+
+
+
+        </style>
+    
+</head>
+
+<body>
+    <div class="wrapper wrapper-full-page">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute">
+            <div class="container">
+                <div class="navbar-wrapper">
+                    <a class="navbar-brand" href="#pablo"><strong>SALESLAND COLOMBIA</strong></a>
+                    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse justify-content-end" id="navbar">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="../dashboard.html" class="nav-link">
+                                <i class="material-icons" style="font-size: 25px;">dashboard</i>Dashboard                                
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a href="register.html" class="nav-link">
+                                <i class="material-icons" style="font-size: 25px;">person_add</i>Register
+                            </a>
+                        </li>
+                        <li class="nav-item  active ">
+                            <a href="login.html" class="nav-link">
+                                <i class="material-icons" style="font-size: 25px;">fingerprint</i>Login
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a href="lock.html" class="nav-link">
+                                <i class="material-icons" style="font-size: 25px;">lock</i>Lock
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="main-panel">
-                <!-- Include Nav Superior -->
-                <%@include file="../includes/navSuperior.jsp" %>
-                <div class="content">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-lg-3 col-sm-6">
-                                <div class="card card-stats">
-                                    <div class="card-body ">
-                                        <div class="row">
-                                            <div class="col-5">
-                                                <div class="icon-big text-center icon-warning">
-                                                    <i class="material-icons text-warning" style="font-size: 50px;">cloud_circle</i>
-                                                </div>
-                                            </div>
-                                            <div class="col-7">
-                                                <div class="numbers">
-                                                    <p class="card-category">Number</p>
-                                                    <h4 class="card-title">150GB</h4>
-                                                </div>
+        </nav>
+        <!-- End Navbar -->
+        <div class="full-page  section-image" data-color="black" data-image="../../assets/img/SpaceBackground.jpg">
+            <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
+            <div class="content">
+                <div class="container">
+                    
+                    <div class="col-md-4 ml-auto mr-auto">
+                        <form class="form" method="" action="">
+                            <div class="card card-login card-hidden">
+                                <div class="card-header ">
+                                    <h3 class="header text-center">Inicio de sesión</h3>
+                                </div>
+                                <div class="card-body ">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label>Email o documento</label>
+                                            <input type="email" placeholder="Ingrese el email o el documento" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Contraseña</label>
+                                            <input type="password" placeholder="Password" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="checkbox" value="" checked>
+                                                    <span class="form-check-sign"></span>
+                                                    Subscribe to newsletter
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-footer ">
-                                        <hr>
-                                        <div class="stats">
-                                            <i class="fa fa-refresh"></i> Update Now
-                                        </div>
-                                    </div>
+                                </div>
+                                <div class="card-footer ml-auto mr-auto">
+                                    <button type="submit" class="btn btn-warning btn-wd">Login</button>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-sm-6">
-                                <div class="card card-stats">
-                                    <div class="card-body ">
-                                        <div class="row">
-                                            <div class="col-5">
-                                                <div class="icon-big text-center icon-warning">
-                                                    <i class="material-icons text-success" style="font-size: 50px;">monetization_on</i>
-                                                </div>
-                                            </div>
-                                            <div class="col-7">
-                                                <div class="numbers">
-                                                    <p class="card-category">Revenue</p>
-                                                    <h4 class="card-title">$ 1,345</h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer ">
-                                        <hr>
-                                        <div class="stats">
-                                            <i class="fa fa-calendar-o"></i> Last day
-                                        </div>
-                                    </div>
-                                </div>
+                        </form>
+                    </div>
+                    
+                    <section id="container">
+                        <div id="loader">
+                            <div class="rinkin_coffee">
+                                <span class="rinkin">
+                                    alesland
+                                </span>
                             </div>
-                            <div class="col-lg-3 col-sm-6">
-                                <div class="card card-stats">
-                                    <div class="card-body ">
-                                        <div class="row">
-                                            <div class="col-5">
-                                                <div class="icon-big text-center icon-warning">
-                                                    <i class="material-icons text-danger" style="font-size: 50px;">bug_report</i>
-                                                </div>
-                                            </div>
-                                            <div class="col-7">
-                                                <div class="numbers">
-                                                    <p class="card-category">Errors</p>
-                                                    <h4 class="card-title">23</h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer ">
-                                        <hr>
-                                        <div class="stats">
-                                            <i class="fa fa-clock-o"></i> In the last hour
-                                        </div>
-                                    </div>
-                                </div>
+                            <span class="slogan">
+                                #HastaLaLunaNoParamos
+                            </span>
+                            <div class="rectangle outlines">
+                                <span>S</span>
                             </div>
-                            <div class="col-lg-3 col-sm-6">
-                                <div class="card card-stats">
-                                    <div class="card-body ">
-                                        <div class="row">
-                                            <div class="col-5">
-                                                <div class="icon-big text-center icon-warning">
-                                                    <i class="material-icons text-primary" style="font-size: 50px">favorite</i>
-                                                </div>
-                                            </div>
-                                            <div class="col-7">
-                                                <div class="numbers">
-                                                    <p class="card-category">Followers</p>
-                                                    <h4 class="card-title">+45K</h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer ">
-                                        <hr>
-                                        <div class="stats">
-                                            <i class="fa fa-refresh"></i> Update now
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="rectangle fill">
+                                <span>S</span>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="card ">
-                                    <div class="card-header ">
-                                        <h4 class="card-title">Global Sales by Top Locations</h4>
-                                        <p class="card-category">All products that were shipped</p>
-                                    </div>
-                                    <div class="card-body ">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="table-responsive">
-                                                    <table class="table">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    <div class="flag">
-                                                                        <img src="../../assets/img/flags/US.png" </div>
-                                                                </td>
-                                                                <td>USA</td>
-                                                                <td class="text-right">
-                                                                    2.920
-                                                                </td>
-                                                                <td class="text-right">
-                                                                    53.23%
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <div class="flag">
-                                                                        <img src="../../assets/img/flags/DE.png" </div>
-                                                                </td>
-                                                                <td>Germany</td>
-                                                                <td class="text-right">
-                                                                    1.300
-                                                                </td>
-                                                                <td class="text-right">
-                                                                    20.43%
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <div class="flag">
-                                                                        <img src="../../assets/img/flags/AU.png" </div>
-                                                                </td>
-                                                                <td>Australia</td>
-                                                                <td class="text-right">
-                                                                    760
-                                                                </td>
-                                                                <td class="text-right">
-                                                                    10.35%
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <div class="flag">
-                                                                        <img src="../../assets/img/flags/GB.png" </div>
-                                                                </td>
-                                                                <td>United Kingdom</td>
-                                                                <td class="text-right">
-                                                                    690
-                                                                </td>
-                                                                <td class="text-right">
-                                                                    7.87%
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <div class="flag">
-                                                                        <img src="../../assets/img/flags/RO.png" </div>
-                                                                </td>
-                                                                <td>Romania</td>
-                                                                <td class="text-right">
-                                                                    600
-                                                                </td>
-                                                                <td class="text-right">
-                                                                    5.94%
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <div class="flag">
-                                                                        <img src="../../assets/img/flags/BR.png" </div>
-                                                                </td>
-                                                                <td>Brasil</td>
-                                                                <td class="text-right">
-                                                                    550
-                                                                </td>
-                                                                <td class="text-right">
-                                                                    4.34%
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    </div>
-                                                    </div>
-                                                    <div class="col-md-6 ml-auto mr-auto">
-                                                        <div id="worldMap" style="height: 300px;"></div>
-                                                    </div>
-                                                    </div>
-                                                    </div>
-                                                    </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <div class="card ">
-                                                            <div class="card-header ">
-                                                                <h4 class="card-title">Email Statistics</h4>
-                                                                <p class="card-category">Last Campaign Performance</p>
-                                                            </div>
-                                                            <div class="card-body ">
-                                                                <div id=chartEmail class="ct-chart ct-perfect-fourth"></div>
-                                                            </div>
-                                                            <div class="card-footer ">
-                                                                <div class="legend">
-                                                                    <i class="fa fa-circle text-info"></i> Open
-                                                                    <i class="fa fa-circle text-danger"></i> Bounce
-                                                                    <i class="fa fa-circle text-warning"></i> Unsubscribe
-                                                                </div>
-                                                                <hr>
-                                                                <div class="stats">
-                                                                    <i class="fa fa-clock-o"></i> Campaign sent 2 days ago
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <div class="card ">
-                                                            <div class="card-header ">
-                                                                <h4 class="card-title">Users Behavior</h4>
-                                                                <p class="card-category">24 Hours performance</p>
-                                                            </div>
-                                                            <div class="card-body ">
-                                                                <div id=chartHours class="ct-chart"></div>
-                                                            </div>
-                                                            <div class="card-footer ">
-                                                                <div class="legend">
-                                                                    <i class="fa fa-circle text-info"></i> Open
-                                                                    <i class="fa fa-circle text-danger"></i> Click
-                                                                    <i class="fa fa-circle text-warning"></i> Click Second Time
-                                                                </div>
-                                                                <hr>
-                                                                <div class="stats">
-                                                                    <i class="fa fa-history"></i> Updated 3 minutes ago
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="card ">
-                                                            <div class="card-header ">
-                                                                <h4 class="card-title">2017 Sales</h4>
-                                                                <p class="card-category">All products including Taxes</p>
-                                                            </div>
-                                                            <div class="card-body ">
-                                                                <div id="chartActivity" class="ct-chart"></div>
-                                                            </div>
-                                                            <div class="card-footer ">
-                                                                <div class="legend">
-                                                                    <i class="fa fa-circle text-info"></i> Tesla Model S
-                                                                    <i class="fa fa-circle text-danger"></i> BMW 5 Series
-                                                                </div>
-                                                                <hr>
-                                                                <div class="stats">
-                                                                    <i class="fa fa-check"></i> Data information certified
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="card  card-tasks">
-                                                            <div class="card-header ">
-                                                                <h4 class="card-title">Tasks</h4>
-                                                                <p class="card-category">Backend development</p>
-                                                            </div>
-                                                            <div class="card-body ">
-                                                                <div class="table-full-width">
-                                                                    <table class="table">
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <div class="form-check">
-                                                                                        <label class="form-check-label">
-                                                                                            <input class="form-check-input" type="checkbox" value="">
-                                                                                            <span class="form-check-sign"></span>
-                                                                                        </label>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td>Sign contract for "What are conference organizers afraid of?"</td>
-                                                                                <td class="td-actions text-right">
-                                                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                                                        <i class="fa fa-edit"></i>
-                                                                                    </button>
-                                                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                                                        <i class="fa fa-times"></i>
-                                                                                    </button>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <div class="form-check">
-                                                                                        <label class="form-check-label">
-                                                                                            <input class="form-check-input" type="checkbox" value="" checked>
-                                                                                            <span class="form-check-sign"></span>
-                                                                                        </label>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                                                                                <td class="td-actions text-right">
-                                                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                                                        <i class="fa fa-edit"></i>
-                                                                                    </button>
-                                                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                                                        <i class="fa fa-times"></i>
-                                                                                    </button>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <div class="form-check">
-                                                                                        <label class="form-check-label">
-                                                                                            <input class="form-check-input" type="checkbox" value="" checked>
-                                                                                            <span class="form-check-sign"></span>
-                                                                                        </label>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                                                                                </td>
-                                                                                <td class="td-actions text-right">
-                                                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                                                        <i class="fa fa-edit"></i>
-                                                                                    </button>
-                                                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                                                        <i class="fa fa-times"></i>
-                                                                                    </button>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <div class="form-check">
-                                                                                        <label class="form-check-label">
-                                                                                            <input class="form-check-input" type="checkbox" checked>
-                                                                                            <span class="form-check-sign"></span>
-                                                                                        </label>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td>Create 4 Invisible User Experiences you Never Knew About</td>
-                                                                                <td class="td-actions text-right">
-                                                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                                                        <i class="fa fa-edit"></i>
-                                                                                    </button>
-                                                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                                                        <i class="fa fa-times"></i>
-                                                                                    </button>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <div class="form-check">
-                                                                                        <label class="form-check-label">
-                                                                                            <input class="form-check-input" type="checkbox" value="">
-                                                                                            <span class="form-check-sign"></span>
-                                                                                        </label>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td>Read "Following makes Medium better"</td>
-                                                                                <td class="td-actions text-right">
-                                                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                                                        <i class="fa fa-edit"></i>
-                                                                                    </button>
-                                                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                                                        <i class="fa fa-times"></i>
-                                                                                    </button>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <div class="form-check">
-                                                                                        <label class="form-check-label">
-                                                                                            <input class="form-check-input" type="checkbox" value="" checked>
-                                                                                            <span class="form-check-sign"></span>
-                                                                                        </label>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td>Unfollow 5 enemies from twitter</td>
-                                                                                <td class="td-actions text-right">
-                                                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                                                        <i class="fa fa-edit"></i>
-                                                                                    </button>
-                                                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                                                        <i class="fa fa-times"></i>
-                                                                                    </button>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-                                                            <div class="card-footer ">
-                                                                <hr>
-                                                                <div class="stats">
-                                                                    <i class="now-ui-icons loader_refresh spin"></i> Updated 3 minutes ago
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- INCLUDE FOOTER -->
-                                        <%@include  file="../includes/footer.jsp" %>
-                                    </div>
-                                </div>
-                                <div class="fixed-plugin">
-                                    <div class="dropdown show-dropdown">
-                                        <a href="#" data-toggle="dropdown">
-                                            <i class="fa fa-cog fa-2x"> </i>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li class="header-title"> Sidebar Style</li>
-                                            <li class="adjustments-line">
-                                                <a href="javascript:void(0)" class="switch-trigger">
-                                                    <p>Background Image</p>
-                                                    <label class="switch-image">
-                                                        <input type="checkbox" data-toggle="switch" checked="" data-on-color="info" data-off-color="info">
-                                                        <span class="toggle"></span>
-                                                    </label>
-                                                    <div class="clearfix"></div>
-                                                </a>
-                                            </li>
-                                            <li class="adjustments-line">
-                                                <a href="javascript:void(0)" class="switch-trigger">
-                                                    <p>Sidebar Mini</p>
-                                                    <label class="switch-mini">
-                                                        <input type="checkbox" data-toggle="switch" data-on-color="info" data-off-color="info">
-                                                        <span class="toggle"></span>
-                                                    </label>
-                                                    <div class="clearfix"></div>
-                                                </a>
-                                            </li>
-                                            <li class="adjustments-line">
-                                                <a href="javascript:void(0)" class="switch-trigger">
-                                                    <p>Fixed Navbar</p>
-                                                    <label class="switch-nav">
-                                                        <input type="checkbox" data-toggle="switch" data-on-color="info" data-off-color="info">
-                                                        <span class="toggle"></span>
-                                                    </label>
-                                                    <div class="clearfix"></div>
-                                                </a>
-                                            </li>
-                                            <li class="adjustments-line">
-                                                <a href="javascript:void(0)" class="switch-trigger background-color">
-                                                    <p>Filters</p>
-                                                    <div class="pull-right">
-                                                        <span class="badge filter badge-black" data-color="black"></span>
-                                                        <span class="badge filter badge-azure" data-color="azure"></span>
-                                                        <span class="badge filter badge-green" data-color="green"></span>
-                                                        <span class="badge filter badge-orange active" data-color="orange"></span>
-                                                        <span class="badge filter badge-red" data-color="red"></span>
-                                                        <span class="badge filter badge-purple" data-color="purple"></span>
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                </a>
-                                            </li>
-                                            <li class="header-title">Sidebar Images</li>
-                                            <li class="active">
-                                                <a class="img-holder switch-trigger" href="javascript:void(0)">
-                                                    <img src="../assets/img/sidebar-1.jpg" alt="" />
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="img-holder switch-trigger" href="javascript:void(0)">
-                                                    <img src="../assets/img/sidebar-3.jpg" alt="" />
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="img-holder switch-trigger" href="javascript:void(0)">
-                                                    <img src="../assets/img/sidebar-4.jpg" alt="" />
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="img-holder switch-trigger" href="javascript:void(0)">
-                                                    <img src="../assets/img/sidebar-5.jpg" alt="" />
-                                                </a>
-                                            </li>
-                                            <li class="button-container">
-                                                <div>
-                                                    <a href="http://www.creative-tim.com/product/light-bootstrap-dashboard" target="_blank" class="btn btn-info btn-block">Get free demo!</a>
-                                                </div>
-                                            </li>
-                                            <li class="button-container">
-                                                <div>
-                                                    <a href="http://www.creative-tim.com/product/light-bootstrap-dashboard-pro" target="_blank" class="btn btn-warning btn-block">Buy now!</a>
-                                                </div>
-                                            </li>
-                                            <li class="button-container">
-                                                <div>
-                                                    <a href="https://demos.creative-tim.com/light-bootstrap-dashboard-pro/documentation/tutorial-components.html" target="_blank" class="btn btn-danger btn-block">Documention</a>
-                                                </div>
-                                            </li>
-                                            <li class="header-title" id="sharrreTitle">Thank you for sharing!</li>
-                                            <li class="button-container">
-                                                <button id="twitter" class="btn btn-social btn-twitter btn-round twitter-sharrre"><i class="fa fa-twitter"></i> · 256</button>
-                                                <button id="facebook" class="btn btn-social btn-facebook btn-round facebook-sharrre"><i class="fa fa-facebook-square"></i> · 426</button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-    </body>
-    <%@include file="../includes/jsInclude.jsp" %>
+                    </section>
+                    
+                    
+                </div>
+            </div>
+        </div>
+        <%@include file="../../Pages/includes/footer.jsp" %>
+    </div>    
+</body>
+<%@include file="../../Pages/includes/jsInclude.jsp" %>
+<script>
+    $(document).ready(function() {
+        demo.checkFullPageBackgroundImage();
+
+        setTimeout(function() {
+            // after 1000 ms we add the class animated to the login/register card
+            $('.card').removeClass('card-hidden');
+            $("#container").hide();
+        }, 4500)
+    });
+</script>
 </html>

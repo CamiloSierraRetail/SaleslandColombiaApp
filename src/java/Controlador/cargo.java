@@ -66,6 +66,7 @@ public class cargo extends HttpServlet {
                         + "<td>" + cargo.getCanal() + "</td>"
                         + "<td>" + cargo.getArea() + "</td>"
                         + "<td>" + cargo.getEstado() + "</td>"
+<<<<<<< HEAD
                         + "<td class='td-actions text-right'>"
                         + "<a href='/SaleslandColombiaApp/sector/cargardatoscargos/" + cargo.getIdCargo() + "' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Edit Profile'>"
                         + "<i class='fa fa-edit'></i>"
@@ -74,6 +75,19 @@ public class cargo extends HttpServlet {
                         + "<i class='fa fa-times'></i>"
                         + "</a>"
                         + "</td>"
+=======
+                          + "<td class='td-actions text-right'>"
+                                                + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='Ver Sector'>"
+                                                    + "<i class='fa fa-user'></i>"
+                                                + "</a>"   
+                                                + "<a href='/SaleslandColombiaApp/ligth-bootstrap/Pages/cargo/editarcargo.jsp?_"+cargo.getIdCargo()+"' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
+                                                    + "<i class='fa fa-edit'></i>"
+                                                + "</a>"
+                                                + "<a href='#' rel='tooltip' title='' class='btn btn-danger btn-link btn-xs' data-original-title='Eliminar'>"
+                                                    + "<i class='fa fa-times'></i>"
+                                                + "</a>"
+                                              + "</td>"
+>>>>>>> master
                         + "</tr>");
                 countRows++;
             }
@@ -128,6 +142,7 @@ public class cargo extends HttpServlet {
     private void cargaDatosCargo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             System.out.println("...............................................");
+<<<<<<< HEAD
             String idCargo = request.getParameter("idCargo");
             System.out.println("----------------> " + idCargo);
             Session sesion = HibernateUtil.getSessionFactory().openSession();
@@ -184,6 +199,65 @@ public class cargo extends HttpServlet {
 
             System.err.println(e);
             response.getWriter().write("500");
+=======
+            String IdCargo = request.getParameter("idCargo");
+            System.out.println("----------------> " + IdCargo);
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Query query = sesion.createQuery("FROM Cargo WHERE idCargo=" + IdCargo + "");
+            JSONArray canalJson = new JSONArray();
+            List<Cargo> listaCargo = query.list();
+            for (Cargo cargo : listaCargo) {
+
+                canalJson.add(cargo.getIdCargo());
+                canalJson.add(cargo.getNombreCargo());
+                canalJson.add(cargo.getDescripcion());
+                canalJson.add(cargo.getSalario());
+                canalJson.add(cargo.getTipo());
+                canalJson.add(cargo.getEstado());
+                canalJson.add(cargo.getSector());
+                canalJson.add(cargo.getCanal());
+                canalJson.add(cargo.getArea());
+            }
+            response.getWriter().write(canalJson.toJSONString());
+
+        } catch (Exception e) {
+
+            System.err.println(e);
+            response.getWriter().write("500");
+        }
+
+    }
+    
+    private void editarCargo(HttpServletRequest request, HttpServletResponse response)
+         throws ServletException, IOException {
+                 System.out.println("ENTRasdasdasdsadsadsadassdOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        try{
+            String id = request.getParameter("IdCargo");
+             System.out.println("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+            int IdCargo = Integer.parseInt(id);
+            System.out.println(IdCargo);
+            String estado = request.getParameter("Estado");
+             String nombreCargo = request.getParameter("NombreCargo");
+            String descripcion = request.getParameter("Descripcion");
+            String salario = request.getParameter("Salario");
+            String tipo = request.getParameter("Tipo");
+            String sector = request.getParameter("Sector");
+            String canal = request.getParameter("Canal");
+            String area = request.getParameter("Area");
+            
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+            Query query = sesion.createSQLQuery("UPDATE cargo SET Estado='"+estado+"', NombreCargo='"+nombreCargo+"', Descripcion='"+descripcion+"', Salario='"+salario+"', Tipo='"+tipo+"', Sector='"+sector+"', Canal='"+canal+"', Area='"+area+"' WHERE idCargo="+IdCargo+"");
+            query.executeUpdate();
+            sesion.getTransaction().commit();
+            sesion.close();
+           
+            response.getWriter().write("200");
+            
+        }catch(Exception e){
+            response.getWriter().write("500");
+            System.err.println(e);
+>>>>>>> master
         }
     } 
 
@@ -198,7 +272,11 @@ public class cargo extends HttpServlet {
             String Canal = request.getParameter("Canal");
             String Area = request.getParameter("Area");
             Session sesion = HibernateUtil.getSessionFactory().openSession();
+<<<<<<< HEAD
             Cargo objCargo = new Cargo(NombreCargo, Descripcion, Salario, Tipo, "Activo", Sector, Canal, Area);
+=======
+            Cargo objCargo = new Cargo(NombreCargo, Descripcion, Double.parseDouble(Salario), Tipo, "Activo", Sector, Canal, Area);
+>>>>>>> master
             sesion.beginTransaction();
             sesion.save(objCargo);
             sesion.getTransaction().commit();

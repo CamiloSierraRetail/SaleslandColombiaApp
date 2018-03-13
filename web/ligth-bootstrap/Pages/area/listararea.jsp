@@ -6,7 +6,11 @@
         <title>Listado de Areas SaleslandColombia</title>       
     </head>
     <body>   
+<<<<<<< HEAD
        <div class="wrapper">
+=======
+        <div class="wrapper">
+>>>>>>> master
             <!-- Include Nav Lateral  -->
             <%@include file="../includes/navLateral.jsp" %>
             <div class="main-panel">
@@ -16,12 +20,27 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12 mr-auto ml-auto">
+<<<<<<< HEAD
                                 <div class="card bootstrap-table">
                                     <div class="card-body table-full-width">
                                         <div class="toolbar">
+=======
+                                 <div class="card bootstrap-table">
+                                 <div class="card-header">
+                                        <h4 class="card-title">Nuestras Areas</h4>
+                                        <p class="card-category">En este listado se muestran todas las areas registradas en la empresa.</p>
+                                    </div>                                                   
+                                     <div class="toolbar" id="toolbar">
+                                            <a href="registrararea.jsp" class="btn btn-outline btn-round">                                                
+                                                Nuevo
+                                                <span class="btn-label">
+                                                    <i class="fa fa-plus"></i>
+                                                </span>
+                                            </a>
+>>>>>>> master
                                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                                         </div>
-                                        <table id="bootstrap-table" class="table">
+                                        <table id="bootstrap-table" data-toolbar="#toolbar" class="table">
                                             <thead>
                                                 <tr>
                                                     <th class="text-center">#</th>
@@ -37,7 +56,7 @@
                                         </table>
                                     </div>
                                 </div>
-                              
+
                             </div>
                         </div>                                                                                                            
                     </div>
@@ -50,8 +69,13 @@
     <%@include file="../includes/jsInclude.jsp" %>
     <script>
         listarArea();
+<<<<<<< HEAD
         mostrartablabootstrap();    
     </script>
 
 
+=======
+         $("#tituloPagina").text("Empresa-Areas");
+    </script>
+>>>>>>> master
 </html>

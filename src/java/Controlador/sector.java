@@ -1,7 +1,11 @@
 package Controlador;
 
+import Modelo.Administrador;
+import Modelo.Area;
 import Modelo.Canal;
+import Modelo.Empleado;
 import Modelo.Sector;
+import Modelo.Usuario;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.List;
@@ -160,10 +164,77 @@ public class sector extends HttpServlet {
             String descripcion = request.getParameter("DescripcionSector");
             
             Session sesion = HibernateUtil.getSessionFactory().openSession();
+            
+            Query querySector = sesion.createQuery("FROM Sector WHERE idSector = "+id+"");
+            List<Sector> listaSector = querySector.list();
+            for(Sector sector : listaSector){
+            
+                if (!sector.getEstado().equals(estado)) {
+                
+                    sesion.beginTransaction();
+                    Query queryActualizarCanal = sesion.createSQLQuery("UPDATE Canal SET Estado='"+estado+"' WHERE Sector="+id+"");
+                    queryActualizarCanal.executeUpdate();
+                    sesion.getTransaction().commit();
+
+                    Query queryCanal = sesion.createQuery("FROM Canal WHERE Sector = "+id+"");
+                    List<Canal> listaCanal = queryCanal.list();
+                    for (Canal canal : listaCanal){
+
+                        sesion.beginTransaction();
+                        Query queryActualizarArea = sesion.createSQLQuery("UPDATE Area SET Estado = '"+estado+"' WHERE Canal="+canal.getIdCanal()+"");
+                        queryActualizarArea.executeUpdate();
+                        sesion.getTransaction().commit();
+
+                    }
+                    //////////////// STATUS ADMINISTRADORES Y USUARIOS /////////////
+                    
+                    //////////// STATUS PARA CANAL /////////////////
+                    Query queryCanalUsuarios = sesion.createQuery("FROM Canal WHERE Sector = "+id+"");
+                    List<Canal> listaCanalUsuarios = queryCanalUsuarios.list();
+                    for(Canal canal : listaCanalUsuarios){
+                    
+                        Query queryAdministrador = sesion.createQuery("FROM Administrador WHERE Canal='"+canal.getIdCanal()+"'");
+                        List<Administrador>listaAdministrador = queryAdministrador.list();
+                        for(Administrador administrador : listaAdministrador){
+                            System.out.println("-----------------> for administrador"+ listaAdministrador.size());
+                            sesion.beginTransaction();
+                            Query queryEstadoAdministrador = sesion.createSQLQuery("UPDATE Usuario SET Estado='"+estado+"' WHERE idUSuario="+administrador.getUsuario().getIdUsuario()+"");
+                            queryEstadoAdministrador.executeUpdate();
+                            sesion.beginTransaction().commit();
+                        
+                        }
+                        
+                        
+                        ///////////// STATUS PARA AREAS /////////////////
+                        Query queryArea = sesion.createQuery("FROM Area WHERE Canal= "+canal.getIdCanal()+"");
+                        List<Area>ListaArea = queryArea.list();
+                        for(Area area : ListaArea){
+                        
+                            Query queryEmpleado = sesion.createQuery("FROM Empleado WHERE Area="+area.getIdArea()+"");
+                            List<Empleado> ListaEmpleado = queryEmpleado.list();
+                            for(Empleado empleado : ListaEmpleado){
+                                
+                                sesion.beginTransaction();
+                                Query queryUsuario = sesion.createSQLQuery("UPDATE usuario SET Estado='"+estado+"' WHERE idUsuario="+empleado.getUsuario().getIdUsuario()+"");
+                                queryUsuario.executeUpdate();
+                                sesion.getTransaction().commit();
+                                
+                            }
+                        
+                        }
+                        
+                    }
+
+                }
+                
+            
+            }
+            
             sesion.beginTransaction();
             Query query = sesion.createSQLQuery("UPDATE sector SET Estado='"+estado+"', NombreSector='"+nombre+"', Descripcion='"+descripcion+"' WHERE idSector="+idEstado+"");
             query.executeUpdate();
             sesion.getTransaction().commit();
+            
             sesion.close();
            
             response.getWriter().write("200");

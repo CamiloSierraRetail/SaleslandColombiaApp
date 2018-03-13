@@ -22,19 +22,18 @@
                                 <div class="card">
                                     <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmRegistrarCanal" name="frmRegistrarCanal">
                                         <div class="card-header">
-                                            <h4 class="card-title">Ingrese los datos del canal</h4>
+                                            <h4 class="card-title">Registro de Canales</h4>
+                                            <p class="card-category">Ingresa los datos correctamente por favor. </p>
                                         </div>
                                         <div class="card-body">
                                             <div class="card-body col-md-10 mr-auto ml-auto">
                                                 <fieldset>  
                                                     <div class="form-group">
                                                         <div class="row">
-                                                            <label class="control-label">Sector *</label>
-                                                            <div class="col-md-12 mr-auto ml-auto">
-                                                                <select id="cmbSector" name="Sector" class="selectpicker" data-title="Selecciona el sector" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
-                                                                    
-                                                                </select>
-                                                            </div>
+                                                            <label class="control-label">Sector *</label>                                                            
+                                                            <select id="cmbSector" name="Sector" class="selectpicker" data-title="Selecciona el sector" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+
+                                                            </select>                                                            
                                                         </div>
                                                     </div>
                                                 </fieldset>
@@ -57,6 +56,7 @@
                                             </div>
                                         </div>
                                         <div class="card-footer text-right card-body col-md-10 mr-auto ml-auto">
+                                            <a href="listarcanal.jsp" class="btn btn-fill pull-left">Volver</a>
                                             <button type="submit" class="btn btn-info btn-fill pull-right">Confirmar</button>
                                             <div class="clearfix"></div>
                                         </div>   
@@ -75,9 +75,10 @@
     <script>
         
         $(document).ready(function (){
-           cargarSectores();
-            
+               cargarSectores();          
         });
+         $("#tituloPagina").text("Empresa-Canales");
         
     </script>
+    
 </html>

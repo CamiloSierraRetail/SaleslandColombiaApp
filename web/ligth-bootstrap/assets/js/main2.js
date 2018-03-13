@@ -53,7 +53,11 @@ $('#frmRegistrarArea').validate({
                         var descripcionArea = $("#txtDescripcionArea").val();
                         $.post("/SaleslandColombiaApp/area/registrararea", {CanalArea: canalArea, NombreArea: nombreArea, descripcionArea: descripcionArea}, function (responsetext) {
                             if (responsetext == "200") {
+<<<<<<< HEAD
                                 swal("Registro exitoso", "El canal ha sido registrado exitosamente", "success").then((willDelete) => {
+=======
+                                swal("Registro exitoso", "El Area ha sido registrada exitosamente", "success").then((willDelete) => {
+>>>>>>> master
                                     if (willDelete) {
                                         window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/area/listararea.jsp";
                                     }
@@ -74,13 +78,23 @@ function listarArea() {
 
         if (responseText == "500") {
 
+<<<<<<< HEAD
             swal("Ocurrio un error", "Lo sentimos tus datos no fueron registrados, por favor intentalo nuevamente.", "error");
+=======
+            swal("Ocurrio un error", "Lo sentimos a ocurrido un problema, por favor intentalo nuevamente.", "error");
+>>>>>>> master
 
         } else {
 
             $("#listadoCanales").html("");
             $("#listadoArea").append(responseText);
         }
+<<<<<<< HEAD
+=======
+         // orden de datos tamaño,showRefresh, search, showToggle, showColumns, alineacion, texto
+        //tamanio,showRefresh, search, showToggle, showColumns, alineacion, texto
+        botstrapPaginacionTabla(5, false, true, true, true, 'right');
+>>>>>>> master
 
     });
 }
@@ -92,7 +106,11 @@ function verDatosArea() {
     $.post("/SaleslandColombiaApp/area/cargardatosarea", {idArea: IdArea[1]}, function (responseText) {
 
         if (responseText == "500") {
+<<<<<<< HEAD
             swal("Ocurrio un error", "Lo sentimos, ocurrió un erro en el servidor, por favor intentalo nuevamente", "error");
+=======
+            swal("Ocurrio un error", "Lo sentimos, ocurrió un error en el servidor, por favor intentalo nuevamente", "error");
+>>>>>>> master
         } else {
 
             var dt = JSON.parse(responseText);
@@ -164,7 +182,11 @@ $('#frmEditarArea').validate({
         swal({
 
             title: "Editar Area",
+<<<<<<< HEAD
             text: "¿Está seguro que desea reemplazar los datos del canal?",
+=======
+            text: "¿Está seguro que desea reemplazar los datos del Area?",
+>>>>>>> master
             icon: "info",
             buttons: true,
             closeonconfirm: false,
@@ -182,7 +204,11 @@ $('#frmEditarArea').validate({
                         $.post("/SaleslandColombiaApp/area/editararea", {IdArea: idArea[1], NombreArea: nombreArea, DescripcionArea: descripcionArea, EstadoArea: estadoArea, CanalArea: canalArea}, function (responsetext) {
                             if (responsetext == "200") {
 
+<<<<<<< HEAD
                                 swal("Cambios Guardados", "Los cambios del sector han guardado exitosamente", "success").then((willDelete) => {
+=======
+                                swal("Cambios Guardados", "Los cambios del area han guardado exitosamente", "success").then((willDelete) => {
+>>>>>>> master
                                     if (willDelete) {
                                         window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/area/listararea.jsp";
                                     }
@@ -198,13 +224,21 @@ $('#frmEditarArea').validate({
                 });
     }
 });
+<<<<<<< HEAD
 //CARGAR CANAL
+=======
+//////CARGAR CANAL
+>>>>>>> master
 function cargarCanal() {
 
     $.post("/SaleslandColombiaApp/canal/cargacombocanal", function (responseText) {
 
         if (responseText == 500) {
+<<<<<<< HEAD
             swal("Ocurrio un error", "Lo ocuttió un error al intentar cargar la información.", "error");
+=======
+            swal("Ocurrio un error", "Ocurrio un error al intentar cargar la información.", "error");
+>>>>>>> master
         } else {
 
             var dt = JSON.parse(responseText);
@@ -251,7 +285,11 @@ $('#frmRegistrarCargos').validate({
         },
         Salario: {
             required: true,
+<<<<<<< HEAD
             minlength: 15,
+=======
+            minlength: 6,
+>>>>>>> master
             maxlength: 80
         },
         Tipo: {
@@ -278,7 +316,12 @@ $('#frmRegistrarCargos').validate({
             maxlength: "Ingresa 80 caracteres como maximo"
         },
         Salario: {
+<<<<<<< HEAD
             required: "Este campo es requerido"
+=======
+            required: "Este campo es requerido",
+            minlength: "El salario minimo es de 781,242 "
+>>>>>>> master
         },
         Tipo: {
             required: "Este campo es requerido"
@@ -322,14 +365,22 @@ $('#frmRegistrarCargos').validate({
                         var area = $("#cmbArea").val();
                         $.post("/SaleslandColombiaApp/cargo/registrarcargo", {NombreCargo: nombreCargo, Descripcion: descripcionCargo, Salario: salario, Tipo: tipo, Sector: sector, Canal: canal, Area: area }, function (responsetext) {
                             if (responsetext == "200") {
+<<<<<<< HEAD
                                 swal("Registro exitoso", "El canal ha sido registrado exitosamente", "success").then((willDelete) => {
+=======
+                                swal("Registro exitoso", "El Cargo ha sido registrado exitosamente", "success").then((willDelete) => {
+>>>>>>> master
                                     if (willDelete) {
                                         window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/cargo/listarcargo.jsp";
                                     }
                                 });
 
                             } else {
+<<<<<<< HEAD
                                 swal("Ocurrio un error", "Lo sentimos tus datos de REGISTRO no fueron registrados, por favor intentalo nuevamente.", "error");
+=======
+                                swal("Ocurrio un error", "Lo sentimos ha ocurrido un error, por favor intentalo nuevamente.", "error");
+>>>>>>> master
                             }
                         });
                     }
@@ -364,6 +415,7 @@ function cargarAreas(){
                 }
 
 
+<<<<<<< HEAD
             }
 
             /*for (var key in dt) {
@@ -374,9 +426,151 @@ function cargarAreas(){
              
              }
              }*/
+=======
+            }      
+>>>>>>> master
         }
 
     });
 }
 
+<<<<<<< HEAD
 
+=======
+/////////////////FUNCION CARGAR CARGOS//////////////////////
+function verDatosCargo() {
+
+    var url = "" + window.location + "";
+    var IdCargo = url.split("_");
+    $.post("/SaleslandColombiaApp/cargo/cargardatoscargo", {idCargo: IdCargo[1]}, function (responseText) {
+
+        if (responseText == "500") {
+            swal("Ocurrio un error", "Lo sentimos, ocurrió un error en el servidor, por favor intentalo nuevamente", "error");
+        } else {
+
+            var dt = JSON.parse(responseText);
+            console.log(dt);
+            if (dt[8] == "Activo") {
+                $("#cmbEditarEstadoCargo").val('Activo');
+            } else {
+
+                $("#cmbEditarEstadoCargo").val('Inactivo');
+            }   
+            $("#txteditarNombreCargo").val(dt[1]);
+            $("#txteditarDescripcionCargo").val(dt[2]);
+            $("#txteditarSalario").val(dt[3]);
+            $("#cmbeditarTipo").val("" + dt[4] + "");
+            $("#cmbeditarSector").val("" + dt[5] + "");
+            $("#cmbeditarCanal").val("" + dt[6] + "");
+            $("#cmbeditarArea").val("" + dt[7] + "");
+        }
+    });
+}
+/////////////////////////EDITAR CARGO ///////////////////////////////////////////
+$('#frmEditarCargo').validate({
+  rules: {
+        NombreCargo: {
+            required: true,
+            minlength: 5
+        },
+        DescripcionCargo: {
+            required: true,
+            minlength: 15,
+            maxlength: 80
+        },
+        Salario: {
+            required: true,
+            minlength: 6,
+            maxlength: 80
+        },
+        Tipo: {
+            required: true,
+        },
+        Sector: {
+            required: true
+        },
+        Canal: {
+            required: true
+        },
+        Area: {
+            required: true
+        }
+    }, messages: {
+
+        NombreCargo: {
+            required: "Este campo es requerido",
+            minlength: "Ingresa 5 caracteres como minimo"
+        },
+        DescripcionCargo: {
+            required: "Este campo es requerido",
+            minlength: "Ingresa 15 caracteres como minimo",
+            maxlength: "Ingresa 80 caracteres como maximo"
+        },
+        Salario: {
+            required: "Este campo es requerido",
+            minlength: "El salario minimo es de 781,242 "
+        },
+        Tipo: {
+            required: "Este campo es requerido"
+        },
+        Sector: {
+            required: "Este campo es requerido"
+        },
+        Canal: {
+            required: "Este campo es requerido"
+        },
+        Area: {
+            required: "Este campo es requerido"
+        }
+
+    }, errorElement: 'div',
+    errorPlacement: function (error, element) {
+        var placement = $(element).data('error');
+        if (placement) {
+            $(placement).append(error);
+        } else {
+            error.insertAfter(element);
+        }
+    }, submitHandler: function () {
+
+        swal({
+            title: "Confirmar Datos",
+            text: "¿Está seguro que desea remplazar estos campos?",
+            icon: "info",
+            buttons: true,
+            closeonconfirm: false,
+            buttons: ["Cancelar", "Sí"]
+        })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        var nombreCargo = $("#txteditarNombreCargo").val();
+                        var descripcionCargo = $("#txteditarDescripcionCargo").val();
+                        var salario = $("#txteditarSalario").val();
+                        var estadoCargo = $("#cmbEditarEstadoCargo").val();
+                        var tipo = $("#cmbeditarTipo").val();
+                        var sector = $("#cmbSector").val();
+                        var canal = $("#cmbCanal").val();
+                        var area = $("#cmbArea").val();     
+                        alert(responsetext);
+                        alert ("asdasdsadsad");
+                        $.post("/SaleslandColombiaApp/cargo/editarcargo", {NombreCargo: nombreCargo, Descripcion: descripcionCargo, Salario: salario, Estado: estadoCargo, Tipo: tipo, Sector: sector, Canal: canal, Area: area }, function (responsetext) {
+                            
+                            if (responsetext == "200") {
+                                swal("Actualizado Correctamente", "El Cargo ha sido actualizado exitosamente", "success").then((willDelete) => {
+                                    if (willDelete) {
+                                        window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/cargo/listarcargo.jsp";
+                                    }
+                                });
+
+                            } else {
+                                swal("Ocurrio un error", "Lo sentimos tus datos de Actualizacion no fueron registrados, por favor intentalo nuevamente.", "error");
+                            }
+                        });
+                    }
+                });
+    }
+});
+
+
+    
+>>>>>>> master

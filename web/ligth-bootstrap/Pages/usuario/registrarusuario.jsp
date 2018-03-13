@@ -45,8 +45,7 @@
                                                         <div class="row justify-content-center">
                                                             <div class="col-md-5 ">
                                                                 <div class="form-group">
-                                                                    <label class="control-label">Tipo de Documento <star>*</star></label>
-                                                                    
+                                                                    <label class="control-label">Tipo de Documento <star>*</star></label>                                    
                                                                     <select id="cmbTipoDocumentoUsuario" name="TipoDocumentoUsuario" class="selectpicker" data-title="Seleccionar Estado" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
                                                                         <option value="T.I">Tarjeta de indentidad (T.I)</option>
                                                                         <option value="C.C">Cedula de ciudadanía (C.C)</option> 
@@ -62,7 +61,7 @@
                                                             <div class="col-md-5">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Documento <star>*</star></label>
-                                                                    <input class="form-control" type="text" id="txtDocumentoUsuario" name="DocumentoUsuario" required="true" placeholder="ej: Perez Perez">
+                                                                    <input class="form-control" type="text" id="txtDocumentoUsuario" name="DocumentoUsuario" placeholder="ej: Perez Perez">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -76,7 +75,7 @@
                                                             <div class="col-md-5">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Apellidos <star>*</star></label>
-                                                                    <input class="form-control" type="text" id="txtApellidoUsuario" name="ApellidoUsuario" required="true" placeholder="ej: Perez Perez">
+                                                                    <input class="form-control" type="text" id="txtApellidoUsuario" name="ApellidoUsuario" placeholder="ej: Perez Perez">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -100,7 +99,7 @@
                                                             <div class="col-md-5">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Confirmar Contraseña<star>*</star></label>
-                                                                    <input class="form-control" type="password" id="txtConfirmarContraseniaUsuario" name="ConfirmarContraseniaUsuario" required="true" placeholder="ej: ****************">
+                                                                    <input class="form-control" type="password" id="txtConfirmarContraseniaUsuario" name="ConfirmarContraseniaUsuario" placeholder="ej: ****************">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -111,13 +110,13 @@
                                                             <div class="col-md-5 ">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Direccion <star>*</star></label>
-                                                                    <input class="form-control" type="password" name="first_name" placeholder="ej: carrera 16A # 85-64 Bogotá">
+                                                                    <input class="form-control" type="text" id="txtDireccionUsuario" name="DireccionUsuario" placeholder="ej: carrera 16A # 85-64 Bogotá">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Genero<star>*</star></label>
-                                                                    <select name="cities" class="selectpicker" data-title="Selecciona el genero" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                                                    <select id="cmbGeneroUsuario" name="GeneroUsuario" class="selectpicker"  data-title="Selecciona el genero" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
                                                                         <option value="Masculino">Masculino</option>
                                                                         <option value="Femenino">Femenino</option>
                                                                         <option value="Otro">Otro</option>
@@ -129,13 +128,13 @@
                                                             <div class="col-md-5 ">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Celular <star>*</star></label>
-                                                                    <input class="form-control" type="text" name="first_name" placeholder="ej: 315 8921655">
+                                                                    <input class="form-control" type="tel" id="txtCelularUsuario" name="CelularUsuario" placeholder="ej: 315 8921655">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Telefono <star>*</star></label>
-                                                                    <input class="form-control" type="text" name="last_name" required="true" placeholder="ej: 7435596">
+                                                                    <input class="form-control" type="tel" id="txtTelefonoUSuario" name="TelefonoUsuario" placeholder="ej: 7435596">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -143,7 +142,9 @@
                                                             <div class="col-md-5 ">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Fecha de nacimiento <star>*</star></label>
-                                                                    <input type="text" class="form-control datepicker" placeholder="Selecciona la fecha de nacimiento">                                                                    
+                                                                    <div class="form-group">
+                                                                        <input id="datetimepicker" type="text" class="form-control datepicker" placeholder="Selecciona la fecha de nacimiento" />
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-5">
@@ -164,7 +165,7 @@
                                                                     </div>-->
                                                                     
                                                                     <label class="control-label">Imagen de perfil <star>*</star></label>
-                                                                    <input class="form-control" type="file" name="last_name" required="true" placeholder="ej: 7435596">
+                                                                    <input class="form-control" type="file" id="fileImagenUsuario" name="ImagenUsuario" placeholder="ej: 7435596">
                                                                     
                                                                 </div>
                                                             </div>
@@ -173,60 +174,45 @@
                                                     <div class="tab-pane fade" id="tab3" role="tabpanel">
                                                         <h5 class="text-center">solo faltan algunos campos (>_<)</h5>
                                                         <div class="row justify-content-center">
-                                                            <div class="col-md-5">                                                            
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Sector<star>*</star></label>
-                                                                    <select name="cities" class="selectpicker" data-title="Selecciona el sector" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
-                                                                        <option value="id">Sector 1</option>
-                                                                        <option value="ms">Sector 2</option>
-                                                                        <option value="ca">Sector 3</option>
-                                                                    </select>
-                                                                </div>                                                            
+                                                            <div class="col-md-12">
+
+
+
+                                                                <div class="card bootstrap-table">
+                                                                    <div class="card-body table-full-width">
+                                                                        <div class="toolbar">
+                                                                            <!--        Here you can write extra buttons/actions for the toolbar              -->
+                                                                        </div>
+                                                                        <table id="bootstrap-table" class="table">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Select</th>
+                                                                                    <th>Nombre</th>
+                                                                                    <th>Descripción</th>
+                                                                                    <th>Sector</th> 
+                                                                                    <th>Tipo</th> 
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody id="listadoCargosSectores">
+                                                                                
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>                                                                                                                            
                                                             </div>
-                                                            <div class="col-md-5">
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Canal<star>*</star></label>
-                                                                    <select name="cities" class="selectpicker" data-title="Selecciona el canal" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
-                                                                        <option value="Masculino">Canal 1</option>
-                                                                        <option value="Femenino">Canal 2</option>
-                                                                        <option value="Otro">Canal 3</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row justify-content-center">
-                                                            <div class="col-md-5">                                                            
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Area<star>*</star></label>
-                                                                    <select name="cities" class="selectpicker" data-title="Selecciona el area" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
-                                                                        <option value="id">Area 1</option>
-                                                                        <option value="ms">Area 2</option>
-                                                                        <option value="ca">Area 3</option>
-                                                                    </select>
-                                                                </div>                                                            
-                                                            </div>
-                                                            <div class="col-md-5">
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Cargo<star>*</star></label>
-                                                                    <select name="cities" class="selectpicker" data-title="Selecciona el cargo" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
-                                                                        <option value="Masculino">Cargo 1</option>
-                                                                        <option value="Femenino">Cargo 2</option>
-                                                                        <option value="Otro">Cargo 3</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        </div>                                                        
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="card-footer text-center">
                                                 <button type="button" class="btn btn-default btn-wd btn-back pull-left">Volver</button>
                                                 <button type="button" class="btn btn-info btn-wd btn-next pull-right">Siguiente</button>
-                                                <button type="button" class="btn btn-info btn-wd btn-finish pull-right" onclick="onFinishWizard()" style="display: none;">Finalizar</button>
+                                                <button type="submit" class="btn btn-info btn-wd btn-finish pull-right" style="display: none;">Finalizar</button>
                                                 <div class="clearfix"></div>
                                             </div>
                                         </div>
                                     </form>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -237,93 +223,91 @@
             </div>
         </div>
     </body>
-    <%@include file="../includes/jsInclude.jsp" %>    
+    <%@include file="../includes/jsInclude.jsp" %>  
     <script>
-        /*
-         * Conclusion: Crear un nuevo archivo e ir haciendo test de los cambios en las variables del formulario
-         * que pueden estar fallando. En el nuevo archivo no borrar el id del formulario.
-         * Buscar el upload file y agregar a el formulario, ademas revisar la funcion del upload file el 
-         * FutPlay y tomar como referencia. Good Look
-         * 
-         * @type type
-         * 
-         */
-        // Wizard Initialization
-        $('.card-wizard').bootstrapWizard({
-            'tabClass': 'nav nav-pills',
-            'nextSelector': '.btn-next',
-            'previousSelector': '.btn-previous',
-
-            onNext: function(tab, navigation, index) {
-                var $valid = $('#frmRegistrarUsuario').valid();
-                if (!$valid) {
-                    $validator.focusInvalid();
-                    return false;
-                }
-            },
-
-            onInit: function(tab, navigation, index) {
-                //check number of tabs and fill the entire row
-                var $total = navigation.find('li').length;
-                var $wizard = navigation.closest('.card-wizard');
-
-                $first_li = navigation.find('li:first-child a').html();
-                $moving_div = $('<div class="moving-tab">' + $first_li + '</div>');
-                $('.card-wizard .wizard-navigation').append($moving_div);
-
-                refreshAnimation($wizard, index);
-
-                $('.moving-tab').css('transition', 'transform 0s');
-            },
-
-            onTabClick: function(tab, navigation, index) {
-                var $valid = $('#frmRegistrarUsuario').valid();
-
-                if (!$valid) {
-                    return false;
-                } else {
-                    return true;
-                }
-            },
-
-            onTabShow: function(tab, navigation, index) {
-                var $total = navigation.find('li').length;
-                var $current = index + 1;
-
-                var $wizard = navigation.closest('.card-wizard');
-
-                // If it's the last tab then hide the last button and show the finish instead
-                if ($current >= $total) {
-                    $($wizard).find('.btn-next').hide();
-                    $($wizard).find('.btn-finish').show();
-                } else {
-                    $($wizard).find('.btn-next').show();
-                    $($wizard).find('.btn-finish').hide();
-                }
-
-                button_text = navigation.find('li:nth-child(' + $current + ') a').html();
-
-                setTimeout(function() {
-                    $('.moving-tab').text(button_text);
-                }, 150);
-
-                var checkbox = $('.footer-checkbox');
-
-                if (!index == 0) {
-                    $(checkbox).css({
-                        'opacity': '0',
-                        'visibility': 'hidden',
-                        'position': 'absolute'
-                    });
-                } else {
-                    $(checkbox).css({
-                        'opacity': '1',
-                        'visibility': 'visible'
-                    });
-                }
-
-                refreshAnimation($wizard, index);
-            }
+        $(document).ready(function (){            
+            cargarCargosSectores();
+            InicializarFormularioRegistro();
         });
     </script>
+    <script type="text/javascript">
+        function putaTabla(){
+    var $table = $('#bootstrap-table');
+
+    function operateFormatter(value, row, index) {
+        return [
+            '<a rel="tooltip" title="View" class="btn btn-link btn-info table-action view" href="javascript:void(0)">',
+            '<i class="fa fa-image"></i>',
+            '</a>',
+            '<a rel="tooltip" title="Edit" class="btn btn-link btn-warning table-action edit" href="javascript:void(0)">',
+            '<i class="fa fa-edit"></i>',
+            '</a>',
+            '<a rel="tooltip" title="Remove" class="btn btn-link btn-danger table-action remove" href="javascript:void(0)">',
+            '<i class="fa fa-remove"></i>',
+            '</a>'
+        ].join('');
+    }
+
+    $().ready(function() {
+        window.operateEvents = {
+            'click .view': function(e, value, row, index) {
+                info = JSON.stringify(row);
+
+                swal('You click view icon, row: ', info);
+                console.log(info);
+            },
+            'click .edit': function(e, value, row, index) {
+                info = JSON.stringify(row);
+
+                swal('You click edit icon, row: ', info);
+                console.log(info);
+            },
+            'click .remove': function(e, value, row, index) {
+                console.log(row);
+                $table.bootstrapTable('remove', {
+                    field: 'id',
+                    values: [row.id]
+                });
+            }
+        };
+
+        $table.bootstrapTable({
+            toolbar: ".toolbar",
+            clickToSelect: true,
+            showRefresh: false,
+            search: true,
+            showToggle: false,
+            showColumns: false,
+            pagination: true,
+            searchAlign: 'left',
+            pageSize: 4,
+            clickToSelect: false,
+            pageList: [8, 10, 25, 50, 100],
+
+            formatShowingRows: function(pageFrom, pageTo, totalRows) {
+                //do nothing here, we don't want to show the text "showing x of y from..."
+            },
+            formatRecordsPerPage: function(pageNumber) {
+                return pageNumber + " rows visible";
+            },
+            icons: {
+                refresh: 'fa fa-refresh',
+                toggle: 'fa fa-th-list',
+                columns: 'fa fa-columns',
+                detailOpen: 'fa fa-plus-circle',
+                detailClose: 'fa fa-minus-circle'
+            }
+        });
+
+        //activate the tooltips after the data table is initialized
+        $('[rel="tooltip"]').tooltip();
+
+        $(window).resize(function() {
+            $table.bootstrapTable('resetView');
+        });
+
+
+    });
+        }
+</script>    
 </html>

@@ -2,10 +2,7 @@ package Modelo;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -13,7 +10,7 @@ import javax.persistence.Table;
 public class Cargo {
  
     @Id
-    @Column(name = "idCargo")
+    @Column(name = "IdCargo")
     private int IdCargo;
     
     @Column(name = "NombreCargo")
@@ -23,8 +20,24 @@ public class Cargo {
     private String Descripcion;
     
     @Column(name = "Salario")
-    private String Salario;
+    private double Salario;
     
+    @Column(name = "Tipo")
+    private String Tipo;
+    
+    @Column(name = "Estado")
+    private String Estado;
+    
+    @Column(name = "Sector")
+    private String Sector;
+    
+    @Column(name = "Canal")
+    private String Canal;
+    
+    @Column(name = "Area")
+    private String Area;
+    
+<<<<<<< HEAD
     @Column(name = "Tipo")
     private String Tipo;
     
@@ -44,6 +57,12 @@ public class Cargo {
     }
 
     public Cargo(String NombreCargo, String Descripcion, String Salario, String Tipo, String Estado, String Sector, String Canal, String Area) {
+=======
+    public Cargo() {
+    }
+
+    public Cargo(String NombreCargo, String Descripcion, double Salario, String Tipo, String Estado, String Sector, String Canal, String Area) {
+>>>>>>> master
         this.NombreCargo = NombreCargo;
         this.Descripcion = Descripcion;
         this.Salario = Salario;
@@ -78,11 +97,11 @@ public class Cargo {
         this.Descripcion = Descripcion;
     }
 
-    public String getSalario() {
+    public double getSalario() {
         return Salario;
     }
 
-    public void setSalario(String Salario) {
+    public void setSalario(double Salario) {
         this.Salario = Salario;
     }
 
@@ -125,11 +144,14 @@ public class Cargo {
     public void setArea(String Area) {
         this.Area = Area;
     }
+<<<<<<< HEAD
     
 
    
 
    
+=======
+>>>>>>> master
 
     
     

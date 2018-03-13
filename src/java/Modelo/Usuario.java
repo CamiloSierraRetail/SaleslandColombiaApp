@@ -56,6 +56,12 @@ public class Usuario {
     @Column(name = "Estado")
     private String Estado;
     
+    
+    //El horatio Tipo A es de 8 hasta 6
+    //El horario Tipo B es de 7 hasta 5
+    @Column(name = "Horario")
+    private String Horario;
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Cargo")
     private Cargo Cargo;
@@ -63,7 +69,7 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String TipoDocumento, String Documento, String Nombre, String Apellido, String Direccion, String Telefono, String Celular, String Genero, String Email, Date FechaNacimiento, String Contrasenia, String Foto, String Estado, Cargo Cargo) {
+    public Usuario(String TipoDocumento, String Documento, String Nombre, String Apellido, String Direccion, String Telefono, String Celular, String Genero, String Email, Date FechaNacimiento, String Contrasenia, String Foto, String Estado, String Horario, Cargo Cargo) {
         this.TipoDocumento = TipoDocumento;
         this.Documento = Documento;
         this.Nombre = Nombre;
@@ -77,6 +83,7 @@ public class Usuario {
         this.Contrasenia = Contrasenia;
         this.Foto = Foto;
         this.Estado = Estado;
+        this.Horario = Horario;
         this.Cargo = Cargo;
     }
 
@@ -192,6 +199,14 @@ public class Usuario {
         this.Estado = Estado;
     }
 
+    public String getHorario() {
+        return Horario;
+    }
+
+    public void setHorario(String Horario) {
+        this.Horario = Horario;
+    }
+
     public Cargo getCargo() {
         return Cargo;
     }
@@ -199,5 +214,6 @@ public class Usuario {
     public void setCargo(Cargo Cargo) {
         this.Cargo = Cargo;
     }
-
+    
+    
 }

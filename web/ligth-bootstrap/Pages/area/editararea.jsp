@@ -19,7 +19,8 @@
                                 <div class="card">
                                     <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmEditarArea" name="frmEditarArea">
                                         <div class="card-header">
-                                            <h4 class="card-title">Ingrese los datos</h4>
+                                            <h4 class="card-title">Actualizar Areas</h4>
+                                            <p class="card-category">Ingrese los cambios, por favor diligenciar correctamente</p>
                                         </div>
                                         <div class="card-body">
                                             <div class="card-body col-md-10 mr-auto ml-auto">
@@ -66,6 +67,7 @@
                                             </div>
                                         </div>
                                         <div class="card-footer text-right card-body col-md-10 mr-auto ml-auto">
+                                            <a href="listararea.jsp" class="btn btn-fill pull-left">Volver</a>
                                             <button type="submit" class="btn btn-info btn-fill pull-right">Confirmar Cambios</button>
                                             <div class="clearfix"></div>
                                         </div>   
@@ -84,6 +86,7 @@
     <%@include file="../includes/jsInclude.jsp" %>
     <script>
         cargarCanal();
-        verDatosArea();
+        verDatosArea();      
     </script>
+     <script>$("#tituloPagina").text("Empresa-Areas");</script>
 </html>

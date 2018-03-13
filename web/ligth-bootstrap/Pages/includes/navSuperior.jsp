@@ -8,7 +8,7 @@
                                 <i class="fa fa-navicon visible-on-sidebar-mini"></i>
                             </button>
                         </div>
-                        <a class="navbar-brand" href="#pablo"> Dashboard PRO </a>
+                        <p class="navbar-brand" id="tituloPagina"> Dashboard PRO </p>
                     </div>
                     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-bar burger-lines"></span>
@@ -70,8 +70,8 @@
                                     <a class="dropdown-item" href="#">
                                         <i class="material-icons">lock</i> Lock Screen
                                     </a>
-                                    <a href="#" class="dropdown-item text-danger">
-                                        <i class="material-icons">exit_to_app</i> Log out
+                                    <a href="#" class="dropdown-item text-danger cerrarSesion">
+                                        <i class="material-icons">exit_to_app</i> Cerrar Sesión
                                     </a>
                                 </div>
                             </li>
