@@ -65,6 +65,6 @@
     <%@include file="../includes/jsInclude.jsp" %>
     <script>
         listarCanales();
-        $("#tituloPagina").text("Empresa-Sectores");
+        $("#tituloPagina").text("Empresa-Canales");
     </script>    
 </html>

@@ -218,9 +218,11 @@ function listarCargos() {
             swal("Ocurrio un error", "Lo sentimos tus datos no fueron cargados.", "error");
         } else {
             $("#listadoCargos").html("");
-            $("#listadoCargos").append(responseText);
-            swal("Ok", "Listado", "success");
+            $("#listadoCargos").append(responseText);           
         }
+          // orden de datos tamaño,showRefresh, search, showToggle, showColumns, alineacion, texto
+        //tamanio,showRefresh, search, showToggle, showColumns, alineacion, texto
+        botstrapPaginacionTabla(5, false, true, true, true, 'right');
     });
 }
 ///////////////// CARGAR COMBO DE SECTORES /////////////////////////////////
@@ -327,7 +329,7 @@ function listarCanales() {
             $("#listadoSectores").html("");           
             $("#listadoCanales").append(responseText);            
         }
-        // orden de datos tamaño,showRefresh, search, showToggle, showColumns, alineacion, texto
+         // orden de datos tamaño,showRefresh, search, showToggle, showColumns, alineacion, texto
         //tamanio,showRefresh, search, showToggle, showColumns, alineacion, texto
         botstrapPaginacionTabla(5, false, true, true, true, 'right');
     });

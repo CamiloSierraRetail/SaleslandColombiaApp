@@ -19,8 +19,9 @@
                             <div class="col-md-10 mr-auto ml-auto">
                                 <div class="card">
                                     <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmRegistrarCargos" name="frmRegistrarCargo">
-                                        <div class="card-header">
-                                            <h4 class="card-title">Ingrese los datos</h4>
+                                         <div class="card-header">
+                                            <h4 class="card-title">Registro de Cargos</h4>
+                                            <p class="card-category">Ingresa los datos correctamente por favor. </p>
                                         </div>
                                         <div class="card-body">
                                             <div class="card-body col-md-10 mr-auto ml-auto">
@@ -92,6 +93,7 @@
                                             </div>
                                         </div>
                                         <div class="card-footer text-right card-body col-md-10 mr-auto ml-auto">
+                                            <a href="listarcargos.jsp" class="btn btn-fill pull-left">Volver</a>
                                             <button type="submit" class="btn btn-info btn-fill pull-right">Confirmar</button>
                                             <div class="clearfix"></div>
                                         </div>   
@@ -108,16 +110,16 @@
     </body>
     <%@include file="../includes/jsInclude.jsp" %>
     <script>
-        
-          $(document).ready(function (){
+         $("#tituloPagina").text("Empresa-Cargos");
+         
             cargarSectores();        
             cargarCanal();
             cargarAreas();
-        });
+      
         </script>
+            
     <script>
-       
-        function pagoOnChange(sel) {
+           function pagoOnChange(sel) {
             if (sel.value == "director") {
                 divC = document.getElementById("nsector");
                 divC.style.display = "";
@@ -183,23 +185,6 @@
 
 
         }
-    </script>
-    <script type="text/javascrpt">
-       $(document).ready(function (){
-          $('#cmbSector').change(function (){
-             SeleccionandoCombo(this,'idCanal') 
-          }); 
-        });
-        function SeleccionandoCombo(combo1, combo2){
-            combo2 = document.getElementById(combo2);
-            LimpiarCombo(combo2);
-            if(combo1.options [combo1,SelectedIndex].value 1= ""){
-            combo2.disable = true;
-            }
-        }
-        
-        
-    </script>
 
-    
+    </script>   
 </html>

@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Table(name = "Area")
 public class Area {
     @Id
-    @Column(name = "idArea")
+    @Column(name = "IdArea")
     private int IdArea;
     
     @Column(name = "NombreArea")

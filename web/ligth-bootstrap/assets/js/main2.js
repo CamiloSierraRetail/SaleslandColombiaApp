@@ -81,6 +81,9 @@ function listarArea() {
             $("#listadoCanales").html("");
             $("#listadoArea").append(responseText);
         }
+         // orden de datos tamaño,showRefresh, search, showToggle, showColumns, alineacion, texto
+        //tamanio,showRefresh, search, showToggle, showColumns, alineacion, texto
+        botstrapPaginacionTabla(5, false, true, true, true, 'right');
 
     });
 }
@@ -486,7 +489,7 @@ $('#frmEditarCargo').validate({
                         var canal = $("#cmbCanal").val();
                         var area = $("#cmbArea").val();     
                         alert(responsetext);
-                        alert ("asdasdsadsadsadasdd-");
+                        alert ("asdasdsadsad");
                         $.post("/SaleslandColombiaApp/cargo/editarcargo", {NombreCargo: nombreCargo, Descripcion: descripcionCargo, Salario: salario, Estado: estadoCargo, Tipo: tipo, Sector: sector, Canal: canal, Area: area }, function (responsetext) {
                             
                             if (responsetext == "200") {
@@ -506,3 +509,4 @@ $('#frmEditarCargo').validate({
 });
 
 
+    

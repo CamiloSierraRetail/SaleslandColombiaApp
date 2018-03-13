@@ -7,8 +7,7 @@
         
     </head>
     <body>
-        <div class="wrapper">
-            
+        <div class="wrapper">         
             <!-- Include Nav Lateral  -->
             <%@include file="../includes/navLateral.jsp" %>
 
@@ -22,7 +21,7 @@
                                 <div class="card">
                                     <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmEditarCanal" name="frmEditarCanal">
                                         <div class="card-header">
-                                            <h4 class="card-title">Ingrese los datos</h4>
+                                            <h4 class="card-title">Actualizar Canal</h4>
                                             <p class="card-category">Es necesario tener presente que cuanda actualizas un canal los empleados que dependan de este sufriran cambios.</p>
                                         </div>
                                         <div class="card-body">
@@ -86,5 +85,6 @@
     <script>
         cargarSectores();
         verDatosCanal();
+        $("#tituloPagina").text("Empresa-Canales");
     </script>
 </html>

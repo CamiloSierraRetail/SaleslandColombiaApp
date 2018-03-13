@@ -238,12 +238,10 @@
                                             </li>                                
                                         </ul>
                                     </div>
-                                </li>
-                                
-                                
+                                </li>                                                           
                                 <li class="nav-item">
                                     <a class="nav-link" data-toggle="collapse" href="#ExamplesCargos">
-                                        <i class="material-icons">business_center</i>
+                                        <i class="material-icons">work</i>
                                         <p>
                                             Cargos
                                             <b class="caret"></b>
@@ -252,34 +250,45 @@
                                     <div class="collapse " id="ExamplesCargos">
                                         <ul class="nav">
                                             <li class="nav-item ">
-                                                <a class="nav-link" href="../usuario/listadousuarios.jsp">
+                                                <a class="nav-link" href="../cargo/listarcargo.jsp">
                                                     <span class="sidebar-mini">L</span>
-                                                    <span class="sidebar-normal">Listado</span>
+                                                    <span class="sidebar-normal">Listado Cargos</span>
                                                 </a>
                                             </li>
                                             <li class="nav-item ">
-                                                <a class="nav-link" href="../usuario/registrarusuario.jsp">
+                                                <a class="nav-link" href="../cargo/registrarcargo.jsp">
                                                     <span class="sidebar-mini">R</span>
-                                                    <span class="sidebar-normal">Registrar</span>
+                                                    <span class="sidebar-normal">Registrar Cargos</span>
                                                 </a>
-                                            </li>
-                                            <li class="nav-item ">
-                                                <a class="nav-link" href="../area/listararea.jsp">
-                                                    <span class="sidebar-mini">M</span>
-                                                    <span class="sidebar-normal">Monitorear</span>
-                                                </a>
-                                            </li>                                
+                                            </li>                                                                     
                                         </ul>
                                     </div>
-                                </li>     
-                                
-                                <li class="nav-item ">
-                                    <a class="nav-link" href="../administrador/indexadministrador.jsp">
-                                        <i class="material-icons">dashboard</i>
-                                        <p>Inicio (Administrador)</p>
+                                </li>    
+                                  <li class="nav-item">
+                                    <a class="nav-link" data-toggle="collapse" href="#ExamplesReportes">
+                                        <i class="material-icons">insert_chart</i>
+                                        <p>
+                                            Reportes
+                                            <b class="caret"></b>
+                                        </p>
                                     </a>
-                                </li>
-                                
+                                    <div class="collapse " id="ExamplesReportes">
+                                        <ul class="nav">
+                                            <li class="nav-item ">
+                                                <a class="nav-link" href="../cargo/listarcargo.jsp">
+                                                    <span class="sidebar-mini">U</span>
+                                                    <span class="sidebar-normal">Usuarios</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item ">
+                                                <a class="nav-link" href="../usuario/registrarcargo.jsp">
+                                                    <span class="sidebar-mini">S</span>
+                                                    <span class="sidebar-normal">Sectores</span>
+                                                </a>
+                                            </li>                                                                     
+                                        </ul>
+                                    </div>
+                                </li>    
                             </ul>
                         </div>        
                     </div>

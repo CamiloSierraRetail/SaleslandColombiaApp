@@ -20,7 +20,8 @@
                                 <div class="card">
                                     <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmRegistrarArea" name="frmRegistrarCanal">
                                         <div class="card-header">
-                                            <h4 class="card-title">Ingrese los datos del Area</h4>
+                                            <h4 class="card-title">Registro de Areas</h4>
+                                            <p class="card-category">Ingresa los datos </p>
                                         </div>
                                         <div class="card-body">
                                             <div class="card-body col-md-10 mr-auto ml-auto">
@@ -55,6 +56,7 @@
                                             </div>
                                         </div>
                                         <div class="card-footer text-right card-body col-md-10 mr-auto ml-auto">
+                                            <a href="listarareas.jsp" class="btn btn-fill pull-left">Volver</a>
                                             <button type="submit" class="btn btn-info btn-fill pull-right">Confirmar</button>
                                             <div class="clearfix"></div>
                                         </div>   
@@ -70,11 +72,8 @@
         </div>
     </body>
     <%@include file="../includes/jsInclude.jsp" %>
-    <script>  
-        $(document).ready(function (){
-           cargarCanal();
-            
-        });
-        
+    <script>    
+           cargarCanal();        
     </script>
+     <script>$("#tituloPagina").text("Empresa-Areas");</script>
 </html>

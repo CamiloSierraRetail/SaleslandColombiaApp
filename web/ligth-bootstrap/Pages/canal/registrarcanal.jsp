@@ -22,7 +22,8 @@
                                 <div class="card">
                                     <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmRegistrarCanal" name="frmRegistrarCanal">
                                         <div class="card-header">
-                                            <h4 class="card-title">Ingrese los datos del canal</h4>
+                                            <h4 class="card-title">Registro de Canales</h4>
+                                            <p class="card-category">Ingresa los datos correctamente por favor. </p>
                                         </div>
                                         <div class="card-body">
                                             <div class="card-body col-md-10 mr-auto ml-auto">
@@ -76,9 +77,10 @@
     <script>
         
         $(document).ready(function (){
-           cargarSectores();
-            
+               cargarSectores();          
         });
+         $("#tituloPagina").text("Empresa-Canales");
         
     </script>
+    
 </html>
