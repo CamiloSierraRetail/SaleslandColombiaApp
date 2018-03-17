@@ -17,7 +17,7 @@
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute">
             <div class="container">
                 <div class="navbar-wrapper">
-                    <a class="navbar-brand" href="#pablo">SALESLAND COLOMBIA</a>
+                    <a class="navbar-brand" href="login.jsp">SALESLAND COLOMBIA</a>
                     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-bar burger-lines"></span>
                         <span class="navbar-toggler-bar burger-lines"></span>
@@ -26,23 +26,13 @@
                 </div>
                 <div class="collapse navbar-collapse justify-content-end" id="navbar">
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a href="../dashboard.html" class="nav-link">
-                                <i class="nc-icon nc-chart-pie-35"></i> Dashboard
+                        <li class="nav-item ">
+                            <a href="login.jsp" class="nav-link">
+                                <i class="nc-icon nc-mobile"></i> Iniciar Sesión
                             </a>
                         </li>
-                        <li class="nav-item ">
-                            <a href="register.html" class="nav-link">
-                                <i class="nc-icon nc-badge"></i> Registrar
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a href="../usuario/login.jsp" class="nav-link">
-                                <i class="nc-icon nc-mobile"></i> Login
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a href="ingresousuario.jsp" class="nav-link">
+                        <li class="nav-item active">
+                            <a href="#" class="nav-link">
                                 <i class="nc-icon nc-key-25"></i> Ingreso
                             </a>
                         </li>
@@ -59,7 +49,7 @@
                         <div class="card card-lock text-center card-plain">
                             <div class="card-header ">
                                 <div class="author">
-                                    <img class="avatar" src="../../assets/img/imagenesDePerfil/otroDefaultImagePorfile.png" alt="...">
+                                    <img class="avatar" src="../../assets/img/imagenesDePerfil/otroDefaultImageProfile.png" alt="...">
                                 </div>
                             </div>
                             <div class="card-body ">

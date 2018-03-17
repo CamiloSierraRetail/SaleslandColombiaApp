@@ -80,11 +80,11 @@ public class usuario extends HttpServlet {
                 
                 if (Genero.equals("Masculino")) {
                     
-                    imagenPerfil = "hombreDefaultImagePorfile.png";
+                    imagenPerfil = "hombreDefaultImageProfile.png";
                 }else if (Genero.equals("Femenino")) {
-                    imagenPerfil = "mujerDefaultImagePorfile.png";
+                    imagenPerfil = "mujerDefaultImageProfile.png";
                 }else if (Genero.equals("Otro")){
-                    imagenPerfil = "otroDefaultImagePorfile.png";
+                    imagenPerfil = "otroDefaultImageProfile.png";
                 
                 }
             }else{

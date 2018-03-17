@@ -4,12 +4,12 @@
             <ul class="footer-menu">
                 <li>
                     <a href="#">
-                        Home
+                        Inicio
                     </a>
                 </li>
                 <li>
                     <a href="https://www.salesland.net/" target="_blank">
-                        Company
+                        Web Oficial
                     </a>
                 </li>
                 <li>

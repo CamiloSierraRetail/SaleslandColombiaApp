@@ -954,11 +954,11 @@ $("#frmIniciarSesion").validate({
                 error.insertAfter(element);
             }
     }, submitHandler: function () {
-
+        $("#divBtn").hide();
+        $("#preloader").show();
         var usuario = $("#txtUsuarioSesion").val();
         var contrasenia = $("#txtContraseniaSesion").val();    
         $.post("/SaleslandColombiaApp/usuario/IniciarSesion",{Usuario:usuario,Contrasenia:contrasenia},function (responsetext) {
-            
             if (responsetext == "Empleado") {
                 window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/empleado/indexempleado.jsp";
                 
@@ -967,8 +967,12 @@ $("#frmIniciarSesion").validate({
                 
             }else if (responsetext == "404") {
                 swal("Error en el ingreso", "Usuario o contraseña incorrectos, por favor verifica tus datos e intentalo de nuevo.", "warning");
+                $("#divBtn").show();
+                $("#preloader").hide();
             }else if (responsetext == 500) {
                 swal("Ocurrio un error", "Lo sentimos tus datos no fueron registrados, por favor intentalo nuevamente.", "error");
+                $("#divBtn").show();
+                $("#preloader").hide(); 
             }
             
         });
@@ -1061,9 +1065,7 @@ function ingreso(){
                     align: 'right'
                 }
             });
-        }else if(responseText == "IngresoTarde"){
-            
-            
+        }else if(responseText == "IngresoTarde"){     
             $.notify({
                 icon: "nc-icon nc-spaceship",
                 message: "Usuario ingresado con retardo."

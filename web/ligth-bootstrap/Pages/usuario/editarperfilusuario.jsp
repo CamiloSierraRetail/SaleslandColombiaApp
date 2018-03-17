@@ -5,7 +5,6 @@
     <head>
         <%@include file="../includes/cssInclude.jsp" %>
         <title>Inicio - SaleslandColombia</title>
-
     </head>
 
     <body>
@@ -26,40 +25,34 @@
                                             <div class="card ">
                                                 <div class="card-header ">
                                                     <div class="card-header">
-                                                        <h4 class="card-title">Edit Profile</h4>
+                                                        <h4 class="card-title">Editar Perfil</h4>
                                                     </div>
                                                 </div>
                                                 <div class="card-body ">
                                                     <div class="row">
-                                                        <div class="col-md-5 pr-1">
+                                                        <div class="col-md-6 pr-1">
                                                             <div class="form-group">
-                                                                <label>Company (disabled)</label>
-                                                                <input type="text" class="form-control" disabled="" placeholder="Company" value="Creative Code Inc.">
+                                                                <label>Nombres</label>
+                                                                <input type="text" class="form-control" value="michael23">
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-3 px-1">
+                                                        <div class="col-md-6 pl-1">
                                                             <div class="form-group">
-                                                                <label>Username</label>
-                                                                <input type="text" class="form-control" placeholder="Username" value="michael23">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4 pl-1">
-                                                            <div class="form-group">
-                                                                <label for="exampleInputEmail1">Email address</label>
-                                                                <input type="email" class="form-control" placeholder="Email">
+                                                                <label for="exampleInputEmail1">Apellidos</label>
+                                                                <input type="text" class="form-control">
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-6 pr-1">
                                                             <div class="form-group">
-                                                                <label>First Name</label>
+                                                                <label>Direccion</label>
                                                                 <input type="text" class="form-control" placeholder="Company" value="Mike">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 pl-1">
                                                             <div class="form-group">
-                                                                <label>Last Name</label>
+                                                                <label>Telefono</label>
                                                                 <input type="text" class="form-control" placeholder="Last Name" value="Andrew">
                                                             </div>
                                                         </div>
@@ -67,7 +60,7 @@
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <div class="form-group">
-                                                                <label>Address</label>
+                                                                <label>Email</label>
                                                                 <input type="text" class="form-control" placeholder="Home Address" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09">
                                                             </div>
                                                         </div>
@@ -75,32 +68,32 @@
                                                     <div class="row">
                                                         <div class="col-md-4 pr-1">
                                                             <div class="form-group">
-                                                                <label>City</label>
+                                                                <label>Celular</label>
                                                                 <input type="text" class="form-control" placeholder="City" value="Mike">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4 px-1">
                                                             <div class="form-group">
-                                                                <label>Country</label>
+                                                                <label>Genero</label>
                                                                 <input type="text" class="form-control" placeholder="Country" value="Andrew">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4 pl-1">
                                                             <div class="form-group">
-                                                                <label>Postal Code</label>
-                                                                <input type="number" class="form-control" placeholder="ZIP Code">
+                                                                <label>Fecha Nacimiento</label>
+                                                                <input type="text" class="form-control datepicker">
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <div class="form-group">
-                                                                <label>About Me</label>
-                                                                <textarea rows="4" cols="80" class="form-control" placeholder="Here can be your description" value="Mike"></textarea>
+                                                                <label>Foto</label>
+                                                                <input type="file" class="form-control" placeholder="Here can be your description"  ></input>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <button type="submit" class="btn btn-info btn-fill pull-right">Update Profile</button>
+                                                    <button type="submit" class="btn btn-info btn-fill pull-right">Actualizar Perfil</button>
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
@@ -152,6 +145,11 @@
                 <%@include file="../includes/footer.jsp" %>
             </div>
         </div>
+        <%@include file="../includes/jsInclude.jsp" %>
+        <script>
+            $(document).ready(function(){
+               $("#tituloPagina").text("Editar Perfil"); 
+            });
+        </script>
     </body>
-    <%@include file="../includes/jsInclude.jsp" %>
 </html>

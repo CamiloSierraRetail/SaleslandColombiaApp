@@ -140,6 +140,13 @@
                 <%@include  file="../includes/footer.jsp" %>
             </div>
         </div>
+        <!-- INCLUDE JS -->
+        <%@include file="../includes/jsInclude.jsp" %>
+        
+        <script>
+            $(document).ready(function(){
+                $("#tituloPagina").text("Inicio");
+            });
+        </script>
     </body>
-    <%@include file="../includes/jsInclude.jsp" %>
 </html>
