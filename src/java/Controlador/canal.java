@@ -2,7 +2,7 @@ package Controlador;
 
 import Modelo.Area;
 import Modelo.Canal;
-import Modelo.Empleado;
+import Modelo.Cargo;
 import Modelo.Sector;
 import java.io.IOException;
 import java.util.List;
@@ -184,17 +184,23 @@ public class canal extends HttpServlet {
             List<Area> listaAreas = queyBuscarAreas.list();
             for(Area area : listaAreas){
             
+                Query queryCargo = sesion.createQuery("FROM Cargo WHERE area='"+area.getIdArea()+"'");
+                List<Cargo>ListaCargo = queryCargo.list();
+                for(Cargo cargo : ListaCargo){
                 
-                Query queryEmpleado = sesion.createQuery("FROM Empleado WHERE Area = "+area.getIdArea()+"");
-                List<Empleado> listaEmpleado = queryEmpleado.list();
-                for(Empleado empleado : listaEmpleado){
-                
-                    /// ACTUALIZA EL ESTADO DE LOS USUARIOS QUE PERTENESCAN A ESTA AREA ///////////////
-                    sesion.beginTransaction();
-                    Query queryUsuario = sesion.createSQLQuery("UPDATE usuario SET Estado='"+Estado+"' WHERE idUsuario="+empleado.getUsuario().getIdUsuario()+"");
-                    queryUsuario.executeUpdate();
-                    sesion.getTransaction().commit();
+                    Query query = sesion.createSQLQuery("UPDATE usuario SET Estado='"+Estado+"' WHERE cargo="+cargo.getIdCargo()+"");
                 }
+                
+//                Query queryEmpleado = sesion.createQuery("FROM Empleado WHERE Area = "+area.getIdArea()+"");
+//                List<Empleado> listaEmpleado = queryEmpleado.list();
+//                for(Empleado empleado : listaEmpleado){
+//                
+//                    /// ACTUALIZA EL ESTADO DE LOS USUARIOS QUE PERTENESCAN A ESTA AREA ///////////////
+//                    sesion.beginTransaction();
+//                    Query queryUsuario = sesion.createSQLQuery("UPDATE usuario SET Estado='"+Estado+"' WHERE idUsuario="+empleado.getUsuario().getIdUsuario()+"");
+//                    queryUsuario.executeUpdate();
+//                    sesion.getTransaction().commit();
+//                }
                 
             }
             

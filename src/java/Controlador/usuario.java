@@ -180,7 +180,7 @@ public class usuario extends HttpServlet {
             throws ServletException, IOException {
         
         try{
-        
+            System.out.println("INICIAR SESION SALESLAND APP");
             String Usuario = request.getParameter("Usuario");
             String Contrasenia = request.getParameter("Contrasenia");
             Session sesion = HibernateUtil.getSessionFactory().openSession();
