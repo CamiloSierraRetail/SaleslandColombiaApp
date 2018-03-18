@@ -21,7 +21,7 @@
                             <div class="container">
                                 <div class="row">
                                     <div class="col-md-8 col-sm-6">
-                                        <form class="form" method="" action="">
+                                        <form class="form" method="post" action="" id="frmEditarPerfil">
                                             <div class="card ">
                                                 <div class="card-header ">
                                                     <div class="card-header">
@@ -33,13 +33,13 @@
                                                         <div class="col-md-6 pr-1">
                                                             <div class="form-group">
                                                                 <label>Nombres</label>
-                                                                <input type="text" class="form-control" value="michael23">
+                                                                <input type="text" class="form-control" id="txtNombre" value="<%=objUsuario.getNombre()%>">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 pl-1">
                                                             <div class="form-group">
                                                                 <label for="exampleInputEmail1">Apellidos</label>
-                                                                <input type="text" class="form-control">
+                                                                <input type="text" class="form-control" id="txtApellido" value="<%=objUsuario.getApellido()%>">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -47,13 +47,13 @@
                                                         <div class="col-md-6 pr-1">
                                                             <div class="form-group">
                                                                 <label>Direccion</label>
-                                                                <input type="text" class="form-control" placeholder="Company" value="Mike">
+                                                                <input type="text" class="form-control" id="txtDireccion" value="<%=objUsuario.getDireccion()%>">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 pl-1">
                                                             <div class="form-group">
                                                                 <label>Telefono</label>
-                                                                <input type="text" class="form-control" placeholder="Last Name" value="Andrew">
+                                                                <input type="text" class="form-control" id="txtTelefono" value="<%=objUsuario.getTelefono()%>">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -61,7 +61,7 @@
                                                         <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <label>Email</label>
-                                                                <input type="text" class="form-control" placeholder="Home Address" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09">
+                                                                <input type="text" class="form-control" id="txtEmail" value="<%=objUsuario.getEmail()%>">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -69,19 +69,27 @@
                                                         <div class="col-md-4 pr-1">
                                                             <div class="form-group">
                                                                 <label>Celular</label>
-                                                                <input type="text" class="form-control" placeholder="City" value="Mike">
+                                                                <input type="text" class="form-control" id="txtCelular" value="<%=objUsuario.getCelular()%>">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4 px-1">
                                                             <div class="form-group">
                                                                 <label>Genero</label>
-                                                                <input type="text" class="form-control" placeholder="Country" value="Andrew">
+                                                                <select id="cmbGenero" class="form-control">
+                                                                    <%if (objUsuario.getGenero().equals("Masculino")) {%>
+                                                                        <option value="Masculino">Masculino</option>
+                                                                        <option value="Femenino">Femenino</option>
+                                                                    <%}else{%>
+                                                                        <option value="Femenino">Femenino</option>
+                                                                        <option value="Masculino">Masculino</option>
+                                                                    <%}%>
+                                                                </select>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4 pl-1">
                                                             <div class="form-group">
                                                                 <label>Fecha Nacimiento</label>
-                                                                <input type="text" class="form-control datepicker">
+                                                                <input type="text" id="datetimepicker" class="form-control datepicker" value="<%=objUsuario.getFechaNacimiento()%>">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -89,7 +97,7 @@
                                                         <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <label>Foto</label>
-                                                                <input type="file" class="form-control" placeholder="Here can be your description"  ></input>
+                                                                <input type="file" class="form-control" value="<%=objUsuario.getFoto()%>"></input>
                                                             </div>
                                                         </div>
                                                     </div>

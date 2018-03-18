@@ -4,7 +4,7 @@
 
     <head>
         <%@include file="../../Pages/includes/cssInclude.jsp" %>
-        <title>Inicio de sesion - SaleslandColombia</title>
+        <title>Inicio de sesión - SaleslandColombia</title>
 
         <style>   
             /*/////////////// NO BORRAR, FUENTES PARA EL PRELOADER /////////////////////*/
@@ -68,7 +68,7 @@
                                             <div class="form-group">
                                                 <div class="form-check">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox" value="" checked>
+                                                        <input class="form-check-input" type="checkbox" id="remember_me">
                                                         <span class="form-check-sign"></span>
                                                         Recuerdame
                                                     </label>
@@ -111,7 +111,7 @@
     </body>
     <%@include file="../../Pages/includes/jsInclude.jsp" %>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function () {            
             $("#preloader").hide();
             demo.checkFullPageBackgroundImage();
 
