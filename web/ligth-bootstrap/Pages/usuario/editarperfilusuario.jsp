@@ -61,7 +61,7 @@
                                                         <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <label>Email</label>
-                                                                <input type="text" class="form-control" id="txtEmail" value="<%=objUsuario.getEmail()%>">
+                                                                <input type="email" class="form-control" id="txtEmail" value="<%=objUsuario.getEmail()%>">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -89,7 +89,8 @@
                                                         <div class="col-md-4 pl-1">
                                                             <div class="form-group">
                                                                 <label>Fecha Nacimiento</label>
-                                                                <input type="text" id="datetimepicker" class="form-control datepicker" value="<%=objUsuario.getFechaNacimiento()%>">
+                                                                <input type="hidden" id="dtData" value="<%=objUsuario.getFechaNacimiento()%>">
+                                                                <input type="text" id="datetimepicker" class="form-control datepicker dtFechaNacimiento">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -155,7 +156,8 @@
         </div>
         <%@include file="../includes/jsInclude.jsp" %>
         <script>
-            $(document).ready(function(){
+            $(document).ready(function(){     
+               $(".dtFechaNacimiento").val(moment($("#dtData").val()).format('DD/MM/YYYY'));
                $("#tituloPagina").text("Editar Perfil"); 
             });
         </script>

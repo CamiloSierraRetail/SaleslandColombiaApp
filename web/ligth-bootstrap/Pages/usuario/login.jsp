@@ -117,7 +117,6 @@
                 if ($('#remember_me').is(':checked')) {
                     localStorage.username = $('#txtUsuarioSesion').val();
                     localStorage.checkBox = $('#remember_me').val();
-                    console.log(localStorage.username);
                 } else {
                     localStorage.username = '';
                     localStorage.checkBox = '';
