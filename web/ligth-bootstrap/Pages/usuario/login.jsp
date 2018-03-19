@@ -35,7 +35,7 @@
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a href="../usuario/ingresousuario.jsp" class="nav-link">
+                                <a href="../ingreso/ingresousuario.jsp" class="nav-link">
                                     <i class="nc-icon nc-key-25"></i> Ingreso
                                 </a>
                             </li>

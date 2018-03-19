@@ -192,53 +192,31 @@ public class sector extends HttpServlet {
                     for(Canal canal : listaCanalUsuarios){
                     
                         ////////////////7COORECCIN DEL CODIGO DE ABAJO ///////////////
-                        Query queryCargo = sesion.createQuery("FROM cargo WHERE canal='"+canal.getIdCanal()+"'");
+                        Query queryCargo = sesion.createQuery("FROM Cargo WHERE Canal='"+canal.getIdCanal()+"'");
                         List<Cargo>ListaCargo = queryCargo.list();
                         for(Cargo cargo : ListaCargo){
                         
                             sesion.beginTransaction();
-                            Query queryActuzalizarUsuario = sesion.createSQLQuery("UPDATE Usuario WHERE Cargo="+cargo.getIdCargo()+" SET Estado='"+estado+"'");
+                            Query queryActuzalizarUsuario = sesion.createSQLQuery("UPDATE usuario SET Estado='"+estado+"' WHERE Cargo="+cargo.getIdCargo()+"");
                             queryActuzalizarUsuario.executeUpdate();
                             sesion.getTransaction().commit();
                         }
-                        
-//                        Query queryAdministrador = sesion.createQuery("FROM Administrador WHERE Canal='"+canal.getIdCanal()+"'");
-//                        List<Administrador>listaAdministrador = queryAdministrador.list();
-//                        for(Administrador administrador : listaAdministrador){
-//                            System.out.println("-----------------> for administrador"+ listaAdministrador.size());
-//                            sesion.beginTransaction();
-//                            Query queryEstadoAdministrador = sesion.createSQLQuery("UPDATE Usuario SET Estado='"+estado+"' WHERE idUSuario="+administrador.getUsuario().getIdUsuario()+"");
-//                            queryEstadoAdministrador.executeUpdate();
-//                            sesion.beginTransaction().commit();
-//                        
-//                        }
-                        
                         
                         ///////////// STATUS PARA AREAS /////////////////
                         Query queryArea = sesion.createQuery("FROM Area WHERE Canal= "+canal.getIdCanal()+"");
                         List<Area>ListaArea = queryArea.list();
                         for(Area area : ListaArea){
                             
-                        ////////////////7COORECCIN DEL CODIGO DE ABAJO ///////////////
-                        Query queryCargoPro = sesion.createQuery("FROM cargo WHERE area='"+area.getIdArea()+"'");
-                        List<Cargo>ListaCargoPro = queryCargo.list();
-                        for(Cargo cargo : ListaCargoPro){
-                        
-                            sesion.beginTransaction();
-                            Query queryActuzalizarUsuario = sesion.createSQLQuery("UPDATE Usuario WHERE Cargo="+cargo.getIdCargo()+" SET Estado='"+estado+"'");
-                            queryActuzalizarUsuario.executeUpdate();
-                            sesion.getTransaction().commit();
-                        }    
-//                            Query queryEmpleado = sesion.createQuery("FROM Empleado WHERE Area="+area.getIdArea()+"");
-//                            List<Empleado> ListaEmpleado = queryEmpleado.list();
-//                            for(Empleado empleado : ListaEmpleado){
-//                                
-//                                sesion.beginTransaction();
-//                                Query queryUsuario = sesion.createSQLQuery("UPDATE usuario SET Estado='"+estado+"' WHERE idUsuario="+empleado.getUsuario().getIdUsuario()+"");
-//                                queryUsuario.executeUpdate();
-//                                sesion.getTransaction().commit();
-//                                
-//                            }
+                            ////////////////7COORECCIN DEL CODIGO DE ABAJO ///////////////
+                            Query queryCargoPro = sesion.createQuery("FROM Cargo WHERE Area='"+area.getIdArea()+"'");
+                            List<Cargo>ListaCargoPro = queryCargoPro.list();
+                            for(Cargo cargo : ListaCargoPro){
+
+                                sesion.beginTransaction();
+                                Query queryActuzalizarUsuario = sesion.createSQLQuery("UPDATE usuario SET Estado='"+estado+"' WHERE Cargo="+cargo.getIdCargo()+"");
+                                queryActuzalizarUsuario.executeUpdate();
+                                sesion.getTransaction().commit();
+                            }    
                         
                         }
                         

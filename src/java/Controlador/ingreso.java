@@ -11,8 +11,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.json.simple.JSONArray;
 
 
 public class ingreso extends HttpServlet {
@@ -35,6 +37,14 @@ public class ingreso extends HttpServlet {
                 case "ingresousuario":
                     usuarioIngreso(request, response);
                     break;
+                    
+                case "promedioimgresos":
+                    promedioIngresos(request, response);
+                    break;
+                    
+                case "chartSemana":
+                    chartSemana(request, response);
+                    break;
             }
             
         }
@@ -51,7 +61,7 @@ public class ingreso extends HttpServlet {
             String hora = request.getParameter("Hora");
             String Minutos = request.getParameter("Minutos");
             Session sesion = HibernateUtil.getSessionFactory().openSession();
-            Query query = sesion.createQuery("FROM Usuario WHERE Documento='"+UsuarioID+"' AND Estado='Activo'");
+            Query query = sesion.createQuery("FROM Usuario WHERE Documento='"+UsuarioID+"'");
             List<Usuario> listaUsuario = query.list();
             
             if (listaUsuario.size() == 1) {
@@ -64,19 +74,16 @@ public class ingreso extends HttpServlet {
                         Usuario objUsuario = new Usuario();
                         objUsuario.setIdUsuario(usuario.getIdUsuario());
                         
-                        
-                        System.out.println("listaIngreso .size --------------------------> "+listaIngreso.size());
-                        
                         if (listaIngreso.size() == 0) {
-                            System.out.println("Tipo de horario ---------> " + usuario.getHorario() + "   Hora ----------> "+hora + "          Minutos----------> "+Minutos);
+                            
                             String observacionIngreso = "";
                             if (usuario.getHorario().equals("A")) {
                                 
-                                if (Integer.parseInt(hora) >= 8 && Integer.parseInt(Minutos) > 5) {
+                                if (Integer.parseInt(hora) == 8 && Integer.parseInt(Minutos) > 5 || Integer.parseInt(hora) >= 9) {
                                 
                                     observacionIngreso = "Tarde";
 
-                                }else if (Integer.parseInt(hora) <= 7 && Integer.parseInt(Minutos) < 55) {
+                                }else if (Integer.parseInt(hora) <= 7 && Integer.parseInt(Minutos) < 55 || Integer.parseInt(hora) < 7) {
 
                                     observacionIngreso = "Temprano";
 
@@ -87,11 +94,11 @@ public class ingreso extends HttpServlet {
                                 
                             }else if (usuario.getHorario().equals("B")) {
                                 
-                                if (Integer.parseInt(hora) >= 7 && Integer.parseInt(Minutos) > 5) {
+                                if (Integer.parseInt(hora) >= 7 && Integer.parseInt(Minutos) > 5 || Integer.parseInt(hora) > 7) {
                                 
                                     observacionIngreso = "Tarde";
 
-                                }else if (Integer.parseInt(hora) <= 6 && Integer.parseInt(Minutos) < 55) {
+                                }else if (Integer.parseInt(hora) <= 6 && Integer.parseInt(Minutos) < 55 || Integer.parseInt(hora) < 6) {
 
                                     observacionIngreso = "Temprano";
 
@@ -119,7 +126,7 @@ public class ingreso extends HttpServlet {
                                 String observacionIngreso = "";
                                 if (usuario.getHorario().equals("A")) {
                                 
-                                    if (Integer.parseInt(hora) >= 18 && Integer.parseInt(Minutos) > 5) {
+                                    if (Integer.parseInt(hora) >= 18 && Integer.parseInt(Minutos) > 5 || Integer.parseInt(hora) > 18) {
 
                                         observacionIngreso = "Tarde";
 
@@ -134,7 +141,7 @@ public class ingreso extends HttpServlet {
 
                                 }else if (usuario.getHorario().equals("B")) {
 
-                                    if (Integer.parseInt(hora) >= 17 && Integer.parseInt(Minutos) > 5) {
+                                    if (Integer.parseInt(hora) >= 17 && Integer.parseInt(Minutos) > 5 || Integer.parseInt(hora) > 17) {
 
                                         observacionIngreso = "Tarde";
 
@@ -169,6 +176,8 @@ public class ingreso extends HttpServlet {
                             response.getWriter().write("407");
                         }
                         
+                    }else{
+                        response.getWriter().write("Inactivo");
                     }
                 }                
             }else if (listaUsuario.size() > 1) {
@@ -180,6 +189,218 @@ public class ingreso extends HttpServlet {
             System.err.println(e);
             response.getWriter().write("500");
         }
+    }
+    protected void promedioIngresos(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+        
+        try{
+            int totalIngresos = 0, ingresosBien = 0, ingresosMal = 0, ingresosJusto = 0;
+            
+            Usuario objUsuario = (Usuario) request.getSession().getAttribute("UsuarioIngresado");
+            
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Query query = sesion.createQuery("FROM Ingreso WHERE Usuario = "+objUsuario.getIdUsuario()+"");
+            List<Ingreso> ListaIngreso = query.list();
+            totalIngresos = ListaIngreso.size();
+            for(Ingreso ingreso : ListaIngreso){
+            
+                if (ingreso.getTipo().equals("Ingreso")) {
+                    
+                    if (ingreso.getObservacion().equals("Tarde")) {
+                    
+                        ingresosMal++;
+                        
+                    }else if (ingreso.getObservacion().equals("Temprano")) {
+                        
+                        ingresosBien++;
+                        
+                    }else if (ingreso.getObservacion().equals("Justo")) {
+                        
+                        ingresosJusto++;
+                        
+                    }
+                    
+                    
+                }else if (ingreso.getTipo().equals("Salida")) {
+                    
+                    if (ingreso.getObservacion().equals("Tarde")) {
+                        ingresosBien++;
+                    }else if (ingreso.getObservacion().equals("Temprano")) {
+                        ingresosMal++;
+                    }else if (ingreso.getObservacion().equals("Justo")) {
+                        ingresosJusto++;
+                    }
+                    
+                }
+            
+            }
+            JSONArray  horasSemanaJson = new JSONArray();
+            horasSemanaJson.add(totalIngresos);
+            horasSemanaJson.add(ingresosBien);
+            horasSemanaJson.add(ingresosMal);
+            horasSemanaJson.add(ingresosJusto);
+            
+            response.getWriter().write(horasSemanaJson.toJSONString());
+            
+        }catch(Exception e){
+            response.getWriter().write("500");
+            System.err.println(e);
+        }
+        
+    }
+    protected void chartSemana(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+        
+        try{
+            
+            String Dia = request.getParameter("Dia");
+            String Fecha [] = request.getParameter("Fecha").split("/");
+            String fechaQuery = "";
+            Usuario objUsuario = (Usuario) request.getSession().getAttribute("UsuarioIngresado");
+            
+            String horaIngresoLunes = "0.2", horaSalidaLunes = "0.2";
+            String horaIngresoMartes = "0.2", horaSalidaMartes = "0.2";
+            String horaIngresoMiercoles = "0.2", horaSalidaMiercoles = "0.2";
+            String horaIngresoJueves = "0.2", horaSalidaJueves = "0.2";
+            String horaIngresoViernes = "0.2", horaSalidaViernes = "0.2";
+            String horaIngresoSabado = "0.2", horaSalidaSabado = "0.2";
+            String horaIngresoDominngo = "0.2", horaSalidaDomingo = "0.2";            
+            
+            if (Dia == "Domingo") {
+                fechaQuery = Fecha[0]+"-"+Fecha[1]+"-"+String.valueOf(Integer.parseInt(Fecha[2])-7);                
+            }else if (Dia.equals("Lunes")) {
+                fechaQuery = Fecha[0]+"-"+Fecha[1]+"-"+String.valueOf(Integer.parseInt(Fecha[2])-1);
+            }else if (Dia == "Martes") {
+                fechaQuery = Fecha[0]+"-"+Fecha[1]+"-"+String.valueOf(Integer.parseInt(Fecha[2])-2);
+            }else if (Dia == "Miercoles") {
+                fechaQuery = Fecha[0]+"-"+Fecha[1]+"-"+String.valueOf(Integer.parseInt(Fecha[2])-3);
+            }else if (Dia == "Jueves") {
+                fechaQuery = Fecha[0]+"-"+Fecha[1]+"-"+String.valueOf(Integer.parseInt(Fecha[2])-4);
+            }else if (Dia == "Viernes") {
+                fechaQuery = Fecha[0]+"-"+Fecha[1]+"-"+String.valueOf(Integer.parseInt(Fecha[2])-5);
+            }else if (Dia == "Sabado") {
+                fechaQuery = Fecha[0]+"-"+Fecha[1]+"-"+String.valueOf(Integer.parseInt(Fecha[2])-6);
+            }
+            
+            
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Query query = sesion.createQuery("FROM Ingreso WHERE Usuario = "+objUsuario.getIdUsuario()+" AND Fecha > '"+fechaQuery+"'");
+            List<Ingreso> ListaIngreso = query.list();
+            for(Ingreso ingreso : ListaIngreso){
+                String hora [] = String.valueOf(ingreso.getHora()).split(" ");
+                String horaParseada [] = hora[1].split(":");
+                
+                if (ingreso.getDia().equals("Domingo")) {
+                    
+                    if (ingreso.getTipo().equals("Ingreso")) {
+                    
+                        horaIngresoDominngo = horaParseada[0]+"."+horaParseada[1];
+                        
+                    }else if (ingreso.getTipo().equals("Salida")) {
+                        
+                        horaSalidaDomingo = horaParseada[0]+"."+horaParseada[1];
+                        
+                    }
+                    
+                }else if (ingreso.getDia().equals("Lunes")) {
+                    
+                    if (ingreso.getTipo().equals("Ingreso")) {
+                    
+                        horaIngresoLunes = horaParseada[0]+"."+horaParseada[1];
+                        
+                    }else if (ingreso.getTipo().equals("Salida")) {
+                        
+                        horaSalidaLunes = horaParseada[0]+"."+horaParseada[1];
+                        
+                    }
+                    
+                }else if (ingreso.getDia().equals("Martes")) {
+                    
+                    if (ingreso.getTipo().equals("Ingreso")) {
+                    
+                        horaIngresoMartes = horaParseada[0]+"."+horaParseada[1];
+                        
+                    }else if (ingreso.getTipo().equals("Salida")) {
+                        
+                        horaSalidaMartes = horaParseada[0]+"."+horaParseada[1];
+                        
+                    }
+                    
+                }else if (ingreso.getDia().equals("Miercoles")) {
+                    
+                    if (ingreso.getTipo().equals("Ingreso")) {
+                    
+                        horaIngresoMiercoles = horaParseada[0]+"."+horaParseada[1];
+                        
+                    }else if (ingreso.getTipo().equals("Salida")) {
+                        
+                        horaSalidaMiercoles = horaParseada[0]+"."+horaParseada[1];
+                        
+                    }
+                    
+                }else if (ingreso.getDia().equals("Jueves")) {
+                    
+                    if (ingreso.getTipo().equals("Ingreso")) {
+                    
+                        horaIngresoJueves = horaParseada[0]+"."+horaParseada[1];
+                        
+                    }else if (ingreso.getTipo().equals("Salida")) {
+                        
+                        horaSalidaJueves = horaParseada[0]+"."+horaParseada[1]; 
+                        
+                    }
+                    
+                }else if (ingreso.getDia().equals("Viernes")) {
+                    
+                    if (ingreso.getTipo().equals("Ingreso")) {
+                    
+                        horaIngresoViernes = horaParseada[0]+"."+horaParseada[1];
+                        
+                    }else if (ingreso.getTipo().equals("Salida")) {
+                        
+                        horaSalidaViernes = horaParseada[0]+"."+horaParseada[1];
+                        
+                    }
+                    
+                }else if (ingreso.getDia().equals("Sabado")) {
+                    
+                    if (ingreso.getTipo().equals("Ingreso")) {
+                    
+                        horaIngresoSabado = horaParseada[0]+"."+horaParseada[1];
+                        
+                    }else if (ingreso.getTipo().equals("Salida")) {
+                        
+                        horaSalidaSabado = horaParseada[0]+"."+horaParseada[1];
+                        
+                    }
+                }
+             
+            }
+            JSONArray  horasSemanaJson = new JSONArray();
+            horasSemanaJson.add(horaIngresoLunes);
+            horasSemanaJson.add(horaSalidaLunes);
+            horasSemanaJson.add(horaIngresoMartes);
+            horasSemanaJson.add(horaSalidaMartes);
+            horasSemanaJson.add(horaIngresoMiercoles);
+            horasSemanaJson.add(horaSalidaMiercoles);
+            horasSemanaJson.add(horaIngresoJueves);
+            horasSemanaJson.add(horaSalidaJueves);
+            horasSemanaJson.add(horaIngresoViernes);
+            horasSemanaJson.add(horaSalidaViernes);
+            horasSemanaJson.add(horaIngresoSabado);
+            horasSemanaJson.add(horaSalidaSabado);
+            horasSemanaJson.add(horaIngresoDominngo);
+            horasSemanaJson.add(horaSalidaDomingo);
+            
+            response.getWriter().write(horasSemanaJson.toJSONString());
+            
+        }catch(Exception e){
+        
+            response.getWriter().write("500");
+            System.out.println(e);
+        
+        }
+    
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
