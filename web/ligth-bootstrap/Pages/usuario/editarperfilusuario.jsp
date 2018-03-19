@@ -33,13 +33,13 @@
                                                         <div class="col-md-6 pr-1">
                                                             <div class="form-group">
                                                                 <label>Nombres</label>
-                                                                <input type="text" class="form-control" id="txtNombre" value="<%=objUsuario.getNombre()%>">
+                                                                <input type="text" class="form-control" id="txtNombre" name="txtNombre" value="<%=objUsuario.getNombre()%>">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 pl-1">
                                                             <div class="form-group">
                                                                 <label for="exampleInputEmail1">Apellidos</label>
-                                                                <input type="text" class="form-control" id="txtApellido" value="<%=objUsuario.getApellido()%>">
+                                                                <input type="text" class="form-control" id="txtApellido" name="txtApellido" value="<%=objUsuario.getApellido()%>">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -47,13 +47,13 @@
                                                         <div class="col-md-6 pr-1">
                                                             <div class="form-group">
                                                                 <label>Direccion</label>
-                                                                <input type="text" class="form-control" id="txtDireccion" value="<%=objUsuario.getDireccion()%>">
+                                                                <input type="text" class="form-control" id="txtDireccion" name="txtDireccion" value="<%=objUsuario.getDireccion()%>">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 pl-1">
                                                             <div class="form-group">
                                                                 <label>Telefono</label>
-                                                                <input type="text" class="form-control" id="txtTelefono" value="<%=objUsuario.getTelefono()%>">
+                                                                <input type="text" class="form-control" id="txtTelefono" name="txtTelefono" value="<%=objUsuario.getTelefono()%>">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -61,7 +61,7 @@
                                                         <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <label>Email</label>
-                                                                <input type="email" class="form-control" id="txtEmail" value="<%=objUsuario.getEmail()%>">
+                                                                <input type="email" class="form-control" id="txtEmail" name="txtEmail" value="<%=objUsuario.getEmail()%>">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -69,13 +69,13 @@
                                                         <div class="col-md-4 pr-1">
                                                             <div class="form-group">
                                                                 <label>Celular</label>
-                                                                <input type="text" class="form-control" id="txtCelular" value="<%=objUsuario.getCelular()%>">
+                                                                <input type="text" class="form-control" id="txtCelular" name="txtCelular" value="<%=objUsuario.getCelular()%>">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4 px-1">
                                                             <div class="form-group">
                                                                 <label>Genero</label>
-                                                                <select id="cmbGenero" class="form-control">
+                                                                <select id="cmbGenero" name="cmbGenero" class="form-control">
                                                                     <%if (objUsuario.getGenero().equals("Masculino")) {%>
                                                                         <option value="Masculino">Masculino</option>
                                                                         <option value="Femenino">Femenino</option>
@@ -90,15 +90,22 @@
                                                             <div class="form-group">
                                                                 <label>Fecha Nacimiento</label>
                                                                 <input type="hidden" id="dtData" value="<%=objUsuario.getFechaNacimiento()%>">
-                                                                <input type="text" id="datetimepicker" class="form-control datepicker dtFechaNacimiento">
+                                                                <input type="text" id="datetimepicker" class="form-control datepicker dtFechaNacimiento" name="dtFechaNacimiento">
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-md-12">
+                                                        <div class="col-md-4 pr-1">
                                                             <div class="form-group">
-                                                                <label>Foto</label>
-                                                                <input type="file" class="form-control" value="<%=objUsuario.getFoto()%>"></input>
+                                                                <label>Foto</label> 
+                                                                <label class="btn btn-info btn-fill form-control" for="txtFotoFile">Selecciona un archivo</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-8 pl-1">
+                                                            <div class="form-group">
+                                                                <label>Archivo</label>
+                                                                <input type="text" class="form-control" id="txtFoto" name="txtFoto" disabled="" value="<%=objUsuario.getFoto()%>">
+                                                                <input type="file" id="txtFotoFile" hidden>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -118,16 +125,26 @@
                                             <div class="card-body ">
                                                 <div class="author">
                                                     <a href="#">
+                                                        <%String nombreUSuario[] = objUsuario.getNombre().split(" ");
+                                                         String apellidoUsuario[] = objUsuario.getApellido().split(" ");%>
                                                         <img class="avatar border-gray" src="../../assets/img/imagenesDePerfil/<%=objUsuario.getFoto()%>" alt="...">
-                                                        <h5 class="card-title">Tania Keatley</h5>
+                                                        <h5 class="card-title"><%=nombreUSuario[0] +" " +apellidoUsuario[0]%></h5>
                                                     </a>
                                                     <p class="card-description">
-                                                        michael24
+                                                        <%if(objUsuario.getCargo().getTipo().equals("Empleado")){%>
+                                                            (Empleado)
+                                                        <%}else{%>
+                                                            (Administrador)
+                                                        <%}%>
                                                     </p>
                                                 </div>
                                                 <p class="card-description text-center">
-                                                    Hey there! As you can see,
-                                                    <br> it is already looking great.
+                                                    <div class="row">
+                                                        <span class="col-md-10 ml-auto"><i class="material-icons">email</i> <%=objUsuario.getEmail()%></span>  
+                                                    </div>
+                                                    <div class="row">
+                                                        <span class="col-md-10 ml-auto"><i class="material-icons">phone</i>  <%=objUsuario.getCelular()%></span>
+                                                    </div>
                                                 </p>
                                             </div>
                                             <div class="card-footer ">
@@ -156,9 +173,9 @@
         </div>
         <%@include file="../includes/jsInclude.jsp" %>
         <script>
-            $(document).ready(function(){     
-               $(".dtFechaNacimiento").val(moment($("#dtData").val()).format('DD/MM/YYYY'));
-               $("#tituloPagina").text("Editar Perfil"); 
+            $(document).ready(function(){    
+                $(".dtFechaNacimiento").val(moment($("#dtData").val()).format('DD/MM/YYYY'));
+                $("#tituloPagina").text("Editar Perfil"); 
             });
         </script>
     </body>
