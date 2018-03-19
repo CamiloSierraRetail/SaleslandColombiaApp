@@ -1011,9 +1011,6 @@ $(".cerrarSesion").click(function (){
 ////////////////////// INGRESO Y SALIDA DEL USUARIO ////////////////////////
 function ingreso(){
     
-//    var dt = new Date();
-//    var hora = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
-
     var fullDate = new Date();
     var weekday = new Array(7);
     weekday[0] = "Domingo";
@@ -1187,5 +1184,26 @@ function listarUsuarios(){
         botstrapPaginacionTabla(5, false, true, true, true);
     });
     
+    
+}
+
+/////////////////// FUNCION PARA OBTENER EL PROMEDIO DE LOS INGRESOS DEL USUARIO ////////////////////7
+function cargarPromedio(){
+    
+    $.post("/SaleslandColombiaApp/ingreso/promedioimgresos",function (responseText){
+       
+        if (responseText == "500") {
+            swal("Datos no cargados", "Los datos de las estadisticas del usuario no se lograron cargar, por favor intentalo nuevamente.", "error");
+        }else{
+            var dt = JSON.parse(responseText);
+            
+            $("#numeroIngresos").text(dt[0]);
+            $("#ingresosCorrectos").text(dt[1]);
+            $("#ingresosErroneos").text(dt[2]);
+            $("#ingresosJusto").text(dt[3]);
+            
+        }
+        
+    });
     
 }
