@@ -4,7 +4,7 @@
 
     <head>
         <%@include file="../../Pages/includes/cssInclude.jsp" %>
-        <title>Inicio de sesion - SaleslandColombia</title>
+        <title>Inicio de sesión - SaleslandColombia</title>
 
         <style>   
             /*/////////////// NO BORRAR, FUENTES PARA EL PRELOADER /////////////////////*/
@@ -68,7 +68,7 @@
                                             <div class="form-group">
                                                 <div class="form-check">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox" value="" checked>
+                                                        <input class="form-check-input" type="checkbox" id="remember_me">
                                                         <span class="form-check-sign"></span>
                                                         Recuerdame
                                                     </label>
@@ -111,7 +111,25 @@
     </body>
     <%@include file="../../Pages/includes/jsInclude.jsp" %>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function () {  
+            //LocalStorage para el recuerdame almacenando el username
+            $('#remember_me').click(function() {
+                if ($('#remember_me').is(':checked')) {
+                    localStorage.username = $('#txtUsuarioSesion').val();
+                    localStorage.checkBox = $('#remember_me').val();
+                } else {
+                    localStorage.username = '';
+                    localStorage.checkBox = '';
+                }
+            });
+            if (localStorage.checkBox && localStorage.checkBox != '') {
+                $('#remember_me').attr('checked', 'checked');
+                $('#txtUsuarioSesion').val(localStorage.username);
+            } else {
+                $('#remember_me').removeAttr('checked');
+                $('#txtUsuarioSesion').val('');
+            }
+            
             $("#preloader").hide();
             demo.checkFullPageBackgroundImage();
 
