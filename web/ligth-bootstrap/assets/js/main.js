@@ -78,33 +78,29 @@ function listarSectores() {
 
 }
 ////////////////////////////// CARGAR DATOS SECTOR ////////////////////////////
-function verDatosSector(){
-    
-    var url = ""+window.location+"";
-    var idSector = url.split("_");
-    $.post("/SaleslandColombiaApp/sector/cargardatossector",{idSector:idSector[1]},function(responseText){
-       
+function verDatosSector(id){
+                
+    $.post("/SaleslandColombiaApp/sector/cargardatossector",{idSector:id},function(responseText){
+
         if (responseText == "500") {
             swal("Ocurrio un error", "Lo sentimos, ocurrió un erro en el servidor, por favor intentalo nuevamente", "error");
         }else{
-            
+
             var dt = JSON.parse(responseText);            
             $.each(dt, function (){
-                if (this['Estado'] == "Activo") {
-                    
-                    $("#cmbEditarEstadoSector").val('Activo');
+
+                if (this['Estado'] == "Activo") {                                
+                    $("#cmbEditarEstadoSector").val("Activo");
                 }else{
-                    
-                    $("#cmbEditarEstadoSector").val('Inactivo');
-                }               
+                    $("#cmbEditarEstadoSector").val("Inactivo");
+                } 
                $("#txtEditarNombreSector").val(this['NombreSector']);
                $("#txtEditarDescripcionSector").val(this['DescripcionSector']);
-                
+
             });
         }
-        
+
     });
-    
 }
 
 /////////////////////////// EDITAR SECTOR //////////////////////////////////////////////
