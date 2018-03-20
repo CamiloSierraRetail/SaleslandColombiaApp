@@ -61,3 +61,5 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js" type="text/javascript"></script>
 <!-- TABLAS -->
 <script src="../../assets/js/tablas.js"></script>
+<!--Yerman JS-->
+<script src="../../assets/js/yerman.js"></script>
