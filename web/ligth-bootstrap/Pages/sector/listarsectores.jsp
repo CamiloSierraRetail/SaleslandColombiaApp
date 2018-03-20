@@ -4,7 +4,7 @@
     <head>
         <%@include file="../includes/cssInclude.jsp" %>
         
-        <title>Listado de sectores - SaleslandColombia</title>       
+        <title>Sectores - SaleslandColombia</title>       
     </head>
     <body>
         
@@ -25,9 +25,9 @@
                                         <h4 class="card-title">Nuestros sectores</h4>
                                         <p class="card-category">En este listado se muestran todos los sectores de la empresa.</p>
                                     </div>
-                                    <div class="card-body table-full-width">                                        
+                                    <div class="card-body table-full-width" id="tablaModificada">                                        
                                         <div class="toolbar" id="toolbar">
-                                            <button class="btn btn-outline btn-round" data-toggle="modal" data-target="#myModal1">                                                
+                                            <button class="btn btn-outline btn-round" data-toggle="modal" data-target="#modalRegistrarSector">                                                
                                                 Nuevo
                                                 <span class="btn-label">
                                                     <i class="fa fa-plus"></i>
@@ -60,7 +60,7 @@
             </div>            
         </div>
         <!-- MODAL PARA CREAR UN SECTOR -->
-        <div class="modal fade modal-primary" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade modal-primary" id="modalRegistrarSector" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header justify-content-center">
@@ -100,7 +100,7 @@
         </div>
         <!--  End Modal -->
         
-        <!-- MOSAL PARA EDITAR EL SECTOR -->
+        <!-- MODAL PARA EDITAR EL SECTOR -->
         <div class="modal fade modal-primary" id="ModalEditarSector" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -113,6 +113,7 @@
                         <div class="modal-body text-center">
                             <h5 class="category">ACTUALIZA LOS DATOS DEL SECTOR</h5>
                             <div class="col-md-12 mr-auto ml-auto">
+                                <input id="idSector" type="password" style="display: none" >
                                 <fieldset>  
                                     <div class="form-group">
                                         <div class="row">
@@ -155,9 +156,10 @@
         
         <%@include file="../includes/jsInclude.jsp" %>
         <script>
-
-            listarSectores(); 
-            $("#tituloPagina").text("Empresa-Sectores");
+            listarSectores();             
+            $("#empresaItemNav").addClass("show");
+            $("#sectoresItemNav").addClass('active');
+            $("#tituloPagina").text("Sectores");
         </script>
     </body>          
 </html>

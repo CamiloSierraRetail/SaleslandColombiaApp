@@ -121,7 +121,7 @@ public class area extends HttpServlet {
     }
     private void verArea(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-            try{
+        try{
             int countRows = 1;
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             Query query = sesion.createQuery("FROM Area");
@@ -146,9 +146,9 @@ public class area extends HttpServlet {
                                                 + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='Ver Sector'>"
                                                     + "<i class='fa fa-user'></i>"
                                                 + "</a>"   
-                                                + "<a href='/SaleslandColombiaApp/ligth-bootstrap/Pages/area/editararea.jsp?_"+area.getIdArea()+"' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
+                                                + "<button onclick='verDatosArea("+area.getIdArea()+")' data-toggle='modal' data-target='#ModalEditarArea' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
                                                     + "<i class='fa fa-edit'></i>"
-                                                + "</a>"
+                                                + "</button>"
                                                 + "<a href='#' rel='tooltip' title='' class='btn btn-danger btn-link btn-xs' data-original-title='Eliminar'>"
                                                     + "<i class='fa fa-times'></i>"
                                                 + "</a>"

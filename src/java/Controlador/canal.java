@@ -50,6 +50,9 @@ public class canal extends HttpServlet {
                 case "cargacombocanal":
                     cargacomboCanal(request, response);
                     break;
+                case "cargarcanalesdependientes":                    
+                    cargarCanalesDependientes(request, response);
+                    break;
             }
             
         }
@@ -111,9 +114,9 @@ public class canal extends HttpServlet {
                                                 + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='Ver Sector'>"
                                                     + "<i class='fa fa-user'></i>"
                                                 + "</a>"   
-                                                + "<a href='/SaleslandColombiaApp/ligth-bootstrap/Pages/canal/editarcanal.jsp?_"+canal.getIdCanal()+"' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
+                                                + "<button onclick='verDatosCanal("+canal.getIdCanal()+")' data-toggle='modal' data-target='#ModalEditarCanal' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
                                                     + "<i class='fa fa-edit'></i>"
-                                                + "</a>"
+                                                + "</button>"
                                                 + "<a href='#' rel='tooltip' title='' class='btn btn-danger btn-link btn-xs' data-original-title='Eliminar'>"
                                                     + "<i class='fa fa-times'></i>"
                                                 + "</a>"
@@ -250,7 +253,36 @@ public class canal extends HttpServlet {
         }
         
     }
-
+    protected void cargarCanalesDependientes(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+    
+        try{
+    
+            String idSector = request.getParameter("idSector");
+            
+            System.out.println("------------------->       " + idSector);
+            
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Query query = sesion.createQuery("FROM Canal WHERE Sector="+idSector+"");
+            List<Canal> listaCanal = query.list();
+            JSONArray canalJson = new JSONArray();
+            
+            for(Canal canal : listaCanal){
+            
+                canalJson.add(canal.getIdCanal());
+                canalJson.add(canal.getNombreCanal());
+                
+            }
+            
+            response.getWriter().write(canalJson.toJSONString());
+            
+        }catch(Exception e){
+        
+            response.getWriter().write("500");
+            System.err.println(e);
+        }
+    
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

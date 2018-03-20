@@ -114,12 +114,12 @@
         $(document).ready(function () {  
             $("#preloader").hide();
             demo.checkFullPageBackgroundImage();
-
+            
             setTimeout(function () {
                 // after 1000 ms we add the class animated to the login/register card
                 $('.card').removeClass('card-hidden');
                 $("#container").hide();
-            }, 4500);
+            },4500);
         });
     </script>
 </html>

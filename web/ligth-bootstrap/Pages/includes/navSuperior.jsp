@@ -18,7 +18,7 @@
             <div class="collapse navbar-collapse justify-content-end">
                 <ul class="navbar-nav">
                     <li class="dropdown nav-item">
-                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                        <a href="#" rel="tooltip" data-original-title="Notificaciones" class="dropdown-toggle nav-link" data-toggle="dropdown">
                             <i class="material-icons">notifications_none</i>
                             <span class="notification">5</span>
                             <span class="d-lg-none">Notification</span>
@@ -32,7 +32,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link cerrarSesion" href="#" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link cerrarSesion" rel="tooltip" data-original-title="Cerrar Sesión" href="#" aria-haspopup="true" aria-expanded="false">
                             <span class="d-lg-none">Cerrar Sesión</span>
                             <i class="material-icons">power_settings_new</i>
                         </a>

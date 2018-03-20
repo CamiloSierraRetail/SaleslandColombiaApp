@@ -183,32 +183,40 @@ public class usuario extends HttpServlet {
             throws ServletException, IOException {
         
         try{
-            System.out.println("INICIAR SESION SALESLAND APP");
             String Usuario = request.getParameter("Usuario");
-            String Contrasenia = request.getParameter("Contrasenia");
+            String Contrasenia = request.getParameter("Contrasenia");            
             Session sesion = HibernateUtil.getSessionFactory().openSession();
-            Query query = sesion.createQuery("FROM Usuario WHERE Email='"+Usuario+"' OR Documento='"+Usuario+"' AND Contrasenia='"+Contrasenia+"' AND Estado='Activo'");
+            Query query = sesion.createQuery("FROM Usuario WHERE ((Email='"+Usuario+"' OR Documento='"+Usuario+"') AND Contrasenia='"+Contrasenia+"')");
             List<Usuario> listaUsuario = query.list();
-            if (listaUsuario.size() > 0) {
+            if (listaUsuario.size() == 1) {
                 
                 for(Usuario usuario : listaUsuario){
                 
-                    if (usuario.getCargo().getTipo().equals("Empleado")) {
+                    if (usuario.getEstado().equals("Activo")) {
+                        if (usuario.getCargo().getTipo().equals("Empleado")) {
                         
                         response.getWriter().write("Empleado");
                         
-                    }else{
+                        }else{
+
+                            response.getWriter().write("Administrador");
+
+                        }
+
+                        Usuario objUsuario = new Usuario(usuario.getTipoDocumento(), usuario.getDocumento(), usuario.getNombre(), usuario.getApellido(), usuario.getDireccion(), usuario.getTelefono(), usuario.getCelular(), usuario.getGenero(), usuario.getEmail(), usuario.getFechaNacimiento(), "", usuario.getFoto(), "Activo", usuario.getHorario() , usuario.getCargo());
+                        objUsuario.setIdUsuario(usuario.getIdUsuario());
+                        request.getSession().setAttribute("UsuarioIngresado", objUsuario);
+                        
+                    }else if (usuario.getEstado().equals("Inactivo")){
                     
-                        response.getWriter().write("Administrador");
+                        response.getWriter().write("403");
                         
                     }
-                    
-                    Usuario objUsuario = new Usuario(usuario.getTipoDocumento(), usuario.getDocumento(), usuario.getNombre(), usuario.getApellido(), usuario.getDireccion(), usuario.getTelefono(), usuario.getCelular(), usuario.getGenero(), usuario.getEmail(), usuario.getFechaNacimiento(), "", usuario.getFoto(), "Activo", usuario.getHorario() , usuario.getCargo());
-                    objUsuario.setIdUsuario(usuario.getIdUsuario());
-                    request.getSession().setAttribute("UsuarioIngresado", objUsuario);                    
+                                        
                 }
                 
             }else{            
+
                 response.getWriter().write("404");
             }
         }catch(Exception e){

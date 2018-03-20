@@ -91,13 +91,13 @@
                                                     <span class="sidebar-normal">Sectores</span>
                                                 </a>
                                             </li>
-                                            <li class="nav-item ">
+                                            <li class="nav-item " id="canalesItemNav">
                                                 <a class="nav-link" href="/SaleslandColombiaApp/ligth-bootstrap/Pages/canal/listarcanal.jsp">
                                                     <span class="sidebar-mini">C</span>
                                                     <span class="sidebar-normal">Canales</span>
                                                 </a>
                                             </li>
-                                            <li class="nav-item ">
+                                            <li class="nav-item " id="areasItemNav">
                                                 <a class="nav-link" href="../area/listararea.jsp">
                                                     <span class="sidebar-mini">A</span>
                                                     <span class="sidebar-normal">Areas</span>
@@ -176,28 +176,28 @@
                                 </li>
                                 <!-- Div xdxdxdxddxddxdxdxdxdx -->
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="collapse" href="#Examples">
+                                    <a class="nav-link" data-toggle="collapse" href="#empresaItemNav">
                                         <i class="material-icons">location_city</i>
                                         <p>
                                             Empresa
                                             <b class="caret"></b>
                                         </p>
                                     </a>
-                                    <div class="collapse " id="Examples">
+                                    <div class="collapse " id="empresaItemNav">
                                         <ul class="nav">
-                                            <li class="nav-item ">
+                                            <li class="nav-item " id="sectoresItemNav">
                                                 <a class="nav-link" href="/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/listarsectores.jsp">
                                                     <span class="sidebar-mini">S</span>
                                                     <span class="sidebar-normal">Sectores</span>
                                                 </a>
                                             </li>
-                                            <li class="nav-item ">
+                                            <li class="nav-item " id="canalesItemNav">
                                                 <a class="nav-link" href="/SaleslandColombiaApp/ligth-bootstrap/Pages/canal/listarcanal.jsp">
                                                     <span class="sidebar-mini">C</span>
                                                     <span class="sidebar-normal">Canales</span>
                                                 </a>
                                             </li>
-                                            <li class="nav-item ">
+                                            <li class="nav-item" id="areasItemNav">
                                                 <a class="nav-link" href="../area/listararea.jsp">
                                                     <span class="sidebar-mini">A</span>
                                                     <span class="sidebar-normal">Areas</span>
