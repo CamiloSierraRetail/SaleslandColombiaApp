@@ -31,8 +31,8 @@
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <label class="control-label">Sector *</label>                                                            
-                                                            <select id="cmbSector" name="Sector" class="selectpicker" data-title="Selecciona el sector" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
-
+                                                            <select id="cmbSector" name="Sector" class="form-control">
+                                                                <option>Selecciona el sector</option>
                                                             </select>                                                            
                                                         </div>
                                                     </div>

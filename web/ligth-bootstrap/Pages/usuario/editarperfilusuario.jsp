@@ -4,7 +4,7 @@
 
     <head>
         <%@include file="../includes/cssInclude.jsp" %>
-        <title>Inicio - SaleslandColombia</title>
+        <title>Editar Perfil | SaleslandColombia</title>
     </head>
 
     <body>
@@ -16,7 +16,7 @@
                 <!-- End Navbar -->
                 <div class="content">
                     <div class="container-fluid">
-                        <div class="section-image" data-image="../../assets/img/bg5.jpg" ;>
+                        <div class="section-image" data-image="../../assets/img/bg5.jpg">
                             <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
                             <div class="container">
                                 <div class="row">
@@ -34,6 +34,7 @@
                                                             <div class="form-group">
                                                                 <label>Nombres</label>
                                                                 <input type="text" class="form-control" id="txtNombre" name="txtNombre" value="<%=objUsuario.getNombre()%>">
+                                                                <input type="hidden" id="txtIdUsuario" value="<%=objUsuario.getIdUsuario()%>">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 pl-1">

@@ -1,7 +1,6 @@
 package Controlador;
 
 import Modelo.Cargo;
-import Modelo.Ingreso;
 import Modelo.Sector;
 import Modelo.Usuario;
 import java.io.IOException;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -49,7 +47,12 @@ public class usuario extends HttpServlet {
                 case "listarUsuarios":
                     listarUSuarios(request, response);
                     break;
-                
+                case "verificarEmail":
+                    verificarEmail(request, response);
+                    break;
+                case "actualizarPerfil":
+                    actualizarPerfil(request, response);
+                    break;
             }
             
         }
@@ -80,7 +83,6 @@ public class usuario extends HttpServlet {
             if (ImagenPerfil.equals("")) {
                 
                 if (Genero.equals("Masculino")) {
-                    
                     imagenPerfil = "hombreDefaultImageProfile.png";
                 }else if (Genero.equals("Femenino")) {
                     imagenPerfil = "mujerDefaultImageProfile.png";
@@ -278,6 +280,50 @@ public class usuario extends HttpServlet {
             response.getWriter().write("500");
         }
     
+    }
+    
+    protected void verificarEmail(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try{
+            String email = request.getParameter("email");
+            String idusuario = request.getParameter("idusuario");
+            Session s = HibernateUtil.getSessionFactory().openSession();
+            Query q  = s.createQuery("FROM Usuario WHERE Email ='"+email+"'");
+            Query q2 = s.createQuery("FROM Usuario WHERE IdUsuario = '"+idusuario+"' AND Email = '"+email+"'");
+            if(q.list().size() > 0 && q2.list().isEmpty()){
+                response.getWriter().write("0");
+            }else{
+                response.getWriter().write("1");
+            }
+        }catch(Exception ex){
+            System.out.println(ex);
+        }
+    }
+    
+    protected void actualizarPerfil(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try{
+            String idusuario = request.getParameter("idUsuario");
+            String nombre = request.getParameter("nombres");
+            String apellidos = request.getParameter("apellidos");
+            String direccion = request.getParameter("direccion");
+            String telefono = request.getParameter("telefono");
+            String email = request.getParameter("email");
+            String celular = request.getParameter("celular");
+            String genero = request.getParameter("genero");
+            String fechaNacimiento = request.getParameter("fechaNacimiento");
+            String foto = request.getParameter("foto");
+            Session s = HibernateUtil.getSessionFactory().openSession();
+            s.beginTransaction();
+            Query q = s.createSQLQuery("UPDATE usuario SET Nombre = '"+nombre+"', Apellido = '"+apellidos+"', Direccion = '"+direccion+"', Telefono = '"+telefono+"', Email = '"+email+"', Celular = '"+celular+"', Genero = '"+genero+"', FechaNacimiento = '"+fechaNacimiento+"', Foto = '"+foto+"' WHERE idUsuario = '"+idusuario+"'");
+            q.executeUpdate();
+            s.getTransaction().commit();
+            s.close();
+            response.getWriter().write("1");
+        }catch(Exception ex){
+            System.out.println(ex);
+            response.getWriter().write("0");
+        }
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

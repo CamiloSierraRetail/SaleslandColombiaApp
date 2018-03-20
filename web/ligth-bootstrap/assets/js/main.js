@@ -237,8 +237,7 @@ function cargarSectores(){
             for (var key in dt) {
                 if (dt.hasOwnProperty(key)) {
                   var val = dt[key];
-                    $("#cmbSector").append("<option value='"+val['IdSector']+"'>"+val['NombreSector']+"</option>")
-                    
+                    $("#cmbSector").append("<option value='"+val['IdSector']+"'>"+val['NombreSector']+"</option>");  
                 }
             }
         } 
@@ -495,26 +494,28 @@ function cargarCargosSectores(){
 }
 ////////// FUNCION PARA VALIDAR EL FORMATO DE LA IMAGEN ////////////////////////////
 $("#fileImagenUsuario").change(function(){
-    var fileTypes = ["jpg","jpeg","png"];
-    if (this.files && this.files[0]) {
-        var extension = this.files[0].name.split('.').pop().toLowerCase(),  //file extension from input file
+    validarImagen(this);
+});
+
+var fileTypes = ["jpg","jpeg","png"];
+function validarImagen(imagen){
+    if (imagen.files && imagen.files[0]) {
+        var extension = imagen.files[0].name.split('.').pop().toLowerCase(),  //file extension from input file
         isSuccess = fileTypes.indexOf(extension) > -1;  //is extension in acceptable types
 
         if (isSuccess) { 
             var reader = new FileReader();
             reader.onload = function (e) {
-                
-                $("#fileImagenUsuario").val(this.files[0].name);
+                $("#fileImagenUsuarioNombre").val(imagen.files[0].name);
             }
-            reader.readAsDataURL(this.files[0]);
+            reader.readAsDataURL(imagen.files[0]);
         }
         else{
             $("#fileImagenUsuario").val("");
             swal("Advertencia","El archivo seleccionado no es una imagen, solo puedes subir archivos con extension jpg, jpeg y png.","warning");
         }
     }
-    
-});
+}
 
 ////////////////////Funciones para validar password email y telefono////////////////7
     $.validator.addMethod("pwcheck1", function(value) {
@@ -705,11 +706,10 @@ $("#frmRegistrarUsuario").validate({
                       var Celular = $("#txtCelularUsuario").val();
                       var Telefono = $("#txtTelefonoUSuario").val();
                       var FechaNacnimiento = $("#datetimepicker").val();
-                      var ImagenPerfil = $("#fileImagenUsuario").val();
+                      var ImagenPerfil = $("#fileImagenUsuarioNombre").val();
                       var Horario = $("#cmbHorarioUsuario").val();
                       //Agregar el CARGO
                         ////////Subir IMAGEN DE PERFIL/////////
-                        alert("subiendo imagen xd");
                         var data = new FormData();
                         $.each($('#fileImagenUsuario')[0].files, function(i, file) {
                             data.append('file-'+i, file);
@@ -722,7 +722,6 @@ $("#frmRegistrarUsuario").validate({
                             contentType: false,
                             type: 'POST'
                         });
-                            alert("fINALIZA!!!");
                       $.post("/SaleslandColombiaApp/usuario/registrar",{TipoDocumentoUsuario:TipoDocumento,DocumentoUsuario:Documento,NombreUsuario:Nombres,ApellidoUsuario:Apellidos,EmailUsuario:Email,ContraseniaUsuario:Contrasenia,DireccionUsuario:Direccion,GeneroUsuario:Genero,CelularUsuario:Celular,TelefonoUsuario:Telefono,FechaNacimientoUsuario:FechaNacnimiento,ImagenPerfilUsuario:ImagenPerfil,CargoUsuario:cargo,Horario:Horario},function (responsetext) {                                
                             if(responsetext == "200"){
 

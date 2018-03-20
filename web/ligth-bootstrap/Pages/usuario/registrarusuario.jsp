@@ -166,7 +166,7 @@
                                                                     
                                                                     <label class="control-label">Imagen de perfil <star>*</star></label>
                                                                     <input class="form-control" type="file" id="fileImagenUsuario" name="ImagenUsuario">
-                                                                    
+                                                                    <input type="hidden" id="fileImagenUsuarioNombre">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-10">

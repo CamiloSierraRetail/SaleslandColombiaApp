@@ -46,7 +46,7 @@
                                     <div class="collapse" id="collapseExample">
                                         <ul class="nav">
                                             <li>
-                                                <a class="profile-dropdown" href="#pablo">
+                                                <a class="profile-dropdown" href="../usuario/verPerfil.jsp">
                                                     <span class="sidebar-mini">MP</span>
                                                     <span class="sidebar-normal">Mi Perfil</span>
                                                 </a>
@@ -146,7 +146,7 @@
                                     <div class="collapse" id="collapseExample">
                                         <ul class="nav">
                                             <li>
-                                                <a class="profile-dropdown" href="#pablo">
+                                                <a class="profile-dropdown" href="../usuario/verPerfil.jsp">
                                                     <span class="sidebar-mini">MP</span>
                                                     <span class="sidebar-normal">Mi Perfil</span>
                                                 </a>
