@@ -18,7 +18,7 @@
                 <%@include file="../includes/navSuperior.jsp" %>
                 <div class="content">
                     <div class="container-fluid">
-                        <div class="row">
+                        <div class="row">                            
                             <div class="col-md-12 mr-auto ml-auto">                                
                                 <div class="card bootstrap-table">
                                     <div class="card-header">
@@ -27,12 +27,12 @@
                                     </div>
                                     <div class="card-body table-full-width">                                        
                                         <div class="toolbar" id="toolbar">
-                                            <a href="registrarsector.jsp" class="btn btn-outline btn-round">                                                
+                                            <button class="btn btn-outline btn-round" data-toggle="modal" data-target="#myModal1">                                                
                                                 Nuevo
                                                 <span class="btn-label">
                                                     <i class="fa fa-plus"></i>
                                                 </span>
-                                            </a>
+                                            </button>
                                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                                         </div>
                                         <table id="bootstrap-table" data-toolbar="#toolbar" class="table">
@@ -50,8 +50,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
-                              
+                                </div>                                
                             </div>
                         </div>                                                                                                            
                     </div>
@@ -60,12 +59,105 @@
                 <%@include  file="../includes/footer.jsp" %>
             </div>            
         </div>
-    </body>        
-    <%@include file="../includes/jsInclude.jsp" %>
-    <script>
-    
-        listarSectores(); 
-        $("#tituloPagina").text("Empresa-Sectores");
-    </script>    
-</script>
+        <!-- MODAL PARA CREAR UN SECTOR -->
+        <div class="modal fade modal-primary" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-center">
+                        <div class="modal-profile">
+                            <i class="nc-icon nc-puzzle-10"></i>
+                        </div>
+                    </div>
+                    <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmRegistrarSector" name="frmRegistrarSector">
+                        <div class="modal-body text-center">
+                            <h5 class="category">INGRESA LOS DATOS DEL SECTOR</h5>
+                            <div class="col-md-12 mr-auto ml-auto">
+                                <fieldset>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <small class="card-category"><strong>Nombre del sector *</strong></small>
+                                            <input id="txtNombreSector" name="NombreSector" type="text" class="form-control">                                                        
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <small class="card-category"><strong>Descripción *</strong></small>
+                                            <textarea id="txtDescripcionSector" name="DescripcionSector" class="form-control textArea"></textarea>                                                       
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>   
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-link btn-simple" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-info btn-fill pull-right">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--  End Modal -->
+        
+        <!-- MOSAL PARA EDITAR EL SECTOR -->
+        <div class="modal fade modal-primary" id="ModalEditarSector" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-center">
+                        <div class="modal-profile">
+                            <i class="nc-icon nc-puzzle-10"></i>
+                        </div>
+                    </div>
+                    <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmEditarSector" name="frmEditarSector">
+                        <div class="modal-body text-center">
+                            <h5 class="category">ACTUALIZA LOS DATOS DEL SECTOR</h5>
+                            <div class="col-md-12 mr-auto ml-auto">
+                                <fieldset>  
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <small class="control-label"><strong>Estado *</strong></small>                                                            
+                                            <select id="cmbEditarEstadoSector" name="EditarEstadoSector" class="form-control" data-title="Seleccionar Estado" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                                <option value="Activo">Activo</option>
+                                                <option value="Inactivo">Inactivo</option>                                                                                                                                
+                                            </select>                                                          
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <small class="control-label"><strong>Nombre del sector *</strong></small>
+                                            <input id="txtEditarNombreSector" name="EditarNombreSector" type="text" class="form-control">                                                        
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <small class="control-label"><strong>Descripción *</strong></small>
+                                            <textarea id="txtEditarDescripcionSector" name="EditarDescripcionSector" class="form-control textArea"></textarea>                                                       
+                                        </div>
+                                    </div>
+                                </fieldset>                                                
+
+                            </div>   
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-link btn-simple" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-info btn-fill pull-right">Guardar cambios</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--  End Modal -->
+        
+        <%@include file="../includes/jsInclude.jsp" %>
+        <script>
+
+            listarSectores(); 
+            $("#tituloPagina").text("Empresa-Sectores");
+        </script>
+    </body>          
 </html>

@@ -18,7 +18,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-10 mr-auto ml-auto">
-                                <div class="card">                                    
+                                <div class="card">                                                
                                     <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmRegistrarSector" name="frmRegistrarSector">
                                         <div class="card-header">
                                             <h4 class="card-title">Registro de Sector</h4>
@@ -49,7 +49,7 @@
                                             <button type="submit" class="btn btn-info btn-fill pull-right">Confirmar</button>
                                             <div class="clearfix"></div>
                                         </div>   
-                                    </form>
+                                    </form>                                    
                                 </div>
                             </div>                                                                                                            
                         </div>
@@ -59,7 +59,7 @@
                 <%@include  file="../includes/footer.jsp" %>
             </div>
         </div>
-    </body>
-    <%@include file="../includes/jsInclude.jsp" %>
-    <script>$("#tituloPagina").text("Empresa-Sectores");</script>
+        <%@include file="../includes/jsInclude.jsp" %> 
+        <script>$("#tituloPagina").text("Empresa-Sectores");</script>
+    </body>    
 </html>
