@@ -3,10 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/lolic/Desktop/SaleslandColombiaApp/web/ligth-bootstrap/assets/js/yerman.js</file>
             <file>file:/C:/Users/lolic/Desktop/SaleslandColombiaApp/src/java/Controlador/usuario.java</file>
             <file>file:/C:/Users/lolic/Desktop/SaleslandColombiaApp/web/ligth-bootstrap/Pages/administrador/indexadministrador.jsp</file>
             <file>file:/C:/Users/lolic/Desktop/SaleslandColombiaApp/web/ligth-bootstrap/Pages/usuario/login.jsp</file>
+=======
+            <file>file:/C:/Users/Andres/Desktop/SaleslandColombiaApp/src/java/Controlador/cargo.java</file>
+            <file>file:/C:/Users/Andres/Desktop/SaleslandColombiaApp/web/ligth-bootstrap/assets/js/main.js</file>
+            <file>file:/C:/Users/Andres/Desktop/SaleslandColombiaApp/web/ligth-bootstrap/Pages/cargo/listarcargo.jsp</file>
+>>>>>>> 10c8e1996f3ba0f98452bf2690f3b51b76e780f7
         </group>
     </open-files>
 </project-private>
