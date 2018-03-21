@@ -19,9 +19,7 @@ $(document).ready(function(){
     
     //Onchange del input file en la edicion del perfil para actualizar el txtArchivo
     $("#txtFotoFile").on('change',function(){
-        var file = $(this)[0].files[0];
-        $("#txtFoto").val(file.name);
-        readUrl(this);
+        validarImagen(this);
     });
 
     //Funcion para actualizar los datos del perfil
@@ -188,6 +186,16 @@ $(document).ready(function(){
                }
             });
         }
+    });
+    //Funcion para recuperar cuenta mediante envio de codigo al email o al telefono
+    $("#btnRecuperarCuenta").on("click", function(){
+        swal({
+            
+        }).then((confirm) =>{
+            if(confirm){
+                
+            }
+        });
     });
 });
 

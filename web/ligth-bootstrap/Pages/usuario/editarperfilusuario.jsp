@@ -141,10 +141,10 @@
                                                 </div>
                                                 <p class="card-description text-center">
                                                     <div class="row">
-                                                        <span class="col-md-10 ml-auto"><i class="material-icons">email</i> <%=objUsuario.getEmail()%></span>  
+                                                        <span class="col-md-10 ml-auto"><i class="fa fa-envelope"></i> <%=objUsuario.getEmail()%></span>  
                                                     </div>
                                                     <div class="row">
-                                                        <span class="col-md-10 ml-auto"><i class="material-icons">phone</i>  <%=objUsuario.getCelular()%></span>
+                                                        <span class="col-md-10 ml-auto"><i class="fa fa-phone"></i>  <%=objUsuario.getCelular()%></span>
                                                     </div>
                                                 </p>
                                             </div>

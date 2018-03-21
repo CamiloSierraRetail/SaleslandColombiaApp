@@ -72,14 +72,17 @@
                                                         <span class="form-check-sign"></span>
                                                         Recuerdame
                                                     </label>
-                                                </div>
+                                                </div>                                          
                                             </div>
                                         </div>
                                     </div>
                                     <div class="preloader" id="preloader">
                                     </div>
                                     <div class="card-footer ml-auto mr-auto" id="divBtn">
-                                        <button type="submit" class="btn btn-warning btn-wd">Iniciar</button>
+                                        <button type="submit" class="btn btn-warning btn-wd">Iniciar</button><br>
+                                        <div class="text-center">
+                                            <a href="#RecuperarCuenta" id="btnRecuperarCuenta">¿Olvidaste tu Cuenta?</a>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
