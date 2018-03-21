@@ -54,7 +54,10 @@
                                 <div class="card-body ">
                                     <h4 class="card-title">INGRESO DE PERSONAL</h4>
                                     <div class="form-group">
-                                        <input id="txtUsuarioIngreso" name="UsuarioIngreso" type="password" placeholder="Acerca tu carnet al lector" class="form-control">
+                                        <input id="txtUsuarioIngresoDisabled" name="UsuarioIngreso" disabled type="password" placeholder="Acerca tu carnet al lector" class="form-control">
+                                        <div class="txtUsuarioIngresoContainer">
+                                            <input type="password" id="txtUsuarioIngreso">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -66,19 +69,20 @@
         </div>
         <%@include file="../includes/jsInclude.jsp" %>
         <script>
-
             $(document).ready(function() {
                 demo.checkFullPageBackgroundImage();               
-
-                $("#txtUsuarioIngreso").focus();
+                
+                setInterval(function(){ 
+                    $("#txtUsuarioIngreso").focus(); 
+                },800);
 
                 setTimeout(function() {
                     // after 1000 ms we add the class animated to the login/register card
                     $('.card').removeClass('card-hidden');
                 }, 700);
             });
-            $("#txtUsuarioIngreso").change(function (){        
-                $("#txtUsuarioIngreso").attr("disabled", "disabled");
+            $("#txtUsuarioIngreso").change(function (){     
+                $("#txtUsuarioIngresoDisabled").val($(this).val());
                 ingreso();
             });
         </script>

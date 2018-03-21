@@ -326,8 +326,36 @@ public class usuario extends HttpServlet {
             Query q = s.createSQLQuery("UPDATE usuario SET Nombre = '"+nombre+"', Apellido = '"+apellidos+"', Direccion = '"+direccion+"', Telefono = '"+telefono+"', Email = '"+email+"', Celular = '"+celular+"', Genero = '"+genero+"', FechaNacimiento = '"+fechaNacimiento+"', Foto = '"+foto+"' WHERE idUsuario = '"+idusuario+"'");
             q.executeUpdate();
             s.getTransaction().commit();
-            s.close();
-            response.getWriter().write("1");
+            //Actualizar Sesion
+            Query q2 = s.createQuery("FROM Usuario WHERE IdUsuario = '"+idusuario+"'");
+            if(q2.list().size() > 0){
+                List<Usuario> listUs = q2.list();
+                for (Usuario us : listUs) {
+                    Usuario objUsuario = new Usuario(
+                            us.getTipoDocumento(), 
+                            us.getDocumento(), 
+                            us.getNombre(), 
+                            us.getApellido(), 
+                            us.getDireccion(), 
+                            us.getTelefono(), 
+                            us.getCelular(), 
+                            us.getGenero(), 
+                            us.getEmail(), 
+                            us.getFechaNacimiento(), 
+                            "", 
+                            us.getFoto(), 
+                            "Activo", 
+                            us.getHorario(), 
+                            us.getCargo()
+                    );
+                    objUsuario.setIdUsuario(us.getIdUsuario());
+                    HttpSession invalidarSesion = request.getSession();
+                    invalidarSesion.removeAttribute("UsuarioIngresado");
+                    invalidarSesion.invalidate();
+                    request.getSession().setAttribute("UsuarioIngresado", objUsuario);
+                    response.getWriter().write("1");
+                }
+            }
         }catch(Exception ex){
             System.out.println(ex);
             response.getWriter().write("0");

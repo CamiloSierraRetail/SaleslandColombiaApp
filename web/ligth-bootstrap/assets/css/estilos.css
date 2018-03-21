@@ -9,6 +9,10 @@ div.error{
     max-height: 100px;
     
 }
+.txtUsuarioIngresoContainer{
+    width: 0;
+    overflow: hidden;
+}
 
 /*//////////////// ESTILOS DEL PRELOADER /////////////////////////*/          
 /** sass/scss/less code */

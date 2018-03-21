@@ -190,7 +190,7 @@
             function preferencias(){
                 
                 var data = {
-                    series: [62, 32, 6]
+                    series: [62, 32, 6, 32, 32]
                 };
 
                 var sum = function(a, b) { return a + b };

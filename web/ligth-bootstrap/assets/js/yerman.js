@@ -1,14 +1,5 @@
 $(document).ready(function(){
     //LocalStorage para el recuerdame almacenando el documento o email
-    $('#remember_me').click(function() {
-        if ($('#remember_me').is(':checked')) {
-            localStorage.docEmail = $('#txtUsuarioSesion').val();
-            localStorage.checkBox = $('#remember_me').val();
-        } else {
-            localStorage.docEmail = '';
-            localStorage.checkBox = '';
-        }
-    });
     if (localStorage.checkBox && localStorage.checkBox != '') {
         $('#remember_me').attr('checked', 'checked');
         $('#txtUsuarioSesion').val(localStorage.docEmail);
@@ -173,7 +164,7 @@ $(document).ready(function(){
                                         dataType:"json"
                                     }).done(function(data){
                                         if(data > "0"){
-                                            window.location.href = "/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/verPerfil.jsp";
+                                            window.location.href = "/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/editarperfilusuario.jsp";
                                         }else{
                                             swal("Error","Algo ocurrio al momento de procesar tu solicitud","error");
                                         }
@@ -193,6 +184,7 @@ $(document).ready(function(){
             
         }).then((confirm) =>{
             if(confirm){
+                
                 
             }
         });
