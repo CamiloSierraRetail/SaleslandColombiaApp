@@ -63,3 +63,5 @@
 <script src="../../assets/js/tablas.js"></script>
 <!--Yerman JS-->
 <script src="../../assets/js/yerman.js"></script>
+<!-- es js -->
+<script src="../../assets/js/es.js"></script>

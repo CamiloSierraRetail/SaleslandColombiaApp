@@ -23,7 +23,7 @@
                                         <div class="row">
                                             <div class="col-5">
                                                 <div class="icon-big text-center icon-warning">
-                                                    <i class="nc-icon nc-planet text-warning"></i>
+                                                    <i class="nc-icon nc-badge text-warning"></i>
                                                 </div>
                                             </div>
                                             <div class="col-7">
@@ -37,7 +37,7 @@
                                     <div class="card-footer ">
                                         <hr>
                                         <div class="stats">
-                                            <i class="fa fa-refresh"></i> Actualizado ahora
+                                            <i class="fa fa-clock-o"></i> <p id="ultimoIngreso"></p>
                                         </div>
                                     </div>
                                 </div>
@@ -48,7 +48,7 @@
                                         <div class="row">
                                             <div class="col-5">
                                                 <div class="icon-big text-center icon-warning">
-                                                    <i class="nc-icon nc-spaceship text-success"></i>
+                                                    <i class="nc-icon nc-check-2 text-success"></i>
                                                 </div>
                                             </div>
                                             <div class="col-7">
@@ -62,7 +62,7 @@
                                     <div class="card-footer ">
                                         <hr>
                                         <div class="stats">
-                                            <i class="fa fa-calendar-o"></i> Last day
+                                            <i class="fa fa-clock-o"></i> <p id="ultimoIngresoCorrecto"></p>
                                         </div>
                                     </div>
                                 </div>
@@ -73,7 +73,7 @@
                                         <div class="row">
                                             <div class="col-5">
                                                 <div class="icon-big text-center icon-warning">
-                                                    <i class="nc-icon nc-fav-remove text-danger"></i>
+                                                    <i class="nc-icon nc-simple-remove text-danger"></i>
                                                 </div>
                                             </div>
                                             <div class="col-7">
@@ -87,7 +87,7 @@
                                     <div class="card-footer ">
                                         <hr>
                                         <div class="stats">
-                                            <i class="fa fa-clock-o"></i> In the last hour
+                                            <i class="fa fa-clock-o"></i> <p id="ultimoIngresoErroneo"></p>
                                         </div>
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@
                                         <div class="row">
                                             <div class="col-5">
                                                 <div class="icon-big text-center icon-warning">
-                                                    <i class="nc-icon nc-alien-33 text-primary"></i>
+                                                    <i class="nc-icon nc-time-alarm text-primary"></i>
                                                 </div>
                                             </div>
                                             <div class="col-7">
@@ -112,7 +112,7 @@
                                     <div class="card-footer ">
                                         <hr>
                                         <div class="stats">
-                                            <i class="fa fa-refresh"></i> Update now
+                                            <i class="fa fa-clock-o"></i> <p id="ultimoIngresoJusto"></p>
                                         </div>
                                     </div>
                                 </div>
@@ -125,10 +125,12 @@
                                         <div class="card">
                                             <div class="card-header ">
                                                 <h4 class="card-title">Esta semana</h4>
-                                                <p class="card-category">En esta grafica se muestra la hora tu entrada y salida en lo que ha corrido de la semana.</p>
+                                                <p class="card-category">En esta grafica se representa tu hora de entrada y salida cada dia a lo largo de la semana.</p>
                                             </div>
-                                            <div class="card-body ">
-                                                <div id="chartActivity" class="ct-chart"></div>
+                                            <div class="card-body">
+                                                <div class="ct-chart ct-golden-section">
+                                                    
+                                                </div>
                                             </div>
                                             <div class="card-footer ">
                                                 <div class="legend">
@@ -137,13 +139,13 @@
                                                 </div>
                                                 <hr>
                                                 <div class="stats">
-                                                    <i class="fa fa-check"></i>Información de datos certificada (>_<)
+                                                    <i class="fa fa-check"></i>Datos actualizados desde el ultimo ingreso y la ultima salida.
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <!--<div class="row">
                                     <div class="col-md-6">
                                         <div class="card ">
                                             <div class="card-header ">
@@ -166,7 +168,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>                                                                                                            
                         </div>
                     </div>
@@ -178,16 +180,13 @@
         <%@include file="../includes/jsInclude.jsp" %>
         <script>
             $(document).ready(function (){
-                $("#tituloPagina").text("Inicio");
-                
+                $("#tituloPagina").text("Inicio");              
                 cargarPromedio();
-                preferencias();
-                inicializarChartIngreso();
-
+                initIngresosChart();
             });
         </script>
         <script>
-            function preferencias(){
+            /*function preferencias(){
                 
                 var data = {
                     series: [62, 32, 6, 32, 32]
@@ -267,7 +266,7 @@
                 
 
             }
-
+*/
         </script>
     </body>
 </html>

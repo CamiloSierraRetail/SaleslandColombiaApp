@@ -1369,10 +1369,9 @@ function listarUsuarios(){
 function cargarPromedio(){
     
     $.post("/SaleslandColombiaApp/ingreso/promedioimgresos",function (responseText){
-       
         if (responseText == "500") {
             swal("Datos no cargados", "Los datos de las estadisticas del usuario no se lograron cargar, por favor intentalo nuevamente.", "error");
-        }else{
+        }else if(responseText != "undefined"){
             var dt = JSON.parse(responseText);
             
             $("#numeroIngresos").text(dt[0]);
@@ -1380,6 +1379,32 @@ function cargarPromedio(){
             $("#ingresosErroneos").text(dt[2]);
             $("#ingresosJusto").text(dt[3]);
             
+            //Esta parte del codigo calcula el tiempo que ha pasado desde el ultimo tipo de ingreso
+            var ingresos = dt[4].split("/");
+            var in2 = ingresos[0].split(" ");
+            var in3 = ingresos[1].split(" ");
+            
+            var ingresosBien = dt[5].split("/");
+            var inOk2 = ingresosBien[0].split(" ");
+            var inOk3 = ingresosBien[1].split(" ");
+            
+            var ingresosMal = dt[6].split("/");
+            var inM2 = ingresosMal[0].split(" ");
+            var inM3 = ingresosMal[1].split(" ");
+            
+            var ingresosJusto = dt[7].split("/");
+            var inJ1 = ingresosJusto[0].split(" ");
+            var inJ2 = ingresosJusto[1].split(" ");
+
+            $("#ultimoIngreso").append('Ultimo ingreso '+moment(in2[0]+" "+in3[1]).fromNow());
+            $("#ultimoIngresoCorrecto").append('Ultimo ingreso correcto '+moment(inOk2[0]+" "+inOk3[1]).fromNow());
+            $("#ultimoIngresoErroneo").append('Ultimo ingreso erroneo '+moment(inM2[0]+" "+inM3[1]).fromNow());
+            $("#ultimoIngresoJusto").append('Ultimo ingreso a tiempo '+moment(inJ1[0]+" "+inJ2[1]).fromNow());
+        }else{
+            $("#ultimoIngreso").append('El empleado no ha realizado ningun ingreso');
+            $("#ultimoIngresoCorrecto").append('El empleado no ha realizado ningun ingreso');
+            $("#ultimoIngresoErroneo").append('El empleado no ha realizado ningun ingreso');
+            $("#ultimoIngresoJusto").append('El empleado no ha realizado ningun ingreso');
         }
         
     });

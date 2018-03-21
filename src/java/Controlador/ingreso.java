@@ -192,7 +192,7 @@ public class ingreso extends HttpServlet {
     }
     protected void promedioIngresos(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-        
+        String fechaIngreso = "", fechaTarde = "", fechaTemprano = "", fechaJusto = "";
         try{
             int totalIngresos = 0, ingresosBien = 0, ingresosMal = 0, ingresosJusto = 0;
             
@@ -202,45 +202,43 @@ public class ingreso extends HttpServlet {
             Query query = sesion.createQuery("FROM Ingreso WHERE Usuario = "+objUsuario.getIdUsuario()+"");
             List<Ingreso> ListaIngreso = query.list();
             totalIngresos = ListaIngreso.size();
-            for(Ingreso ingreso : ListaIngreso){
-            
-                if (ingreso.getTipo().equals("Ingreso")) {
-                    
-                    if (ingreso.getObservacion().equals("Tarde")) {
-                    
-                        ingresosMal++;
-                        
-                    }else if (ingreso.getObservacion().equals("Temprano")) {
-                        
-                        ingresosBien++;
-                        
-                    }else if (ingreso.getObservacion().equals("Justo")) {
-                        
-                        ingresosJusto++;
-                        
+            if(ListaIngreso.size() > 0){
+                for(Ingreso ingreso : ListaIngreso){
+
+                    if (ingreso.getTipo().equals("Ingreso")) {
+                        fechaIngreso = String.valueOf(ingreso.getFecha()+"/"+ingreso.getHora());
+
+                        if (ingreso.getObservacion().equals("Tarde")) {
+                            ingresosMal++;
+                            fechaTarde = String.valueOf(ingreso.getFecha()+"/"+ingreso.getHora());
+                            System.out.println(ingresosMal);
+                        }else if (ingreso.getObservacion().equals("Temprano")) {
+                            ingresosBien++;
+                            fechaTemprano = String.valueOf(ingreso.getFecha()+"/"+ingreso.getHora());
+                        }else if (ingreso.getObservacion().equals("Justo")) {
+                            ingresosJusto++;
+                            fechaJusto = String.valueOf(ingreso.getFecha()+"/"+ingreso.getHora());
+                        }
+
+
                     }
-                    
-                    
-                }else if (ingreso.getTipo().equals("Salida")) {
-                    
-                    if (ingreso.getObservacion().equals("Tarde")) {
-                        ingresosBien++;
-                    }else if (ingreso.getObservacion().equals("Temprano")) {
-                        ingresosMal++;
-                    }else if (ingreso.getObservacion().equals("Justo")) {
-                        ingresosJusto++;
-                    }
-                    
                 }
-            
+
+                JSONArray  horasSemanaJson = new JSONArray();
+                horasSemanaJson.add(totalIngresos);
+                horasSemanaJson.add(ingresosBien);
+                horasSemanaJson.add(ingresosMal);
+                horasSemanaJson.add(ingresosJusto);
+
+                horasSemanaJson.add(fechaIngreso);
+                horasSemanaJson.add(fechaTemprano);
+                horasSemanaJson.add(fechaTarde);
+                horasSemanaJson.add(fechaJusto);
+
+                response.getWriter().write(horasSemanaJson.toJSONString());
+            }else{
+                response.getWriter().write("undefined");
             }
-            JSONArray  horasSemanaJson = new JSONArray();
-            horasSemanaJson.add(totalIngresos);
-            horasSemanaJson.add(ingresosBien);
-            horasSemanaJson.add(ingresosMal);
-            horasSemanaJson.add(ingresosJusto);
-            
-            response.getWriter().write(horasSemanaJson.toJSONString());
             
         }catch(Exception e){
             response.getWriter().write("500");
@@ -248,6 +246,12 @@ public class ingreso extends HttpServlet {
         }
         
     }
+    
+    protected void weekChart(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+        
+    }
+    
     protected void chartSemana(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         
