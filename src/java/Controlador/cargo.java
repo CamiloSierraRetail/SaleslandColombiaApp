@@ -1,8 +1,9 @@
 package Controlador;
 
 import Modelo.Area;
+import Modelo.Canal;
 import Modelo.Cargo;
-import com.google.gson.Gson;
+import Modelo.Sector;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -55,15 +56,48 @@ public class cargo extends HttpServlet {
             response.setCharacterEncoding("UTF-8");
             response.setContentType("text/plain");
             for (Cargo cargo : listaCargo) {
-
+                
+                String sector = "-", canal = "-", area = "-";
+                
+                Query querySector = sesion.createQuery("FROM Sector WHERE idSector = "+cargo.getSector()+"");
+                List<Sector> listaSector = querySector.list();
+                for(Sector sect : listaSector){
+                
+                    sector = sect.getNombreSector();
+                
+                }
+                
+                
+                if (cargo.getCanal() != null) {
+                    
+                    Query queryCanal = sesion.createQuery("FROM Canal WHERE idCanal = "+cargo.getCanal()+"");
+                    List<Canal> listaCanal = queryCanal.list();
+                    for(Canal canalItem : listaCanal){
+                    
+                        canal = canalItem.getNombreCanal();
+                        
+                    }
+                    
+                }
+                if (cargo.getArea() != null) {
+                    
+                    Query queryArea = sesion.createQuery("FROM Area WHERE idArea = "+cargo.getArea()+"");
+                    List<Area> listaArea = queryArea.list();
+                    for(Area areaItem: listaArea){
+                    
+                        area = areaItem.getNombreArea();
+                    }
+                    
+                }
+                
                 response.getWriter().write("<tr>"
                         + "<td class='text-center'>" + countRows + "</td>"
                         + "<td>" + cargo.getNombreCargo() + "</td>"
                         + "<td>" + cargo.getDescripcion() + "</td>"
                         + "<td>" + cargo.getSalario() + "</td>"
                         + "<td>" + cargo.getTipo() + "</td>"
-                        + "<td>" + cargo.getSector() + "</td>"
-                        + "<td>" + cargo.getCanal() + "</td>"
+                        + "<td>" + sector + "</td>"
+                        + "<td>" + canal + "</td>"
                         + "<td>" + cargo.getArea() + "</td>"
                         + "<td>" + cargo.getEstado() + "</td>"
                           + "<td class='td-actions text-right'>"
