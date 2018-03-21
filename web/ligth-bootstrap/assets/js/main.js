@@ -503,6 +503,7 @@ function validarImagen(imagen){
             var reader = new FileReader();
             reader.onload = function (e) {
                 $("#fileImagenUsuarioNombre").val(imagen.files[0].name);
+                $("#txtFoto").val(imagen.files[0].name);
             }
             reader.readAsDataURL(imagen.files[0]);
         }
