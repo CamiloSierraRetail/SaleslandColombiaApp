@@ -1091,6 +1091,13 @@ $("#frmIniciarSesion").validate({
                 error.insertAfter(element);
             }
     }, submitHandler: function () {
+        if ($('#remember_me').is(':checked')) {
+            localStorage.docEmail = $('#txtUsuarioSesion').val();
+            localStorage.checkBox = $('#remember_me').val();
+        } else {
+            localStorage.docEmail = '';
+            localStorage.checkBox = '';
+        } 
         $("#divBtn").hide();
         $("#preloader").show();
         var usuario = $("#txtUsuarioSesion").val();
