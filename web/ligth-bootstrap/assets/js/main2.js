@@ -234,105 +234,105 @@ function cargarCanal() {
     });
 }
 ///////////////////////////////METODO REGISTRAR CARGOS ///////////////////////////////////////////
-$('#frmRegistrarCargos').validate({
-    rules: {
-        NombreCargo: {
-            required: true,
-            minlength: 5
-        },
-        DescripcionCargo: {
-            required: true,
-            minlength: 15,
-            maxlength: 80
-        },
-        Salario: {
-            required: true,
-            minlength: 6,
-            maxlength: 80
-        },
-        Tipo: {
-            required: true,
-        },
-        Sector: {
-            required: true
-        },
-        Canal: {
-            required: true
-        },
-        Area: {
-            required: true
-        }
-    }, messages: {
-
-        NombreCargo: {
-            required: "Este campo es requerido",
-            minlength: "Ingresa 5 caracteres como minimo"
-        },
-        DescripcionCargo: {
-            required: "Este campo es requerido",
-            minlength: "Ingresa 15 caracteres como minimo",
-            maxlength: "Ingresa 80 caracteres como maximo"
-        },
-        Salario: {
-            required: "Este campo es requerido",
-            minlength: "El salario minimo es de 781,242 "
-        },
-        Tipo: {
-            required: "Este campo es requerido"
-        },
-        Sector: {
-            required: "Este campo es requerido"
-        },
-        Canal: {
-            required: "Este campo es requerido"
-        },
-        Area: {
-            required: "Este campo es requerido"
-        }
-
-    }, errorElement: 'div',
-    errorPlacement: function (error, element) {
-        var placement = $(element).data('error');
-        if (placement) {
-            $(placement).append(error);
-        } else {
-            error.insertAfter(element);
-        }
-    }, submitHandler: function () {
-
-        swal({
-            title: "Confirmar Datos",
-            text: "¿Está seguro que desea realizar el registro?",
-            icon: "info",
-            buttons: true,
-            closeonconfirm: false,
-            buttons: ["Cancelar", "Sí"]
-        })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        var nombreCargo = $("#txtNombreCargo").val();
-                        var descripcionCargo = $("#txtDescripcionCargo").val();
-                        var salario = $("#txtSalario").val();
-                        var tipo = $("#cmbTipo").val();
-                        var sector = $("#cmbSector").val();
-                        var canal = $("#cmbCanal").val();
-                        var area = $("#cmbArea").val();
-                        $.post("/SaleslandColombiaApp/cargo/registrarcargo", {NombreCargo: nombreCargo, Descripcion: descripcionCargo, Salario: salario, Tipo: tipo, Sector: sector, Canal: canal, Area: area }, function (responsetext) {
-                            if (responsetext == "200") {
-                                swal("Registro exitoso", "El Cargo ha sido registrado exitosamente", "success").then((willDelete) => {
-                                    if (willDelete) {
-                                        window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/cargo/listarcargo.jsp";
-                                    }
-                                });
-
-                            } else {
-                                swal("Ocurrio un error", "Lo sentimos ha ocurrido un error, por favor intentalo nuevamente.", "error");
-                            }
-                        });
-                    }
-                });
-    }
-});
+//$('#frmRegistrarCargos').validate({
+//    rules: {
+//        NombreCargo: {
+//            required: true,
+//            minlength: 5
+//        },
+//        DescripcionCargo: {
+//            required: true,
+//            minlength: 15,
+//            maxlength: 80
+//        },
+//        Salario: {
+//            required: true,
+//            minlength: 6,
+//            maxlength: 80
+//        },
+//        Tipo: {
+//            required: true,
+//        },
+//        Sector: {
+//            required: true
+//        },
+//        Canal: {
+//            required: true
+//        },
+//        Area: {
+//            required: true
+//        }
+//    }, messages: {
+//
+//        NombreCargo: {
+//            required: "Este campo es requerido",
+//            minlength: "Ingresa 5 caracteres como minimo"
+//        },
+//        DescripcionCargo: {
+//            required: "Este campo es requerido",
+//            minlength: "Ingresa 15 caracteres como minimo",
+//            maxlength: "Ingresa 80 caracteres como maximo"
+//        },
+//        Salario: {
+//            required: "Este campo es requerido",
+//            minlength: "El salario minimo es de 781,242 "
+//        },
+//        Tipo: {
+//            required: "Este campo es requerido"
+//        },
+//        Sector: {
+//            required: "Este campo es requerido"
+//        },
+//        Canal: {
+//            required: "Este campo es requerido"
+//        },
+//        Area: {
+//            required: "Este campo es requerido"
+//        }
+//
+//    }, errorElement: 'div',
+//    errorPlacement: function (error, element) {
+//        var placement = $(element).data('error');
+//        if (placement) {
+//            $(placement).append(error);
+//        } else {
+//            error.insertAfter(element);
+//        }
+//    }, submitHandler: function () {
+//
+//        swal({
+//            title: "Confirmar Datos",
+//            text: "¿Está seguro que desea realizar el registro?",
+//            icon: "info",
+//            buttons: true,
+//            closeonconfirm: false,
+//            buttons: ["Cancelar", "Sí"]
+//        })
+//                .then((willDelete) => {
+//                    if (willDelete) {
+//                        var nombreCargo = $("#txtNombreCargo").val();
+//                        var descripcionCargo = $("#txtDescripcionCargo").val();
+//                        var salario = $("#txtSalario").val();
+//                        var tipo = $("#cmbTipo").val();
+//                        var sector = $("#cmbSector").val();
+//                        var canal = $("#cmbCanal").val();
+//                        var area = $("#cmbArea").val();
+//                        $.post("/SaleslandColombiaApp/cargo/registrarcargo", {NombreCargo: nombreCargo, Descripcion: descripcionCargo, Salario: salario, Tipo: tipo, Sector: sector, Canal: canal, Area: area }, function (responsetext) {
+//                            if (responsetext == "200") {
+//                                swal("Registro exitoso", "El Cargo ha sido registrado exitosamente", "success").then((willDelete) => {
+//                                    if (willDelete) {
+//                                        window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/cargo/listarcargo.jsp";
+//                                    }
+//                                });
+//
+//                            } else {
+//                                swal("Ocurrio un error", "Lo sentimos ha ocurrido un error, por favor intentalo nuevamente.", "error");
+//                            }
+//                        });
+//                    }
+//                });
+//    }
+//});
 
 
 

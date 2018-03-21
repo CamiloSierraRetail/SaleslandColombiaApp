@@ -69,7 +69,7 @@
                             <i class="nc-icon nc-puzzle-10"></i>
                         </div>
                     </div>
-                    <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmRegistrarSector" name="frmRegistrarSector">
+                    <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmRegistrarCargos" name="frmRegistrarCargo">
                         <div class="modal-body text-center">
                             <h5 class="category">INGRESA LOS DATOS DEL CARGO</h5>
                             <div class="col-md-12 mr-auto ml-auto">
@@ -93,7 +93,7 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <small class="control-label"><strong>Salario *</strong></small>
-                                            <input id="txtSalario"type="number" value="781.242" min="781.242" class="form-control currency" name="Salario" ></input>                                                       
+                                            <input id="txtSalario" name="Salario" type="number" value="781.242" min="781.242" class="form-control currency"></input>                                                       
                                         </div>
                                     </div>
                                 </fieldset>
@@ -103,11 +103,11 @@
                                             <small class="control-label"><strong>Selecciona tipo de Usuario *</strong></small>
                                             <select name="opciones" id="cmbTipo" class="form-control" data-title="Seleccionar Tipo" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" >                                                      
                                             <option>Seleccione</option>
-                                            <option value="director">Director</option>                                                       
-                                            <option value="jefecanal">Jefe Canal</option>
-                                            <option value="coordinador">Coordinador</option>                                                       
-                                            <option VALUE="jefearea">Jefe Area</option>
-                                            <option VALUE="empleado">Empleado</option>
+                                            <option value="Director">Director</option>                                                       
+                                            <option value="JefeCanal">Jefe Canal</option>
+                                            <option value="CoordinadorCanal">Coordinador</option>                                                       
+                                            <option value="JefeArea">Jefe Area</option>
+                                            <option value="Empleado">Empleado</option>
                                             </select>
                                         </div>
                                     </div>
@@ -168,17 +168,17 @@
 
             $("#cmbTipo").change(function (){
                var tipo = $("#cmbTipo").val();
-               if (tipo == "director") {               
+               if (tipo == "Director") {               
                    $("#nsector").show();  
                    $("#ncanal").hide();
                    $("#narea").hide();
                    cargarSectores();
-               }else if (tipo == "jefecanal" || tipo == "coordinador" ) {                                                             
+               }else if (tipo == "JefeCanal" || tipo == "CoordinadorCanal" ) {                                                             
                    $("#nsector").show();
                    $("#ncanal").show();
                    $("#narea").hide();
                    cargarSectores();                   
-               }else if (tipo == "empleado" || tipo == "jefearea"){
+               }else if (tipo == "Empleado" || tipo == "JefeArea"){
 
                    $("#nsector").show();
                    $("#ncanal").show();
@@ -189,8 +189,8 @@
             });
 ///////////////////////////  EVENTO DEL SECTOR /////////////////////////////////
             $("#cmbSector").change(function (){
-                if ($("#cmbTipo").val() != "director" ) { 
-                    alert("------------------>   sector");
+                if ($("#cmbTipo").val() != "Director" ) { 
+                    
                     cargarCanalesDependientes();
                 
                 }                
@@ -198,14 +198,14 @@
             
 ///////////////////////////  EVENTO DEL CANAL /////////////////////////////////            
             $("#cmbCanal").change(function (){
-                if ($("#cmbTipo").val() == "empleado" || $("#cmbTipo").val() == "jefearea" ) { 
-                    alert("------------------>   areas");
+                if ($("#cmbTipo").val() == "Empleado" || $("#cmbTipo").val() == "JefeArea" ) { 
+                    
                     cargarAreasDependientes();
                 
                 }                
             });
             ///////////////////////////////// FUNCION PARA CARGAR LOS CANALES /////////////////////////////7
-            function cargarCanalesDependientes(){            
+            function cargarCanalesDependientes(){
                 var idsector = $("#cmbSector").val();                
                 $.post("/SaleslandColombiaApp/canal/cargarcanalesdependientes",{idSector:idsector},function(responseText) {                
                     if (responseText == "500") {
@@ -218,21 +218,20 @@
                         var dt = JSON.parse(responseText); 
                         $("#cmbCanal").html("");
                         for (var i = 0, max = dt.length; i < max; i++) {
-                            //alert(contador);
-                            if (selectCount === 0) {
-                                alert("EL VALOR DEL SELECT COUNT ES -------> "+selectCount)
-                                $("#cmbArea").append("<option>Seleccione</option>");
-                                selectCount++;
-                                alert("EL VALOR DEL SELECT COUNT DESPUED DE TERMINAR LA CONDICION " + selectCount);
-                            }
+                            
                             if (contador == 1) {
                                 contador = 0;
 
                             }else{
+                                
+                                if (selectCount == 0) {
+                                    $("#cmbCanal").append("<option>Seleccione</option>");
+                                    selectCount++;
+                                }
                                 $("#cmbCanal").append("<option value='"+dt[i]+"'>"+dt[i+1]+"</option>");
                                 contador++;
                             }
-                        } 
+                        }
 
                     }
 
@@ -242,7 +241,6 @@
             function cargarAreasDependientes (){
                 var idCanal = $("#cmbCanal").val(); 
                 $.post("/SaleslandColombiaApp/area/cargarareasdependientes",{idCanal:idCanal},function(responseText) {
-                    alert("RESPUESTA DE LA FUNCION DEPENDIENTE DE AREAS --------------> " + responseText);
                     if (responseText == "500") {
 
                         swal("Ocurrio un error", "Lo sentimos, los datos de los canales no se lograron cargar, por favor intentalo mas tarde.", "error");
@@ -251,9 +249,9 @@
                         var contador = 0;
                         var selectCount = 0;
                         var dt = JSON.parse(responseText); 
-                        $("#cmbCanal").html("");
+                        $("#cmbArea").html("");
                         for (var i = 0, max = dt.length; i < max; i++) {
-                            alert(contador);
+                            
                             if (selectCount == 0) {
                                 $("#cmbArea").append("<option>Seleccione</option>");
                                 selectCount++;
@@ -272,9 +270,6 @@
     
                 }); 
             }
-            //cargarSectores();        
-            //cargarCanal();
-            //cargarAreas();
 
             $("#tituloPagina").text("Cargos");
         </script>

@@ -1659,3 +1659,159 @@ $('#frmEditarArea').validate({
         });
     }
 });
+////////////////////////////////////////// FUNCIONES PARA CARGOS ////////////////////////////////////////////
+///////////////////////////////METODO REGISTRAR CARGOS ///////////////////////////////////////////
+$('#frmRegistrarCargos').validate({
+    rules: {
+        NombreCargo: {
+            required: true,
+            minlength: 5
+        },
+        DescripcionCargo: {
+            required: true,
+            minlength: 15,
+            maxlength: 80
+        },
+        Salario: {
+            required: true,
+            
+        },
+        Tipo: {
+            required: true,
+        },
+        Sector: {
+            required: true
+        },
+        Canal: {
+            required: true
+        },
+        Area: {
+            required: true
+        }
+    }, messages: {
+
+        NombreCargo: {
+            required: "Este campo es requerido",
+            minlength: "Ingresa 5 caracteres como minimo"
+        },
+        DescripcionCargo: {
+            required: "Este campo es requerido",
+            minlength: "Ingresa 15 caracteres como minimo",
+            maxlength: "Ingresa 80 caracteres como maximo"
+        },
+        Salario: {
+            required: "Este campo es requerido",
+            minlength: "El salario minimo es de 781,242 "
+        },
+        Tipo: {
+            required: "Este campo es requerido"
+        },
+        Sector: {
+            required: "Este campo es requerido"
+        },
+        Canal: {
+            required: "Este campo es requerido"
+        },
+        Area: {
+            required: "Este campo es requerido"
+        }
+
+    }, errorElement: 'div',
+    errorPlacement: function (error, element) {
+        var placement = $(element).data('error');
+        if (placement) {
+            $(placement).append(error);
+        } else {
+            error.insertAfter(element);
+        }
+    }, submitHandler: function () {
+
+        swal({
+            title: "Confirmar Datos",
+            text: "¿Está seguro que desea realizar el registro?",
+            icon: "info",
+            buttons: {
+                cancel:{
+                    text: "Cancelar",
+                    value: true,
+                    visible: true,
+                    closeModal: true
+                },
+                confirm: {
+                    text: "Sí",
+                    value: true,
+                    visible: true,
+                    closeModal: false
+                }
+            }
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                
+                if ($("#cmbTipo").val() == "Director") {
+                    
+                    if ($("#cmbSector").val() == "Seleccione") {
+                    
+                        swal("El sector es requerido", "Para completar el registro debes seleccionar un sector", "warning");
+                     
+                    }else{
+                        
+                        realizarRegistro();
+                        
+                    }
+                    
+                }else if ($("#cmbTipo").val() == "JefeCanal" || $("#cmbTipo").val() == "CoordinadorCanal" ) {
+                    
+                    if ($("#cmbSector").val() == "Seleccione" || $("#cmbCanal").val() == "Seleccione") {
+                    
+                        swal("El sector es requerido y el canal son requeridos", "Para completar el registro debes seleccionar un sector y un canal", "warning");
+                     
+                    }else{
+                        
+                        realizarRegistro();
+                    }
+                    
+                }else if ($("#cmbTipo").val() == "Empleado" || $("#cmbTipo").val() == "JefeArea") {
+                
+                    if ($("#cmbSector").val() == "Seleccione" || $("#cmbCanal").val() == "Seleccione" || $("#cmbArea").val() == "Seleccione") {
+                    
+                        swal("Completa los campos del registro", "Para poder continuar con el registro selecciona los campos solicitados.", "warning");
+                     
+                    }else{
+                        realizarRegistro();
+                    }
+                     
+                }
+                
+                function realizarRegistro() {
+                    var nombreCargo = $("#txtNombreCargo").val();
+                    var descripcionCargo = $("#txtDescripcionCargo").val();
+                    var salario = $("#txtSalario").val();
+                    var tipo = $("#cmbTipo").val();
+                    var sector = $("#cmbSector").val();
+                    var canal = $("#cmbCanal").val();
+                    var area = $("#cmbArea").val();
+                    
+                    $.post("/SaleslandColombiaApp/cargo/registrarcargo", {NombreCargo: nombreCargo, Descripcion: descripcionCargo, Salario: salario, Tipo: tipo, Sector: sector, Canal: canal, Area: area }, function (responsetext) {
+                        if (responsetext == "200") {
+                            swal("Registro exitoso", "El Cargo ha sido registrado exitosamente", "success").then((willDelete) => {
+                                if (willDelete) {
+                                    
+                                    $("#modalRegistrarCargo").removeClass('show');
+                                    $("body").removeClass('modal-open');
+                                    $("body").css("padding-right","");
+                                    $("div").removeClass('modal-backdrop');
+                                    listarCargos();
+                                    
+                                }
+                            });
+
+                        } else {
+                            swal("Ocurrio un error", "Lo sentimos ha ocurrido un error, por favor intentalo nuevamente.", "error");
+                        }
+                    });
+                }
+            }
+        });
+    }
+});
