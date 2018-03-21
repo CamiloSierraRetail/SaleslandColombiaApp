@@ -49,6 +49,11 @@ public class area extends HttpServlet {
                     break;
                 case "cargarcomboarea":
                     cargarcomboarea(request, response);
+                    break;
+                    
+                case "cargarareasdependientes":
+                    cargarAreasDependientes(request, response);
+                    break;
              
             }
             
@@ -253,6 +258,29 @@ public class area extends HttpServlet {
         }
         
     }
-
+    private void cargarAreasDependientes(HttpServletRequest request, HttpServletResponse response)  
+            throws ServletException, IOException {
+        try{
+            
+            String idCanal = request.getParameter("idCanal");
+            
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Query query = sesion.createQuery("FROM Area WHERE Canal="+idCanal+"");
+            List<Area> ListaArea = query.list();
+            JSONArray areaJson = new JSONArray();
+            
+            for(Area area : ListaArea){
+            
+                areaJson.add(area.getIdArea());
+                areaJson.add(area.getNombreArea());
+            }
+            
+            response.getWriter().write(areaJson.toJSONString());
+        
+        }catch(Exception e){
+            response.getWriter().write("500");
+            System.err.println("e");
+        }
+    }
 
 }

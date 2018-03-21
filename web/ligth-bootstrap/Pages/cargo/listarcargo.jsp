@@ -118,7 +118,7 @@
                                             <div class="row">
                                                 <small class="control-label"><strong>Sector *</strong></small>
                                                 <select name="Sector" id="cmbSector" class="form-control" data-title="Seleccionar" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" >                                                           
-                                                
+                                                    <option>Seleccione</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -130,7 +130,7 @@
                                             <div class="row">
                                                 <small class="control-label"><strong>Canal *</strong></small>
                                                 <select name="Canal" id="cmbCanal" class="form-control" data-title="Seleccionar">
-
+                                                    <option>Seleccione</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -142,7 +142,7 @@
                                             <div class="row">
                                                 <small class="control-label"><strong>Area *</strong></small>
                                                 <select name="Area" id="cmbArea" class="form-control" data-title="Seleccionar">
-
+                                                    <option>Seleccione</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -159,73 +159,124 @@
             </div>
         </div>
         <!--  End Modal -->
-    </body>        
-    <%@include file="../includes/jsInclude.jsp" %>
-    <script>
-        listarCargos();
-        $("#nsector").hide();
-        $("#ncanal").hide();
-        $("#narea").hide();
-        
-        $("#cmbTipo").change(function (){
-           var tipo = $("#cmbTipo").val();
-           if (tipo == "director") {               
-               $("#nsector").show();  
-               $("#ncanal").hide();
-               $("#narea").hide();
-               cargarSectores();
-           }else if (tipo == "jefecanal" || tipo == "coordinador" ) {                                                             
-               $("#nsector").show();
-               $("#ncanal").show();
-               $("#narea").hide();
-               cargarSectores();
-               cargarCanalesDependientes();
-           }else if (tipo == "empleado" || tipo == "jefearea"){
-                              
-               $("#nsector").show();
-               $("#ncanal").show();
-               $("#narea").show();
-           }
-            
-        });
-        
-        $("#cmbSector").change(function (){
-            
-            cargarCanalesDependientes();
-        });
-        
-        function cargarCanalesDependientes(){            
-            var idsector = $("#cmbSector").val();
-            alert("id del sector ----> "+idsector);
-            $.post("/SaleslandColombiaApp/canal/cargarcanalesdependientes",{idSector:idsector},function(responseText) {                
-                if (responseText == "500") {
-    
-                    swal("Ocurrio un error", "Lo sentimos, los datos de los canales no se lograron cargar, por favor intentalo mas tarde.", "error");
-                    
-                }else{
-                    var contador = 0;
-                    var dt = JSON.parse(responseText); 
-                    $("#cmbCanal").html("");
-                    for (var i = 0, max = dt.length; i < max; i++) {
-                        alert(contador);
-                        if (contador == 1) {
-                            contador = 0;
-                            
-                        }else{
-                            $("#cmbCanal").append("<option value='"+dt[i]+"'>"+dt[i+1]+"</option>");
-                            contador++;
-                        }
-                    } 
-                    
-                }
-    
+        <%@include file="../includes/jsInclude.jsp" %>
+        <script>
+            listarCargos();
+            $("#nsector").hide();
+            $("#ncanal").hide();
+            $("#narea").hide();
+
+            $("#cmbTipo").change(function (){
+               var tipo = $("#cmbTipo").val();
+               if (tipo == "director") {               
+                   $("#nsector").show();  
+                   $("#ncanal").hide();
+                   $("#narea").hide();
+                   cargarSectores();
+               }else if (tipo == "jefecanal" || tipo == "coordinador" ) {                                                             
+                   $("#nsector").show();
+                   $("#ncanal").show();
+                   $("#narea").hide();
+                   cargarSectores();                   
+               }else if (tipo == "empleado" || tipo == "jefearea"){
+
+                   $("#nsector").show();
+                   $("#ncanal").show();
+                   $("#narea").show();
+                   cargarSectores();
+               }
+
             });
-        }
-        
-        //cargarSectores();        
-        //cargarCanal();
-        //cargarAreas();
-        
-        $("#tituloPagina").text("Cargos");
-    </script>
+///////////////////////////  EVENTO DEL SECTOR /////////////////////////////////
+            $("#cmbSector").change(function (){
+                if ($("#cmbTipo").val() != "director" ) { 
+                    alert("------------------>   sector");
+                    cargarCanalesDependientes();
+                
+                }                
+            });
+            
+///////////////////////////  EVENTO DEL CANAL /////////////////////////////////            
+            $("#cmbCanal").change(function (){
+                if ($("#cmbTipo").val() == "empleado" || $("#cmbTipo").val() == "jefearea" ) { 
+                    alert("------------------>   areas");
+                    cargarAreasDependientes();
+                
+                }                
+            });
+            ///////////////////////////////// FUNCION PARA CARGAR LOS CANALES /////////////////////////////7
+            function cargarCanalesDependientes(){            
+                var idsector = $("#cmbSector").val();                
+                $.post("/SaleslandColombiaApp/canal/cargarcanalesdependientes",{idSector:idsector},function(responseText) {                
+                    if (responseText == "500") {
+
+                        swal("Ocurrio un error", "Lo sentimos, los datos de los canales no se lograron cargar, por favor intentalo mas tarde.", "error");
+
+                    }else{
+                        var selectCount = 0;
+                        var contador = 0;
+                        var dt = JSON.parse(responseText); 
+                        $("#cmbCanal").html("");
+                        for (var i = 0, max = dt.length; i < max; i++) {
+                            //alert(contador);
+                            if (selectCount === 0) {
+                                alert("EL VALOR DEL SELECT COUNT ES -------> "+selectCount)
+                                $("#cmbArea").append("<option>Seleccione</option>");
+                                selectCount++;
+                                alert("EL VALOR DEL SELECT COUNT DESPUED DE TERMINAR LA CONDICION " + selectCount);
+                            }
+                            if (contador == 1) {
+                                contador = 0;
+
+                            }else{
+                                $("#cmbCanal").append("<option value='"+dt[i]+"'>"+dt[i+1]+"</option>");
+                                contador++;
+                            }
+                        } 
+
+                    }
+
+                });
+            }
+            ////////////7 FUNCION PARA CARGAR LAS AREAS //////////////////
+            function cargarAreasDependientes (){
+                var idCanal = $("#cmbCanal").val(); 
+                $.post("/SaleslandColombiaApp/area/cargarareasdependientes",{idCanal:idCanal},function(responseText) {
+                    alert("RESPUESTA DE LA FUNCION DEPENDIENTE DE AREAS --------------> " + responseText);
+                    if (responseText == "500") {
+
+                        swal("Ocurrio un error", "Lo sentimos, los datos de los canales no se lograron cargar, por favor intentalo mas tarde.", "error");
+
+                    }else{
+                        var contador = 0;
+                        var selectCount = 0;
+                        var dt = JSON.parse(responseText); 
+                        $("#cmbCanal").html("");
+                        for (var i = 0, max = dt.length; i < max; i++) {
+                            alert(contador);
+                            if (selectCount == 0) {
+                                $("#cmbArea").append("<option>Seleccione</option>");
+                                selectCount++;
+                            }
+                            
+                            if (contador == 1) {
+                                contador = 0;
+
+                            }else{
+                                $("#cmbArea").append("<option value='"+dt[i]+"'>"+dt[i+1]+"</option>");
+                                contador++;
+                            }
+                        } 
+
+                    }
+    
+                }); 
+            }
+            //cargarSectores();        
+            //cargarCanal();
+            //cargarAreas();
+
+            $("#tituloPagina").text("Cargos");
+        </script>
+    </body>        
 </html>
