@@ -3,6 +3,7 @@ package Controlador;
 import Modelo.Ingreso;
 import Modelo.Usuario;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Calendar;
@@ -255,6 +256,7 @@ public class ingreso extends HttpServlet {
                    outLunes = "", outMartes = "", outMiercoles = "", outJueves = "", outViernes = "", outSabado = "", outDomingo = "";
             
             String finalDate = "";
+            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
             Date dt = new Date();
             LocalDate ld = dt.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(); 
             Calendar cal = Calendar.getInstance();
@@ -272,25 +274,25 @@ public class ingreso extends HttpServlet {
             List<Ingreso> listInOut = q.list();
             for (Ingreso item : listInOut) {
                 if(item.getTipo().equals("Ingreso")){
-                    if(item.getDia().equals("Lunes")) inLunes = String.valueOf(item.getHora());
-                    if(item.getDia().equals("Martes")) inMartes = String.valueOf(item.getHora());
-                    if(item.getDia().equals("Miercoles")) inMiercoles = String.valueOf(item.getHora());
-                    if(item.getDia().equals("Jueves")) inJueves = String.valueOf(item.getHora());
-                    if(item.getDia().equals("Viernes")) inViernes = String.valueOf(item.getHora());
-                    if(item.getDia().equals("Sabado")) inSabado = String.valueOf(item.getHora());
-                    if(item.getDia().equals("Domingo")) inDomingo = String.valueOf(item.getHora());
+                    if(item.getDia().equals("Lunes")) inLunes = sdf.format(item.getHora());
+                    if(item.getDia().equals("Martes")) inMartes = sdf.format(item.getHora());
+                    if(item.getDia().equals("Miercoles")) inMiercoles = sdf.format(item.getHora());
+                    if(item.getDia().equals("Jueves")) inJueves = sdf.format(item.getHora());
+                    if(item.getDia().equals("Viernes")) inViernes = sdf.format(item.getHora());
+                    if(item.getDia().equals("Sabado")) inSabado = sdf.format(item.getHora());
+                    if(item.getDia().equals("Domingo")) inDomingo = sdf.format(item.getHora());
                 }
                 if(item.getTipo().equals("Salida")){
-                    if(item.getDia().equals("Lunes")) outLunes = String.valueOf(item.getHora());
-                    if(item.getDia().equals("Martes")) outMartes = String.valueOf(item.getHora());
-                    if(item.getDia().equals("Miercoles")) outMiercoles = String.valueOf(item.getHora());
-                    if(item.getDia().equals("Jueves")) outJueves = String.valueOf(item.getHora());
-                    if(item.getDia().equals("Viernes")) outViernes = String.valueOf(item.getHora());
-                    if(item.getDia().equals("Sabado")) outSabado = String.valueOf(item.getHora());
-                    if(item.getDia().equals("Domingo")) outDomingo = String.valueOf(item.getHora());
+                    if(item.getDia().equals("Lunes")) outLunes = sdf.format(item.getHora());
+                    if(item.getDia().equals("Martes")) outMartes = sdf.format(item.getHora());
+                    if(item.getDia().equals("Miercoles")) outMiercoles = sdf.format(item.getHora());
+                    if(item.getDia().equals("Jueves")) outJueves = sdf.format(item.getHora());
+                    if(item.getDia().equals("Viernes")) outViernes = sdf.format(item.getHora());
+                    if(item.getDia().equals("Sabado")) outSabado = sdf.format(item.getHora());
+                    if(item.getDia().equals("Domingo")) outDomingo = sdf.format(item.getHora());
                 }
             }
-            
+           
             JSONArray jsonIngresos = new JSONArray();
             jsonIngresos.add(inLunes+"/"+outLunes);
             jsonIngresos.add(inMartes+"/"+outMartes);
