@@ -256,7 +256,8 @@ public class ingreso extends HttpServlet {
                    outLunes = "", outMartes = "", outMiercoles = "", outJueves = "", outViernes = "", outSabado = "", outDomingo = "";
             
             String finalDate = "";
-            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
+            SimpleDateFormat sdf12 = new SimpleDateFormat("hh:mm");
+            SimpleDateFormat sdf24 = new SimpleDateFormat("HH:mm");
             Date dt = new Date();
             LocalDate ld = dt.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(); 
             Calendar cal = Calendar.getInstance();
@@ -273,23 +274,69 @@ public class ingreso extends HttpServlet {
             Query q = s.createQuery("FROM Ingreso WHERE Usuario = '"+idusuario+"' AND Fecha > '"+finalDate+"'");
             List<Ingreso> listInOut = q.list();
             for (Ingreso item : listInOut) {
+                String valorCompleto = String.valueOf(item.getHora());
+                String valorDividido[] = valorCompleto.split(" ");
+                String hora[] = valorDividido[1].split(":");
+                int horaFinal = Integer.valueOf(hora[0]);
                 if(item.getTipo().equals("Ingreso")){
-                    if(item.getDia().equals("Lunes")) inLunes = sdf.format(item.getHora());
-                    if(item.getDia().equals("Martes")) inMartes = sdf.format(item.getHora());
-                    if(item.getDia().equals("Miercoles")) inMiercoles = sdf.format(item.getHora());
-                    if(item.getDia().equals("Jueves")) inJueves = sdf.format(item.getHora());
-                    if(item.getDia().equals("Viernes")) inViernes = sdf.format(item.getHora());
-                    if(item.getDia().equals("Sabado")) inSabado = sdf.format(item.getHora());
-                    if(item.getDia().equals("Domingo")) inDomingo = sdf.format(item.getHora());
+                    if(item.getDia().equals("Lunes")){                       
+                        if(horaFinal < 12) inLunes = sdf12.format(item.getHora())+" AM";
+                        else inLunes = sdf24.format(item.getHora())+" PM";
+                    }
+                    if(item.getDia().equals("Martes")){
+                        if(horaFinal < 12) inMartes = sdf12.format(item.getHora())+" AM";
+                        else inMartes = sdf24.format(item.getHora())+" PM";
+                    }
+                    if(item.getDia().equals("Miercoles")){
+                        if(horaFinal < 12) inMiercoles = sdf12.format(item.getHora())+" AM";
+                        else inMiercoles = sdf24.format(item.getHora())+" PM";
+                    }
+                    if(item.getDia().equals("Jueves")){
+                        if(horaFinal < 12) inJueves = sdf12.format(item.getHora())+" AM";
+                        else inJueves = sdf24.format(item.getHora())+" PM";
+                    }
+                    if(item.getDia().equals("Viernes")){
+                        if(horaFinal < 12) inViernes = sdf12.format(item.getHora())+" AM";
+                        else inViernes = sdf24.format(item.getHora())+" PM";
+                    }
+                    if(item.getDia().equals("Sabado")){
+                        if(horaFinal < 12) inSabado = sdf12.format(item.getHora())+" AM";
+                        else inSabado = sdf24.format(item.getHora())+" PM";
+                    }
+                    if(item.getDia().equals("Domingo")){
+                        if(horaFinal < 12) inDomingo = sdf12.format(item.getHora())+" AM";
+                        else inDomingo = sdf24.format(item.getHora())+" PM";
+                    }
                 }
                 if(item.getTipo().equals("Salida")){
-                    if(item.getDia().equals("Lunes")) outLunes = sdf.format(item.getHora());
-                    if(item.getDia().equals("Martes")) outMartes = sdf.format(item.getHora());
-                    if(item.getDia().equals("Miercoles")) outMiercoles = sdf.format(item.getHora());
-                    if(item.getDia().equals("Jueves")) outJueves = sdf.format(item.getHora());
-                    if(item.getDia().equals("Viernes")) outViernes = sdf.format(item.getHora());
-                    if(item.getDia().equals("Sabado")) outSabado = sdf.format(item.getHora());
-                    if(item.getDia().equals("Domingo")) outDomingo = sdf.format(item.getHora());
+                    if(item.getDia().equals("Lunes")){                       
+                        if(horaFinal < 12) outLunes = sdf12.format(item.getHora())+" AM";
+                        else outLunes = sdf24.format(item.getHora())+" PM";
+                    }
+                    if(item.getDia().equals("Martes")){
+                        if(horaFinal < 12) outMartes = sdf12.format(item.getHora())+" AM";
+                        else outMartes = sdf24.format(item.getHora())+" PM";
+                    }
+                    if(item.getDia().equals("Miercoles")){
+                        if(horaFinal < 12) outMiercoles = sdf12.format(item.getHora())+" AM";
+                        else outMiercoles = sdf24.format(item.getHora())+" PM";
+                    }
+                    if(item.getDia().equals("Jueves")){
+                        if(horaFinal < 12) outJueves = sdf12.format(item.getHora())+" AM";
+                        else outJueves = sdf24.format(item.getHora())+" PM";
+                    }
+                    if(item.getDia().equals("Viernes")){
+                        if(horaFinal < 12) outViernes = sdf12.format(item.getHora())+" AM";
+                        else outViernes = sdf24.format(item.getHora())+" PM";
+                    }
+                    if(item.getDia().equals("Sabado")){
+                        if(horaFinal < 12) outSabado = sdf12.format(item.getHora())+" AM";
+                        else outSabado = sdf24.format(item.getHora())+" PM";
+                    }
+                    if(item.getDia().equals("Domingo")){
+                        if(horaFinal < 12) outDomingo = sdf12.format(item.getHora())+" AM";
+                        else outDomingo = sdf24.format(item.getHora())+" PM";
+                    }
                 }
             }
            

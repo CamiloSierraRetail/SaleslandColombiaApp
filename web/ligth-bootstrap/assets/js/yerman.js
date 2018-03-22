@@ -213,23 +213,75 @@ $(document).ready(function(){
 //Funcion para inicializar chart de ingresos y salidas a lo largo de la semana
     function initIngresosChart(dt){  
         var Lunes = dt[0].split("/");
+        var LunIn = Lunes[0].split(":");
+        var LunOut = Lunes[1].split(":");
+        
         var Martes = dt[1].split("/");
-        var Miercoles = dt[2].split("/");    
+        var MarIn = Martes[0].split(":");
+        var MarOut = Martes[1].split(":");
+        
+        var Miercoles = dt[2].split("/");  
+        var MierIn = Miercoles[0].split(":");
+        var MierOut = Miercoles[1].split(":");
+        
         var Jueves = dt[3].split("/");
+        var JueIn = Jueves[0].split(":");
+        var JueOut = Jueves[1].split(":");
+        
         var Viernes = dt[4].split("/");
+        var VierIn = Viernes[0].split(":");
+        var VierOut = Viernes[1].split(":");
+        
         var Sabado = dt[5].split("/");
+        var SaIn = Sabado[0].split(":");
+        var SaOut = Sabado[1].split(":");
+        
         var Domingo = dt[6].split("/");
+        var DoIn = Domingo[0].split(":");
+        var DoOut = Domingo[1].split(":");
+        
         
         var chart = new Chartist.Line('.ct-chart', {
             labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
             series: [
-               //Hora de entrada
-               [Lunes[0], Martes[0], Miercoles[0], Jueves[0], Viernes[0], Sabado[0], Domingo[0]],
-               //Hora de salida
-               [Lunes[1], Martes[1], Miercoles[1], Jueves[1], Viernes[1], Sabado[1], Domingo[1]]
+                //Chart series para los ingresos
+                [
+                    {meta: Lunes[0], value: LunIn[0]},
+                    {meta: Martes[0], value: MarIn[0]},
+                    {meta: Miercoles[0], value: MierIn[0]},
+                    {meta: Jueves[0], value: JueIn[0]},
+                    {meta: Viernes[0], value: VierIn[0]},
+                    {meta: Sabado[0], value: SaIn[0]},
+                    {meta: Domingo[0], value: DoIn[0]}
+                ],
+                //Chart series para las salidas
+                [
+                    {meta: Lunes[1], value: LunOut[0]},
+                    {meta: Martes[1], value: MarOut[0]},
+                    {meta: Miercoles[1], value: MierOut[0]},
+                    {meta: Jueves[1], value: JueOut[0]},
+                    {meta: Viernes[1], value: VierOut[0]},
+                    {meta: Sabado[1], value: SaOut[0]},
+                    {meta: Domingo[1], value: DoOut[0]}
+                ]
             ]
         },{
-            low: 0
+            low: 0,
+            axisY: {
+                onlyInteger:true, 
+                labelInterpolationFnc: function(value) {
+                    if(value < 12){
+                        return (value +"AM");
+                    }else{
+                        return (value +"PM");
+                    }
+                }
+            },
+            plugins: [
+                Chartist.plugins.tooltip({
+                    
+                })
+            ]
         });
 
         // Let's put a sequence number aside so we can use it in the event callbacks

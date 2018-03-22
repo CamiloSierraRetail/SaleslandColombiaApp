@@ -65,3 +65,5 @@
 <script src="../../assets/js/yerman.js"></script>
 <!-- es js -->
 <script src="../../assets/js/es.js"></script>
+<!-- Chartist Plugin Tooltip -->
+<script src="../../assets/js/plugins/chartist-plugin-tooltip.min.js"></script>

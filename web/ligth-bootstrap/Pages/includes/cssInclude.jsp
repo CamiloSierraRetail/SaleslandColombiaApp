@@ -46,3 +46,6 @@
 <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
 <link href="../../assets/css/estilos.css" rel="stylesheet"/>
+
+<!-- Chartist Plugin Tooltip -->
+<link href="../../assets/css/chartist-plugin-tooltip.css" rel="stylesheet"/>
