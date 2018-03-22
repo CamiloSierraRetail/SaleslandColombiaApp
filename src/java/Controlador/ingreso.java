@@ -3,15 +3,16 @@ package Controlador;
 import Modelo.Ingreso;
 import Modelo.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.json.simple.JSONArray;
@@ -42,8 +43,8 @@ public class ingreso extends HttpServlet {
                     promedioIngresos(request, response);
                     break;
                     
-                case "chartSemana":
-                    chartSemana(request, response);
+                case "weeklyChart":
+                    weeklyChart(request, response);
                     break;
             }
             
@@ -211,7 +212,6 @@ public class ingreso extends HttpServlet {
                         if (ingreso.getObservacion().equals("Tarde")) {
                             ingresosMal++;
                             fechaTarde = String.valueOf(ingreso.getFecha()+"/"+ingreso.getHora());
-                            System.out.println(ingresosMal);
                         }else if (ingreso.getObservacion().equals("Temprano")) {
                             ingresosBien++;
                             fechaTemprano = String.valueOf(ingreso.getFecha()+"/"+ingreso.getHora());
@@ -247,164 +247,64 @@ public class ingreso extends HttpServlet {
         
     }
     
-    protected void weekChart(HttpServletRequest request, HttpServletResponse response)
+    protected void weeklyChart(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-        
-    }
-    
-    protected void chartSemana(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        
         try{
+            String idusuario = request.getParameter("idusuario");
+            String inLunes = "", inMartes = "", inMiercoles = "", inJueves = "", inViernes = "", inSabado = "", inDomingo = "",
+                   outLunes = "", outMartes = "", outMiercoles = "", outJueves = "", outViernes = "", outSabado = "", outDomingo = "";
             
-            String Dia = request.getParameter("Dia");
-            String Fecha [] = request.getParameter("Fecha").split("/");
-            String fechaQuery = "";
-            Usuario objUsuario = (Usuario) request.getSession().getAttribute("UsuarioIngresado");
+            String finalDate = "";
+            Date dt = new Date();
+            LocalDate ld = dt.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(); 
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(dt);
+            if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) finalDate = ld.getYear()+"-"+"0"+ld.getMonthValue()+"-"+String.valueOf(ld.getDayOfMonth()-1);
+            if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY) finalDate = ld.getYear()+"-"+"0"+ld.getMonthValue()+"-"+String.valueOf(ld.getDayOfMonth()-2);
+            if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY) finalDate = ld.getYear()+"-"+"0"+ld.getMonthValue()+"-"+String.valueOf(ld.getDayOfMonth()-3);
+            if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY) finalDate = ld.getYear()+"-"+"0"+ld.getMonthValue()+"-"+String.valueOf(ld.getDayOfMonth()-4);
+            if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) finalDate = ld.getYear()+"-"+"0"+ld.getMonthValue()+"-"+String.valueOf(ld.getDayOfMonth()-5);
+            if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) finalDate = ld.getYear()+"-"+"0"+ld.getMonthValue()+"-"+String.valueOf(ld.getDayOfMonth()-6);
+            if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) finalDate = ld.getYear()+"-"+"0"+ld.getMonthValue()+"-"+String.valueOf(ld.getDayOfMonth()-7);
             
-            String horaIngresoLunes = "0.2", horaSalidaLunes = "0.2";
-            String horaIngresoMartes = "0.2", horaSalidaMartes = "0.2";
-            String horaIngresoMiercoles = "0.2", horaSalidaMiercoles = "0.2";
-            String horaIngresoJueves = "0.2", horaSalidaJueves = "0.2";
-            String horaIngresoViernes = "0.2", horaSalidaViernes = "0.2";
-            String horaIngresoSabado = "0.2", horaSalidaSabado = "0.2";
-            String horaIngresoDominngo = "0.2", horaSalidaDomingo = "0.2";            
-            
-            if (Dia == "Domingo") {
-                fechaQuery = Fecha[0]+"-"+Fecha[1]+"-"+String.valueOf(Integer.parseInt(Fecha[2])-7);                
-            }else if (Dia.equals("Lunes")) {
-                fechaQuery = Fecha[0]+"-"+Fecha[1]+"-"+String.valueOf(Integer.parseInt(Fecha[2])-1);
-            }else if (Dia == "Martes") {
-                fechaQuery = Fecha[0]+"-"+Fecha[1]+"-"+String.valueOf(Integer.parseInt(Fecha[2])-2);
-            }else if (Dia == "Miercoles") {
-                fechaQuery = Fecha[0]+"-"+Fecha[1]+"-"+String.valueOf(Integer.parseInt(Fecha[2])-3);
-            }else if (Dia == "Jueves") {
-                fechaQuery = Fecha[0]+"-"+Fecha[1]+"-"+String.valueOf(Integer.parseInt(Fecha[2])-4);
-            }else if (Dia == "Viernes") {
-                fechaQuery = Fecha[0]+"-"+Fecha[1]+"-"+String.valueOf(Integer.parseInt(Fecha[2])-5);
-            }else if (Dia == "Sabado") {
-                fechaQuery = Fecha[0]+"-"+Fecha[1]+"-"+String.valueOf(Integer.parseInt(Fecha[2])-6);
-            }
-            
-            
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
-            Query query = sesion.createQuery("FROM Ingreso WHERE Usuario = "+objUsuario.getIdUsuario()+" AND Fecha > '"+fechaQuery+"'");
-            List<Ingreso> ListaIngreso = query.list();
-            for(Ingreso ingreso : ListaIngreso){
-                String hora [] = String.valueOf(ingreso.getHora()).split(" ");
-                String horaParseada [] = hora[1].split(":");
-                
-                if (ingreso.getDia().equals("Domingo")) {
-                    
-                    if (ingreso.getTipo().equals("Ingreso")) {
-                    
-                        horaIngresoDominngo = horaParseada[0]+"."+horaParseada[1];
-                        
-                    }else if (ingreso.getTipo().equals("Salida")) {
-                        
-                        horaSalidaDomingo = horaParseada[0]+"."+horaParseada[1];
-                        
-                    }
-                    
-                }else if (ingreso.getDia().equals("Lunes")) {
-                    
-                    if (ingreso.getTipo().equals("Ingreso")) {
-                    
-                        horaIngresoLunes = horaParseada[0]+"."+horaParseada[1];
-                        
-                    }else if (ingreso.getTipo().equals("Salida")) {
-                        
-                        horaSalidaLunes = horaParseada[0]+"."+horaParseada[1];
-                        
-                    }
-                    
-                }else if (ingreso.getDia().equals("Martes")) {
-                    
-                    if (ingreso.getTipo().equals("Ingreso")) {
-                    
-                        horaIngresoMartes = horaParseada[0]+"."+horaParseada[1];
-                        
-                    }else if (ingreso.getTipo().equals("Salida")) {
-                        
-                        horaSalidaMartes = horaParseada[0]+"."+horaParseada[1];
-                        
-                    }
-                    
-                }else if (ingreso.getDia().equals("Miercoles")) {
-                    
-                    if (ingreso.getTipo().equals("Ingreso")) {
-                    
-                        horaIngresoMiercoles = horaParseada[0]+"."+horaParseada[1];
-                        
-                    }else if (ingreso.getTipo().equals("Salida")) {
-                        
-                        horaSalidaMiercoles = horaParseada[0]+"."+horaParseada[1];
-                        
-                    }
-                    
-                }else if (ingreso.getDia().equals("Jueves")) {
-                    
-                    if (ingreso.getTipo().equals("Ingreso")) {
-                    
-                        horaIngresoJueves = horaParseada[0]+"."+horaParseada[1];
-                        
-                    }else if (ingreso.getTipo().equals("Salida")) {
-                        
-                        horaSalidaJueves = horaParseada[0]+"."+horaParseada[1]; 
-                        
-                    }
-                    
-                }else if (ingreso.getDia().equals("Viernes")) {
-                    
-                    if (ingreso.getTipo().equals("Ingreso")) {
-                    
-                        horaIngresoViernes = horaParseada[0]+"."+horaParseada[1];
-                        
-                    }else if (ingreso.getTipo().equals("Salida")) {
-                        
-                        horaSalidaViernes = horaParseada[0]+"."+horaParseada[1];
-                        
-                    }
-                    
-                }else if (ingreso.getDia().equals("Sabado")) {
-                    
-                    if (ingreso.getTipo().equals("Ingreso")) {
-                    
-                        horaIngresoSabado = horaParseada[0]+"."+horaParseada[1];
-                        
-                    }else if (ingreso.getTipo().equals("Salida")) {
-                        
-                        horaSalidaSabado = horaParseada[0]+"."+horaParseada[1];
-                        
-                    }
+            Session s = HibernateUtil.getSessionFactory().openSession();
+            Query q = s.createQuery("FROM Ingreso WHERE Usuario = '"+idusuario+"' AND Fecha > '"+finalDate+"'");
+            List<Ingreso> listInOut = q.list();
+            for (Ingreso item : listInOut) {
+                if(item.getTipo().equals("Ingreso")){
+                    if(item.getDia().equals("Lunes")) inLunes = String.valueOf(item.getHora());
+                    if(item.getDia().equals("Martes")) inMartes = String.valueOf(item.getHora());
+                    if(item.getDia().equals("Miercoles")) inMiercoles = String.valueOf(item.getHora());
+                    if(item.getDia().equals("Jueves")) inJueves = String.valueOf(item.getHora());
+                    if(item.getDia().equals("Viernes")) inViernes = String.valueOf(item.getHora());
+                    if(item.getDia().equals("Sabado")) inSabado = String.valueOf(item.getHora());
+                    if(item.getDia().equals("Domingo")) inDomingo = String.valueOf(item.getHora());
                 }
-             
+                if(item.getTipo().equals("Salida")){
+                    if(item.getDia().equals("Lunes")) outLunes = String.valueOf(item.getHora());
+                    if(item.getDia().equals("Martes")) outMartes = String.valueOf(item.getHora());
+                    if(item.getDia().equals("Miercoles")) outMiercoles = String.valueOf(item.getHora());
+                    if(item.getDia().equals("Jueves")) outJueves = String.valueOf(item.getHora());
+                    if(item.getDia().equals("Viernes")) outViernes = String.valueOf(item.getHora());
+                    if(item.getDia().equals("Sabado")) outSabado = String.valueOf(item.getHora());
+                    if(item.getDia().equals("Domingo")) outDomingo = String.valueOf(item.getHora());
+                }
             }
-            JSONArray  horasSemanaJson = new JSONArray();
-            horasSemanaJson.add(horaIngresoLunes);
-            horasSemanaJson.add(horaSalidaLunes);
-            horasSemanaJson.add(horaIngresoMartes);
-            horasSemanaJson.add(horaSalidaMartes);
-            horasSemanaJson.add(horaIngresoMiercoles);
-            horasSemanaJson.add(horaSalidaMiercoles);
-            horasSemanaJson.add(horaIngresoJueves);
-            horasSemanaJson.add(horaSalidaJueves);
-            horasSemanaJson.add(horaIngresoViernes);
-            horasSemanaJson.add(horaSalidaViernes);
-            horasSemanaJson.add(horaIngresoSabado);
-            horasSemanaJson.add(horaSalidaSabado);
-            horasSemanaJson.add(horaIngresoDominngo);
-            horasSemanaJson.add(horaSalidaDomingo);
             
-            response.getWriter().write(horasSemanaJson.toJSONString());
+            JSONArray jsonIngresos = new JSONArray();
+            jsonIngresos.add(inLunes+"/"+outLunes);
+            jsonIngresos.add(inMartes+"/"+outMartes);
+            jsonIngresos.add(inMiercoles+"/"+outMiercoles);
+            jsonIngresos.add(inJueves+"/"+outJueves);
+            jsonIngresos.add(inViernes+"/"+outViernes);
+            jsonIngresos.add(inSabado+"/"+outSabado);
+            jsonIngresos.add(inDomingo+"/"+outDomingo);
             
-        }catch(Exception e){
-        
-            response.getWriter().write("500");
-            System.out.println(e);
-        
+            response.getWriter().write(jsonIngresos.toJSONString());
         }
-    
+        catch(Exception ex){
+            System.out.println(ex);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

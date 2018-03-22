@@ -1393,18 +1393,18 @@ function cargarPromedio(){
             var inM3 = ingresosMal[1].split(" ");
             
             var ingresosJusto = dt[7].split("/");
-            var inJ1 = ingresosJusto[0].split(" ");
-            var inJ2 = ingresosJusto[1].split(" ");
+            var inJ2 = ingresosJusto[0].split(" ");
+            var inJ3 = ingresosJusto[1].split(" ");
 
             $("#ultimoIngreso").append('Ultimo ingreso '+moment(in2[0]+" "+in3[1]).fromNow());
             $("#ultimoIngresoCorrecto").append('Ultimo ingreso correcto '+moment(inOk2[0]+" "+inOk3[1]).fromNow());
             $("#ultimoIngresoErroneo").append('Ultimo ingreso erroneo '+moment(inM2[0]+" "+inM3[1]).fromNow());
-            $("#ultimoIngresoJusto").append('Ultimo ingreso a tiempo '+moment(inJ1[0]+" "+inJ2[1]).fromNow());
+            $("#ultimoIngresoJusto").append('Ultimo ingreso a tiempo '+moment(inJ2[0]+" "+inJ3[1]).fromNow());
         }else{
-            $("#ultimoIngreso").append('El empleado no ha realizado ningun ingreso');
-            $("#ultimoIngresoCorrecto").append('El empleado no ha realizado ningun ingreso');
-            $("#ultimoIngresoErroneo").append('El empleado no ha realizado ningun ingreso');
-            $("#ultimoIngresoJusto").append('El empleado no ha realizado ningun ingreso');
+            $("#ultimoIngreso").append('El usuario no ha realizado ningun ingreso');
+            $("#ultimoIngresoCorrecto").append('El usuario no ha realizado ningun ingreso');
+            $("#ultimoIngresoErroneo").append('El usuario no ha realizado ningun ingreso');
+            $("#ultimoIngresoJusto").append('El usuario no ha realizado ningun ingreso');
         }
         
     });

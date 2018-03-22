@@ -192,13 +192,61 @@ $(document).ready(function(){
     });
 });
 
+//Funcion para cargar datos semanales del chart
+    function loadWeeklyData(idUsuario){
+        $.ajax({
+            url:"/SaleslandColombiaApp/ingreso/weeklyChart",
+            method: "post",
+            data:{
+                idusuario: idUsuario
+            },
+            dataType:"json"
+        }).done(function(data){
+           if(data !== undefined){
+               initIngresosChart(data);
+           }else{
+               swal('Error', 'Algo ocurrio al momento de solicitar los datos', 'error');
+           }
+        });
+    }
+
 //Funcion para inicializar chart de ingresos y salidas a lo largo de la semana
-    function initIngresosChart(){  
+    function initIngresosChart(dt){  
+        var dt0 = dt[0].split("/");
+        var LunesIn = dt0[0].split(" ");
+        var LunesOut = dt0[1].split(" ");
+        
+        var dt1 = dt[1].split("/");
+        var MartesIn = dt1[0].split(" ");
+        var MartesOut = dt1[1].split(" ");
+        
+        var dt2 = dt[2].split("/");
+        var MiercolesIn = dt2[0].split(" ");
+        var MiercolesOut = dt2[1].split(" ");
+        
+        var dt3 = dt[3].split("/");
+        var JuevesIn = dt3[0].split(" ");
+        var JuevesOut = dt3[1].split(" ");
+        
+        var dt4 = dt[4].split("/");
+        var ViernesIn = dt4[0].split(" ");
+        var ViernesOut = dt4[1].split(" ");
+        
+        var dt5 = dt[5].split("/");
+        var SabadoIn = dt5[0].split(" ");
+        var SabadoOut = dt5[1].split(" ");
+        
+        var dt6 = dt[6].split("/");
+        var DomingoIn = dt6[0].split(" ");
+        var DomingoOut = dt6[1].split(" ");
+        
         var chart = new Chartist.Line('.ct-chart', {
             labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
             series: [
-              [12, 9, 7, 8, 5, 4, 6, 2, 3, 3, 4, 6],
-              [4,  5, 3, 7, 3, 5, 5, 3, 4, 4, 5, 5]
+               //Hora de entrada
+               [LunesIn[1], MartesIn[1], MiercolesIn[1], JuevesIn[1], ViernesIn[1], SabadoIn[1], DomingoIn[1]],
+               //Hora de salida
+               [LunesOut[1], MartesOut[1], MiercolesOut[1], JuevesOut[1], ViernesOut[1], SabadoOut[1], DomingoOut[1]]
             ]
         },{
             low: 0
