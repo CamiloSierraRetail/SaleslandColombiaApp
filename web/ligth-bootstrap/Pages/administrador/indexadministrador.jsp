@@ -129,7 +129,7 @@
                                                 <p class="card-category">En esta grafica se representa tu hora de entrada y salida cada dia a lo largo de la semana.</p>
                                             </div>
                                             <div class="card-body">
-                                                <div class="ct-chart ct-golden-section">
+                                                <div class="ct-chart ct-octave">
                                                     
                                                 </div>
                                             </div>

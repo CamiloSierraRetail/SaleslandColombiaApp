@@ -202,11 +202,11 @@ $(document).ready(function(){
             },
             dataType:"json"
         }).done(function(data){
-           if(data !== undefined){
-               initIngresosChart(data);
-           }else{
-               swal('Error', 'Algo ocurrio al momento de solicitar los datos', 'error');
-           }
+            if(data !== undefined){
+                initIngresosChart(data);
+            }else{
+                swal('Error', 'Algo ocurrio al momento de solicitar los datos', 'error');
+            }
         });
     }
 
@@ -337,41 +337,41 @@ $(document).ready(function(){
               });
             } else if(data.type === 'point') {
                 console.log(variable);
-                var circle = new Chartist.Svg('circle', {
-                    cx: [data.x],
-                    cy: [data.y],
-                    r: [5],
-                    'ct:value': variable,
-                    'ct:meta': data.meta,
-                    class: 'customTooltipOnPoint'
-                }, 'ct-point');
-
-                // With data.element we get the Chartist SVG wrapper and we can replace the original point drawn by Chartist with our newly created triangle
-                data.element.replace(circle);
-
-                data.element.animate({
-                    x1: {
-                      begin: seq * delays,
-                      dur: durations,
-                      from: cx - 10,
-                      to: cx,
-                      easing: 'easeOutQuart'
-                    },
-                    x2: {
-                      begin: seq * delays,
-                      dur: durations,
-                      from: cx - 10,
-                      to: cx,
-                      easing: 'easeOutQuart'
-                    },
-                    opacity: {
-                      begin: seq * delays,
-                      dur: durations,
-                      from: 0,
-                      to: 1,
-                      easing: 'easeOutQuart'
-                    }
-                });
+                    var circle = new Chartist.Svg('circle', {
+                        cx: [data.x],
+                        cy: [data.y],
+                        r: [5],
+                        'ct:value': variable,
+                        'ct:meta': data.meta,
+                        class: 'customTooltipOnPoint'
+                    }, 'ct-point');
+                    
+                    // With data.element we get the Chartist SVG wrapper and we can replace the original point drawn by Chartist with our newly created triangle
+                    data.element.replace(circle);
+                
+                    data.element.animate({
+                        x1: {
+                          begin: seq * delays,
+                          dur: durations,
+                          from: data.x - 10,
+                          to: data.x,
+                          easing: 'easeOutQuart'
+                        },
+                        x2: {
+                          begin: seq * delays,
+                          dur: durations,
+                          from: data.x - 10,
+                          to: data.x,
+                          easing: 'easeOutQuart'
+                        },
+                        opacity: {
+                          begin: seq * delays,
+                          dur: durations,
+                          from: 0,
+                          to: 1,
+                          easing: 'easeOutQuart'
+                        }
+                    });
             } else if(data.type === 'grid') {
               // Using data.axis we get x or y which we can use to construct our animation definition objects
               var pos1Animation = {
