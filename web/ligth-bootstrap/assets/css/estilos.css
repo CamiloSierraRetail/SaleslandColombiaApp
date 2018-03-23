@@ -4,10 +4,8 @@ div.error{
     padding-left: 5px;
 }
 .textArea{
-    
     min-height: 100px;
-    max-height: 100px;
-    
+    max-height: 100px; 
 }
 .txtUsuarioIngresoContainer{
     width: 0;
@@ -15,6 +13,10 @@ div.error{
 }
 .none{
     display: none;
+}
+.customTooltipOnPoint:hover{
+  stroke-opacity: 0.2;
+  stroke-width: 20px;
 }
 /*//////////////// ESTILOS DEL PRELOADER /////////////////////////*/          
 /** sass/scss/less code */
