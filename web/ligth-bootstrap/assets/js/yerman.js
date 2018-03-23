@@ -179,6 +179,11 @@ $(document).ready(function(){
         }
     });
     
+    //Funcion para desplegar sideDiv que mostrara los usuarios ingresados
+    $(".btnSideUsers").on("click", function(){
+       
+    });
+    
     //Funcion para recuperar cuenta mediante envio de codigo al email o al telefono
     $("#btnRecuperarCuenta").on("click", function(){
         swal({
@@ -272,10 +277,8 @@ $(document).ready(function(){
                 onlyInteger:true, 
                 labelInterpolationFnc: function(value) {
                     if(value < 12){
-                        variable = 'Ingreso';
                         return (value +"AM");
                     }else{
-                        variable = 'Salida';
                         return (value +"PM");
                     }
                 }
@@ -336,12 +339,17 @@ $(document).ready(function(){
                 }
               });
             } else if(data.type === 'point') {
-                console.log(variable);
+                    var v;
+                    if(data.value.y < 12){
+                        v = "Ingreso";
+                    }else{
+                        v = "Salida";
+                    }
                     var circle = new Chartist.Svg('circle', {
                         cx: [data.x],
                         cy: [data.y],
                         r: [5],
-                        'ct:value': variable,
+                        'ct:value': v,
                         'ct:meta': data.meta,
                         class: 'customTooltipOnPoint'
                     }, 'ct-point');

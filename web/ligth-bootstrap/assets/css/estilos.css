@@ -14,9 +14,27 @@ div.error{
 .none{
     display: none;
 }
-.customTooltipOnPoint:hover{
-  stroke-opacity: 0.2;
+.customTooltipOnPoint{
+  fill-opacity: 1!important;
+  stroke-width: 5px;
+  transition: all 0.2s linear;
+  fill:white;
+}
+.ct-series-a .customTooltipOnPoint:hover{
+  r:7;
+  fill:#23CCEF;
+  stroke-opacity: 0.5;
   stroke-width: 20px;
+}
+.ct-series-b .customTooltipOnPoint:hover{    
+  r:7;
+  fill:red;
+  stroke-opacity: 0.5;
+  stroke-width: 20px;
+}
+/*////////////////Estilos del side div////////////////////////////*/
+.sideDiv{
+
 }
 /*//////////////// ESTILOS DEL PRELOADER /////////////////////////*/          
 /** sass/scss/less code */
