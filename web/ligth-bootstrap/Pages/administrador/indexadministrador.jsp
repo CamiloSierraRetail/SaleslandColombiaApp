@@ -1,13 +1,22 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    response.setHeader("Cache-Control","no-cache"); //Forces caches to obtain a new copy of the page from the origin server
+    response.setHeader("Cache-Control","no-store"); //Directs caches not to store the page under any circumstance
+    response.setDateHeader("Expires", 0); //Causes the proxy cache to see the page as "stale"
+    response.setHeader("Pragma","no-cache"); //HTTP 1.0 backward compatibility
+    try{      
+        if(session.getAttribute("UsuarioIngresado").equals("") || session.getAttribute("UsuarioIngresado").equals(null)){
+            response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/sesionBloqueada.jsp");
+        }
+        else{
+%>
 <!DOCTYPE html>
 <html>
     <head>
         <%@include file="../includes/cssInclude.jsp" %>
-        <title>Inicio | SaleslandColombia</title>
-        
+        <title>Inicio | SaleslandColombia</title>       
     </head>
     <body>
-        <div class="test">
         <div class="wrapper">
             <!-- Include Nav Lateral  -->
             <%@include file="../includes/navLateral.jsp" %>
@@ -32,6 +41,8 @@
                                                     <p class="card-category">Ingresos</p>
                                                     <h4 class="card-title" id="numeroIngresos">0</h4>
                                                     <input type="hidden" id="txtIdUsuario" value="<%=objUsuario.getIdUsuario()%>">
+                                                    <input type="hidden" id="imgPerfilNavLateral" value="<%=objUsuario.getFoto()%>">
+                                                    <input type="hidden" class="spanName" value="<%= objUsuario.getNombre() +" "+ objUsuario.getApellido()%>">
                                                 </div>
                                             </div>
                                         </div>
@@ -155,10 +166,11 @@
                 <%@include  file="../includes/footer.jsp" %>
             </div>
         </div>
-        </div>
         <%@include file="../includes/jsInclude.jsp" %>
         <script>
             $(document).ready(function (){
+                localStorage.imgPerfil = $("#imgPerfilNavLateral").val();
+                localStorage.name = $(".spanName").val();
                 $("#home").addClass("active");
                 $("#tituloPagina").text("Inicio");              
                 cargarPromedio();
@@ -167,3 +179,9 @@
         </script>
     </body>
 </html>
+<%        }
+    }  
+    catch(NullPointerException ex){
+        response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/sesionBloqueada.jsp");
+    }
+%>

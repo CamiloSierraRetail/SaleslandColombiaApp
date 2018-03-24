@@ -37,7 +37,7 @@
 <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="../../assets/js/light-bootstrap-dashboard.js" type="text/javascript"></script>
 <!-- Perfect Scrollbar -->
-<script src="https://rawgit.com/utatti/perfect-scrollbar/master/dist/perfect-scrollbar.js"></script>
+<script src="../../assets/js/plugins/perfect-scollbar.jquery.min.js"></script>
 <!-- Light Dashboard DEMO methods, don't include it in your project! -->
 <script src="../../assets/js/demo.js"></script>
 <script type="text/javascript">

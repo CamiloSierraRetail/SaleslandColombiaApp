@@ -1,6 +1,15 @@
-//Inicializa el perfectScrollbar para el body y el sidebar
-const wrapper = new PerfectScrollbar('.wrapper');
 $(document).ready(function(){
+    //Inicializa el perfectScrollbar para el body y el sidebar
+    $('.wrapper').perfectScrollbar({
+        minScrollbarLength: 150,
+        maxScrollbarLength: 300,
+        wheelSpeed: 1
+    });
+    $('.sidebar-wrapper').perfectScrollbar({
+        minScrollbarLength: 250,
+        maxScrollbarLength: 500,
+        wheelSpeed: 1
+    });
     //LocalStorage para el recuerdame almacenando el documento o email
     if (localStorage.checkBox && localStorage.checkBox != '') {
         $('#remember_me').attr('checked', 'checked');
@@ -16,7 +25,7 @@ $(document).ready(function(){
     });
 
     //Funcion para actualizar los datos del perfil
-    $('#frmEditarPerfil').validate({
+    $('#frmEditarPerfil').validate({    
         rules: {
             txtNombre: {
                 required: true,
@@ -180,6 +189,84 @@ $(document).ready(function(){
             });
         }
     });
+    
+    //Funcion para desbloquear sesion
+    $("#frmUnlock").validate({
+        rules:{
+            passwordUnlock:{            
+                required:true
+            }
+        },messages:{
+            passwordUnlock:{            
+                required:"Introduce tu contraseña"
+            }
+
+        },errorElement: 'div',
+            errorPlacement: function (error, element) {
+                var placement = $(element).data('error');
+                if (placement) {
+                    $(placement).append(error);
+                } else {
+                    error.insertAfter(element);
+                }
+        },submitHandler: function () {
+            var usuario = $("#txtUserUnlock").val();
+            var contrasenia = $("#passwordUnlock").val();        
+            $.post("/SaleslandColombiaApp/usuario/IniciarSesion",{Usuario:usuario,Contrasenia:contrasenia},function (responsetext) {                       
+                if (responsetext == "Empleado") {
+                    window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/empleado/indexempleado.jsp";
+
+                }else if (responsetext == "Administrador") {
+                    window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/administrador/indexadministrador.jsp";
+
+                }else if (responsetext == "403") {
+                    $.notify({
+                        icon: "nc-icon nc-key-25",
+                        message: "No puedes acceder al sistema porque tu estado actual es inactivo."
+                    },{
+                        type: 'danger',
+                        timer: 3000,
+                        placement: {
+                            from: 'bottom',
+                            align: 'right'
+                        }
+                    });
+                    $("#divBtn").show();
+                    $("#preloader").hide();
+                }else if (responsetext == "404") {
+                    $.notify({
+                        icon: "nc-icon nc-key-25",
+                        message: "Usuario o contraseña incorrectos, por favor verifica tus datos e intentalo nuevamente."
+                    },{
+                        type: 'danger',
+                        timer: 3000,
+                        placement: {
+                            from: 'bottom',
+                            align: 'right'
+                        }
+                    });
+                    $("#divBtn").show();
+                    $("#preloader").hide();
+                }else if (responsetext == 500) {
+                    $.notify({
+                        icon: "nc-icon nc-fav-remove",
+                        message: "Ocurrio un erro al tratar de realizar el ingreso, por favor intentalo mas tarde."
+                    },{
+                        type: 'danger',
+                        timer: 3000,
+                        placement: {
+                            from: 'bottom',
+                            align: 'right'
+                        }
+                    });
+                    $("#divBtn").show();
+                    $("#preloader").hide(); 
+                }
+
+            });
+        }
+    });
+    
     
     //Funcion para desplegar sideDiv que mostrara los usuarios ingresados
     $(".btnSideUsers").on("click", function(){
