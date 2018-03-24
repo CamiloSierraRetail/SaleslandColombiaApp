@@ -34,7 +34,7 @@ try{
                     </div>
                     <div class="user">
                         <div class="photo">
-                            <img src="../../assets/img/imagenesDePerfil/<%=objUsuario.getFoto()%>"/>
+                            <img src="../../assets/img/imagenesDePerfil/<%=objUsuario.getFoto()%>" alt=""/>
                         </div>
                         <div class="info ">
                             <a data-toggle="collapse" href="#collapseExample" class="collapsed">

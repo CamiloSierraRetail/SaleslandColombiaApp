@@ -10,6 +10,7 @@ $(document).ready(function(){
         maxScrollbarLength: 500,
         wheelSpeed: 1
     });
+    
     //LocalStorage para el recuerdame almacenando el documento o email
     if (localStorage.checkBox && localStorage.checkBox != '') {
         $('#remember_me').attr('checked', 'checked');

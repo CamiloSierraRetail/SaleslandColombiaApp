@@ -42,7 +42,11 @@
                                                     <h4 class="card-title" id="numeroIngresos">0</h4>
                                                     <input type="hidden" id="txtIdUsuario" value="<%=objUsuario.getIdUsuario()%>">
                                                     <input type="hidden" id="imgPerfilNavLateral" value="<%=objUsuario.getFoto()%>">
-                                                    <input type="hidden" class="spanName" value="<%= objUsuario.getNombre() +" "+ objUsuario.getApellido()%>">
+                                                    <%
+                                                        String nombreUSuario[] = objUsuario.getNombre().split(" ");
+                                                        String apellidoUsuario[] = objUsuario.getApellido().split(" ");
+                                                    %>
+                                                    <input type="hidden" class="spanName" value="<%= nombreUSuario[0] +" "+ apellidoUsuario[0]%>">
                                                 </div>
                                             </div>
                                         </div>
