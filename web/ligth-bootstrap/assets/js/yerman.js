@@ -1,3 +1,5 @@
+//Inicializa el perfectScrollbar para el body y el sidebar
+const wrapper = new PerfectScrollbar('.wrapper');
 $(document).ready(function(){
     //LocalStorage para el recuerdame almacenando el documento o email
     if (localStorage.checkBox && localStorage.checkBox != '') {
@@ -6,7 +8,7 @@ $(document).ready(function(){
     } else {
         $('#remember_me').removeAttr('checked');
         $('#txtUsuarioSesion').val('');
-    }
+    }   
     
     //Onchange del input file en la edicion del perfil para actualizar el txtArchivo
     $("#txtFotoFile").on('change',function(){

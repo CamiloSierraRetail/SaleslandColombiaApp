@@ -131,7 +131,7 @@
                                 <div class="photo">
                                     <img src="../../assets/img/imagenesDePerfil/<%=objUsuario.getFoto()%>"/>
                                 </div>
-                                <div class="info ">
+                                <div class="info">
                                     <a data-toggle="collapse" href="#collapseExample" class="collapsed">
                                         <span><%= nombreUSuario[0] +" "+ apellidoUsuario[0]%>
                                             <b class="caret"></b>
@@ -140,7 +140,7 @@
                                     <div class="collapse" id="collapseExample">
                                         <ul class="nav">
                                             <li>
-                                                <a class="profile-dropdown" href="../usuario/editarperfilusuario.jsp">
+                                                <a class="nav-link profile-dropdown" href="../usuario/editarperfilusuario.jsp">
                                                     <span class="sidebar-mini">EP</span>
                                                     <span class="sidebar-normal">Editar Perfil</span>
                                                 </a>
@@ -156,7 +156,7 @@
                                 </div>
                             </div>
                             <ul class="nav">
-                                <li class="nav-item ">
+                                <li class="nav-item " id="home">
                                     <a class="nav-link" href="../administrador/indexadministrador.jsp">
                                         <i class="material-icons">dashboard</i>
                                         <p>Inicio (Administrador)</p>

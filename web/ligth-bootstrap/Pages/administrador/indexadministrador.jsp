@@ -7,6 +7,7 @@
         
     </head>
     <body>
+        <div class="test">
         <div class="wrapper">
             <!-- Include Nav Lateral  -->
             <%@include file="../includes/navLateral.jsp" %>
@@ -154,9 +155,11 @@
                 <%@include  file="../includes/footer.jsp" %>
             </div>
         </div>
+        </div>
         <%@include file="../includes/jsInclude.jsp" %>
         <script>
             $(document).ready(function (){
+                $("#home").addClass("active");
                 $("#tituloPagina").text("Inicio");              
                 cargarPromedio();
                 loadWeeklyData($("#txtIdUsuario").val());

@@ -35,7 +35,9 @@
 <!--  Full Calendar   -->
 <script src="../../assets/js/plugins/fullcalendar.min.js"></script>
 <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
-<script src="../../assets/js/light-bootstrap-dashboard.js?v=2.0.1" type="text/javascript"></script>
+<script src="../../assets/js/light-bootstrap-dashboard.js" type="text/javascript"></script>
+<!-- Perfect Scrollbar -->
+<script src="https://rawgit.com/utatti/perfect-scrollbar/master/dist/perfect-scrollbar.js"></script>
 <!-- Light Dashboard DEMO methods, don't include it in your project! -->
 <script src="../../assets/js/demo.js"></script>
 <script type="text/javascript">
@@ -51,7 +53,7 @@
     });
 </script>
 
-<!-- ||||||||||||||||||||||||||||||||같같같같같같같같같같같같같같같||||||||||||||||||같같같같같같같같같같같같같같같같� -->
+<!-- Jquery Validate -->
 <script src="../../assets/js/plugins/jquery.validate.min_1.js" type="text/javascript"></script>
 <!-- MAIN JS -->
 <script src="../../assets/js/main.js" type="text/javascript"></script>

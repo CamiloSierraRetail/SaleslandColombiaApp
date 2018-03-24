@@ -175,6 +175,8 @@
         <%@include file="../includes/jsInclude.jsp" %>
         <script>
             $(document).ready(function(){    
+                $("#collapseExample").addClass("show");
+                $("#editarperfilTab").addClass('active');
                 $(".dtFechaNacimiento").val(moment($("#dtData").val()).format('DD/MM/YYYY'));
                 $("#tituloPagina").text("Editar Perfil"); 
             });
