@@ -330,7 +330,11 @@ lbd = {
                 lbd.misc.sidebar_mini_active = false;
 
                 if (isWindows) {
-                    $('.sidebar .sidebar-wrapper').perfectScrollbar();
+                    $('.sidebar-wrapper').perfectScrollbar({
+                        minScrollbarLength: 250,
+                        maxScrollbarLength: 500,
+                        wheelSpeed: 1
+                    });
                 }
 
             } else {
@@ -340,7 +344,7 @@ lbd = {
                 });
 
                 if (isWindows) {
-                    $('.sidebar .sidebar-wrapper').perfectScrollbar('destroy');
+                    $('.sidebar-wrapper').perfectScrollbar('destroy');
                 }
 
                 setTimeout(function() {

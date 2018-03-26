@@ -10,6 +10,11 @@ $(document).ready(function(){
         maxScrollbarLength: 500,
         wheelSpeed: 1
     });
+    $('.sideDiv').perfectScrollbar({
+        minScrollbarLength: 250,
+        maxScrollbarLength: 500,
+        wheelSpeed: 1
+    });
     
     //LocalStorage para el recuerdame almacenando el documento o email
     if (localStorage.checkBox && localStorage.checkBox != '') {
@@ -266,14 +271,24 @@ $(document).ready(function(){
 
             });
         }
-    });
+    });   
     
-    
-    //Funcion para desplegar sideDiv que mostrara los usuarios ingresados
+    //Funciones para desplegar y ocultar sideDiv
     $(".btnSideUsers").on("click", function(){
-       
+       $('.sideDiv').css('right','0px');
+       $('#dimScreen').css('opacity','1');
+       $('#dimScreen').css('visibility','visible');
     });
-    
+    $(".btnHideRigthSideBar").on("click", function(){
+       $('.sideDiv').css('right','-310px');
+       $('#dimScreen').css('opacity','0');
+       $('#dimScreen').css('visibility','hidden');
+    });
+    $("#dimScreen").on("click", function(){
+        $('.sideDiv').css('right','-310px');
+        $('#dimScreen').css('opacity','0');
+        $('#dimScreen').css('visibility','hidden');
+    });
     //Funcion para recuperar cuenta mediante envio de codigo al email o al telefono
     $("#btnRecuperarCuenta").on("click", function(){
         swal({

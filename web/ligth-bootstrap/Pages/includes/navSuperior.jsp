@@ -18,15 +18,11 @@
             <div class="collapse navbar-collapse justify-content-end">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a href="#" class="nav-link btnSideUsers" rel="tooltip" data-original-title="Empleados">
+                        <a href="#" class="nav-link btnSideUsers" rel="" data-title="Empleados">
                             <i class="material-icons">perm_identity</i>
                             <span class="d-lg-none">Empleados</span>
                         </a>
                     </li>
-                    <!-- Side div -->
-                    <div class="sideDiv">
-                        
-                    </div>
                     <li class="dropdown nav-item">
                         <a href="#" rel="tooltip" data-original-title="Notificaciones" class="dropdown-toggle nav-link" data-toggle="dropdown">
                             <i class="material-icons">notifications_none</i>

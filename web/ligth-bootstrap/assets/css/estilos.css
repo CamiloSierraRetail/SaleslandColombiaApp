@@ -34,7 +34,51 @@ div.error{
 }
 /*////////////////Estilos del side div////////////////////////////*/
 .sideDiv{
-
+    position: fixed;
+    width: 300px;
+    top: 0;
+    margin: 0;
+    height: 100%;
+    height: calc(100% + 60px);
+    height: -moz-calc(100%);
+    padding-bottom: 60px;
+    background-color: #F7F7F8;
+    z-index: 999;
+    overflow-y: auto;
+    will-change: left;
+    right: -310px;
+    transition: 0.4s;
+    padding: 10px;
+}
+#dimScreen
+{
+    transition: visibility .3s, opacity .3s;
+    position:fixed;
+    padding:0;
+    margin:0;
+    opacity: 0;
+    visibility: hidden;
+    top:0;
+    left:0;
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.4);
+}
+.btnHideRigthSideBar{
+    width: 24px;
+    height: 24px;
+    color:black;
+}
+.sideDiv .sidebar-wrapper .nav .nav-item img{
+    max-width: 100%;
+    height: auto;
+    border-radius: 50px; 
+    border: 2px solid #00e676;
+}
+.ctli{
+    padding: 5px;
+    border-bottom: 2px solid rgba(0,0,0, .2);
 }
 /*//////////////// ESTILOS DEL PRELOADER /////////////////////////*/          
 /** sass/scss/less code */

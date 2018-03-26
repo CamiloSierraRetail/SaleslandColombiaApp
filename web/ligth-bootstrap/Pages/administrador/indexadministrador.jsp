@@ -17,13 +17,49 @@
         <title>Inicio | SaleslandColombia</title>       
     </head>
     <body>
+        <div id="dimScreen">
+            
+        </div>
         <div class="wrapper">
             <!-- Include Nav Lateral  -->
             <%@include file="../includes/navLateral.jsp" %>
-
             <div class="main-panel">
                 <!-- Include Nav Superior -->
                 <%@include file="../includes/navSuperior.jsp" %>
+                <!-- Side div showing users -->
+                <div class="sideDiv">
+                    <div class="sidebar-wrapper">
+                        <div class="logo">
+                            <a href="#" class="btnHideRigthSideBar">
+                                <i class="material-icons">close</i>
+                            </a>
+                            <br>
+                            <br>
+                            <form class="navbar-form navbar-left navbar-search-form" role="search">
+                                <div class="input-group">
+                                    <i class="material-icons">search</i>
+                                    <input type="text" value="" class="form-control" placeholder="Buscar..." style="color: gray;">
+                                </div>
+                                <br>
+                            </form>
+                        </div>       
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <div class="ctli">
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <img src="../../assets/img/imagenesDePerfil/cruz.png" alt=""/>
+                                        </div>
+                                        <div class="col-lg-9">
+                                            <p style="padding: 0; margin:0;">German Gualteros</p>
+                                            <p style="font-size:12px; margin:0; padding: 0;">Ingreso: 10:55 AM</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="content">
                     <div class="container-fluid">
                         <div class="row">
