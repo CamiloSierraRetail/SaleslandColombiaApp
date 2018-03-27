@@ -20,7 +20,7 @@
                     <li class="nav-item">
                         <a href="#" class="nav-link btnSideUsers" rel="" data-title="Empleados">
                             <i class="material-icons">perm_identity</i>
-                            <span class="d-lg-none">Empleados</span>
+                            <a href="#"class="d-lg-none btnSideUsers">Empleados</a>
                         </a>
                     </li>
                     <li class="dropdown nav-item">

@@ -161,7 +161,6 @@ try{
                                 <p>Inicio (Administrador)</p>
                             </a>
                         </li>
-                        <!-- Div xdxdxdxddxddxdxdxdxdx -->
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="collapse" href="#empresaItemNav">
                                 <i class="material-icons">location_city</i>
@@ -225,31 +224,12 @@ try{
                                     </li>                                
                                 </ul>
                             </div>
-                        </li>                                                           
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="collapse" href="#ExamplesCargos">
+                        </li>
+                        <li class="nav-item" id="ExamplesCargos">
+                            <a class="nav-link"  href="../cargo/listarcargo.jsp">
                                 <i class="material-icons">work</i>
-                                <p>
-                                    Cargos
-                                    <b class="caret"></b>
-                                </p>
-                            </a>
-                            <div class="collapse " id="ExamplesCargos">
-                                <ul class="nav">
-                                    <li class="nav-item ">
-                                        <a class="nav-link" href="../cargo/listarcargo.jsp">
-                                            <span class="sidebar-mini">L</span>
-                                            <span class="sidebar-normal">Listado Cargos</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item ">
-                                        <a class="nav-link" href="../cargo/registrarcargo.jsp">
-                                            <span class="sidebar-mini">R</span>
-                                            <span class="sidebar-normal">Registrar Cargos</span>
-                                        </a>
-                                    </li>                                                                     
-                                </ul>
-                            </div>
+                                <p>Cargos</p>
+                            </a>                                                        
                         </li>    
                           <li class="nav-item">
                             <a class="nav-link" data-toggle="collapse" href="#ExamplesReportes">

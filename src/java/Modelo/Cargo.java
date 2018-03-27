@@ -19,9 +19,6 @@ public class Cargo {
     @Column(name = "Descripcion")
     private String Descripcion;
     
-    @Column(name = "Salario")
-    private double Salario;
-    
     @Column(name = "Tipo")
     private String Tipo;
     
@@ -40,10 +37,9 @@ public class Cargo {
     public Cargo() {
     }
 
-    public Cargo(String NombreCargo, String Descripcion, double Salario, String Tipo, String Estado, String Sector, String Canal, String Area) {
+    public Cargo(String NombreCargo, String Descripcion, String Tipo, String Estado, String Sector, String Canal, String Area) {
         this.NombreCargo = NombreCargo;
         this.Descripcion = Descripcion;
-        this.Salario = Salario;
         this.Tipo = Tipo;
         this.Estado = Estado;
         this.Sector = Sector;
@@ -73,15 +69,7 @@ public class Cargo {
 
     public void setDescripcion(String Descripcion) {
         this.Descripcion = Descripcion;
-    }
-
-    public double getSalario() {
-        return Salario;
-    }
-
-    public void setSalario(double Salario) {
-        this.Salario = Salario;
-    }
+    }   
 
     public String getTipo() {
         return Tipo;
@@ -123,6 +111,4 @@ public class Cargo {
         this.Area = Area;
     }
 
-    
-    
 }

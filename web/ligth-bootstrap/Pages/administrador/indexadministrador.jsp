@@ -25,41 +25,10 @@
             <%@include file="../includes/navLateral.jsp" %>
             <div class="main-panel">
                 <!-- Include Nav Superior -->
-                <%@include file="../includes/navSuperior.jsp" %>
-                <!-- Side div showing users -->
-                <div class="sideDiv">
-                    <div class="sidebar-wrapper">
-                        <div class="logo">
-                            <a href="#" class="btnHideRigthSideBar">
-                                <i class="material-icons">close</i>
-                            </a>
-                            <br>
-                            <br>
-                            <form class="navbar-form navbar-left navbar-search-form" role="search">
-                                <div class="input-group">
-                                    <i class="material-icons">search</i>
-                                    <input type="text" value="" class="form-control" placeholder="Buscar..." style="color: gray;">
-                                </div>
-                                <br>
-                            </form>
-                        </div>       
-                        <ul class="nav">
-                            <li class="nav-item">
-                                <div class="ctli">
-                                    <div class="row">
-                                        <div class="col-lg-3">
-                                            <img src="../../assets/img/imagenesDePerfil/cruz.png" alt=""/>
-                                        </div>
-                                        <div class="col-lg-9">
-                                            <p style="padding: 0; margin:0;">German Gualteros</p>
-                                            <p style="font-size:12px; margin:0; padding: 0;">Ingreso: 10:55 AM</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                <%@include file="../includes/navSuperior.jsp" %>   
+                <!-- Include div Ingresos -->
+                <%@include file="../includes/divIngresos.jsp" %>
+                
                 <div class="content">
                     <div class="container-fluid">
                         <div class="row">
@@ -72,6 +41,7 @@
                                                     <i class="nc-icon nc-badge text-warning"></i>
                                                 </div>
                                             </div>
+                                            <!-- CODIGO REDUNDANTE, VER APLICACION O BORRAR -->
                                             <div class="col-7">
                                                 <div class="numbers">
                                                     <p class="card-category">Ingresos</p>
@@ -90,7 +60,7 @@
                                     <div class="card-footer ">
                                         <hr>
                                         <div class="stats">
-                                            <i class="fa fa-clock-o"></i> <p id="ultimoIngreso"></p>
+                                            <i class="fa fa-clock-o"></i> <small id="ultimoIngreso"></small>
                                         </div>
                                     </div>
                                 </div>
@@ -115,7 +85,7 @@
                                     <div class="card-footer ">
                                         <hr>
                                         <div class="stats">
-                                            <i class="fa fa-clock-o"></i> <p id="ultimoIngresoCorrecto"></p>
+                                            <i class="fa fa-clock-o"></i> <small id="ultimoIngresoCorrecto"></small>
                                         </div>
                                     </div>
                                 </div>
@@ -140,7 +110,7 @@
                                     <div class="card-footer ">
                                         <hr>
                                         <div class="stats">
-                                            <i class="fa fa-clock-o"></i> <p id="ultimoIngresoErroneo"></p>
+                                            <i class="fa fa-clock-o"></i> <small id="ultimoIngresoErroneo"></small>
                                         </div>
                                     </div>
                                 </div>
@@ -165,7 +135,7 @@
                                     <div class="card-footer ">
                                         <hr>
                                         <div class="stats">
-                                            <i class="fa fa-clock-o"></i> <p id="ultimoIngresoJusto"></p>
+                                            <i class="fa fa-clock-o"></i> <small id="ultimoIngresoJusto"></small>
                                         </div>
                                     </div>
                                 </div>
@@ -216,6 +186,37 @@
                 cargarPromedio();
                 loadWeeklyData($("#txtIdUsuario").val());
             });
+        </script>
+        
+        <script>
+            
+            var websocket = new WebSocket("ws://localhost:8080/SaleslandColombiaApp/ingresoSala");
+            
+            function on_Open(){
+                
+                websocket.onopen = function (){
+                
+                    alert("on open");
+                };
+                
+            }            
+            
+            //function on_Message(message){
+                
+                websocket.onmessage = function (message){
+                
+                    alert("on message  ------------>   " + message);
+
+                };
+            //}
+                        
+            window.onload = function (){
+                
+                //on_Open();
+                //websocket.send("ooooooooooooooop");
+                mostrarEmpleados();
+            };
+            
         </script>
     </body>
 </html>

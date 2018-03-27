@@ -280,8 +280,7 @@ function listarCargos() {
                                         +"<tr>"
                                             +"<th class='text-center'>#</th>"
                                             +"<th>Nombre</th>"
-                                            +"<th>Descripción</th>"
-                                            +"<th>Salario</th>"
+                                            +"<th>Descripción</th>"                                            
                                             +"<th>Tipo</th>"
                                             +"<th>Sector</th>"
                                             +"<th>Canal</th>"
@@ -1186,6 +1185,27 @@ $(".cerrarSesion").click(function (){
         });
     
 });
+/////////////////    MOSTRAR TODOS LOS USUARIOS EN EL DIV DE INGRESOS   ////////////////////
+function mostrarEmpleados (){
+    
+    
+    var fullDate = new Date();
+    var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
+    var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
+    
+    $.post("/SaleslandColombiaApp/ingreso/usuariosingresados",{Fecha:currentDate},function (responseText){
+        alert(responseText);
+        if (responseText == "500") {            
+            swal("Error", "Ocurrió un error mientras estabamos tratando de ingresa tus datos", "error");            
+        }else{
+            
+            
+            
+        }
+        
+    });
+    
+}
 ////////////////////// INGRESO Y SALIDA DEL USUARIO ////////////////////////
 function ingreso(){
     
@@ -1252,7 +1272,7 @@ function ingreso(){
                     align: 'right'
                 }
             });
-            
+            websocket.send(UsuarioID);
         }else if(responseText == "IngresoTemprano"){
             
             
@@ -1267,7 +1287,7 @@ function ingreso(){
                     align: 'right'
                 }
             });
-            
+            websocket.send(UsuarioID);
         }else if(responseText == "IngresoJusto"){
             
             
@@ -1282,7 +1302,7 @@ function ingreso(){
                     align: 'right'
                 }
             });
-            
+            websocket.send(UsuarioID);
         }else if(responseText == "SalidaTarde"){
             
             
@@ -1297,7 +1317,7 @@ function ingreso(){
                     align: 'right'
                 }
             });
-            
+            websocket.send(UsuarioID);
         }else if(responseText == "SalidaTemprano"){
             
             
@@ -1312,7 +1332,7 @@ function ingreso(){
                     align: 'right'
                 }
             });
-            
+            websocket.send(UsuarioID);
         }else if(responseText == "SalidaJusto"){
             
             
@@ -1327,7 +1347,7 @@ function ingreso(){
                     align: 'right'
                 }
             });
-            
+            websocket.send(UsuarioID);
         }
         
     });
@@ -1368,34 +1388,26 @@ function listarUsuarios(){
 /////////////////// FUNCION PARA OBTENER EL PROMEDIO DE LOS INGRESOS DEL USUARIO ////////////////////7
 function cargarPromedio(){
     
-    $.post("/SaleslandColombiaApp/ingreso/promedioimgresos",function (responseText){
+    $.post("/SaleslandColombiaApp/ingreso/promedioingresos",function (responseText){
         if (responseText == "500") {
             swal("Datos no cargados", "Los datos de las estadisticas del usuario no se lograron cargar, por favor intentalo nuevamente.", "error");
         }else if(responseText != "undefined"){
             var dt = JSON.parse(responseText);
-            
             $("#numeroIngresos").text(dt[0]);
             $("#ingresosCorrectos").text(dt[1]);
             $("#ingresosErroneos").text(dt[2]);
             $("#ingresosJusto").text(dt[3]);
             
-            //Esta parte del codigo calcula el tiempo que ha pasado desde el ultimo tipo de ingreso
-            var ingresos = dt[4].split("/");
-            var in2 = ingresos[0].split(" ");
-            var in3 = ingresos[1].split(" ");
-            
-            var ingresosBien = dt[5].split("/");
-            var inOk2 = ingresosBien[0].split(" ");
-            var inOk3 = ingresosBien[1].split(" ");
-            
-            var ingresosMal = dt[6].split("/");
-            var inM2 = ingresosMal[0].split(" ");
-            var inM3 = ingresosMal[1].split(" ");
-            
-            var ingresosJusto = dt[7].split("/");
-            var inJ2 = ingresosJusto[0].split(" ");
-            var inJ3 = ingresosJusto[1].split(" ");
-
+            var in2 = dt[4].split(" ");
+            var in3 = dt[5].split(" ");          
+            var inOk2 = dt[6].split(" ");
+            var inOk3 = dt[7].split(" ");
+            var inM2 = dt[8].split(" ");
+            var inM3 = dt[9].split(" ");                        
+            var inJ2 = dt[10].split(" ");
+            var inJ3 = dt[11].split(" ");
+   
+            ///// QUEDA PENDIENTE POR ARREGLAR EL INVALID DATE ---> CAMBIAR EL IDIOMA Y COLOCAR ALGO ACORDE /////////////
             $("#ultimoIngreso").append('Ultimo ingreso '+moment(in2[0]+" "+in3[1]).fromNow());
             $("#ultimoIngresoCorrecto").append('Ultimo ingreso correcto '+moment(inOk2[0]+" "+inOk3[1]).fromNow());
             $("#ultimoIngresoErroneo").append('Ultimo ingreso erroneo '+moment(inM2[0]+" "+inM3[1]).fromNow());
@@ -1697,10 +1709,6 @@ $('#frmRegistrarCargos').validate({
             minlength: 15,
             maxlength: 80
         },
-        Salario: {
-            required: true,
-            
-        },
         Tipo: {
             required: true,
         },
@@ -1810,14 +1818,13 @@ $('#frmRegistrarCargos').validate({
                 
                 function realizarRegistro() {
                     var nombreCargo = $("#txtNombreCargo").val();
-                    var descripcionCargo = $("#txtDescripcionCargo").val();
-                    var salario = $("#txtSalario").val();
+                    var descripcionCargo = $("#txtDescripcionCargo").val();                    
                     var tipo = $("#cmbTipo").val();
                     var sector = $("#cmbSector").val();
                     var canal = $("#cmbCanal").val();
                     var area = $("#cmbArea").val();
                     
-                    $.post("/SaleslandColombiaApp/cargo/registrarcargo", {NombreCargo: nombreCargo, Descripcion: descripcionCargo, Salario: salario, Tipo: tipo, Sector: sector, Canal: canal, Area: area }, function (responsetext) {
+                    $.post("/SaleslandColombiaApp/cargo/registrarcargo", {NombreCargo: nombreCargo, Descripcion: descripcionCargo, Tipo: tipo, Sector: sector, Canal: canal, Area: area }, function (responsetext) {
                         if (responsetext == "200") {
                             swal("Registro exitoso", "El Cargo ha sido registrado exitosamente", "success").then((willDelete) => {
                                 if (willDelete) {

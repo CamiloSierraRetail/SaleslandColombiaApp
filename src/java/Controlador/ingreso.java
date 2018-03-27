@@ -2,6 +2,7 @@ package Controlador;
 
 import Modelo.Ingreso;
 import Modelo.Usuario;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -39,13 +40,18 @@ public class ingreso extends HttpServlet {
                     usuarioIngreso(request, response);
                     break;
                     
-                case "promedioimgresos":
+                case "promedioingresos":
                     promedioIngresos(request, response);
                     break;
                     
                 case "weeklyChart":
                     weeklyChart(request, response);
                     break;
+                case "usuariosingresados":
+                    usuariosIngresados(request, response);
+                    break;
+                default:
+                    response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/ingreso/ingresousuario.jsp");
             }
             
         }
@@ -193,7 +199,7 @@ public class ingreso extends HttpServlet {
     }
     protected void promedioIngresos(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-        String fechaIngreso = "", fechaTarde = "", fechaTemprano = "", fechaJusto = "";
+        String fechaIngreso = "", horaIngreso="", fechaTarde = "", horaTarde="", fechaTemprano = "", horaTemprano="", fechaJusto = "", horaJusto="";
         try{
             int totalIngresos = 0, ingresosBien = 0, ingresosMal = 0, ingresosJusto = 0;
             
@@ -207,17 +213,30 @@ public class ingreso extends HttpServlet {
                 for(Ingreso ingreso : ListaIngreso){
 
                     if (ingreso.getTipo().equals("Ingreso")) {
-                        fechaIngreso = String.valueOf(ingreso.getFecha()+"/"+ingreso.getHora());
-
+                        //fechaIngreso = String.valueOf(ingreso.getFecha()+"/"+ingreso.getHora());
+                        fechaIngreso = String.valueOf(ingreso.getFecha());
+                        horaIngreso = String.valueOf(ingreso.getHora());
+                        
                         if (ingreso.getObservacion().equals("Tarde")) {
                             ingresosMal++;
-                            fechaTarde = String.valueOf(ingreso.getFecha()+"/"+ingreso.getHora());
+                            //fechaTarde = String.valueOf(ingreso.getFecha()+"/"+ingreso.getHora());
+                            // Modificacion porque esta dando error
+                            fechaTarde = String.valueOf(ingreso.getFecha());
+                            horaTarde = String.valueOf(ingreso.getHora());
+                            
                         }else if (ingreso.getObservacion().equals("Temprano")) {
                             ingresosBien++;
-                            fechaTemprano = String.valueOf(ingreso.getFecha()+"/"+ingreso.getHora());
+                            
+                            fechaTemprano = String.valueOf(ingreso.getFecha());
+                            horaTemprano = String.valueOf(ingreso.getHora());
+                            
+                            //fechaTemprano = String.valueOf(ingreso.getFecha()+"/"+ingreso.getHora());
                         }else if (ingreso.getObservacion().equals("Justo")) {
                             ingresosJusto++;
-                            fechaJusto = String.valueOf(ingreso.getFecha()+"/"+ingreso.getHora());
+                            //fechaJusto = String.valueOf(ingreso.getFecha()+"/"+ingreso.getHora());
+                            
+                            fechaJusto = String.valueOf(ingreso.getFecha());
+                            horaJusto = String.valueOf(ingreso.getHora());
                         }
 
 
@@ -231,10 +250,17 @@ public class ingreso extends HttpServlet {
                 horasSemanaJson.add(ingresosJusto);
 
                 horasSemanaJson.add(fechaIngreso);
+                horasSemanaJson.add(horaIngreso);
+                
                 horasSemanaJson.add(fechaTemprano);
+                horasSemanaJson.add(horaTemprano);
+                
                 horasSemanaJson.add(fechaTarde);
+                horasSemanaJson.add(horaTarde);
+                
                 horasSemanaJson.add(fechaJusto);
-
+                horasSemanaJson.add(horaJusto);
+                
                 response.getWriter().write(horasSemanaJson.toJSONString());
             }else{
                 response.getWriter().write("undefined");
@@ -354,7 +380,31 @@ public class ingreso extends HttpServlet {
             System.out.println(ex);
         }
     }
-
+    
+    protected void usuariosIngresados(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    
+        try{
+            
+            Usuario objUsuario = (Usuario) request.getSession().getAttribute("UsuarioIngresado");
+            
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            if (objUsuario.getCargo().getTipo().equals("Director")) {
+                
+                //Query query = sesion.createQuery("FROM Usuario WHERE Cago = "+objUsuario.get+"")
+                
+                
+            }
+            
+            
+        }catch(Exception e){
+            System.err.println(e);
+            response.getWriter().write("500");
+        }
+    
+    }
+    
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

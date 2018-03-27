@@ -343,17 +343,18 @@ $(document).ready(function(){
         var VierIn = Viernes[0].split(":");
         var VierOut = Viernes[1].split(":");
         
-        var Sabado = dt[5].split("/");
-        var SaIn = Sabado[0].split(":");
-        var SaOut = Sabado[1].split(":");
-        
-        var Domingo = dt[6].split("/");
-        var DoIn = Domingo[0].split(":");
-        var DoOut = Domingo[1].split(":");
+//        var Sabado = dt[5].split("/");
+//        var SaIn = Sabado[0].split(":");
+//        var SaOut = Sabado[1].split(":");
+//        
+//        var Domingo = dt[6].split("/");
+//        var DoIn = Domingo[0].split(":");
+//        var DoOut = Domingo[1].split(":");
         
         
         var chart = new Chartist.Line('.ct-chart', {
-            labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
+            labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'],
+            //labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
             series: [
                 //Chart series para los ingresos
                 [
@@ -362,8 +363,8 @@ $(document).ready(function(){
                     {meta: Miercoles[0], value: MierIn[0]},
                     {meta: Jueves[0], value: JueIn[0]},
                     {meta: Viernes[0], value: VierIn[0]},
-                    {meta: Sabado[0], value: SaIn[0]},
-                    {meta: Domingo[0], value: DoIn[0]}
+                    //{meta: Sabado[0], value: SaIn[0]},
+                    //{meta: Domingo[0], value: DoIn[0]}
                 ],
                 //Chart series para las salidas
                 [
@@ -372,8 +373,8 @@ $(document).ready(function(){
                     {meta: Miercoles[1], value: MierOut[0]},
                     {meta: Jueves[1], value: JueOut[0]},
                     {meta: Viernes[1], value: VierOut[0]},
-                    {meta: Sabado[1], value: SaOut[0]},
-                    {meta: Domingo[1], value: DoOut[0]}
+                    //{meta: Sabado[1], value: SaOut[0]},
+                    //{meta: Domingo[1], value: DoOut[0]}
                 ]
             ]
         },{

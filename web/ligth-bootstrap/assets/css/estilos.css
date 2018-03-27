@@ -70,15 +70,16 @@ div.error{
     height: 24px;
     color:black;
 }
-.sideDiv .sidebar-wrapper .nav .nav-item img{
+.sideDiv .sidebar-wrapper .nav .nav-item img{    
     max-width: 100%;
     height: auto;
     border-radius: 50px; 
-    border: 2px solid #00e676;
+    opacity: 0.5;    
+    border: 2px solid #00ACC0;
 }
 .ctli{
     padding: 5px;
-    border-bottom: 2px solid rgba(0,0,0, .2);
+    border-bottom: 1px solid rgba(0,0,0, .2);
 }
 /*//////////////// ESTILOS DEL PRELOADER /////////////////////////*/          
 /** sass/scss/less code */

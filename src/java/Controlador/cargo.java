@@ -93,12 +93,11 @@ public class cargo extends HttpServlet {
                 response.getWriter().write("<tr>"
                         + "<td class='text-center'>" + countRows + "</td>"
                         + "<td>" + cargo.getNombreCargo() + "</td>"
-                        + "<td>" + cargo.getDescripcion() + "</td>"
-                        + "<td>" + cargo.getSalario() + "</td>"
+                        + "<td>" + cargo.getDescripcion() + "</td>"                        
                         + "<td>" + cargo.getTipo() + "</td>"
                         + "<td>" + sector + "</td>"
                         + "<td>" + canal + "</td>"
-                        + "<td>" + cargo.getArea() + "</td>"
+                        + "<td>" + area + "</td>"
                         + "<td>" + cargo.getEstado() + "</td>"
                           + "<td class='td-actions text-right'>"
                                                 + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='Ver Sector'>"
@@ -175,8 +174,7 @@ public class cargo extends HttpServlet {
 
                 canalJson.add(cargo.getIdCargo());
                 canalJson.add(cargo.getNombreCargo());
-                canalJson.add(cargo.getDescripcion());
-                canalJson.add(cargo.getSalario());
+                canalJson.add(cargo.getDescripcion());                
                 canalJson.add(cargo.getTipo());
                 canalJson.add(cargo.getEstado());
                 canalJson.add(cargo.getSector());
@@ -203,8 +201,7 @@ public class cargo extends HttpServlet {
             System.out.println(IdCargo);
             String estado = request.getParameter("Estado");
              String nombreCargo = request.getParameter("NombreCargo");
-            String descripcion = request.getParameter("Descripcion");
-            String salario = request.getParameter("Salario");
+            String descripcion = request.getParameter("Descripcion");            
             String tipo = request.getParameter("Tipo");
             String sector = request.getParameter("Sector");
             String canal = request.getParameter("Canal");
@@ -212,7 +209,7 @@ public class cargo extends HttpServlet {
             
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
-            Query query = sesion.createSQLQuery("UPDATE cargo SET Estado='"+estado+"', NombreCargo='"+nombreCargo+"', Descripcion='"+descripcion+"', Salario='"+salario+"', Tipo='"+tipo+"', Sector='"+sector+"', Canal='"+canal+"', Area='"+area+"' WHERE idCargo="+IdCargo+"");
+            Query query = sesion.createSQLQuery("UPDATE cargo SET Estado='"+estado+"', NombreCargo='"+nombreCargo+"', Descripcion='"+descripcion+"', Tipo='"+tipo+"', Sector='"+sector+"', Canal='"+canal+"', Area='"+area+"' WHERE idCargo="+IdCargo+"");
             query.executeUpdate();
             sesion.getTransaction().commit();
             sesion.close();
@@ -229,14 +226,13 @@ public class cargo extends HttpServlet {
             throws ServletException, IOException {
         try {
             String NombreCargo = request.getParameter("NombreCargo");
-            String Descripcion = request.getParameter("Descripcion");
-            String Salario = request.getParameter("Salario");
+            String Descripcion = request.getParameter("Descripcion");            
             String Tipo = request.getParameter("Tipo");
             String Sector = request.getParameter("Sector");
             String Canal = request.getParameter("Canal");
             String Area = request.getParameter("Area");
             Session sesion = HibernateUtil.getSessionFactory().openSession();
-            Cargo objCargo = new Cargo(NombreCargo, Descripcion, Double.parseDouble(Salario), Tipo, "Activo", Sector, Canal, Area);
+            Cargo objCargo = new Cargo(NombreCargo, Descripcion, Tipo, "Activo", Sector, Canal, Area);
             sesion.beginTransaction();
             sesion.save(objCargo);
             sesion.getTransaction().commit();

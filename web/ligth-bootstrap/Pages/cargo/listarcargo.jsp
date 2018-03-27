@@ -36,8 +36,7 @@
                                                 <tr>
                                                     <th class="text-center">#</th>
                                                     <th>Nombre</th>
-                                                    <th>Descripción</th>
-                                                    <th>Salario</th>
+                                                    <th>Descripción</th>                                                  
                                                     <th>Tipo</th>
                                                     <th>Sector</th>
                                                     <th>Canal</th>
@@ -86,14 +85,6 @@
                                         <div class="row">
                                             <small class="control-label"><strong>Descripción *</strong></small>
                                             <textarea id="txtDescripcionCargo" name="DescripcionCargo" class="form-control textArea"></textarea>                                                       
-                                        </div>
-                                    </div>
-                                </fieldset>
-                                <fieldset>
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <small class="control-label"><strong>Salario *</strong></small>
-                                            <input id="txtSalario" name="Salario" type="number" value="781.242" min="781.242" class="form-control currency"></input>                                                       
                                         </div>
                                     </div>
                                 </fieldset>

@@ -69,3 +69,5 @@
 <script src="../../assets/js/es.js"></script>
 <!-- Chartist Plugin Tooltip -->
 <script src="../../assets/js/plugins/chartist-plugin-tooltip.min.js"></script>
+<!-- SOCKETS INCLUDE -->
+<script src="../../assets/js/ingresoSockets.js" type="text/javascript"></script>
