@@ -1,9 +1,12 @@
 package Controlador;
 
 import Modelo.Area;
+import Modelo.Area_Cargo;
 import Modelo.Canal;
+import Modelo.Canal_Cargo;
 import Modelo.Cargo;
 import Modelo.Sector;
+import Modelo.Sector_Cargo;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -55,37 +58,40 @@ public class cargo extends HttpServlet {
             List<Cargo> listaCargo = query.list();
             response.setCharacterEncoding("UTF-8");
             response.setContentType("text/plain");
-            for (Cargo cargo : listaCargo) {
+            
+            for(Cargo cargo : listaCargo){
                 
                 String sector = "-", canal = "-", area = "-";
                 
-                Query querySector = sesion.createQuery("FROM Sector WHERE idSector = "+cargo.getSector()+"");
-                List<Sector> listaSector = querySector.list();
-                for(Sector sect : listaSector){
-                
-                    sector = sect.getNombreSector();
+                Query querySector = sesion.createQuery("FROM Sector_Cargo WHERE Cargo="+cargo.getIdCargo()+"");
+                List<Sector_Cargo> listaCargo_Sector = querySector.list();
+                for(Sector_Cargo sector_cargo : listaCargo_Sector){
+                    
+                    sector = sector_cargo.getSector().getNombreSector();
                 
                 }
                 
                 
-                if (cargo.getCanal() != null) {
-                    
-                    Query queryCanal = sesion.createQuery("FROM Canal WHERE idCanal = "+cargo.getCanal()+"");
-                    List<Canal> listaCanal = queryCanal.list();
-                    for(Canal canalItem : listaCanal){
-                    
-                        canal = canalItem.getNombreCanal();
-                        
+                Query queryCanal = sesion.createQuery("FROM Canal_Cargo WHERE Cargo="+cargo.getIdCargo()+"");
+                List<Canal_Cargo> listaCanal = queryCanal.list();
+                for(Canal_Cargo canal_cargo : listaCanal){
+                
+                    if (canal_cargo.getCanal() != null) {
+                        sector = canal_cargo.getCanal().getSector().getNombreSector();
+                        canal = canal_cargo.getCanal().getNombreCanal();
                     }
                     
                 }
-                if (cargo.getArea() != null) {
-                    
-                    Query queryArea = sesion.createQuery("FROM Area WHERE idArea = "+cargo.getArea()+"");
-                    List<Area> listaArea = queryArea.list();
-                    for(Area areaItem: listaArea){
-                    
-                        area = areaItem.getNombreArea();
+                
+                
+                Query queryArea = sesion.createQuery("FROM Area_Cargo WHERE Cargo="+cargo.getIdCargo()+"");
+                List<Area_Cargo> listaArea = queryArea.list();
+                for(Area_Cargo area_cargo : listaArea){
+                
+                    if (area_cargo.getArea() != null) {
+                        sector = area_cargo.getArea().getCanal().getSector().getNombreSector();
+                        canal = area_cargo.getArea().getCanal().getNombreCanal();
+                        area = area_cargo.getArea().getNombreArea();
                     }
                     
                 }
@@ -111,9 +117,9 @@ public class cargo extends HttpServlet {
                                                 + "</a>"
                                               + "</td>"
                         + "</tr>");
-                countRows++;
+                countRows++;            
             }
-
+                        
         } catch (Exception e) {
 
             System.err.println(e);
@@ -177,9 +183,7 @@ public class cargo extends HttpServlet {
                 canalJson.add(cargo.getDescripcion());                
                 canalJson.add(cargo.getTipo());
                 canalJson.add(cargo.getEstado());
-                canalJson.add(cargo.getSector());
-                canalJson.add(cargo.getCanal());
-                canalJson.add(cargo.getArea());
+                
             }
             response.getWriter().write(canalJson.toJSONString());
 
@@ -231,11 +235,48 @@ public class cargo extends HttpServlet {
             String Sector = request.getParameter("Sector");
             String Canal = request.getParameter("Canal");
             String Area = request.getParameter("Area");
+                                    
             Session sesion = HibernateUtil.getSessionFactory().openSession();
-            Cargo objCargo = new Cargo(NombreCargo, Descripcion, Tipo, "Activo", Sector, Canal, Area);
+            Cargo objCargo = new Cargo(NombreCargo, Descripcion, Tipo, "Activo");
             sesion.beginTransaction();
             sesion.save(objCargo);
             sesion.getTransaction().commit();
+
+            Query queryCargo = sesion.createQuery("FROM Cargo ORDER BY idCargo DESC");
+            queryCargo.setMaxResults(1);
+            List<Cargo> listaCargo = queryCargo.list();
+            for(Cargo cargo : listaCargo){
+            
+                Sector objSector = new Sector();
+                objSector.setIdSector(Integer.parseInt(Sector));
+                Sector_Cargo objSector_Cargo = new Sector_Cargo(cargo, objSector);
+                sesion.beginTransaction();
+                sesion.save(objSector_Cargo);
+                sesion.getTransaction().commit();
+                
+                if (!"Seleccione".equals(Canal)) {
+                
+                    
+                    Canal objCanal = new Canal();
+                    objCanal.setIdCanal(Integer.parseInt(Canal));
+                    Canal_Cargo objCanal_Cargo = new Canal_Cargo(cargo, objCanal);
+                    sesion.beginTransaction();
+                    sesion.save(objCanal_Cargo);
+                    sesion.getTransaction().commit();
+                    
+                }
+                if (!"Seleccione".equals(Area)) {
+                    
+                    Area objArea = new Area();
+                    objArea.setIdArea(Integer.parseInt(Area));
+                    Area_Cargo objArea_Cargo = new Area_Cargo(cargo, objArea);
+                    sesion.beginTransaction();
+                    sesion.save(objArea_Cargo);
+                    sesion.getTransaction().commit();
+                }
+            
+            }
+
             sesion.close();
             response.getWriter().write("200");
 

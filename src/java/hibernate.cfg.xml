@@ -14,5 +14,8 @@
     <mapping class="Modelo.Publicacion"/>
     <mapping class="Modelo.Sector"/>
     <mapping class="Modelo.Usuario"/>
+    <mapping class="Modelo.Sector_Cargo"/>
+    <mapping class="Modelo.Canal_Cargo"/>
+    <mapping class="Modelo.Area_Cargo"/>
   </session-factory>
 </hibernate-configuration>

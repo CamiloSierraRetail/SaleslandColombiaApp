@@ -1,6 +1,7 @@
 package Controlador;
 
 import Modelo.Ingreso;
+import Modelo.Sector_Cargo;
 import Modelo.Usuario;
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -386,15 +387,25 @@ public class ingreso extends HttpServlet {
     
         try{
             
-            Usuario objUsuario = (Usuario) request.getSession().getAttribute("UsuarioIngresado");
-            
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
-            if (objUsuario.getCargo().getTipo().equals("Director")) {
-                
-                //Query query = sesion.createQuery("FROM Usuario WHERE Cago = "+objUsuario.get+"")
-                
-                
-            }
+//            Usuario objUsuario = (Usuario) request.getSession().getAttribute("UsuarioIngresado");
+//            
+//            Session sesion = HibernateUtil.getSessionFactory().openSession();
+//            if (objUsuario.getCargo().getTipo().equals("Director")) {
+//                
+//                Query query = sesion.createQuery("FROM Sector_Cargo WHERE Cargo = "+objUsuario.getCargo()+"");
+//                List<Sector_Cargo> listaSector_Cargo = query.list();
+//                for(Sector_Cargo sector_cargo : listaSector_Cargo){
+//                
+//                    //String usuario = sector_cargo.getSector().get
+//                
+//                }
+//                
+//                
+//                
+//                //Query query = sesion.createQuery("FROM Usuario WHERE Cago = "+objUsuario.get+"")
+//                
+//                
+//            }
             
             
         }catch(Exception e){
