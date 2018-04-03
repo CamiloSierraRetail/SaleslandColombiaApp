@@ -110,6 +110,7 @@ try{
             </div>
 
         <%}else{%>
+        <!-- ///////////////////////////////////////////////// ADMINISTRADOR //////////////////////////////////////////////// -->
 
             <div class="sidebar" data-color="corp" data-image="../../assets/img/navLateral.jpg">
                 <!--
@@ -192,8 +193,6 @@ try{
                                 </ul>
                             </div>
                         </li>
-
-
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="collapse" href="#ExamplesEmpleado">
                                 <i class="material-icons">supervisor_account</i>
@@ -225,13 +224,7 @@ try{
                                 </ul>
                             </div>
                         </li>
-                        <li class="nav-item" id="ExamplesCargos">
-                            <a class="nav-link"  href="../cargo/listarcargo.jsp">
-                                <i class="material-icons">work</i>
-                                <p>Cargos</p>
-                            </a>                                                        
-                        </li>    
-                          <li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link" data-toggle="collapse" href="#ExamplesReportes">
                                 <i class="material-icons">insert_chart</i>
                                 <p>
@@ -255,7 +248,13 @@ try{
                                     </li>                                                                     
                                 </ul>
                             </div>
-                        </li>    
+                        </li>                        
+                        <li class="nav-item" id="ExamplesCargos">
+                            <a class="nav-link"  href="../cargo/listarcargo.jsp">
+                                <i class="material-icons">work</i>
+                                <p>Cargos</p>
+                            </a>                                                        
+                        </li>
                     </ul>
                 </div>        
             </div>

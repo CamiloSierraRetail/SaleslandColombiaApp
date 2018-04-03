@@ -214,33 +214,45 @@ public class ingreso extends HttpServlet {
                 for(Ingreso ingreso : ListaIngreso){
 
                     if (ingreso.getTipo().equals("Ingreso")) {
-                        //fechaIngreso = String.valueOf(ingreso.getFecha()+"/"+ingreso.getHora());
                         fechaIngreso = String.valueOf(ingreso.getFecha());
                         horaIngreso = String.valueOf(ingreso.getHora());
                         
                         if (ingreso.getObservacion().equals("Tarde")) {
                             ingresosMal++;
-                            //fechaTarde = String.valueOf(ingreso.getFecha()+"/"+ingreso.getHora());
-                            // Modificacion porque esta dando error
                             fechaTarde = String.valueOf(ingreso.getFecha());
                             horaTarde = String.valueOf(ingreso.getHora());
                             
                         }else if (ingreso.getObservacion().equals("Temprano")) {
-                            ingresosBien++;
-                            
+                            ingresosBien++;                            
                             fechaTemprano = String.valueOf(ingreso.getFecha());
                             horaTemprano = String.valueOf(ingreso.getHora());
-                            
-                            //fechaTemprano = String.valueOf(ingreso.getFecha()+"/"+ingreso.getHora());
                         }else if (ingreso.getObservacion().equals("Justo")) {
                             ingresosJusto++;
-                            //fechaJusto = String.valueOf(ingreso.getFecha()+"/"+ingreso.getHora());
-                            
                             fechaJusto = String.valueOf(ingreso.getFecha());
                             horaJusto = String.valueOf(ingreso.getHora());
                         }
 
 
+                    }else if (ingreso.getTipo().equals("Salida")) {
+                        
+                        fechaIngreso = String.valueOf(ingreso.getFecha());
+                        horaIngreso = String.valueOf(ingreso.getHora());
+                        
+                        if (ingreso.getObservacion().equals("Tarde")) {
+                            ingresosBien++;
+                            fechaTarde = String.valueOf(ingreso.getFecha());
+                            horaTarde = String.valueOf(ingreso.getHora());                            
+                        }else if (ingreso.getObservacion().equals("Temprano")) {                            
+                            ingresosMal++;
+                            fechaTemprano = String.valueOf(ingreso.getFecha());
+                            horaTemprano = String.valueOf(ingreso.getHora());                            
+                        }else if (ingreso.getObservacion().equals("Justo")) {
+                            ingresosJusto++;                           
+                            fechaJusto = String.valueOf(ingreso.getFecha());
+                            horaJusto = String.valueOf(ingreso.getHora());
+                        }
+                        
+                        
                     }
                 }
 

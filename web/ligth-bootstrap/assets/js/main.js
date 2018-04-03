@@ -1194,7 +1194,8 @@ function mostrarEmpleados (){
     var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
     
     $.post("/SaleslandColombiaApp/ingreso/usuariosingresados",{Fecha:currentDate},function (responseText){
-        alert(responseText);
+        alert("ESTO ES MOSTRAR EMPLEADOS   " + responseText);
+        console.log(responseText);
         if (responseText == "500") {            
             swal("Error", "Ocurrió un error mientras estabamos tratando de ingresa tus datos", "error");            
         }else{

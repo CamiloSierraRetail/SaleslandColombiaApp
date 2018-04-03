@@ -19,7 +19,7 @@
                     </div>
                 </div>
             </div>       
-            <ul class="nav" style="position: relative; top: -20px;">
+            <ul class="nav" id="usuariosIngresados" style="position: relative; top: -20px;">
                 <li class="nav-item">
                     <div class="ctli">
                         <div class="row">
