@@ -1185,28 +1185,6 @@ $(".cerrarSesion").click(function (){
         });
     
 });
-/////////////////    MOSTRAR TODOS LOS USUARIOS EN EL DIV DE INGRESOS   ////////////////////
-function mostrarEmpleados (){
-    
-    
-    var fullDate = new Date();
-    var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
-    var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
-    
-    $.post("/SaleslandColombiaApp/ingreso/usuariosingresados",{Fecha:currentDate},function (responseText){
-        alert("ESTO ES MOSTRAR EMPLEADOS   " + responseText);
-        console.log(responseText);
-        if (responseText == "500") {            
-            swal("Error", "Ocurrió un error mientras estabamos tratando de ingresa tus datos", "error");            
-        }else{
-            
-            
-            
-        }
-        
-    });
-    
-}
 ////////////////////// INGRESO Y SALIDA DEL USUARIO ////////////////////////
 function ingreso(){
     
@@ -1230,6 +1208,7 @@ function ingreso(){
     var UsuarioID = $("#txtUsuarioIngreso").val();
     $.post("/SaleslandColombiaApp/ingreso/ingresousuario",{UsuarioID:UsuarioID,Fecha:currentDate,Hora:hora,Minutos:minutos, Dia:n},function (responseText) {
         //alert(responseText);
+        websocket.send("IngresarUsuario-"+UsuarioID+"-"+currentDate);
         if (responseText == "500") {
             swal("Error", "Ocurrió un error mientras estabamos tratando de ingresa tus datos", "error");
         }else if (responseText == "302") {
@@ -1273,7 +1252,7 @@ function ingreso(){
                     align: 'right'
                 }
             });
-            websocket.send(UsuarioID);
+            //websocket2.send("IngresarUsuario-"+UsuarioID);
         }else if(responseText == "IngresoTemprano"){
             
             
@@ -1288,7 +1267,6 @@ function ingreso(){
                     align: 'right'
                 }
             });
-            websocket.send(UsuarioID);
         }else if(responseText == "IngresoJusto"){
             
             
@@ -1303,7 +1281,6 @@ function ingreso(){
                     align: 'right'
                 }
             });
-            websocket.send(UsuarioID);
         }else if(responseText == "SalidaTarde"){
             
             
@@ -1318,7 +1295,6 @@ function ingreso(){
                     align: 'right'
                 }
             });
-            websocket.send(UsuarioID);
         }else if(responseText == "SalidaTemprano"){
             
             
@@ -1333,7 +1309,6 @@ function ingreso(){
                     align: 'right'
                 }
             });
-            websocket.send(UsuarioID);
         }else if(responseText == "SalidaJusto"){
             
             
@@ -1348,7 +1323,6 @@ function ingreso(){
                     align: 'right'
                 }
             });
-            websocket.send(UsuarioID);
         }
         
     });

@@ -44,31 +44,33 @@ public class ingresoSocket {
     @OnMessage
     public void onMessage(String mensaje, Session UserSession) throws IOException, EncodeException{
         
+        accionesSocket objAccionesSocket = new accionesSocket();
         String accion[] = mensaje.split("-");
+        
         if (accion[0].equals("CargarUsuarios")) {
             
-            accionesSocket objAccionesSocket = new accionesSocket();
-            String listaUsuarios = objAccionesSocket.mostrarEmpleados(Integer.parseInt(accion[1]), accion[2]);
+            
+            String jsonUsuarios = objAccionesSocket.mostrarEmpleados(Integer.parseInt(accion[1]), accion[2]);
             
             Iterator<Session> iterador = chatroomUsers.iterator();
         
             while(iterador.hasNext()){
                 System.out.println("ESTOY EN EL ITERADOR ENVIANDO A TODOS LOS USUARIOS CONECTADOS");
-                iterador.next().getBasicRemote().sendObject(listaUsuarios);
+                iterador.next().getBasicRemote().sendObject(jsonUsuarios);
 
             }
             
-        }else{
-        
+        }else if (accion[0].equals("IngresarUsuario")) {
+            
+            String jsonUsuarios = objAccionesSocket.ingresoEmpleado(accion[1], accion[2]);
+            System.out.println("ESTAMOS HACIENDO EL INGRESO DE UN SUSUARIO");
+            
             Iterator<Session> iterador = chatroomUsers.iterator();
-        
             while(iterador.hasNext()){
                 System.out.println("ESTOY EN EL ITERADOR ENVIANDO A TODOS LOS USUARIOS CONECTADOS");
-                String jsonUltimo = new Gson().toJson("TU MENSAJE LLEGO AL SOCKET Y AHORA ESTA DE REGRESO");
-                iterador.next().getBasicRemote().sendText(jsonUltimo.toString());
+                iterador.next().getBasicRemote().sendObject(jsonUsuarios);
 
             }
-        
         }
         
         System.out.println("ON MESSAGE   -------------->  " +mensaje +  "   -------->   "+ UserSession);
