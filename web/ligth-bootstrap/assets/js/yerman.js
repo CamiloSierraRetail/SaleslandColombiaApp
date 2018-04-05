@@ -322,27 +322,28 @@ $(document).ready(function(){
 
 //Funcion para inicializar chart de ingresos y salidas a lo largo de la semana
     function initIngresosChart(dt){  
-        var variable;
+        var variable = 1;
         var Lunes = dt[0].split("/");
         var LunIn = Lunes[0].split(":");
-        var LunOut = Lunes[1].split(":");
+        var LunOut = Lunes[2].split(":");
         
         var Martes = dt[1].split("/");
         var MarIn = Martes[0].split(":");
-        var MarOut = Martes[1].split(":");
+        var MarOut = Martes[2].split(":");
         
         var Miercoles = dt[2].split("/");  
         var MierIn = Miercoles[0].split(":");
-        var MierOut = Miercoles[1].split(":");
+        var MierOut = Miercoles[2].split(":");
         
         var Jueves = dt[3].split("/");
         var JueIn = Jueves[0].split(":");
-        var JueOut = Jueves[1].split(":");
+        var JueOut = Jueves[2].split(":");
         
         var Viernes = dt[4].split("/");
         var VierIn = Viernes[0].split(":");
-        var VierOut = Viernes[1].split(":");
+        var VierOut = Viernes[2].split(":");
         
+                
 //        var Sabado = dt[5].split("/");
 //        var SaIn = Sabado[0].split(":");
 //        var SaOut = Sabado[1].split(":");
@@ -350,8 +351,7 @@ $(document).ready(function(){
 //        var Domingo = dt[6].split("/");
 //        var DoIn = Domingo[0].split(":");
 //        var DoOut = Domingo[1].split(":");
-        
-        
+       
         var chart = new Chartist.Line('.ct-chart', {
             labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'],
             //labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
@@ -362,17 +362,17 @@ $(document).ready(function(){
                     {meta: Martes[0], value: MarIn[0]},
                     {meta: Miercoles[0], value: MierIn[0]},
                     {meta: Jueves[0], value: JueIn[0]},
-                    {meta: Viernes[0], value: VierIn[0]},
+                    {meta: Viernes[0], value: VierIn[0]}
                     //{meta: Sabado[0], value: SaIn[0]},
                     //{meta: Domingo[0], value: DoIn[0]}
                 ],
                 //Chart series para las salidas
                 [
-                    {meta: Lunes[1], value: LunOut[0]},
-                    {meta: Martes[1], value: MarOut[0]},
-                    {meta: Miercoles[1], value: MierOut[0]},
-                    {meta: Jueves[1], value: JueOut[0]},
-                    {meta: Viernes[1], value: VierOut[0]},
+                    {meta: Lunes[2], value: LunOut[0]},
+                    {meta: Martes[2], value: MarOut[0]},
+                    {meta: Miercoles[2], value: MierOut[0]},
+                    {meta: Jueves[2], value: JueOut[0]},
+                    {meta: Viernes[2], value: VierOut[0]}
                     //{meta: Sabado[1], value: SaOut[0]},
                     //{meta: Domingo[1], value: DoOut[0]}
                 ]
@@ -391,7 +391,7 @@ $(document).ready(function(){
             },
             plugins: [
                 Chartist.plugins.tooltip({
-                    pointClass: 'customTooltipOnPoint'
+                    pointClass: 'customTooltipOnPoint',
                 })
             ]
         });
@@ -444,48 +444,92 @@ $(document).ready(function(){
                   easing: 'easeOutQuart'
                 }
               });
-            } else if(data.type === 'point') {
-                    var v;
-                    if(data.value.y < 12){
-                        v = "Ingreso";
-                    }else{
-                        v = "Salida";
-                    }
-                    var circle = new Chartist.Svg('circle', {
-                        cx: [data.x],
-                        cy: [data.y],
-                        r: [5],
-                        'ct:value': v,
-                        'ct:meta': data.meta,
-                        class: 'customTooltipOnPoint'
-                    }, 'ct-point');
-                    
-                    // With data.element we get the Chartist SVG wrapper and we can replace the original point drawn by Chartist with our newly created triangle
-                    data.element.replace(circle);
+            }else if(data.type === 'point') {
+                var v;
+
+                //////// ESTE ES UN ERROR, SE DEBE HACER LA VALIDACION CON LOS DATOS QUE SE TRAEN DE LA DB ///////////////
+                /*if(data.value.y < 12){
+                    v = "Ingreso";
+                }else{
+                    v = "Salida";
+                }*/
+                /*if (Lunes[1] != "") {
                 
-                    data.element.animate({
-                        x1: {
-                          begin: seq * delays,
-                          dur: durations,
-                          from: data.x - 10,
-                          to: data.x,
-                          easing: 'easeOutQuart'
-                        },
-                        x2: {
-                          begin: seq * delays,
-                          dur: durations,
-                          from: data.x - 10,
-                          to: data.x,
-                          easing: 'easeOutQuart'
-                        },
-                        opacity: {
-                          begin: seq * delays,
-                          dur: durations,
-                          from: 0,
-                          to: 1,
-                          easing: 'easeOutQuart'
-                        }
-                    });
+                }
+
+                if (variable == 1) {                        
+
+                    v = Lunes[1];
+
+                }else if (variable == 2){
+
+                    v = Martes[1];
+
+                }else if (variable == 3){
+
+                    v = Miercoles[1];
+
+                }else if (variable == 4){
+
+                    v = Jueves[1];
+
+                }else if (variable == 5){
+                    v = Viernes[1];
+
+                }else if (variable == 6){
+                    v = Lunes[3];
+
+                }else if (variable == 7){
+                    v = Martes[3];
+
+                }else if (variable == 8){
+                    v = Miercoles[3];
+
+                }else if (variable == 9){
+                    v = Jueves[3];
+
+                }else if (variable == 10){
+                    v = Viernes[3];
+
+                }
+                //alert(variable)
+                variable++;*/
+
+                var circle = new Chartist.Svg('circle', {
+                    cx: [data.x],
+                    cy: [data.y],
+                    r: [5],
+                    'ct:value': v,
+                    'ct:meta': data.meta,
+                    class: 'customTooltipOnPoint'
+                }, 'ct-point');
+
+                // With data.element we get the Chartist SVG wrapper and we can replace the original point drawn by Chartist with our newly created triangle
+                data.element.replace(circle);
+
+                data.element.animate({
+                    x1: {
+                      begin: seq * delays,
+                      dur: durations,
+                      from: data.x - 10,
+                      to: data.x,
+                      easing: 'easeOutQuart'
+                    },
+                    x2: {
+                      begin: seq * delays,
+                      dur: durations,
+                      from: data.x - 10,
+                      to: data.x,
+                      easing: 'easeOutQuart'
+                    },
+                    opacity: {
+                      begin: seq * delays,
+                      dur: durations,
+                      from: 0,
+                      to: 1,
+                      easing: 'easeOutQuart'
+                    }
+                });
             } else if(data.type === 'grid') {
               // Using data.axis we get x or y which we can use to construct our animation definition objects
               var pos1Animation = {

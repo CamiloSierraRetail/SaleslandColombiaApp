@@ -289,6 +289,7 @@ public class ingreso extends HttpServlet {
     protected void weeklyChart(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         try{
+            String tipo = "", tipo1 = "";
             String idusuario = request.getParameter("idusuario");
             String inLunes = "", inMartes = "", inMiercoles = "", inJueves = "", inViernes = "", inSabado = "", inDomingo = "",
                    outLunes = "", outMartes = "", outMiercoles = "", outJueves = "", outViernes = "", outSabado = "", outDomingo = "";
@@ -314,9 +315,10 @@ public class ingreso extends HttpServlet {
             for (Ingreso item : listInOut) {
                 String valorCompleto = String.valueOf(item.getHora());
                 String valorDividido[] = valorCompleto.split(" ");
-                String hora[] = valorDividido[1].split(":");
+                String hora[] = valorDividido[1].split(":");                
                 int horaFinal = Integer.valueOf(hora[0]);
                 if(item.getTipo().equals("Ingreso")){
+                    tipo="Ingreso";
                     if(item.getDia().equals("Lunes")){                       
                         if(horaFinal < 12) inLunes = sdf12.format(item.getHora())+" AM";
                         else inLunes = sdf24.format(item.getHora())+" PM";
@@ -347,6 +349,7 @@ public class ingreso extends HttpServlet {
                     }
                 }
                 if(item.getTipo().equals("Salida")){
+                    tipo1="Salida";
                     if(item.getDia().equals("Lunes")){                       
                         if(horaFinal < 12) outLunes = sdf12.format(item.getHora())+" AM";
                         else outLunes = sdf24.format(item.getHora())+" PM";
@@ -379,13 +382,13 @@ public class ingreso extends HttpServlet {
             }
            
             JSONArray jsonIngresos = new JSONArray();
-            jsonIngresos.add(inLunes+"/"+outLunes);
-            jsonIngresos.add(inMartes+"/"+outMartes);
-            jsonIngresos.add(inMiercoles+"/"+outMiercoles);
-            jsonIngresos.add(inJueves+"/"+outJueves);
-            jsonIngresos.add(inViernes+"/"+outViernes);
-            jsonIngresos.add(inSabado+"/"+outSabado);
-            jsonIngresos.add(inDomingo+"/"+outDomingo);
+            jsonIngresos.add(inLunes+"/"+tipo+"/"+outLunes+"/"+tipo1);
+            jsonIngresos.add(inMartes+"/"+tipo+"/"+outMartes+"/"+tipo1);
+            jsonIngresos.add(inMiercoles+"/"+tipo+"/"+outMiercoles+"/"+tipo1);
+            jsonIngresos.add(inJueves+"/"+tipo+"/"+outJueves+"/"+tipo1);
+            jsonIngresos.add(inViernes+"/"+tipo+"/"+outViernes+"/"+tipo1);
+            jsonIngresos.add(inSabado+"/"+tipo+"/"+outSabado+"/"+tipo1);
+            jsonIngresos.add(inDomingo+"/"+tipo+"/"+outDomingo+"/"+tipo1);
             
             response.getWriter().write(jsonIngresos.toJSONString());
         }

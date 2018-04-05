@@ -1,7 +1,7 @@
 <%@page import="Modelo.Usuario"%>
-<%
+<%  
+    
     Usuario objUsuario = (Usuario) request.getSession().getAttribute("UsuarioIngresado");
-
     response.setHeader("Cache-Control","no-cache"); //Forces caches to obtain a new copy of the page from the origin server
     response.setHeader("Cache-Control","no-store"); //Directs caches not to store the page under any circumstance
     response.setDateHeader("Expires", 0); //Causes the proxy cache to see the page as "stale"
@@ -9,8 +9,8 @@
 
 try{
 
-    if(session.getAttribute("UsuarioIngresado").equals(null) || session.getAttribute("UsuarioIngresado").equals("")){
-        response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/login.jsp");
+    if(objUsuario.getIdUsuario() == 0){
+        response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/sesionBloqueada.jsp");
     }else{
 
         String nombreUSuario[] = objUsuario.getNombre().split(" ");
@@ -194,28 +194,28 @@ try{
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="collapse" href="#ExamplesEmpleado">
+                            <a class="nav-link" data-toggle="collapse" href="#empleadoItemNav">
                                 <i class="material-icons">supervisor_account</i>
                                 <p>
                                     Empleados
                                     <b class="caret"></b>
                                 </p>
                             </a>
-                            <div class="collapse " id="ExamplesEmpleado">
+                            <div class="collapse " id="empleadoItemNav">
                                 <ul class="nav">
-                                    <li class="nav-item ">
+                                    <li class="nav-item" id="listadoEmpleadosNav">
                                         <a class="nav-link" href="../usuario/listadousuarios.jsp">
                                             <span class="sidebar-mini">L</span>
                                             <span class="sidebar-normal">Listado</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item ">
+                                    <li class="nav-item" id="registrarEmpleadosNav">
                                         <a class="nav-link" href="../usuario/registrarusuario.jsp">
                                             <span class="sidebar-mini">R</span>
                                             <span class="sidebar-normal">Registrar</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item ">
+                                    <li class="nav-item" id="monitorearEmpleadosNav">
                                         <a class="nav-link" href="../area/listararea.jsp">
                                             <span class="sidebar-mini">M</span>
                                             <span class="sidebar-normal">Monitorear</span>
@@ -249,7 +249,7 @@ try{
                                 </ul>
                             </div>
                         </li>                        
-                        <li class="nav-item" id="ExamplesCargos">
+                        <li class="nav-item" id="cargosEmpleadosNav">
                             <a class="nav-link"  href="../cargo/listarcargo.jsp">
                                 <i class="material-icons">work</i>
                                 <p>Cargos</p>
@@ -258,10 +258,14 @@ try{
                     </ul>
                 </div>        
             </div>
-
+                                    
+            <input type="hidden" id="txtIdUsuario" value="<%=objUsuario.getIdUsuario()%>">
+            <input type="hidden" id="imgPerfilNavLateral" value="<%=objUsuario.getFoto()%>">                                                   
+            <input type="hidden" class="spanName" value="<%= nombreUSuario[0] +" "+ apellidoUsuario[0]%>">
+                                            
       <%}%>
 
   <%}    
-}catch(Exception e){
+}catch(Exception ex){
     response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/login.jsp");
 }%>        

@@ -1,7 +1,10 @@
 package Controlador;
 
+import Modelo.Area_Cargo;
+import Modelo.Canal_Cargo;
 import Modelo.Cargo;
 import Modelo.Sector;
+import Modelo.Sector_Cargo;
 import Modelo.Usuario;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -137,38 +140,34 @@ public class usuario extends HttpServlet {
             throws ServletException, IOException {
     
         try{
-            String tipo = "";
+            
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             Query query =  sesion.createQuery("FROM Sector WHERE Estado='Activo'");
             List<Sector> listaSector = query.list();
             
             for(Sector sector : listaSector){
-            
-                Query queryCargo = sesion.createQuery("FROM Cargo WHERE Sector='"+sector.getIdSector()+"' AND Estado='Activo' ");
-                List<Cargo>listaCargo = queryCargo.list();
-                for(Cargo cargo : listaCargo){
+                            
+                Query querySector_Cargo = sesion.createQuery("FROM Sector_Cargo WHERE Sector="+sector.getIdSector()+"");
+                List<Sector_Cargo> listaSector_Cargo = querySector_Cargo.list();
+                for(Sector_Cargo sector_Cargo : listaSector_Cargo){
                     
-                    if (cargo.getTipo().equals("Empleado")) {
-                        
-                        tipo="Usuario";
-                    }else{
-                        
-                        tipo="Administrador";
-                    }
-                    response.getWriter().write("<tr>"
-                                              + "<td>"
-                                                    +"<div class='form-check form-check-radio'>"
-                                                        + "<label class='form-check-label'>"
-                                                            + "<input class='form-check-input' type='radio' name='CargoUsuario' id='rbtnCargoUsuario' value='"+cargo.getIdCargo()+"'>"
-                                                            + "<span class='form-check-sign'></span>"                                                            
-                                                        + "</label>"
-                                                    + "</div>"
-                                              + "</td>"
-                                              + "<td>"+cargo.getNombreCargo()+"</td>"
-                                              + "<td>"+cargo.getDescripcion()+"</td>"
-                                              + "<td>"+sector.getNombreSector()+"</td>"  
-                                              + "<td>"+tipo+"</td>"
-                                         + "</tr>");
+                    response.getWriter().write(buscarCargo(sector_Cargo.getCargo().getIdCargo(), sector_Cargo.getSector().getNombreSector()));
+                
+                }
+                
+                Query queryCanal_Cargo = sesion.createQuery("FROM Canal_Cargo WHERE Sector="+sector.getIdSector()+"");
+                List<Canal_Cargo> listaCanal_Cargo = queryCanal_Cargo.list();
+                for(Canal_Cargo canal_Cargo : listaCanal_Cargo){
+                    
+                    response.getWriter().write(buscarCargo(canal_Cargo.getCargo().getIdCargo(), canal_Cargo.getCanal().getSector().getNombreSector()));
+                
+                }
+                                
+                Query queryArea_Cargo = sesion.createQuery("FROM Area_Cargo WHERE Sector="+sector.getIdSector()+"");
+                List<Area_Cargo> listaArea_Cargo = queryArea_Cargo.list();
+                for(Area_Cargo area_Cargo : listaArea_Cargo){
+                    
+                    response.getWriter().write(buscarCargo(area_Cargo.getCargo().getIdCargo(), area_Cargo.getArea().getCanal().getSector().getNombreSector()));
                 
                 }
                 
@@ -179,6 +178,52 @@ public class usuario extends HttpServlet {
             response.getWriter().write("500");
         }
     }
+    private String buscarCargo(int idCargo, String sector){
+        
+        String resultadoBusqueda = "", tipo = "";
+        
+        try{            
+            
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            
+            Query queryCargo = sesion.createQuery("FROM Cargo WHERE idCargo="+idCargo+" AND Estado='Activo' ");
+            List<Cargo>listaCargo = queryCargo.list();
+            for(Cargo cargo : listaCargo){
+
+                if (cargo.getTipo().equals("Empleado")) {
+
+                    tipo="Usuario";
+                }else{
+
+                    tipo="Administrador";
+                }
+                resultadoBusqueda = "<tr>"
+                                          + "<td>"
+                                                +"<div class='form-check form-check-radio'>"
+                                                    + "<label class='form-check-label'>"
+                                                        + "<input class='form-check-input' type='radio' name='CargoUsuario' id='rbtnCargoUsuario' value='"+cargo.getIdCargo()+"'>"
+                                                        + "<span class='form-check-sign'></span>"                                                            
+                                                    + "</label>"
+                                                + "</div>"
+                                          + "</td>"
+                                          + "<td>"+cargo.getNombreCargo()+"</td>"
+                                          + "<td>"+cargo.getDescripcion()+"</td>"
+                                          + "<td>"+sector+"</td>"  
+                                          + "<td>"+tipo+"</td>"
+                                     + "</tr>";
+
+            }
+
+            
+        }catch(Exception ex){
+        
+            System.err.println(ex);
+        
+        }
+    
+        return resultadoBusqueda;
+    }
+    
     protected void iniciarSesion(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
@@ -246,6 +291,33 @@ public class usuario extends HttpServlet {
         try{
             int countRows = 1;
             Session sesion = HibernateUtil.getSessionFactory().openSession();
+            ////////////// CONTINUARA...
+            /*Usuario objUsuario = (Usuario) request.getSession().getAttribute("UsuarioIngresado");
+            
+            
+            if (objUsuario.getCargo().getTipo().equals("Director")) {
+                
+                Query querySector_Cargo = sesion.createQuery("FROM Sector_Cargo WHERE Cargo="+objUsuario.getCargo().getIdCargo()+"");
+                List<Sector_Cargo> listaSector_Cargo = querySector_Cargo.list();
+                for(Sector_Cargo sector_cargo : listaSector_Cargo){
+                
+                    Query queryCargo = sesion.createQuery("FROM Cargo WHERE idCargo="+sector_cargo.getCargo().getIdCargo()+"");
+                    
+                    
+                }
+                
+                
+            }else if (objUsuario.getCargo().getTipo().equals("JefeCanal")) {
+                
+            }else if (objUsuario.getCargo().getTipo().equals("Coordinador")) {
+                
+            }else if (objUsuario.getCargo().getTipo().equals("JefeArea")) {
+                
+            }*/
+            
+            
+            
+            
             Query query = sesion.createQuery("FROM Usuario");
             List<Usuario>listaUsuario = query.list();
             for(Usuario usuario : listaUsuario){

@@ -159,6 +159,11 @@
 
             $("#cmbTipo").change(function (){
                var tipo = $("#cmbTipo").val();
+               
+               $("#cmbSector").html("<option>Seleccione el sector</option>");
+               $("#cmbCanal").html("<option>Seleccione el canal</option>");
+               $("#cmbArea").html("<option>Seleccione el area</option>");
+               
                if (tipo == "Director") {               
                    $("#nsector").show();  
                    $("#ncanal").hide();
@@ -181,7 +186,7 @@
 ///////////////////////////  EVENTO DEL SECTOR /////////////////////////////////
             $("#cmbSector").change(function (){
                 if ($("#cmbTipo").val() != "Director" ) { 
-                    
+                        
                     cargarCanalesDependientes();
                 
                 }                
@@ -216,7 +221,7 @@
                             }else{
                                 
                                 if (selectCount == 0) {
-                                    $("#cmbCanal").append("<option>Seleccione</option>");
+                                    $("#cmbCanal").append("<option>Seleccione el canal</option>");
                                     selectCount++;
                                 }
                                 $("#cmbCanal").append("<option value='"+dt[i]+"'>"+dt[i+1]+"</option>");
@@ -244,7 +249,7 @@
                         for (var i = 0, max = dt.length; i < max; i++) {
                             
                             if (selectCount == 0) {
-                                $("#cmbArea").append("<option>Seleccione</option>");
+                                $("#cmbArea").append("<option>Seleccione el area</option>");
                                 selectCount++;
                             }
                             
@@ -261,7 +266,7 @@
     
                 }); 
             }
-
+            $("#cargosEmpleadosNav").addClass('active');
             $("#tituloPagina").text("Cargos");
         </script>
     </body>        

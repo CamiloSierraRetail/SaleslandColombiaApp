@@ -56,8 +56,6 @@ public class cargo extends HttpServlet {
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             Query query = sesion.createQuery("FROM Cargo");
             List<Cargo> listaCargo = query.list();
-            response.setCharacterEncoding("UTF-8");
-            response.setContentType("text/plain");
             
             for(Cargo cargo : listaCargo){
                 
@@ -259,9 +257,9 @@ public class cargo extends HttpServlet {
                     
                     Canal objCanal = new Canal();
                     objCanal.setIdCanal(Integer.parseInt(Canal));
-                    Canal_Cargo objCanal_Cargo = new Canal_Cargo(cargo, objCanal);
+                    //Canal_Cargo objCanal_Cargo = new Canal_Cargo(cargo, objCanal);
                     sesion.beginTransaction();
-                    sesion.save(objCanal_Cargo);
+                    //sesion.save(objCanal_Cargo);
                     sesion.getTransaction().commit();
                     
                 }
@@ -269,9 +267,9 @@ public class cargo extends HttpServlet {
                     
                     Area objArea = new Area();
                     objArea.setIdArea(Integer.parseInt(Area));
-                    Area_Cargo objArea_Cargo = new Area_Cargo(cargo, objArea);
+                    //Area_Cargo objArea_Cargo = new Area_Cargo(cargo, objArea);
                     sesion.beginTransaction();
-                    sesion.save(objArea_Cargo);
+                    //sesion.save(objArea_Cargo);
                     sesion.getTransaction().commit();
                 }
             

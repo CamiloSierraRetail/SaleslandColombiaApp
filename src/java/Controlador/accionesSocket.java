@@ -7,7 +7,6 @@ import Modelo.Canal_Cargo;
 import Modelo.Ingreso;
 import Modelo.Sector_Cargo;
 import Modelo.Usuario;
-import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -26,48 +25,47 @@ public class accionesSocket {
         
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             Usuario objUsuario = (Usuario)sesion.createQuery("FROM Usuario WHERE idUsuario="+idUsuario+"").uniqueResult();
-            //System.out.println("<QUERY 1>  {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ ----    " + objUsuario.getCargo().getIdCargo());
             
             if (objUsuario.getCargo().getTipo().equals("Director")) {
                 
                 Query querySector = sesion.createQuery("FROM Sector_Cargo WHERE Cargo="+objUsuario.getCargo().getIdCargo()+"");
-                //System.out.println("<QUERY 2>");
                 List<Sector_Cargo> listaSector_Cargo = querySector.list();
                 for(Sector_Cargo sector_cargo : listaSector_Cargo){
-                
-                    //System.out.println("EL NUMERO Y LOS SECTORES SON --------------------->     " + listaSector_Cargo.size() + "         " + sector_cargo.getCargo().getNombreCargo());
-                    listaUsuarios = getUsuarios(idUsuario, sector_cargo.getCargo().getIdCargo());                   
+                                  
+                    List<Usuario> listaUsuariosBuscados = getUsuarios(idUsuario, sector_cargo.getCargo().getIdCargo());                    
+                    if (listaUsuarios == null) {
+
+                        listaUsuarios = listaUsuariosBuscados;
+
+                    }else{
+                        listaUsuarios.addAll(listaUsuariosBuscados);
+
+                    }
+
+                    
                     
                     Query queryCanal = sesion.createQuery("FROM Canal WHERE Sector = "+sector_cargo.getSector().getIdSector()+"");
-                    //System.out.println("<QUERY 3>");
                     List<Canal> listaCanal = queryCanal.list();
                     for(Canal canal : listaCanal){
                     
                         
                         Query queryCanal_Cargo = sesion.createQuery("FROM Canal_Cargo WHERE Canal = "+canal.getIdCanal()+"");
-                        //System.out.println("<QUERY 4>");
                         List<Canal_Cargo> listaCanal_Cargo = queryCanal_Cargo.list();
                         for(Canal_Cargo canal_cargo : listaCanal_Cargo){                        
                             
-                            //System.out.println("EL NUMERO Y LOS CANALES SON --------------------->     " + listaCanal_Cargo.size() + "         " + canal_cargo.getCargo().getNombreCargo());
                             listaUsuarios.addAll(getUsuarios(idUsuario, canal_cargo.getCargo().getIdCargo()));                                                        
                         
                         }
                         
                         Query queryArea = sesion.createQuery("FROM Area WHERE Canal = "+canal.getIdCanal()+"");
-                        //System.out.println("<QUERY 5>");
                         List<Area> listaArea = queryArea.list();
                         for(Area area : listaArea){
 
                             Query queryArea_Cargo = sesion.createQuery("FROM Area_Cargo WHERE Area="+area.getIdArea()+"");
-                            //System.out.println("<QUERY 6>");
                             List<Area_Cargo> listaArea_Cargo = queryArea_Cargo.list();
                             for(Area_Cargo area_cargo : listaArea_Cargo){
 
-                                //System.out.println("EL NUMERO Y LOS AREAS SON --------------------->     " + listaArea_Cargo.size() + "         " + area_cargo.getCargo().getNombreCargo());
                                 listaUsuarios.addAll(getUsuarios(idUsuario, area_cargo.getCargo().getIdCargo()));
-//                                System.out.println("CARGO    "+area_cargo.getCargo().getNombreCargo()+"   "+area_cargo.getCargo().getIdCargo()+"         >_<>_<>_<>_<>_<>_<>_<>_<>_<>_<>_<>_<>_<>_<>_<>_<>_<     "+area_cargo.getArea().getNombreArea());
-//                                System.out.println("************************** LA FECHA ES ---------->    " + fecha);
 
                             }
 
@@ -80,32 +78,81 @@ public class accionesSocket {
                 getJsonUsuarios(listaUsuarios, fecha);
                     
             }else if (objUsuario.getCargo().getTipo().equals("JefeCanal") || objUsuario.getCargo().getTipo().equals("CoordinadorCanal")) {
+                               
+                Query queryCanalCargo1 = sesion.createQuery("FROM Canal_Cargo WHERE Cargo = "+objUsuario.getCargo().getIdCargo()+"");
+                List<Canal_Cargo> listaCanal_Cargo1 = queryCanalCargo1.list();
+                for(Canal_Cargo canal_cargo1 : listaCanal_Cargo1){
                 
-               
-                
-                
-                listaUsuarios.addAll(getUsuarios(idUsuario, 3));
-                listaUsuarios.addAll(getUsuarios(idUsuario, 4));
-                
-                
-                
+                    Query queryCanal_Cargo = sesion.createQuery("FROM Canal_Cargo WHERE Canal = "+canal_cargo1.getCanal().getIdCanal()+"");
+                    List<Canal_Cargo> listaCanal_Cargo = queryCanal_Cargo.list();
+                    
+                    for(Canal_Cargo canal_cargo : listaCanal_Cargo){                        
+                        
+                        if (objUsuario.getCargo().getTipo().equals("CoordinadorCanal") && canal_cargo.getCargo().getTipo().equals("JefeCanal")) {
+                            
+                            System.out.println("jejefesote xd alv");
+                            
+                        }else{
+                        
+                            List<Usuario> listaUsuariosBuscados = getUsuarios(idUsuario, canal_cargo.getCargo().getIdCargo());
+                        
+                            if (listaUsuarios == null) {
+
+                                listaUsuarios = listaUsuariosBuscados;
+
+                            }else{
+                                listaUsuarios.addAll(listaUsuariosBuscados);
+
+                            }
+                            
+                        }
+                        
+                    }
+
+                    Query queryArea = sesion.createQuery("FROM Area WHERE Canal = "+canal_cargo1.getCanal().getIdCanal()+"");
+                    List<Area> listaArea = queryArea.list();
+                    for(Area area : listaArea){
+
+                        Query queryArea_Cargo = sesion.createQuery("FROM Area_Cargo WHERE Area="+area.getIdArea()+"");
+                        List<Area_Cargo> listaArea_Cargo = queryArea_Cargo.list();
+                        for(Area_Cargo area_cargo : listaArea_Cargo){
+
+                            listaUsuarios.addAll(getUsuarios(idUsuario, area_cargo.getCargo().getIdCargo()));
+
+                        }
+
+                    }
+                    
+                }
                 
                 getJsonUsuarios(listaUsuarios, fecha);
                 
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-               
             }else if (objUsuario.getCargo().getTipo().equals("JefeArea")) {
+                
+                
+                Query queryArea_Cargo1 = sesion.createQuery("FROM Area_Cargo WHERE Cargo="+objUsuario.getCargo().getIdCargo()+"");
+                List<Area_Cargo> listaArea_Cargo1 = queryArea_Cargo1.list();
+                for(Area_Cargo area_cargo1 : listaArea_Cargo1){
+                
+                    Query queryArea_Cargo = sesion.createQuery("FROM Area_Cargo WHERE Area="+area_cargo1.getArea().getIdArea()+"");
+                    List<Area_Cargo> listaArea_Cargo = queryArea_Cargo.list();
+                    for(Area_Cargo area_cargo : listaArea_Cargo){
+                        
+                        
+                        List<Usuario> listaUsuariosBuscados = getUsuarios(idUsuario, area_cargo.getCargo().getIdCargo());
+                            
+                        if (listaUsuarios == null) {
+
+                            listaUsuarios = listaUsuariosBuscados;
+
+                        }else{
+                            listaUsuarios.addAll(listaUsuariosBuscados);
+
+                        }
+                         
+                    }
+                
+                }                
                 
             }
           
@@ -113,7 +160,6 @@ public class accionesSocket {
             System.err.println(ex);            
         }
         
-        System.out.println("EL RESULTADO FINAL DEL JSON   "+usuarioJson);
         return usuarioJson.toJSONString();
     }
         
@@ -121,10 +167,7 @@ public class accionesSocket {
         
         Session sesion = HibernateUtil.getSessionFactory().openSession();
         Query queryUsuarios = sesion.createQuery("FROM Usuario WHERE Cargo="+idCargo+" AND idUsuario != "+idUsuario+"");
-        List<Usuario> listaUsuarios = queryUsuarios.list();
-        
-        System.out.println("BUSCANDO EMPLEADOS TAMAÑO DE LA LISTA =======================      " + listaUsuarios.size());
-//        System.out.println("°°°°°°°°°°°°°°°°°°°°°°°   <QUERY 7> buscando A LOS EMPLEADOS SADASDDSA DSA DAS SD DSA DSA S");
+        List<Usuario> listaUsuarios = queryUsuarios.list();       
         return listaUsuarios;        
     
     }
@@ -214,21 +257,18 @@ public class accionesSocket {
         
         for(Usuario usuario : listaUsuarios){
                     
-//          System.out.println("EL NOMBRE DEL USUARIO ES ........**************$$$$$$$$$ -------->    " +usuario.getNombre());
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             String entrada = "Ingreso: 1970-01-0 00:00:00", salida = "Salida: 1970-01-0 00:00:00";
 
             Query queryIngreso = sesion.createQuery("FROM Ingreso WHERE Usuario="+usuario.getIdUsuario()+" AND Fecha='"+fecha+"'");
             List<Ingreso> listaIngreso = queryIngreso.list();
 
-
-//                    System.out.println("^^^^^^^^^^^^^^^^^^^   TAMAÑO DE LA LISTA DE INGRESOS ------>    " + listaIngreso.size());
             int contador = 0;
 
             if (listaIngreso.size() == 1) {
 
                 for(Ingreso ingreso : listaIngreso){
-//                            System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$ ESTRO XDXDXDXDXDXDXDXDXDXDXDXDX");
+                    
                     if (ingreso.getTipo().equals("Ingreso")) {
 
                         entrada = "Ingreso: " + String.valueOf(ingreso.getHora());
@@ -293,6 +333,5 @@ public class accionesSocket {
         }
     
     }
-    
     
 }

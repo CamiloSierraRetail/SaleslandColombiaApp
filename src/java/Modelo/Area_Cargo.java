@@ -21,7 +21,7 @@ public class Area_Cargo {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Area")
     private Area Area;
-
+    
     public Area_Cargo() {
     }
 
@@ -53,5 +53,5 @@ public class Area_Cargo {
     public void setArea(Area Area) {
         this.Area = Area;
     }
-    
+
 }

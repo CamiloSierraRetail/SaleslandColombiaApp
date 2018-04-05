@@ -1,15 +1,4 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%
-    response.setHeader("Cache-Control","no-cache"); //Forces caches to obtain a new copy of the page from the origin server
-    response.setHeader("Cache-Control","no-store"); //Directs caches not to store the page under any circumstance
-    response.setDateHeader("Expires", 0); //Causes the proxy cache to see the page as "stale"
-    response.setHeader("Pragma","no-cache"); //HTTP 1.0 backward compatibility
-    try{      
-        if(session.getAttribute("UsuarioIngresado").equals("") || session.getAttribute("UsuarioIngresado").equals(null)){
-            response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/sesionBloqueada.jsp");
-        }
-        else{
-%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -41,18 +30,10 @@
                                                     <i class="nc-icon nc-badge text-warning"></i>
                                                 </div>
                                             </div>
-                                            <!-- CODIGO REDUNDANTE, VER USO O BORRAR -->
                                             <div class="col-7">
                                                 <div class="numbers">
                                                     <p class="card-category">Ingresos</p>
-                                                    <h4 class="card-title" id="numeroIngresos">0</h4>
-                                                    <input type="hidden" id="txtIdUsuario" value="<%=objUsuario.getIdUsuario()%>">
-                                                    <input type="hidden" id="imgPerfilNavLateral" value="<%=objUsuario.getFoto()%>">
-                                                    <%
-                                                        String nombreUSuario[] = objUsuario.getNombre().split(" ");
-                                                        String apellidoUsuario[] = objUsuario.getApellido().split(" ");
-                                                    %>
-                                                    <input type="hidden" class="spanName" value="<%= nombreUSuario[0] +" "+ apellidoUsuario[0]%>">
+                                                    <h4 class="card-title" id="numeroIngresos">0</h4>                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -167,6 +148,28 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="card ">
+                                            <div class="card-header ">
+                                                <h4 class="card-title">Promedio</h4>
+                                                <p class="card-category">Este es el promedio de entrada y salida que llevas a lo largo de toda tu estancia en la empresa.</p>
+                                            </div>
+                                            <div class="card-body ">
+                                                <div id=chartEmail class="ct-chart ct-perfect-fourth"></div>
+                                            </div>
+                                            <div class="card-footer ">
+                                                <div class="legend">
+                                                    <i class="fa fa-circle text-info"></i> Correctos
+                                                    <i class="fa fa-circle text-danger"></i> Erroneos
+                                                    <i class="fa fa-circle text-warning"></i> A tiempo
+                                                </div>
+                                                <hr>
+                                                <div class="stats">
+                                                    <i class="fa fa-clock-o"></i> Campaign sent 2 days ago
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>                                                                                                            
                         </div>
@@ -186,7 +189,6 @@
                 cargarPromedio();
                 loadWeeklyData($("#txtIdUsuario").val());
                 
-        
                 var fullDate = new Date();
                 var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
                 var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
@@ -194,10 +196,4 @@
             });
         </script>
     </body>
-</html>
-<%        }
-    }  
-    catch(NullPointerException ex){
-        response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/sesionBloqueada.jsp");
-    }
-%>
+</html> 

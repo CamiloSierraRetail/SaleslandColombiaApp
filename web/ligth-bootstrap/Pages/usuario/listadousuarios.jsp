@@ -42,12 +42,9 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
-                              
-                            </div>
-                      
-                        </div>
-                        
+                                </div>                              
+                            </div>                      
+                       </div>                        
                     </div>
                 </div>
                 <!-- INCLUDE FOOTER -->
@@ -56,6 +53,10 @@
         </div>       
     </body>        
     <%@include file="../includes/jsInclude.jsp" %>
-    <script> listarUsuarios(); </script>    
-    </script>
+    <script>         
+        $("#empleadoItemNav").addClass("show");
+        $("#listadoEmpleadosNav").addClass('active');
+        $("#tituloPagina").text("Empleados");
+        listarUsuarios();         
+    </script>        
 </html>

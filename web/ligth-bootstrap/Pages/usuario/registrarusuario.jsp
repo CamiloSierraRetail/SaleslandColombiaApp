@@ -230,7 +230,10 @@
     </body>
     <%@include file="../includes/jsInclude.jsp" %>  
     <script>
-        $(document).ready(function (){            
+        $(document).ready(function (){ 
+            $("#empleadoItemNav").addClass("show");
+            $("#registrarEmpleadosNav").addClass('active');
+            $("#tituloPagina").text("Empleados");
             cargarCargosSectores();
             InicializarFormularioRegistro();
         });

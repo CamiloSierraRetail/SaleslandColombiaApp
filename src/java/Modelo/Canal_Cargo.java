@@ -11,7 +11,6 @@ import javax.persistence.Table;
 @Table(name = "canal_cargo")
 public class Canal_Cargo {
     
-    
     @Id
     private int idCanal_Cargo;
     
@@ -22,15 +21,15 @@ public class Canal_Cargo {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Canal")
     private Canal Canal;
-
+    
     public Canal_Cargo() {
     }
 
     public Canal_Cargo(Cargo Cargo, Canal Canal) {
         this.Cargo = Cargo;
         this.Canal = Canal;
-    }    
-    
+    }
+
     public int getIdCanal_Cargo() {
         return idCanal_Cargo;
     }
@@ -54,5 +53,5 @@ public class Canal_Cargo {
     public void setCanal(Canal Canal) {
         this.Canal = Canal;
     }
-    
+
 }
