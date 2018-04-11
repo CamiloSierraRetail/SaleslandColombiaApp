@@ -12,6 +12,9 @@
             <div class="main-panel">
                 <!-- Include Nav Superior -->
                 <%@include file="../includes/navSuperior.jsp" %>
+                <!-- Include div Ingresos -->
+                <%@include file="../includes/divIngresos.jsp" %>
+                
                 <div class="content">
                     <div class="container-fluid">
                         <div class="row">
@@ -109,7 +112,7 @@
                                             <div class="row">
                                                 <small class="control-label"><strong>Sector *</strong></small>
                                                 <select name="Sector" id="cmbSector" class="form-control" data-title="Seleccionar" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" >                                                           
-                                                    <option>Seleccione</option>
+                                                    <option>Seleccione el sector</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -121,7 +124,7 @@
                                             <div class="row">
                                                 <small class="control-label"><strong>Canal *</strong></small>
                                                 <select name="Canal" id="cmbCanal" class="form-control" data-title="Seleccionar">
-                                                    <option>Seleccione</option>
+                                                    <option>Seleccione el canal</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -133,7 +136,7 @@
                                             <div class="row">
                                                 <small class="control-label"><strong>Area *</strong></small>
                                                 <select name="Area" id="cmbArea" class="form-control" data-title="Seleccionar">
-                                                    <option>Seleccione</option>
+                                                    <option>Seleccione el area</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -152,122 +155,25 @@
         <!--  End Modal -->
         <%@include file="../includes/jsInclude.jsp" %>
         <script>
-            listarCargos();
-            $("#nsector").hide();
-            $("#ncanal").hide();
-            $("#narea").hide();
-
-            $("#cmbTipo").change(function (){
-               var tipo = $("#cmbTipo").val();
-               
-               $("#cmbSector").html("<option>Seleccione el sector</option>");
-               $("#cmbCanal").html("<option>Seleccione el canal</option>");
-               $("#cmbArea").html("<option>Seleccione el area</option>");
-               
-               if (tipo == "Director") {               
-                   $("#nsector").show();  
-                   $("#ncanal").hide();
-                   $("#narea").hide();
-                   cargarSectores();
-               }else if (tipo == "JefeCanal" || tipo == "CoordinadorCanal" ) {                                                             
-                   $("#nsector").show();
-                   $("#ncanal").show();
-                   $("#narea").hide();
-                   cargarSectores();                   
-               }else if (tipo == "Empleado" || tipo == "JefeArea"){
-
-                   $("#nsector").show();
-                   $("#ncanal").show();
-                   $("#narea").show();
-                   cargarSectores();
-               }
-
-            });
-///////////////////////////  EVENTO DEL SECTOR /////////////////////////////////
-            $("#cmbSector").change(function (){
-                if ($("#cmbTipo").val() != "Director" ) { 
-                        
-                    cargarCanalesDependientes();
+            $(document).ready(function (){
                 
-                }                
-            });
-            
-///////////////////////////  EVENTO DEL CANAL /////////////////////////////////            
-            $("#cmbCanal").change(function (){
-                if ($("#cmbTipo").val() == "Empleado" || $("#cmbTipo").val() == "JefeArea" ) { 
-                    
-                    cargarAreasDependientes();
+                listarCargos();
+                $("#nsector").hide();
+                $("#ncanal").hide();
+                $("#narea").hide();           
+                $("#cargosEmpleadosNav").addClass('active');
+                $("#tituloPagina").text("Cargos");
+
+
+                localStorage.imgPerfil = $("#imgPerfilNavLateral").val();
+                localStorage.name = $(".spanName").val();
+
+                var fullDate = new Date();
+                var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
+                var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
+                websocket.send("CargarUsuarios-"+<%=objUsuario.getIdUsuario()%>+"-"+currentDate);
                 
-                }                
-            });
-            ///////////////////////////////// FUNCION PARA CARGAR LOS CANALES /////////////////////////////7
-            function cargarCanalesDependientes(){
-                var idsector = $("#cmbSector").val();                
-                $.post("/SaleslandColombiaApp/canal/cargarcanalesdependientes",{idSector:idsector},function(responseText) {                
-                    if (responseText == "500") {
-
-                        swal("Ocurrio un error", "Lo sentimos, los datos de los canales no se lograron cargar, por favor intentalo mas tarde.", "error");
-
-                    }else{
-                        var selectCount = 0;
-                        var contador = 0;
-                        var dt = JSON.parse(responseText); 
-                        $("#cmbCanal").html("");
-                        for (var i = 0, max = dt.length; i < max; i++) {
-                            
-                            if (contador == 1) {
-                                contador = 0;
-
-                            }else{
-                                
-                                if (selectCount == 0) {
-                                    $("#cmbCanal").append("<option>Seleccione el canal</option>");
-                                    selectCount++;
-                                }
-                                $("#cmbCanal").append("<option value='"+dt[i]+"'>"+dt[i+1]+"</option>");
-                                contador++;
-                            }
-                        }
-
-                    }
-
-                });
-            }
-            ////////////7 FUNCION PARA CARGAR LAS AREAS //////////////////
-            function cargarAreasDependientes (){
-                var idCanal = $("#cmbCanal").val(); 
-                $.post("/SaleslandColombiaApp/area/cargarareasdependientes",{idCanal:idCanal},function(responseText) {
-                    if (responseText == "500") {
-
-                        swal("Ocurrio un error", "Lo sentimos, los datos de los canales no se lograron cargar, por favor intentalo mas tarde.", "error");
-
-                    }else{
-                        var contador = 0;
-                        var selectCount = 0;
-                        var dt = JSON.parse(responseText); 
-                        $("#cmbArea").html("");
-                        for (var i = 0, max = dt.length; i < max; i++) {
-                            
-                            if (selectCount == 0) {
-                                $("#cmbArea").append("<option>Seleccione el area</option>");
-                                selectCount++;
-                            }
-                            
-                            if (contador == 1) {
-                                contador = 0;
-
-                            }else{
-                                $("#cmbArea").append("<option value='"+dt[i]+"'>"+dt[i+1]+"</option>");
-                                contador++;
-                            }
-                        } 
-
-                    }
-    
-                }); 
-            }
-            $("#cargosEmpleadosNav").addClass('active');
-            $("#tituloPagina").text("Cargos");
+            });                        
         </script>
     </body>        
 </html>

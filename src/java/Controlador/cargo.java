@@ -252,7 +252,7 @@ public class cargo extends HttpServlet {
                 sesion.save(objSector_Cargo);
                 sesion.getTransaction().commit();
                 
-                if (!"Seleccione".equals(Canal)) {
+                if (!"Seleccione el canal".equals(Canal)) {
                 
                     
                     Canal objCanal = new Canal();
@@ -263,7 +263,7 @@ public class cargo extends HttpServlet {
                     sesion.getTransaction().commit();
                     
                 }
-                if (!"Seleccione".equals(Area)) {
+                if (!"Seleccione el area".equals(Area)) {
                     
                     Area objArea = new Area();
                     objArea.setIdArea(Integer.parseInt(Area));

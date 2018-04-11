@@ -12,6 +12,9 @@
             <div class="main-panel">
                 <!-- Include Nav Superior -->
                 <%@include file="../includes/navSuperior.jsp" %>
+                <!-- Include div Ingresos -->
+                <%@include file="../includes/divIngresos.jsp" %>
+                
                 <div class="content">
                     <div class="container-fluid">
                         <div class="row">
@@ -172,13 +175,22 @@
             </div>            
         </div>           
         <%@include file="../includes/jsInclude.jsp" %>
-        <script>
-            $("#tituloPagina").text("Area");
-            $("#tituloPagina").text("Canales");
-            $("#areasItemNav").addClass('active');
-            $("#empresaItemNav").addClass("show");
-            listarArea();            
-            cargarCanal();
+        <script>            
+            $(document).ready(function (){
+               $("#tituloPagina").text("Areas");
+                $("#areasItemNav").addClass('active');
+                $("#empresaItemNav").addClass("show");
+                listarArea();            
+                cargarCanal();
+
+                localStorage.imgPerfil = $("#imgPerfilNavLateral").val();
+                localStorage.name = $(".spanName").val();
+
+                var fullDate = new Date();
+                var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
+                var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
+                websocket.send("CargarUsuarios-"+<%=objUsuario.getIdUsuario()%>+"-"+currentDate);                 
+            });            
         </script>
     </body>            
 </html>

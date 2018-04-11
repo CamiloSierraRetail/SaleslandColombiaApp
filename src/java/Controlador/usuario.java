@@ -1,6 +1,8 @@
 package Controlador;
 
+import Modelo.Area;
 import Modelo.Area_Cargo;
+import Modelo.Canal;
 import Modelo.Canal_Cargo;
 import Modelo.Cargo;
 import Modelo.Sector;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -290,9 +293,10 @@ public class usuario extends HttpServlet {
         
         try{
             int countRows = 1;
+            List<Usuario> listaUsuario = null;            
             Session sesion = HibernateUtil.getSessionFactory().openSession();
-            ////////////// CONTINUARA...
-            /*Usuario objUsuario = (Usuario) request.getSession().getAttribute("UsuarioIngresado");
+            ////////////// CONTINUARA... ///////////////////
+            Usuario objUsuario = (Usuario) request.getSession().getAttribute("UsuarioIngresado");
             
             
             if (objUsuario.getCargo().getTipo().equals("Director")) {
@@ -301,56 +305,211 @@ public class usuario extends HttpServlet {
                 List<Sector_Cargo> listaSector_Cargo = querySector_Cargo.list();
                 for(Sector_Cargo sector_cargo : listaSector_Cargo){
                 
-                    Query queryCargo = sesion.createQuery("FROM Cargo WHERE idCargo="+sector_cargo.getCargo().getIdCargo()+"");
+                    listaUsuario = buscarUsuario(sector_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario());
                     
+                    
+                    Query queryCanal = sesion.createQuery("FROM Canal WHERE Sector="+sector_cargo.getSector().getIdSector()+"");
+                    List<Canal> listaCanal = queryCanal.list();
+                    for(Canal canal : listaCanal){
+                    
+                        Query queryCanal_Cargo = sesion.createQuery("FROM Canal_Cargo WHERE Canal="+canal.getIdCanal()+"");
+                        List<Canal_Cargo> listaCanal_Cargo = queryCanal_Cargo.list();
+                        for(Canal_Cargo canal_cargo : listaCanal_Cargo){
+                        
+                            listaUsuario.addAll(buscarUsuario(canal_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario()));
+                            
+                        }
+                        
+                        Query queryArea = sesion.createQuery("FROM Area WHERE Canal="+canal.getIdCanal()+"");
+                        List<Area> listaArea = queryArea.list();
+                        for(Area area : listaArea){
+                        
+                            Query queryArea_Cargo = sesion.createQuery("FROM Area_Cargo WHERE Area = "+area.getIdArea()+"");
+                            List<Area_Cargo> listaArea_Cargo = queryArea_Cargo.list();
+                            for(Area_Cargo area_cargo : listaArea_Cargo){
+                            
+                                listaUsuario.addAll(buscarUsuario(area_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario()));
+                            
+                            }
+                        
+                        }
+                    
+                    }
                     
                 }
                 
+                for(Usuario usuario : listaUsuario){
+            
+                    response.getWriter().write("<tr>"
+                                                  + "<td class='text-center'>"+countRows+"</td>"
+                                                  + "<td>"+usuario.getDocumento()+"</td>"
+                                                  + "<td>"+usuario.getNombre()+" "+usuario.getApellido()+"</td>"
+                                                  + "<td>"+usuario.getCelular()+"</td>"
+                                                  + "<td>"+usuario.getEmail()+"</td>"
+                                                  + "<td class='text-right'>"+usuario.getEstado()
+
+                                                       /*+ "<div class='row'>"
+                                                          + "<div class='col-md-12'>"
+                                                            + "<input type='checkbox' checked='' data-toggle='switch' data-on-color='info' data-off-color='info'>"
+                                                            + "<span class='toggle'></span>"
+                                                          + "</div>"
+                                                       + "</div>"*/
+                                                  + "</td>"
+                                                  + "<td class='td-actions text-right'>"
+                                                    + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='Ver Sector'>"
+                                                        + "<i class='fa fa-user'></i>"
+                                                    + "</a>"   
+                                                    + "<a href='/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/editarsector.jsp?_' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
+                                                        + "<i class='fa fa-edit'></i>"
+                                                    + "</a>"
+                                                    + "<a href='#' rel='tooltip' title='' class='btn btn-danger btn-link btn-xs' data-original-title='Eliminar'>"
+                                                        + "<i class='fa fa-times'></i>"
+                                                    + "</a>"
+                                                  + "</td>"
+                                             + "</tr>");
+                    countRows++;
+
+                }
                 
-            }else if (objUsuario.getCargo().getTipo().equals("JefeCanal")) {
+            }else if (objUsuario.getCargo().getTipo().equals("JefeCanal") || objUsuario.getCargo().getTipo().equals("Coordinador")) {
                 
-            }else if (objUsuario.getCargo().getTipo().equals("Coordinador")) {
+                Query queryCanalCargo1 = sesion.createQuery("FROM Canal_Cargo WHERE Cargo = "+objUsuario.getCargo().getIdCargo()+"");
+                List<Canal_Cargo> listaCanal_Cargo1 = queryCanalCargo1.list();
+                for(Canal_Cargo canal_cargo1 : listaCanal_Cargo1){
+                
+                    Query queryCanal_Cargo = sesion.createQuery("FROM Canal_Cargo WHERE Canal = "+canal_cargo1.getCanal().getIdCanal()+"");
+                    List<Canal_Cargo> listaCanal_Cargo = queryCanal_Cargo.list();
+                    
+                    for(Canal_Cargo canal_cargo : listaCanal_Cargo){                        
+                        
+                        if (objUsuario.getCargo().getTipo().equals("CoordinadorCanal") && canal_cargo.getCargo().getTipo().equals("JefeCanal")) {
+                            
+                            System.out.println("jejefesote xd alv");
+                            
+                        }else{
+                        
+                            List<Usuario> listaUsuariosBuscados = buscarUsuario(canal_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario());
+                        
+                            if (listaUsuario == null) {
+
+                                listaUsuario = listaUsuariosBuscados;
+
+                            }else{
+                                listaUsuario.addAll(listaUsuariosBuscados);
+
+                            }
+                            
+                        }
+                        
+                    }
+
+                    Query queryArea = sesion.createQuery("FROM Area WHERE Canal = "+canal_cargo1.getCanal().getIdCanal()+"");
+                    List<Area> listaArea = queryArea.list();
+                    for(Area area : listaArea){
+
+                        Query queryArea_Cargo = sesion.createQuery("FROM Area_Cargo WHERE Area="+area.getIdArea()+"");
+                        List<Area_Cargo> listaArea_Cargo = queryArea_Cargo.list();
+                        for(Area_Cargo area_cargo : listaArea_Cargo){
+
+                            listaUsuario.addAll(buscarUsuario(area_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario()));
+
+                        }
+
+                    }
+                    
+                }
+                
+                for(Usuario usuario : listaUsuario){
+            
+                    response.getWriter().write("<tr>"
+                                                  + "<td class='text-center'>"+countRows+"</td>"
+                                                  + "<td>"+usuario.getDocumento()+"</td>"
+                                                  + "<td>"+usuario.getNombre()+" "+usuario.getApellido()+"</td>"
+                                                  + "<td>"+usuario.getCelular()+"</td>"
+                                                  + "<td>"+usuario.getEmail()+"</td>"
+                                                  + "<td class='text-right'>"+usuario.getEstado()
+
+                                                       /*+ "<div class='row'>"
+                                                          + "<div class='col-md-12'>"
+                                                            + "<input type='checkbox' checked='' data-toggle='switch' data-on-color='info' data-off-color='info'>"
+                                                            + "<span class='toggle'></span>"
+                                                          + "</div>"
+                                                       + "</div>"*/
+                                                  + "</td>"
+                                                  + "<td class='td-actions text-right'>"
+                                                    + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='Ver Sector'>"
+                                                        + "<i class='fa fa-user'></i>"
+                                                    + "</a>"   
+                                                    + "<a href='/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/editarsector.jsp?_' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
+                                                        + "<i class='fa fa-edit'></i>"
+                                                    + "</a>"
+                                                    + "<a href='#' rel='tooltip' title='' class='btn btn-danger btn-link btn-xs' data-original-title='Eliminar'>"
+                                                        + "<i class='fa fa-times'></i>"
+                                                    + "</a>"
+                                                  + "</td>"
+                                             + "</tr>");
+                    countRows++;
+
+                }
                 
             }else if (objUsuario.getCargo().getTipo().equals("JefeArea")) {
+            
+                Query queryArea_Cargo1 = sesion.createQuery("FROM Area_Cargo WHERE Cargo="+objUsuario.getCargo().getIdCargo()+"");
+                List<Area_Cargo> listaArea_Cargo1 = queryArea_Cargo1.list();
+                for(Area_Cargo area_cargo1 : listaArea_Cargo1){
                 
-            }*/
-            
-            
-            
-            
-            Query query = sesion.createQuery("FROM Usuario");
-            List<Usuario>listaUsuario = query.list();
-            for(Usuario usuario : listaUsuario){
-            
-                response.getWriter().write("<tr>"
-                                              + "<td class='text-center'>"+countRows+"</td>"
-                                              + "<td>"+usuario.getDocumento()+"</td>"
-                                              + "<td>"+usuario.getNombre()+" "+usuario.getApellido()+"</td>"
-                                              + "<td>"+usuario.getCelular()+"</td>"
-                                              + "<td>"+usuario.getEmail()+"</td>"
-                                              + "<td class='text-right'>"+usuario.getEstado()
-                                                      
-                                                   /*+ "<div class='row'>"
-                                                      + "<div class='col-md-12'>"
-                                                        + "<input type='checkbox' checked='' data-toggle='switch' data-on-color='info' data-off-color='info'>"
-                                                        + "<span class='toggle'></span>"
-                                                      + "</div>"
-                                                   + "</div>"*/
-                                              + "</td>"
-                                              + "<td class='td-actions text-right'>"
-                                                + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='Ver Sector'>"
-                                                    + "<i class='fa fa-user'></i>"
-                                                + "</a>"   
-                                                + "<a href='/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/editarsector.jsp?_' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
-                                                    + "<i class='fa fa-edit'></i>"
-                                                + "</a>"
-                                                + "<a href='#' rel='tooltip' title='' class='btn btn-danger btn-link btn-xs' data-original-title='Eliminar'>"
-                                                    + "<i class='fa fa-times'></i>"
-                                                + "</a>"
-                                              + "</td>"
-                                         + "</tr>");
-                countRows++;
+                    Query queryArea_Cargo = sesion.createQuery("FROM Area_Cargo WHERE Area="+area_cargo1.getArea().getIdArea()+"");
+                    List<Area_Cargo> listaArea_Cargo = queryArea_Cargo.list();
+                    for(Area_Cargo area_cargo : listaArea_Cargo){
+                        
+                        
+                        List<Usuario> listaUsuariosBuscados = buscarUsuario(area_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario());
+                            
+                        if (listaUsuario == null) {
+
+                            listaUsuario = listaUsuariosBuscados;
+
+                        }else{
+                            listaUsuario.addAll(listaUsuariosBuscados);
+
+                        }
+                         
+                    }
                 
+                }
+                
+                for(Usuario usuario : listaUsuario){
+            
+                    response.getWriter().write("<tr>"
+                                                  + "<td class='text-center'>"+countRows+"</td>"
+                                                  + "<td>"+usuario.getDocumento()+"</td>"
+                                                  + "<td>"+usuario.getNombre()+" "+usuario.getApellido()+"</td>"
+                                                  + "<td>"+usuario.getCelular()+"</td>"
+                                                  + "<td>"+usuario.getEmail()+"</td>"
+                                                  + "<td class='text-right'>"+usuario.getEstado()
+
+                                                       /*+ "<div class='row'>"
+                                                          + "<div class='col-md-12'>"
+                                                            + "<input type='checkbox' checked='' data-toggle='switch' data-on-color='info' data-off-color='info'>"
+                                                            + "<span class='toggle'></span>"
+                                                          + "</div>"
+                                                       + "</div>"*/
+                                                  + "</td>"
+                                                  + "<td class='td-actions text-right'>"
+                                                    + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='Ver Sector'>"
+                                                        + "<i class='fa fa-user'></i>"
+                                                    + "</a>"   
+                                                    + "<a href='/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/editarsector.jsp?_' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
+                                                        + "<i class='fa fa-edit'></i>"
+                                                    + "</a>"
+                                                    + "<a href='#' rel='tooltip' title='' class='btn btn-danger btn-link btn-xs' data-original-title='Eliminar'>"
+                                                        + "<i class='fa fa-times'></i>"
+                                                    + "</a>"
+                                                  + "</td>"
+                                             + "</tr>");
+                    countRows++;
+
+                }
                 
             }
             
@@ -360,6 +519,21 @@ public class usuario extends HttpServlet {
             response.getWriter().write("500");
         }
     
+    }
+    //////// METODO PARA BUSCAR A LOS USUARIOS QUE SE VAN A LISTAR /////////
+    private List<Usuario> buscarUsuario(int cargo, int usuarioEnSesion){
+    
+        List<Usuario> listaUsuarios = null;
+        try{
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Query queryUsuario = sesion.createQuery("FROM Usuario WHERE Cargo="+cargo+" AND idUsuario != "+usuarioEnSesion+"");            
+            listaUsuarios = queryUsuario.list();
+                        
+        }catch(HibernateException ex){
+        
+            System.err.println(ex);
+        }
+        return listaUsuarios;
     }
     
     protected void verificarEmail(HttpServletRequest request, HttpServletResponse response)

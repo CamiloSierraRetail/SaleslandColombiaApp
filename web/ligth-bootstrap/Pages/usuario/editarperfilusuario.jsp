@@ -25,6 +25,8 @@
                 <!-- Navbar -->
                 <%@include file="../includes/navSuperior.jsp" %>
                 <!-- End Navbar -->
+                <!-- Include div Ingresos -->
+                <%@include file="../includes/divIngresos.jsp" %>
                 <div class="content">
                     <div class="container-fluid">
                         <div class="section-image" data-image="../../assets/img/bg5.jpg">
@@ -185,11 +187,19 @@
         </div>
         <%@include file="../includes/jsInclude.jsp" %>
         <script>
-            $(document).ready(function(){    
-                $("#collapseExample").addClass("show");
-                $("#editarperfilTab").addClass('active');
+            $(document).ready(function(){                                    
+                $("#opcionesUsuarioNav").addClass("show");
+                $("#editarPerfilUsuario").addClass('active');                
                 $(".dtFechaNacimiento").val(moment($("#dtData").val()).format('DD/MM/YYYY'));
-                $("#tituloPagina").text("Editar Perfil"); 
+                $("#tituloPagina").text("EDITAR PERFIL"); 
+                
+                localStorage.imgPerfil = $("#imgPerfilNavLateral").val();
+                localStorage.name = $(".spanName").val();
+
+                var fullDate = new Date();
+                var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
+                var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
+                websocket.send("CargarUsuarios-"+<%=objUsuario.getIdUsuario()%>+"-"+currentDate);
             });
         </script>
     </body>

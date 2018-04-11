@@ -10,8 +10,7 @@
             /*/////////////// NO BORRAR, FUENTES PARA EL PRELOADER /////////////////////*/
             @import url(https://fonts.googleapis.com/css?family=Montserrat+Alternates:400,700);
             @import url(https://fonts.googleapis.com/css?family=Eczar);
-        </style>
-        <link rel="stylesheet" href="../../assets/css/preloader.css"/>
+        </style>        
     </head>
 
     <body>

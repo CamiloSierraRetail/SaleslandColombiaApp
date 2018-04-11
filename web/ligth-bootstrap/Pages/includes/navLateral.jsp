@@ -132,23 +132,23 @@ try{
                             <img src="../../assets/img/imagenesDePerfil/<%=objUsuario.getFoto()%>"/>
                         </div>
                         <div class="info">
-                            <a data-toggle="collapse" href="#collapseExample" class="collapsed">
+                            <a data-toggle="collapse" href="#opcionesUsuarioNav" class="collapsed">
                                 <span><%= nombreUSuario[0] +" "+ apellidoUsuario[0]%>
                                     <b class="caret"></b>
                                 </span>
                             </a>
-                            <div class="collapse" id="collapseExample">
+                            <div class="collapse" id="opcionesUsuarioNav">
                                 <ul class="nav">
-                                    <li>
+                                    <li class="nav-item" id="editarPerfilUsuario">
                                         <a class="nav-link profile-dropdown" href="../usuario/editarperfilusuario.jsp">
                                             <span class="sidebar-mini">EP</span>
                                             <span class="sidebar-normal">Editar Perfil</span>
                                         </a>
                                     </li>
-                                    <li>
+                                    <li class="nav-item">
                                         <a class="profile-dropdown" href="#pablo">
                                             <span class="sidebar-mini">A</span>
-                                            <span class="sidebar-normal">Ajustes</span>
+                                            <span class="sidebar-normal">AJUSTES</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -172,7 +172,7 @@ try{
                             </a>
                             <div class="collapse " id="empresaItemNav">
                                 <ul class="nav">
-                                    <li class="nav-item " id="sectoresItemNav">
+                                    <li class="nav-item" id="sectoresItemNav">
                                         <a class="nav-link" href="/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/listarsectores.jsp">
                                             <span class="sidebar-mini">S</span>
                                             <span class="sidebar-normal">Sectores</span>

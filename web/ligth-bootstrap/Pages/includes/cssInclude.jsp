@@ -48,3 +48,6 @@
 
 <!-- Chartist Plugin Tooltip -->
 <link href="../../assets/css/chartist-plugin-tooltip.css" rel="stylesheet"/>
+
+<!-- Loader de inicio de sesion y nav de ingresos -->
+<link rel="stylesheet" href="../../assets/css/preloader.css"/>

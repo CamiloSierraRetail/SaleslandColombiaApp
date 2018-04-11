@@ -2,7 +2,7 @@
     <div class="sideDiv">
         <div class="sidebar-wrapper">
             <div class="logo" style="margin-bottom: 20px; margin-top: 5px;">
-                <div class="row">                    
+                <div class="row">
                     <div class="col-md-10 pull-left">
                         <form class="navbar-form navbar-left navbar-search-form" role="search">
                             <div class="input-group">
@@ -20,21 +20,12 @@
                 </div>
             </div>       
             <ul class="nav" id="usuariosIngresados" style="position: relative; top: -20px;">
-                <li class="nav-item">
-                    <div class="ctli">
-                        <div class="row">
-                            <div class="col-md-3">                              
-                                <a href="#">
-                                    <img src="../../assets/img/imagenesDePerfil/hombreDefaultImageProfile.png" alt=""/>                                        
-                                </a>                                    
-                            </div>
-                            <div class="col-md-9">
-                                <p style="padding: 0; margin:0;">German Gualteros</p>
-                                <p style="font-size:11px; margin:0; padding: 0;">Ingreso: 7:55 A.M - Salida: 18:05 P.M</p>
-                            </div>
-                        </div>
+                
+                <div class="row" style="margin-top: 85%;">
+                    <div class="preloader" id="preloader">
+                
                     </div>
-                </li>
+                </div>               
             </ul>
         </div>
     </div>
