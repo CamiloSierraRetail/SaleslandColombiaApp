@@ -71,3 +71,5 @@
 <script src="../../assets/js/plugins/chartist-plugin-tooltip.min.js"></script>
 <!-- SOCKETS INCLUDE -->
 <script src="../../assets/js/ingresoSockets.js" type="text/javascript"></script>
+<!-- CHARTIST PLUGIN -->
+<script src="../../assets/js/plugins/chartist-plugin-fill-donut.js" type="text/javascript"></script>

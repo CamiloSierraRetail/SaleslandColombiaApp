@@ -295,9 +295,7 @@ public class usuario extends HttpServlet {
             int countRows = 1;
             List<Usuario> listaUsuario = null;            
             Session sesion = HibernateUtil.getSessionFactory().openSession();
-            ////////////// CONTINUARA... ///////////////////
             Usuario objUsuario = (Usuario) request.getSession().getAttribute("UsuarioIngresado");
-            
             
             if (objUsuario.getCargo().getTipo().equals("Director")) {
                 
@@ -348,16 +346,10 @@ public class usuario extends HttpServlet {
                                                   + "<td>"+usuario.getEmail()+"</td>"
                                                   + "<td class='text-right'>"+usuario.getEstado()
 
-                                                       /*+ "<div class='row'>"
-                                                          + "<div class='col-md-12'>"
-                                                            + "<input type='checkbox' checked='' data-toggle='switch' data-on-color='info' data-off-color='info'>"
-                                                            + "<span class='toggle'></span>"
-                                                          + "</div>"
-                                                       + "</div>"*/
                                                   + "</td>"
                                                   + "<td class='td-actions text-right'>"
-                                                    + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='Ver Sector'>"
-                                                        + "<i class='fa fa-user'></i>"
+                                                    + "<a href='#' rel='tooltip' title='' class='btn btn-success btn-link btn-xs' data-original-title='Ver Sector'>"
+                                                        + "<i class='fa fa-eye'></i>"
                                                     + "</a>"   
                                                     + "<a href='/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/editarsector.jsp?_' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
                                                         + "<i class='fa fa-edit'></i>"
@@ -371,7 +363,7 @@ public class usuario extends HttpServlet {
 
                 }
                 
-            }else if (objUsuario.getCargo().getTipo().equals("JefeCanal") || objUsuario.getCargo().getTipo().equals("Coordinador")) {
+            }else if (objUsuario.getCargo().getTipo().equals("JefeCanal") || objUsuario.getCargo().getTipo().equals("CoordinadorCanal")) {
                 
                 Query queryCanalCargo1 = sesion.createQuery("FROM Canal_Cargo WHERE Cargo = "+objUsuario.getCargo().getIdCargo()+"");
                 List<Canal_Cargo> listaCanal_Cargo1 = queryCanalCargo1.list();
@@ -384,6 +376,7 @@ public class usuario extends HttpServlet {
                         
                         if (objUsuario.getCargo().getTipo().equals("CoordinadorCanal") && canal_cargo.getCargo().getTipo().equals("JefeCanal")) {
                             
+                            ///////////////////////////// ELIMINAR ESTE IF, OPTIMIZAR CODE /////////////////////////////
                             System.out.println("jejefesote xd alv");
                             
                         }else{
@@ -405,6 +398,7 @@ public class usuario extends HttpServlet {
 
                     Query queryArea = sesion.createQuery("FROM Area WHERE Canal = "+canal_cargo1.getCanal().getIdCanal()+"");
                     List<Area> listaArea = queryArea.list();
+                    System.out.println("AREA AREA AREa aREA AREA arEAR arEA ARAEARARAERAEARAEARAEAREARAEARAE          " + listaArea.size());
                     for(Area area : listaArea){
 
                         Query queryArea_Cargo = sesion.createQuery("FROM Area_Cargo WHERE Area="+area.getIdArea()+"");
@@ -428,18 +422,12 @@ public class usuario extends HttpServlet {
                                                   + "<td>"+usuario.getCelular()+"</td>"
                                                   + "<td>"+usuario.getEmail()+"</td>"
                                                   + "<td class='text-right'>"+usuario.getEstado()
-
-                                                       /*+ "<div class='row'>"
-                                                          + "<div class='col-md-12'>"
-                                                            + "<input type='checkbox' checked='' data-toggle='switch' data-on-color='info' data-off-color='info'>"
-                                                            + "<span class='toggle'></span>"
-                                                          + "</div>"
-                                                       + "</div>"*/
+                                                                                                               
                                                   + "</td>"
                                                   + "<td class='td-actions text-right'>"
-                                                    + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='Ver Sector'>"
-                                                        + "<i class='fa fa-user'></i>"
-                                                    + "</a>"   
+                                                    + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='Ver' data-toggle='modal' data-target='#modalVerUsuario'>"
+                                                        + "<i class='fa fa-eye'></i>"
+                                                    + "</a>"  
                                                     + "<a href='/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/editarsector.jsp?_' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
                                                         + "<i class='fa fa-edit'></i>"
                                                     + "</a>"
@@ -496,8 +484,8 @@ public class usuario extends HttpServlet {
                                                        + "</div>"*/
                                                   + "</td>"
                                                   + "<td class='td-actions text-right'>"
-                                                    + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='Ver Sector'>"
-                                                        + "<i class='fa fa-user'></i>"
+                                                    + "<a href='#' rel='tooltip' title='' class='btn btn-success btn-link btn-xs' data-original-title='Ver Sector'>"
+                                                        + "<i class='fa fa-eye'></i>"
                                                     + "</a>"   
                                                     + "<a href='/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/editarsector.jsp?_' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
                                                         + "<i class='fa fa-edit'></i>"

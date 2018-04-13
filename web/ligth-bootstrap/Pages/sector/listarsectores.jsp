@@ -165,7 +165,7 @@
                 listarSectores();             
                 $("#empresaItemNav").addClass("show");
                 $("#sectoresItemNav").addClass('active');
-                $("#tituloPagina").text("Sectores");
+                $("#tituloPagina").text("SECTORES");
 
                 localStorage.imgPerfil = $("#imgPerfilNavLateral").val();
                 localStorage.name = $(".spanName").val();

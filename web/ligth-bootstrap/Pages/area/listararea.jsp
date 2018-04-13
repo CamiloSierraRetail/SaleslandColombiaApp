@@ -177,7 +177,7 @@
         <%@include file="../includes/jsInclude.jsp" %>
         <script>            
             $(document).ready(function (){
-               $("#tituloPagina").text("Areas");
+               $("#tituloPagina").text("AREAS");
                 $("#areasItemNav").addClass('active');
                 $("#empresaItemNav").addClass("show");
                 listarArea();            

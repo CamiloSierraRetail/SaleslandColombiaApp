@@ -1398,12 +1398,13 @@ function cargarPromedio(){
         var erroneosPorcentaje = Math.round((dt[2]/dt[0])*100); 
         var justoPorcentaje = Math.round((dt[3]/dt[0])*100);
 
-        var chart = new Chartist.Pie('#chartEmail', {
+        var chart = new Chartist.Pie('#chartPromedio', {
           series: [correctosPorcentaje, erroneosPorcentaje, justoPorcentaje],
           labels: ["%"+correctosPorcentaje+"", "%"+erroneosPorcentaje+"", "%"+justoPorcentaje+""]
         }, {
           donut: true,
-          showLabel: true
+          showLabel: true,
+          donutWidth: 50  
         });
 
         chart.on('draw', function(data) {

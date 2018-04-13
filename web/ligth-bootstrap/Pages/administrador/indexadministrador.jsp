@@ -3,7 +3,8 @@
 <html>
     <head>
         <%@include file="../includes/cssInclude.jsp" %>
-        <title>Inicio | SaleslandColombia</title>       
+        <title>Inicio | SaleslandColombia</title>      
+        
     </head>
     <body>
         <div id="dimScreen">
@@ -155,7 +156,7 @@
                                                 <p class="card-category">Este es el promedio de entrada y salida que llevas a lo largo de toda tu estancia en la empresa.</p>
                                             </div>
                                             <div class="card-body ">
-                                                <div id=chartEmail class="ct-chart ct-perfect-fourth"></div>
+                                                <div id="chartPromedio" class="ct-chart ct-perfect-fourth"></div>
                                             </div>
                                             <div class="card-footer ">
                                                 <div class="legend">
@@ -181,6 +182,7 @@
         </div>
         <%@include file="../includes/jsInclude.jsp" %>
         <script>
+            
             $(document).ready(function (){
                 localStorage.imgPerfil = $("#imgPerfilNavLateral").val();
                 localStorage.name = $(".spanName").val();

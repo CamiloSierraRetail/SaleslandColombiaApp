@@ -1,10 +1,6 @@
 $(document).ready(function(){
     //Inicializa el perfectScrollbar para el body y el sidebar
-    $('.wrapper').perfectScrollbar({
-        minScrollbarLength: 150,
-        maxScrollbarLength: 300,
-        wheelSpeed: 1
-    });
+    
     $('.sidebar-wrapper').perfectScrollbar({
         minScrollbarLength: 250,
         maxScrollbarLength: 500,

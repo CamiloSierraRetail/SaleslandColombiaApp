@@ -183,7 +183,7 @@
             $(document).ready(function (){
                
                 listarCanales();
-                $("#tituloPagina").text("Canales");
+                $("#tituloPagina").text("CANALES");
                 $("#canalesItemNav").addClass('active');
                 $("#empresaItemNav").addClass("show");
                 cargarSectores();
