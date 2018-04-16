@@ -4,8 +4,6 @@
 <script src="../../assets/js/core/bootstrap.min.js" type="text/javascript"></script>
 <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
 <script src="../../assets/js/plugins/bootstrap-switch.js"></script>
-<!--  Google Maps Plugin    -->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2Yno10-YTnLjjn_Vtk0V8cdcY5lC4plU"></script>
 <!--  Chartist Plugin  -->
 <script src="../../assets/js/plugins/chartist.min.js"></script>
 <!--  Notifications Plugin    -->
@@ -71,5 +69,3 @@
 <script src="../../assets/js/plugins/chartist-plugin-tooltip.min.js"></script>
 <!-- SOCKETS INCLUDE -->
 <script src="../../assets/js/ingresoSockets.js" type="text/javascript"></script>
-<!-- CHARTIST PLUGIN -->
-<script src="../../assets/js/plugins/chartist-plugin-fill-donut.js" type="text/javascript"></script>

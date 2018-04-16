@@ -145,10 +145,10 @@ try{
                                             <span class="sidebar-normal">Editar Perfil</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="profile-dropdown" href="#pablo">
-                                            <span class="sidebar-mini">A</span>
-                                            <span class="sidebar-normal">AJUSTES</span>
+                                    <li class="nav-item" id="">
+                                        <a class="nav-link profile-dropdown" href="#">
+                                            <span class="sidebar-mini">AJ</span>
+                                            <span class="sidebar-normal">Ajustes</span>
                                         </a>
                                     </li>
                                 </ul>

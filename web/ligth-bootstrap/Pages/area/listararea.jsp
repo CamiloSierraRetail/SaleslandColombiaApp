@@ -122,7 +122,7 @@
                                 <div class="modal-body text-center">
                                     <h5 class="category">ACTUALIZA LOS DATOS DEL AREA</h5>
                                     <div class="col-md-12 mr-auto ml-auto">
-                                        <input id="idArea" type="text" style="">
+                                        <input id="idArea" type="text" style="display: none">
                                         <fieldset>  
                                             <div class="form-group">
                                                 <div class="row">

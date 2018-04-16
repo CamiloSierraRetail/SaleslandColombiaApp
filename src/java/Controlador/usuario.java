@@ -348,7 +348,7 @@ public class usuario extends HttpServlet {
 
                                                   + "</td>"
                                                   + "<td class='td-actions text-right'>"
-                                                    + "<a href='#' rel='tooltip' title='' class='btn btn-success btn-link btn-xs' data-original-title='Ver Sector'>"
+                                                    + "<a href='#' data-toggle='modal' data-target='#modalVerUsuario' rel='tooltip' title='' class='btn btn-success btn-link btn-xs' data-original-title='Ver Usuario'>"
                                                         + "<i class='fa fa-eye'></i>"
                                                     + "</a>"   
                                                     + "<a href='/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/editarsector.jsp?_' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"

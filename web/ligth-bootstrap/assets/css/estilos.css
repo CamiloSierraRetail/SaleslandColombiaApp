@@ -194,7 +194,7 @@ div.error{
         background-color: #e79723;
     }
     40%, 100% {
-        background-color: #00ACC0;
+        background-color: #006A84;
     }
     82% {
         width: 58px;
@@ -291,5 +291,12 @@ div.error{
         right: 58px;
     }
 }
+/*/////////////////////   ESTILOS DEL LOGIN //////////////////////*/
+.cuenta{
+    color: #006A84;
+    
+}
+
+
 
 

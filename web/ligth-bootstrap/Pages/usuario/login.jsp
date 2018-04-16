@@ -5,11 +5,11 @@
     <head>
         <%@include file="../../Pages/includes/cssInclude.jsp" %>
         <title>Inicio de sesión - SaleslandColombia</title>
-
+        
         <style>   
             /*/////////////// NO BORRAR, FUENTES PARA EL PRELOADER /////////////////////*/
             @import url(https://fonts.googleapis.com/css?family=Montserrat+Alternates:400,700);
-            @import url(https://fonts.googleapis.com/css?family=Eczar);
+            @import url(https://fonts.googleapis.com/css?family=Eczar);            
         </style>        
     </head>
 
@@ -19,7 +19,7 @@
             <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute">
                 <div class="container">
                     <div class="navbar-wrapper">
-                        <a class="navbar-brand" href="#"><strong>SALESLAND COLOMBIA</strong></a>
+                        <a href="#" class="navbar-brand"><img style="height: 30px; white-space: 100px;" src="../../assets/img/imgCorp.png"></a>
                         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-bar burger-lines"></span>
                             <span class="navbar-toggler-bar burger-lines"></span>
@@ -43,7 +43,7 @@
                 </div>
             </nav>
             <!-- End Navbar -->
-            <div class="full-page  section-image" data-color="black" data-image="../../assets/img/SpaceBackground.jpg">
+            <div class="full-page  section-image" data-color="" data-image="../../assets/img/SpaceBackground.jpg">
                 <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
                 <div class="content">
                     <div class="container">
@@ -52,12 +52,12 @@
                             <form id="frmIniciarSesion" class="form" method="" action="" novalidate="novalidate">
                                 <div class="card card-login card-hidden">
                                     <div class="card-header ">
-                                        <h3 class="header text-center">Inicio de sesión</h3>
+                                        <h3 class="header text-center">Iniciar Sesión</h3>
                                     </div>
                                     <div class="card-body ">
                                         <div class="card-body">
                                             <div class="form-group">
-                                                <label>Email o documento</label>
+                                                <label>Documento o Email</label>
                                                 <input id="txtUsuarioSesion" name="UsuarioSesion" placeholder="Email o número de documento" class="form-control">
                                             </div>
                                             <div class="form-group">
@@ -80,7 +80,7 @@
                                     <div class="card-footer ml-auto mr-auto" id="divBtn">
                                         <button type="submit" class="btn btn-warning btn-wd">Iniciar</button><br>
                                         <div class="text-center">
-                                            <a href="#RecuperarCuenta" id="btnRecuperarCuenta">¿Olvidaste tu Cuenta?</a>
+                                            <a class="cuenta" href="#RecuperarCuenta" id="btnRecuperarCuenta">¿Olvidaste tu Cuenta?</a>
                                         </div>
                                     </div>
                                 </div>

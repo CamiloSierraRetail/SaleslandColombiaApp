@@ -3,7 +3,7 @@
 <html>
     <head>
         <%@include file="../includes/cssInclude.jsp" %>
-        <title>Inicio | SaleslandColombia</title>      
+        <title>Inicio - Salesland Colombia</title>      
         
     </head>
     <body>

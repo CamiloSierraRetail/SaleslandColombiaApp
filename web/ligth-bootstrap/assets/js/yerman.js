@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    //Inicializa el perfectScrollbar para el body y el sidebar
+    //Inicializa el perfectScrollbar para el body y el sidebar    
     
     $('.sidebar-wrapper').perfectScrollbar({
         minScrollbarLength: 250,
@@ -11,6 +11,8 @@ $(document).ready(function(){
         maxScrollbarLength: 500,
         wheelSpeed: 1
     });
+    /// NO BORRAR ///
+    $("body").css({"overflow-y":"scroll"});
     
     //LocalStorage para el recuerdame almacenando el documento o email
     if (localStorage.checkBox && localStorage.checkBox != '') {

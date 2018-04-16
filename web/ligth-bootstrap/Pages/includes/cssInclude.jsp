@@ -1,35 +1,13 @@
 <meta charset="utf-8" />
-<link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png">
 <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
 <!-- Canonical SEO -->
-<link rel="canonical" href="https://www.creative-tim.com/product/light-bootstrap-dashboard-pro" />
+<link rel="canonical" href="https://www.salesland.net/" />
 <!--  Social tags      -->
-<meta name="keywords" content="creative tim, html dashboard, html css dashboard, web dashboard, bootstrap 4 dashboard, bootstrap 4, css3 dashboard, bootstrap 4 admin, light bootstrap 4 dashboard, frontend, responsive bootstrap dashboard">
-<meta name="description" content="Forget about boring dashboards, get a bootstrap 4 admin template designed to be simple and beautiful.">
-<!-- Schema.org markup for Google+ -->
-<meta itemprop="name" content="Light Bootstrap Dashboard PRO by Creative Tim">
-<meta itemprop="description" content="Forget about boring dashboards, get a bootstrap 4 admin template designed to be simple and beautiful.">
-<meta itemprop="image" content="http://s3.amazonaws.com/creativetim_bucket/products/34/original/opt_lbd_pro_thumbnail.jpg">
-<!-- Twitter Card data -->
-<meta name="twitter:card" content="product">
-<meta name="twitter:site" content="@creativetim">
-<meta name="twitter:title" content="Light Bootstrap Dashboard PRO by Creative Tim">
-<meta name="twitter:description" content="Forget about boring dashboards, get a bootstrap 4 admin template designed to be simple and beautiful.">
-<meta name="twitter:creator" content="@creativetim">
-<meta name="twitter:image" content="http://s3.amazonaws.com/creativetim_bucket/products/34/original/opt_lbd_pro_thumbnail.jpg">
-<meta name="twitter:data1" content="Light Bootstrap Dashboard PRO by Creative Tim">
-<meta name="twitter:label1" content="Product Type">
-<meta name="twitter:data2" content="$39">
-<meta name="twitter:label2" content="Price">
-<!-- Open Graph data -->
-<meta property="og:title" content="Light Bootstrap Dashboard PRO by Creative Tim" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://demos.creative-tim.com/light-bootstrap-dashboard-pro/examples/dashboard.html" />
-<meta property="og:image" content="http://s3.amazonaws.com/creativetim_bucket/products/34/original/opt_lbd_pro_thumbnail.jpg" />
-<meta property="og:description" content="Forget about boring dashboards, get a bootstrap 4 admin template designed to be simple and beautiful." />
-<meta property="og:site_name" content="Creative Tim" />
+<meta name="keywords" content="empresa de ventas, outsourcing comercial, ventas, agencia de ventas, empresa, servicio, especialistas, expertos, compañía, equipo, crecimiento, multicanalidad, empresa de field marketing, comercial, promotores, teleoperadores" />
+<meta name="description" content="Empresa de ventas líder en el sector del outsourcing comercial. El mejor equipo ya está listo: Fuerza de Ventas, Punto de Venta, Venta Remota, Venta Digital y Marketing esperan tu señal." />
+
 <!--     Fonts and icons     -->
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />

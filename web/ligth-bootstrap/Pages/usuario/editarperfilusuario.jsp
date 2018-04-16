@@ -153,12 +153,7 @@
                                                     </p>
                                                 </div>
                                                 <p class="card-description text-center">
-                                                    <div class="row">
-                                                        <span class="col-md-10 ml-auto"><i class="fa fa-envelope"></i> <%=objUsuario.getEmail()%></span>  
-                                                    </div>
-                                                    <div class="row">
-                                                        <span class="col-md-10 ml-auto"><i class="fa fa-phone"></i>  <%=objUsuario.getCelular()%></span>
-                                                    </div>
+                                                    <%=objUsuario.getCargo().getNombreCargo()%> : <%=objUsuario.getCargo().getDescripcion()%>
                                                 </p>
                                             </div>
                                             <div class="card-footer ">

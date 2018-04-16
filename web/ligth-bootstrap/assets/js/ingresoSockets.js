@@ -1,11 +1,9 @@
 var websocket = new WebSocket("ws://"+location.host+"/SaleslandColombiaApp/ingresoSala");
 
-
 /////////////////////// FUNCION PARA CONECTARSE AL SOCKET EN EL EVENTO ONMESSAGE /////////////////////////
 websocket.onmessage = function (message){
 
     var dt = JSON.parse(message.data);
-
 
     if (dt[0] == "muchos") {
 
@@ -55,7 +53,6 @@ websocket.onmessage = function (message){
 
         } 
 
-
     }else if (dt[0] == "uno") {
 
         var entrada2 = dt[5].split(" ");
@@ -66,9 +63,7 @@ websocket.onmessage = function (message){
         $("#hora"+dt[1]+"").text(""+entrada2[0]+" "+horaEntrada2[0]+":"+horaEntrada2[1]+" - "+salida2[0]+" "+horaSalida2[0]+":"+horaSalida2[1]+"");
 
         if (horaEntrada2[0] != "00" && horaSalida2[0] != "00") {
-
-
-            alert("salida");                                
+                                
             $("#imagenPerfil"+dt[1]+"").css({'opacity': '0.5', 'border': '2px solid #f0932b'});
 
         }else if (horaEntrada2[0] != "00") {

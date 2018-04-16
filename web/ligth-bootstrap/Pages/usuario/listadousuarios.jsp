@@ -5,8 +5,7 @@
         <%@include file="../includes/cssInclude.jsp" %>        
         <title>Listado de usuarios - SaleslandColombia</title>       
     </head>
-    <body>
-        
+    <body>        
         <div class="wrapper">
             <!-- Include Nav Lateral  -->
             <%@include file="../includes/navLateral.jsp" %>
@@ -73,7 +72,7 @@
                     </div>
                     <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmRegistrarSector" name="frmRegistrarSector">
                         <div class="modal-body text-center">
-                            <h5 class="category">INGRESA LOS DATOS DEL SECTOR</h5>
+                            <h5 class="category">Hoola HAY QUE CAMBIAR ESTO!!!!!!</h5>
                             <div class="col-md-12 mr-auto ml-auto">
                                 <fieldset>
                                     <div class="form-group">

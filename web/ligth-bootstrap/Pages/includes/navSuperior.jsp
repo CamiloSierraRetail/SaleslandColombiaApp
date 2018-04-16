@@ -18,11 +18,12 @@
             <div class="collapse navbar-collapse justify-content-end">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a href="#" class="nav-link btnSideUsers" rel="" data-title="Empleados">
+                        <a href="#" class="nav-link btnSideUsers" rel="tooltip" data-original-title="Ingreso de Personal" href="#" aria-haspopup="true" aria-expanded="false">
                             <i class="material-icons">perm_identity</i>
                             <a href="#"class="d-lg-none btnSideUsers">Empleados</a>
                         </a>
                     </li>
+                    <!-- CODIGO PARA LAS NOTIFICACIONES, NO BORRAR
                     <li class="dropdown nav-item">
                         <a href="#" rel="tooltip" data-original-title="Notificaciones" class="dropdown-toggle nav-link" data-toggle="dropdown">
                             <i class="material-icons">notifications_none</i>
@@ -36,7 +37,7 @@
                             <a class="dropdown-item" href="#">Notification 4</a>
                             <a class="dropdown-item" href="#">Notification 5</a>
                         </ul>
-                    </li>
+                    </li>-->
                     <li class="nav-item">
                         <a class="nav-link cerrarSesion" rel="tooltip" data-original-title="Cerrar Sesión" href="#" aria-haspopup="true" aria-expanded="false">
                             <span class="d-lg-none">Cerrar Sesión</span>

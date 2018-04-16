@@ -200,7 +200,7 @@ public class ingreso extends HttpServlet {
     }
     protected void promedioIngresos(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-        String fechaIngreso = "", horaIngreso="", fechaTarde = "", horaTarde="", fechaTemprano = "", horaTemprano="", fechaJusto = "", horaJusto="";
+        String fechaUltimoIngreso_Salida = "", horaUltimoIngreso_Salida="", fechaCorrecto = "", horaCorrecto="", fechaErroneo = "", horaErroneo="", fechaJusto = "", horaJusto="";
         try{
             int totalIngresos = 0, ingresosBien = 0, ingresosMal = 0, ingresosJusto = 0;
             
@@ -214,18 +214,18 @@ public class ingreso extends HttpServlet {
                 for(Ingreso ingreso : ListaIngreso){
 
                     if (ingreso.getTipo().equals("Ingreso")) {
-                        fechaIngreso = String.valueOf(ingreso.getFecha());
-                        horaIngreso = String.valueOf(ingreso.getHora());
+                        fechaUltimoIngreso_Salida = String.valueOf(ingreso.getFecha());
+                        horaUltimoIngreso_Salida = String.valueOf(ingreso.getHora());
                         
                         if (ingreso.getObservacion().equals("Tarde")) {
                             ingresosMal++;
-                            fechaTarde = String.valueOf(ingreso.getFecha());
-                            horaTarde = String.valueOf(ingreso.getHora());
+                            fechaErroneo = String.valueOf(ingreso.getFecha());
+                            horaErroneo = String.valueOf(ingreso.getHora());
                             
                         }else if (ingreso.getObservacion().equals("Temprano")) {
                             ingresosBien++;                            
-                            fechaTemprano = String.valueOf(ingreso.getFecha());
-                            horaTemprano = String.valueOf(ingreso.getHora());
+                            fechaCorrecto = String.valueOf(ingreso.getFecha());
+                            horaCorrecto = String.valueOf(ingreso.getHora());
                         }else if (ingreso.getObservacion().equals("Justo")) {
                             ingresosJusto++;
                             fechaJusto = String.valueOf(ingreso.getFecha());
@@ -235,17 +235,17 @@ public class ingreso extends HttpServlet {
 
                     }else if (ingreso.getTipo().equals("Salida")) {
                         
-                        fechaIngreso = String.valueOf(ingreso.getFecha());
-                        horaIngreso = String.valueOf(ingreso.getHora());
+                        fechaUltimoIngreso_Salida = String.valueOf(ingreso.getFecha());
+                        horaUltimoIngreso_Salida = String.valueOf(ingreso.getHora());
                         
                         if (ingreso.getObservacion().equals("Tarde")) {
                             ingresosBien++;
-                            fechaTarde = String.valueOf(ingreso.getFecha());
-                            horaTarde = String.valueOf(ingreso.getHora());                            
+                            fechaCorrecto = String.valueOf(ingreso.getFecha());
+                            horaCorrecto = String.valueOf(ingreso.getHora());                            
                         }else if (ingreso.getObservacion().equals("Temprano")) {                            
                             ingresosMal++;
-                            fechaTemprano = String.valueOf(ingreso.getFecha());
-                            horaTemprano = String.valueOf(ingreso.getHora());                            
+                            fechaErroneo = String.valueOf(ingreso.getFecha());
+                            horaErroneo = String.valueOf(ingreso.getHora());                            
                         }else if (ingreso.getObservacion().equals("Justo")) {
                             ingresosJusto++;                           
                             fechaJusto = String.valueOf(ingreso.getFecha());
@@ -262,14 +262,14 @@ public class ingreso extends HttpServlet {
                 horasSemanaJson.add(ingresosMal);
                 horasSemanaJson.add(ingresosJusto);
 
-                horasSemanaJson.add(fechaIngreso);
-                horasSemanaJson.add(horaIngreso);
+                horasSemanaJson.add(fechaUltimoIngreso_Salida);
+                horasSemanaJson.add(horaUltimoIngreso_Salida);
                 
-                horasSemanaJson.add(fechaTemprano);
-                horasSemanaJson.add(horaTemprano);
+                horasSemanaJson.add(fechaCorrecto);
+                horasSemanaJson.add(horaCorrecto);
                 
-                horasSemanaJson.add(fechaTarde);
-                horasSemanaJson.add(horaTarde);
+                horasSemanaJson.add(fechaErroneo);
+                horasSemanaJson.add(horaErroneo);
                 
                 horasSemanaJson.add(fechaJusto);
                 horasSemanaJson.add(horaJusto);
