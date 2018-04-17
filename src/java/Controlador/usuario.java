@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.json.simple.JSONArray;
 
 
 public class usuario extends HttpServlet {
@@ -58,6 +59,9 @@ public class usuario extends HttpServlet {
                     break;
                 case "actualizarPerfil":
                     actualizarPerfil(request, response);
+                    break;
+                case "verusuariostabla":
+                    listarUsuariosTablas(request, response);
                     break;
             }
             
@@ -326,6 +330,8 @@ public class usuario extends HttpServlet {
                             List<Area_Cargo> listaArea_Cargo = queryArea_Cargo.list();
                             for(Area_Cargo area_cargo : listaArea_Cargo){
                             
+                                System.out.println("***************************************   area arae arae    ------>    " + listaArea_Cargo.size() + "          -------------------------   " + area_cargo.getCargo().getNombreCargo() + " /////////////////////    " + canal.getNombreCanal());
+                                
                                 listaUsuario.addAll(buscarUsuario(area_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario()));
                             
                             }
@@ -348,7 +354,7 @@ public class usuario extends HttpServlet {
 
                                                   + "</td>"
                                                   + "<td class='td-actions text-right'>"
-                                                    + "<a href='#' data-toggle='modal' data-target='#modalVerUsuario' rel='tooltip' title='' class='btn btn-success btn-link btn-xs' data-original-title='Ver Usuario'>"
+                                                    + "<a href='#' onclick='VerUsuariosTabla("+usuario.getIdUsuario()+")' data-toggle='modal' data-target='#modalVerUsuario' rel='tooltip' title='' class='btn btn-success btn-link btn-xs' data-original-title='Ver Usuario'>"
                                                         + "<i class='fa fa-eye'></i>"
                                                     + "</a>"   
                                                     + "<a href='/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/editarsector.jsp?_' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
@@ -422,12 +428,12 @@ public class usuario extends HttpServlet {
                                                   + "<td>"+usuario.getCelular()+"</td>"
                                                   + "<td>"+usuario.getEmail()+"</td>"
                                                   + "<td class='text-right'>"+usuario.getEstado()
-                                                                                                               
+
                                                   + "</td>"
                                                   + "<td class='td-actions text-right'>"
-                                                    + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='Ver' data-toggle='modal' data-target='#modalVerUsuario'>"
+                                                    + "<a href='#' onclick='VerUsuariosTabla("+usuario.getIdUsuario()+")' data-toggle='modal' data-target='#modalVerUsuario' rel='tooltip' title='' class='btn btn-success btn-link btn-xs' data-original-title='Ver Usuario'>"
                                                         + "<i class='fa fa-eye'></i>"
-                                                    + "</a>"  
+                                                    + "</a>"   
                                                     + "<a href='/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/editarsector.jsp?_' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
                                                         + "<i class='fa fa-edit'></i>"
                                                     + "</a>"
@@ -476,15 +482,9 @@ public class usuario extends HttpServlet {
                                                   + "<td>"+usuario.getEmail()+"</td>"
                                                   + "<td class='text-right'>"+usuario.getEstado()
 
-                                                       /*+ "<div class='row'>"
-                                                          + "<div class='col-md-12'>"
-                                                            + "<input type='checkbox' checked='' data-toggle='switch' data-on-color='info' data-off-color='info'>"
-                                                            + "<span class='toggle'></span>"
-                                                          + "</div>"
-                                                       + "</div>"*/
                                                   + "</td>"
                                                   + "<td class='td-actions text-right'>"
-                                                    + "<a href='#' rel='tooltip' title='' class='btn btn-success btn-link btn-xs' data-original-title='Ver Sector'>"
+                                                    + "<a href='#' onclick='VerUsuariosTabla("+usuario.getIdUsuario()+")' data-toggle='modal' data-target='#modalVerUsuario' rel='tooltip' title='' class='btn btn-success btn-link btn-xs' data-original-title='Ver Usuario'>"
                                                         + "<i class='fa fa-eye'></i>"
                                                     + "</a>"   
                                                     + "<a href='/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/editarsector.jsp?_' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
@@ -561,39 +561,54 @@ public class usuario extends HttpServlet {
             q.executeUpdate();
             s.getTransaction().commit();
             //Actualizar Sesion
-            Query q2 = s.createQuery("FROM Usuario WHERE IdUsuario = '"+idusuario+"'");
-            if(q2.list().size() > 0){
-                List<Usuario> listUs = q2.list();
-                for (Usuario us : listUs) {
-                    Usuario objUsuario = new Usuario(
-                            us.getTipoDocumento(), 
-                            us.getDocumento(), 
-                            us.getNombre(), 
-                            us.getApellido(), 
-                            us.getDireccion(), 
-                            us.getTelefono(), 
-                            us.getCelular(), 
-                            us.getGenero(), 
-                            us.getEmail(), 
-                            us.getFechaNacimiento(), 
-                            "", 
-                            us.getFoto(), 
-                            "Activo", 
-                            us.getHorario(), 
-                            us.getCargo()
-                    );
-                    objUsuario.setIdUsuario(us.getIdUsuario());
-                    HttpSession invalidarSesion = request.getSession();
-                    invalidarSesion.removeAttribute("UsuarioIngresado");
-                    invalidarSesion.invalidate();
-                    request.getSession().setAttribute("UsuarioIngresado", objUsuario);
-                    response.getWriter().write("1");
-                }
-            }
+            Usuario objUsuario = (Usuario) s.createQuery("FROM Usuario WHERE IdUsuario = '"+idusuario+"'").uniqueResult();
+            
+            request.getSession().setAttribute("UsuarioIngresado", objUsuario);
+            response.getWriter().write("1");
+            
         }catch(Exception ex){
             System.out.println(ex);
             response.getWriter().write("0");
         }
+    }
+    
+    protected void listarUsuariosTablas(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+    
+        try{
+            String rolUsuario = "";
+            String idUsuario = request.getParameter("IdUsuario");
+        
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Usuario objUsuario = (Usuario) sesion.createQuery("FROM Usuario WHERE IdUsuario="+idUsuario+"").uniqueResult();
+            
+            String nombre[] = objUsuario.getNombre().split(" ");
+            String apellido[] = objUsuario.getApellido().split(" ");
+            
+            if(objUsuario.getCargo().getTipo().equals("Empleado")){
+                rolUsuario = "(Empleado)";
+            }else{
+                rolUsuario = "(Administrador)";
+            }
+            
+            JSONArray usuarioJson = new JSONArray();
+            usuarioJson.add(objUsuario.getIdUsuario());
+            usuarioJson.add(objUsuario.getFoto());
+            usuarioJson.add(objUsuario.getDocumento());
+            usuarioJson.add(nombre[0] + " " + apellido[0]);
+            usuarioJson.add(rolUsuario);
+            usuarioJson.add(objUsuario.getCargo().getNombreCargo() + ": " + objUsuario.getCargo().getDescripcion());
+            
+            response.getWriter().write(usuarioJson.toJSONString());
+        
+        }catch(HibernateException ex){
+        
+            System.err.println(ex);
+            response.getWriter().write("500");
+        
+        }
+        
+    
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

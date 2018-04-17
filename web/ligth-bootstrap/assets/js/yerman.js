@@ -178,8 +178,12 @@ $(document).ready(function(){
                                         },
                                         dataType:"json"
                                     }).done(function(data){
-                                        if(data > "0"){
-                                            window.location.href = "/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/editarperfilusuario.jsp";
+                                        if(data == "1"){
+                                            
+                                            setTimeout(function(){
+                                                window.location.href = "/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/editarperfilusuario.jsp";
+                                            }, 3000);
+                                            
                                         }else{
                                             swal("Error","Algo ocurrio al momento de procesar tu solicitud","error");
                                         }

@@ -133,7 +133,7 @@
                                         <div class="card card-user">
                                             <div class="card-header no-padding">
                                                 <div class="card-image">
-                                                    <img src="../../assets/img/saleslandFondoOscuro.png" alt="...">
+                                                    <img src="/SaleslandColombiaApp/ligth-bootstrap/assets/img/saleslandFondoOscuro.png" alt="...">
                                                 </div>
                                             </div>
                                             <div class="card-body ">

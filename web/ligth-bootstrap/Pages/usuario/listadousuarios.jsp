@@ -63,46 +63,47 @@
                      
         <!-- MODAL PARA CREAR UN SECTOR -->
         <div class="modal fade modal-primary" id="modalVerUsuario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header justify-content-center">
-                        <div class="modal-profile">
-                            <i class="nc-icon nc-puzzle-10"></i>
+            <div class="modal-dialog">                                  
+                    <div class="col-md-9 mr-auto ml-auto">
+                        <div class="card card-user">
+                            <div class="card-header no-padding">
+                                <div class="card-image">
+                                    <img src="../../assets/img/saleslandFondoOscuro.png" alt="...">
+                                </div>
+                            </div>
+                            <div class="card-body ">
+                                <div class="author">
+                                    <a href="#">
+                                        <img class="avatar border-gray" id="imgPerfilUsuario" alt="...">
+                                        <h5 class="card-title" id="lblNombreApellido"></h5>
+                                    </a>
+                                    <p class="card-description" id="lblRolEmpleado">
+                                        
+                                    </p>
+                                </div>
+                                <p class="card-description text-center" id="lblDescripcionEmpleado">
+                                    <%=objUsuario.getCargo().getNombreCargo()%> : <%=objUsuario.getCargo().getDescripcion()%>
+                                </p>
+                            </div>
+                            <div class="card-footer ">
+                                <hr>
+                                <div class="button-container text-center">                                    
+                                    <a href="#" class="btn btn-success btn-link btn-xs" rel="tooltip" data-original-title="Descargar Reporte" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">file_download</i>
+                                    </a>
+                                    <a href="#" class="btn btn-info btn-link btn-icon" rel="tooltip" data-original-title="Ver estadisticas" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">trending_up</i>
+                                    </a>
+                                    <button href="#" class="btn btn-warning btn-link btn-icon" rel="tooltip" data-original-title="Editar Perfil Del Usuario" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">mode_edit</i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmRegistrarSector" name="frmRegistrarSector">
-                        <div class="modal-body text-center">
-                            <h5 class="category">Hoola HAY QUE CAMBIAR ESTO!!!!!!</h5>
-                            <div class="col-md-12 mr-auto ml-auto">
-                                <fieldset>
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <small class="card-category"><strong>Nombre del sector *</strong></small>
-                                            <input id="txtNombreSector" name="NombreSector" type="text" class="form-control">                                                        
-                                        </div>
-                                    </div>
-                                </fieldset>
-                                <fieldset>
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <small class="card-category"><strong>Descripción *</strong></small>
-                                            <textarea id="txtDescripcionSector" name="DescripcionSector" class="form-control textArea"></textarea>                                                       
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            </div>   
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-link btn-simple" data-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-info btn-fill pull-right">Guardar</button>
-                        </div>
-                    </form>
-                </div>
+                    </div>              
             </div>
         </div>
-        <!--  End Modal -->
-            
-            
+        <!--  End Modal -->           
     </body>        
     <%@include file="../includes/jsInclude.jsp" %>
     <script>

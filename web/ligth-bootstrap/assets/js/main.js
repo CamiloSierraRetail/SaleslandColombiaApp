@@ -1381,17 +1381,44 @@ function cargarPromedio(){
             var inM3 = dt[9].split(" ");                        
             var inJ2 = dt[10].split(" ");
             var inJ3 = dt[11].split(" ");
-   
-            ///// QUEDA PENDIENTE POR ARREGLAR EL INVALID DATE ---> CAMBIAR EL IDIOMA Y COLOCAR ALGO ACORDE /////////////
-            $("#ultimoIngreso").append('Ultimo ingreso '+moment(in2[0]+" "+in3[1]).fromNow());
-            $("#ultimoIngresoCorrecto").append('Ultimo ingreso correcto '+moment(inOk2[0]+" "+inOk3[1]).fromNow());
-            $("#ultimoIngresoErroneo").append('Ultimo ingreso erroneo '+moment(inM2[0]+" "+inM3[1]).fromNow());
-            $("#ultimoIngresoJusto").append('Ultimo ingreso a tiempo '+moment(inJ2[0]+" "+inJ3[1]).fromNow());
+            
+            if (in3[1] == undefined) {
+                
+                $("#ultimoIngreso").append('Por el momento no tienes ingresos.');
+            }else{
+                
+                $("#ultimoIngreso").append('Ultimo ingreso '+moment(in2[0]+" "+in3[1]).fromNow());
+            }
+            
+            if (inOk3[1] == undefined) {
+                
+                $("#ultimoIngresoCorrecto").append('Por el momento no tienes ingresos correctos.');
+            }else{
+                $("#ultimoIngresoCorrecto").append('Ultimo ingreso correcto '+moment(inOk2[0]+" "+inOk3[1]).fromNow());
+                
+            }
+            
+            if (inM3[1] == undefined) {
+                
+                $("#ultimoIngresoErroneo").append('Por el momento no tienes ingresos erroneos.');
+                
+            }else{
+                
+                $("#ultimoIngresoErroneo").append('Ultimo ingreso erroneo '+moment(inM2[0]+" "+inM3[1]).fromNow());
+                
+            }
+     
+            if (inJ3[1] == undefined) {
+                $("#ultimoIngresoJusto").append('Por el momento no tienes ingresos a tiempo.');
+            }else{
+                $("#ultimoIngresoJusto").append('Ultimo ingreso a tiempo '+moment(inJ2[0]+" "+inJ3[1]).fromNow());                
+            }
+            
         }else{
-            $("#ultimoIngreso").append('El usuario no ha realizado ningun ingreso');
-            $("#ultimoIngresoCorrecto").append('El usuario no ha realizado ningun ingreso');
-            $("#ultimoIngresoErroneo").append('El usuario no ha realizado ningun ingreso');
-            $("#ultimoIngresoJusto").append('El usuario no ha realizado ningun ingreso');
+            $("#ultimoIngreso").append('Por el momento no tienes ingresos.');
+            $("#ultimoIngresoCorrecto").append('Por el momento no tienes ingresos correctos.');
+            $("#ultimoIngresoErroneo").append('Por el momento no tienes ingresos erroneos.');
+            $("#ultimoIngresoJusto").append('Por el momento no tienes ingresos a tiempo.');
         }
         
         var correctosPorcentaje = Math.round((dt[1]/dt[0])*100);
@@ -1985,6 +2012,30 @@ $("#cmbTipo").change(function (){
          }
 
      }); 
+ }
+ 
+ ///////////////////// FUNCION PARA VER LOS USUARIOS DESDE LA TABLA DE USUARIOS ///////////////////////////////////
+ function VerUsuariosTabla(idUsuario){
+     
+     $.post("/SaleslandColombiaApp/usuario/verusuariostabla",{IdUsuario:idUsuario},function(responseText){
+         
+        if (responseText == "500") {
+            swal("Ocurrio un error", "Lo sentimos, los datos del usuario no se lograron cargar.", "error");
+        }else{
+            
+           var dt = JSON.parse(responseText);  
+           
+           $("#imgPerfilUsuario").attr("src", "../../assets/img/imagenesDePerfil/"+dt[1]+"");
+           $("#lblNombreApellido").text(dt[3]);
+           $("#lblRolEmpleado").text(dt[4]);
+           $("#lblDescripcionEmpleado").text(dt[5]);
+            
+        }
+         
+                
+     });
+     
+     
  }
 
 
