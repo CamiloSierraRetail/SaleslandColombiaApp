@@ -112,7 +112,7 @@ try{
         <%}else{%>
         <!-- ///////////////////////////////////////////////// ADMINISTRADOR //////////////////////////////////////////////// -->
 
-            <div class="sidebar" data-color="corp" data-image="../../assets/img/navLateral.jpg">
+            <div class="sidebar" data-color="corp" data-image="../../assets/img/defaultImage.jpg">
                 <!--
                     Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
@@ -120,11 +120,11 @@ try{
                 -->
                 <div class="sidebar-wrapper">
                     <div class="logo">
-                        <a href="/SaleslandColombiaApp/ligth-bootstrap/Pages/administrador/indexadministrador.jsp" class="simple-text logo-mini">
+                        <a href="/SaleslandColombiaApp/ligth-bootstrap/Pages/administrador/indexadministrador.jsp" class="simple-text logo-mini" style="margin-right: -3px;">
                             SL
                         </a>
                         <a href="/SaleslandColombiaApp/ligth-bootstrap/Pages/administrador/indexadministrador.jsp" class="simple-text logo-normal">
-                            <strong>Sales</strong>land
+                            <img style="height: 30px; white-space: 100px;" src="../../assets/img/LOGO_SALESLAND_NEGATIVO.png">
                         </a>
                     </div>
                     <div class="user">
@@ -216,7 +216,7 @@ try{
                                         </a>
                                     </li>
                                     <li class="nav-item" id="monitorearEmpleadosNav">
-                                        <a class="nav-link" href="../area/listararea.jsp">
+                                        <a class="nav-link" href="../empleado/monitorearempleados.jsp">
                                             <span class="sidebar-mini">M</span>
                                             <span class="sidebar-normal">Monitorear</span>
                                         </a>

@@ -1,5 +1,9 @@
 package Controlador;
 
+import Modelo.Area;
+import Modelo.Area_Cargo;
+import Modelo.Canal;
+import Modelo.Canal_Cargo;
 import Modelo.Ingreso;
 import Modelo.Sector_Cargo;
 import Modelo.Usuario;
@@ -15,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.json.simple.JSONArray;
@@ -50,6 +55,9 @@ public class ingreso extends HttpServlet {
                     break;
                 case "usuariosingresados":
                     usuariosIngresados(request, response);
+                    break;
+                case "cargarPromedioEmpleados" :
+                    cargarPromedioEmpleados(request, response);
                     break;
                 default:
                     response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/ingreso/ingresousuario.jsp");
@@ -430,6 +438,175 @@ public class ingreso extends HttpServlet {
     
     }
     
+    
+    
+    
+    
+    
+    
+    
+    
+    protected void cargarPromedioEmpleados(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    
+        try{
+    
+            int countRows = 1;
+            List<Usuario> listaUsuario = null;     
+            Usuario objUsuario = (Usuario) request.getSession().getAttribute("UsuarioIngresado");
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            
+            String promedioEntrada = "", promedioSalida = "";
+            
+            if (objUsuario.getCargo().getTipo().equals("Director")) {
+                
+                Query querySector_Cargo = sesion.createQuery("FROM Sector_Cargo WHERE Cargo="+objUsuario.getCargo().getIdCargo()+"");
+                List<Sector_Cargo> listaSector_Cargo = querySector_Cargo.list();
+                for(Sector_Cargo sector_cargo : listaSector_Cargo){
+                
+                    listaUsuario = buscarUsuario(sector_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario());
+                    
+                    
+                    Query queryCanal = sesion.createQuery("FROM Canal WHERE Sector="+sector_cargo.getSector().getIdSector()+"");
+                    List<Canal> listaCanal = queryCanal.list();
+                    for(Canal canal : listaCanal){
+                    
+                        Query queryCanal_Cargo = sesion.createQuery("FROM Canal_Cargo WHERE Canal="+canal.getIdCanal()+"");
+                        List<Canal_Cargo> listaCanal_Cargo = queryCanal_Cargo.list();
+                        for(Canal_Cargo canal_cargo : listaCanal_Cargo){
+                        
+                            listaUsuario.addAll(buscarUsuario(canal_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario()));
+                            
+                        }
+                        
+                        Query queryArea = sesion.createQuery("FROM Area WHERE Canal="+canal.getIdCanal()+"");
+                        List<Area> listaArea = queryArea.list();
+                        for(Area area : listaArea){
+                        
+                            Query queryArea_Cargo = sesion.createQuery("FROM Area_Cargo WHERE Area = "+area.getIdArea()+"");
+                            List<Area_Cargo> listaArea_Cargo = queryArea_Cargo.list();
+                            for(Area_Cargo area_cargo : listaArea_Cargo){
+                            
+                                System.out.println("***************************************   area arae arae    ------>    " + listaArea_Cargo.size() + "          -------------------------   " + area_cargo.getCargo().getNombreCargo() + " /////////////////////    " + canal.getNombreCanal());
+                                
+                                listaUsuario.addAll(buscarUsuario(area_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario()));
+                            
+                            }
+                        
+                        }
+                    
+                    }
+                    
+                }
+                int entradasCount = 0, salidaCount = 0;
+                int horaIngreso=0, minutosIngreso=0, segundosIngresos=0;
+                int horaSalida=0, minutosSalida=0, segundosSalida=0;
+                String query = "";
+                
+                
+                //////////// CONTINUARA.............
+                //int contador = 0
+                for(Usuario usuario : listaUsuario){
+            
+                    
+                    
+                        
+                    Query queryPromedioIngresoUsuario = sesion.createQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM Ingreso WHERE Tipo='Ingreso' and Usuario="+usuario.getIdUsuario()+"");
+                    List<Object> listaIngreso = queryPromedioIngresoUsuario.list();
+                    for (Object datos : listaIngreso) {
+
+                        
+                        String fecha[] = datos.toString().split(":");
+                        horaIngreso = (horaIngreso + Integer.parseInt(fecha[0])/2);
+                        minutosIngreso = (minutosIngreso + Integer.parseInt(fecha[1])/2);
+                        segundosIngresos = (segundosIngresos + Integer.parseInt(fecha[2])/2);
+                        System.out.println(datos);
+
+                    }
+
+  
+                    Query queryPromedioSalidaUsuario = sesion.createSQLQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM ingreso WHERE Tipo='Salida' and Usuario="+usuario.getIdUsuario()+"");
+                    List<Object> listaSalida = queryPromedioSalidaUsuario.list();
+                    for (Object datos : listaSalida) {
+
+                        String fecha[] = datos.toString().split(":");
+                        
+                        if (horaSalida == 0) {
+                            horaSalida = Integer.parseInt(fecha[0]);
+                            System.out.println("PROMEDIO    "+datos +"    -----> "+usuario.getNombre()+"   " + horaSalida);
+                        }else{
+                        
+                            horaSalida = (horaSalida + Integer.parseInt(fecha[0]));
+                            minutosSalida = (minutosSalida + Integer.parseInt(fecha[1]));
+                            segundosSalida = (segundosSalida + Integer.parseInt(fecha[2]));                                                        
+                            
+                            System.out.println(datos);
+                            System.out.println("PROMEDIO    "+datos+"    -----> "+usuario.getNombre()+"   " + horaSalida);
+                            
+                        }
+                        salidaCount++;
+                    }
+                    
+//                    response.getWriter().write("<tr>"
+//                                                  + "<td class='text-center'>"+countRows+"</td>"
+//                                                  + "<td>"+usuario.getDocumento()+"</td>"
+//                                                  + "<td>"+usuario.getNombre()+" "+usuario.getApellido()+"</td>"
+//                                                  + "<td>"+usuario.getCelular()+"</td>"
+//                                                  + "<td>"+usuario.getEmail()+"</td>"
+//                                                  + "<td class='text-right'>"+usuario.getEstado()
+//
+//                                                  + "</td>"
+//                                                  + "<td class='td-actions text-right'>"
+//                                                    + "<a href='#' onclick='VerUsuariosTabla("+usuario.getIdUsuario()+")' data-toggle='modal' data-target='#modalVerUsuario' rel='tooltip' title='' class='btn btn-success btn-link btn-xs' data-original-title='Ver Usuario'>"
+//                                                        + "<i class='fa fa-eye'></i>"
+//                                                    + "</a>"   
+//                                                    + "<a href='/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/editarsector.jsp?_' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
+//                                                        + "<i class='fa fa-edit'></i>"
+//                                                    + "</a>"
+//                                                    + "<a href='#' rel='tooltip' title='' class='btn btn-danger btn-link btn-xs' data-original-title='Eliminar'>"
+//                                                        + "<i class='fa fa-times'></i>"
+//                                                    + "</a>"
+//                                                  + "</td>"
+//                                             + "</tr>");
+                    countRows++;
+
+                }
+                
+                
+                
+                JSONArray usuarioJson = new JSONArray();
+                usuarioJson.add(countRows);
+                usuarioJson.add(""+horaIngreso+":"+minutosIngreso+":"+segundosIngresos+"");
+                usuarioJson.add(""+horaSalida/salidaCount+"");
+                
+                response.getWriter().write(usuarioJson.toJSONString());
+                
+            }
+            
+        }catch(HibernateException ex){
+        
+            response.getWriter().write("500");
+            System.err.println(ex);
+        
+        }
+    
+    }
+    
+    //////// METODO PARA BUSCAR A LOS USUARIOS QUE SE VAN A LISTAR /////////
+    private List<Usuario> buscarUsuario(int cargo, int usuarioEnSesion){
+    
+        List<Usuario> listaUsuarios = null;
+        try{
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Query queryUsuario = sesion.createQuery("FROM Usuario WHERE Cargo="+cargo+" AND idUsuario != "+usuarioEnSesion+"");            
+            listaUsuarios = queryUsuario.list();
+                        
+        }catch(HibernateException ex){
+        
+            System.err.println(ex);
+        }
+        return listaUsuarios;
+    }
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

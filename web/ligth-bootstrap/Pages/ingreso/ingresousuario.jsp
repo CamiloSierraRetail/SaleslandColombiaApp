@@ -16,7 +16,7 @@
             <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute">
                 <div class="container">
                     <div class="navbar-wrapper">
-                        <a href="#" class="navbar-brand"><img style="height: 30px; white-space: 100px;" src="../../assets/img/imgCorp.png"></a>
+                        <a href="#" class="navbar-brand"><img style="height: 30px; white-space: 100px;" src="../../assets/img/LOGO_SALESLAND_NEGATIVO.png"></a>
                         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-bar burger-lines"></span>
                             <span class="navbar-toggler-bar burger-lines"></span>
@@ -40,8 +40,12 @@
                 </div>
             </nav>
             <!-- End Navbar -->
-            <div class="full-page lock-page" data-color="" data-image="../../assets/img/SpaceBackground.jpg">
+            <div class="full-page lock-page" data-color="" data-image="../../assets/img/defaultImage.jpg">
                 <!--   you can change the color of the filter page using: data-color="blue | azure | green | orange | red | purple" -->
+              
+                
+                
+                
                 <div class="content">
                     <div class="container">
                         <div class="col-md-4 ml-auto mr-auto">

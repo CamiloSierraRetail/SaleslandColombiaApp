@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!doctype html>
-<html lang="en">
+<html lang="es">
 
     <head>
         <%@include file="../../Pages/includes/cssInclude.jsp" %>
@@ -8,7 +8,6 @@
         
         <style>   
             /*/////////////// NO BORRAR, FUENTES PARA EL PRELOADER /////////////////////*/
-            @import url(https://fonts.googleapis.com/css?family=Montserrat+Alternates:400,700);
             @import url(https://fonts.googleapis.com/css?family=Eczar);            
         </style>        
     </head>
@@ -19,7 +18,7 @@
             <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute">
                 <div class="container">
                     <div class="navbar-wrapper">
-                        <a href="#" class="navbar-brand"><img style="height: 30px; white-space: 100px;" src="../../assets/img/imgCorp.png"></a>
+                        <a href="#" class="navbar-brand"><img style="height: 30px; white-space: 100px;" src="../../assets/img/LOGO_SALESLAND_NEGATIVO.png"></a>
                         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-bar burger-lines"></span>
                             <span class="navbar-toggler-bar burger-lines"></span>
@@ -43,7 +42,7 @@
                 </div>
             </nav>
             <!-- End Navbar -->
-            <div class="full-page  section-image" data-color="" data-image="../../assets/img/SpaceBackground.jpg">
+            <div class="full-page  section-image" data-color="" data-image="../../assets/img/defaultImage.jpg">
                 <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
                 <div class="content">
                     <div class="container">
@@ -85,7 +84,7 @@
                                     </div>
                                 </div>
                             </form>
-                        </div>                    
+                        </div>
                         <section id="container">
                             <div id="loader">
                                 <div class="rinkin_coffee">
@@ -94,7 +93,7 @@
                                     </span>
                                 </div>
                                 <span class="slogan">
-                                    #HastaLaLunaNoParamos
+                                    FIELD MARKETING - CONTACT CENTER
                                 </span>
                                 <div class="rectangle outlines">
                                     <span>S</span>

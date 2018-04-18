@@ -2037,6 +2037,31 @@ $("#cmbTipo").change(function (){
      
      
  }
+ 
+ /////////////////////////////////// FUNCION PARA CERGAR LOS PROMEDIOS PARA MONITOREAR A LOS EMPLEADOS ///////////////////
+ 
+ function cargarPromedioEmpleados(){
+     
+     $.post("/SaleslandColombiaApp/ingreso/cargarPromedioEmpleados", function (responseText){
+         
+        if (responseText == "500") {
+            
+            swal("Ocurrio un error", "Lo sentimos, los datos de los empleados no se lograron cargar, por favor intentalo nuevamente", "error");
+            
+        }else{
+            
+            var dt = JSON.parse(responseText); 
+            
+            $("#lblNumeroEmpleados").text(dt[0]);
+            $("#lblPromedioEntrada").text(dt[1]);
+            $("#lblPromedioSalida").text(dt[2]);
+            
+        }
+         
+     });
+     
+ }
+ 
 
 
 

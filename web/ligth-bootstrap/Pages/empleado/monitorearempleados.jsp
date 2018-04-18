@@ -1,12 +1,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="es">
     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <%@include file="../includes/cssInclude.jsp" %>
-        <title>Inicio - Salesland Colombia</title>
+        <title>Monitorear Empleados - Salesland Colombia</title>
     </head>
     <body>
-        
         <div class="wrapper">
             <!-- Include Nav Lateral  -->
             <%@include file="../includes/navLateral.jsp" %>
@@ -30,8 +30,8 @@
                                             </div>
                                             <div class="col-7">
                                                 <div class="numbers">
-                                                    <p class="card-category">Ingresos</p>
-                                                    <h4 class="card-title" id="numeroIngresos">0</h4>                                                    
+                                                    <p class="card-category">Número empleados</p>
+                                                    <h4 class="card-title" id="lblNumeroEmpleados">0</h4>                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -55,8 +55,8 @@
                                             </div>
                                             <div class="col-7">
                                                 <div class="numbers">
-                                                    <p class="card-category">Correctos</p>
-                                                    <h4 class="card-title" id="ingresosCorrectos">0</h4>
+                                                    <p class="card-category">Promedio Entrada</p>
+                                                    <h4 class="card-title" id="lblPromedioEntrada">0</h4>
                                                 </div>
                                             </div>
                                         </div>
@@ -80,8 +80,8 @@
                                             </div>
                                             <div class="col-7">
                                                 <div class="numbers">
-                                                    <p class="card-category">Erroneos</p>
-                                                    <h4 class="card-title" id="ingresosErroneos">0</h4>
+                                                    <p class="card-category">Promedio Salida</p>
+                                                    <h4 class="card-title" id="lblPromedioSalida">0</h4>
                                                 </div>
                                             </div>
                                         </div>
@@ -105,8 +105,8 @@
                                             </div>
                                             <div class="col-7">
                                                 <div class="numbers">
-                                                    <p class="card-category">A tiempo</p>
-                                                    <h4 class="card-title" id="ingresosJusto">0</h4>
+                                                    <p class="card-category">Promedio horas trabajadas</p>
+                                                    <h4 class="card-title" id="lblPromedioHorasTrabajadas">0</h4>
                                                 </div>
                                             </div>
                                         </div>
@@ -126,8 +126,8 @@
                                     <div class="col-md-8">
                                         <div class="card">
                                             <div class="card-header ">
-                                                <h4 class="card-title">Esta semana</h4>
-                                                <p class="card-category">En esta grafica se representa tu hora de entrada y salida cada dia a lo largo de la semana.</p>
+                                                <h4 class="card-title">Promedio semanal</h4>
+                                                <p class="card-category">Este es el promedio de entrada y salida de los empleados.</p>
                                             </div>
                                             <div class="card-body">
                                                 <div class="ct-chart ct-octave">
@@ -175,19 +175,25 @@
                 </div>
                 <!-- INCLUDE FOOTER -->
                 <%@include  file="../includes/footer.jsp" %>
+                                
             </div>
         </div>
+                
         <%@include file="../includes/jsInclude.jsp" %>
         <script>
-            
+
             $(document).ready(function (){
                 localStorage.imgPerfil = $("#imgPerfilNavLateral").val();
                 localStorage.name = $(".spanName").val();
-                $("#home").addClass("active");
-                $("#tituloPagina").text("Inicio");              
-                cargarPromedio();
-                loadWeeklyData($("#txtIdUsuario").val());
+                $("#empleadoItemNav").addClass("show");
+                $("#monitorearEmpleadosNav").addClass("active");
+                $("#tituloPagina").text("MONITOREAR EMPLEADOS");    
                 
+                cargarPromedioEmpleados();
+                
+                //cargarPromedio();
+                loadWeeklyData($("#txtIdUsuario").val());
+
                 var fullDate = new Date();
                 var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
                 var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
@@ -195,4 +201,4 @@
             });
         </script>
     </body>
-</html> 
+</html>
