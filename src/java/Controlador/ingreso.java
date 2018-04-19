@@ -126,7 +126,7 @@ public class ingreso extends HttpServlet {
                             }
                             
                             
-                            Ingreso objIngreso = new Ingreso(Dia, new Date(), new Date(), "Ingreso", "Lector", observacionIngreso, objUsuario);
+                            Ingreso objIngreso = new Ingreso(Dia, new Date(), new Date(), "Ingreso", "Lector", observacionIngreso, usuario.getHorario(), objUsuario);
                             sesion.beginTransaction();
                             sesion.save(objIngreso);
                             sesion.getTransaction().commit();
@@ -174,7 +174,7 @@ public class ingreso extends HttpServlet {
                                 
                                 if (ingreso.getTipo().equals("Ingreso")) {
                                     
-                                    Ingreso objIngreso = new Ingreso(Dia,new Date(), new Date(), "Salida", "Lector", observacionIngreso, objUsuario);
+                                    Ingreso objIngreso = new Ingreso(Dia,new Date(), new Date(), "Salida", "Lector", observacionIngreso, usuario.getHorario(), objUsuario);
                                     sesion.beginTransaction();
                                     sesion.save(objIngreso);
                                     sesion.getTransaction().commit();
@@ -286,7 +286,7 @@ public class ingreso extends HttpServlet {
             }else{
                 response.getWriter().write("undefined");
             }
-            
+            sesion.close();
         }catch(Exception e){
             response.getWriter().write("500");
             System.err.println(e);
@@ -399,6 +399,8 @@ public class ingreso extends HttpServlet {
             jsonIngresos.add(inDomingo+"/"+tipo+"/"+outDomingo+"/"+tipo1);
             
             response.getWriter().write(jsonIngresos.toJSONString());
+            
+            s.close();
         }
         catch(Exception ex){
             System.out.println(ex);
@@ -498,90 +500,53 @@ public class ingreso extends HttpServlet {
                     }
                     
                 }
-                int entradasCount = 0, salidaCount = 0;
-                int horaIngreso=0, minutosIngreso=0, segundosIngresos=0;
-                int horaSalida=0, minutosSalida=0, segundosSalida=0;
-                String query = "";
                 
+                String UsuariosQuery = "";            
+                int contador = 0;
                 
                 //////////// CONTINUARA.............
                 //int contador = 0
                 for(Usuario usuario : listaUsuario){
             
-                    
-                    
+                    if (contador == 0) {
                         
-                    Query queryPromedioIngresoUsuario = sesion.createQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM Ingreso WHERE Tipo='Ingreso' and Usuario="+usuario.getIdUsuario()+"");
-                    List<Object> listaIngreso = queryPromedioIngresoUsuario.list();
-                    for (Object datos : listaIngreso) {
-
+                        UsuariosQuery = "Usuario = "+usuario.getIdUsuario()+"";
+                        contador++;
                         
-                        String fecha[] = datos.toString().split(":");
-                        horaIngreso = (horaIngreso + Integer.parseInt(fecha[0])/2);
-                        minutosIngreso = (minutosIngreso + Integer.parseInt(fecha[1])/2);
-                        segundosIngresos = (segundosIngresos + Integer.parseInt(fecha[2])/2);
-                        System.out.println(datos);
-
+                    }else{
+                    
+                        UsuariosQuery = UsuariosQuery + " OR Usuario = "+usuario.getIdUsuario()+"";
+                    
                     }
-
-  
-                    Query queryPromedioSalidaUsuario = sesion.createSQLQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM ingreso WHERE Tipo='Salida' and Usuario="+usuario.getIdUsuario()+"");
-                    List<Object> listaSalida = queryPromedioSalidaUsuario.list();
-                    for (Object datos : listaSalida) {
-
-                        String fecha[] = datos.toString().split(":");
-                        
-                        if (horaSalida == 0) {
-                            horaSalida = Integer.parseInt(fecha[0]);
-                            System.out.println("PROMEDIO    "+datos +"    -----> "+usuario.getNombre()+"   " + horaSalida);
-                        }else{
-                        
-                            horaSalida = (horaSalida + Integer.parseInt(fecha[0]));
-                            minutosSalida = (minutosSalida + Integer.parseInt(fecha[1]));
-                            segundosSalida = (segundosSalida + Integer.parseInt(fecha[2]));                                                        
-                            
-                            System.out.println(datos);
-                            System.out.println("PROMEDIO    "+datos+"    -----> "+usuario.getNombre()+"   " + horaSalida);
-                            
-                        }
-                        salidaCount++;
-                    }
-                    
-//                    response.getWriter().write("<tr>"
-//                                                  + "<td class='text-center'>"+countRows+"</td>"
-//                                                  + "<td>"+usuario.getDocumento()+"</td>"
-//                                                  + "<td>"+usuario.getNombre()+" "+usuario.getApellido()+"</td>"
-//                                                  + "<td>"+usuario.getCelular()+"</td>"
-//                                                  + "<td>"+usuario.getEmail()+"</td>"
-//                                                  + "<td class='text-right'>"+usuario.getEstado()
-//
-//                                                  + "</td>"
-//                                                  + "<td class='td-actions text-right'>"
-//                                                    + "<a href='#' onclick='VerUsuariosTabla("+usuario.getIdUsuario()+")' data-toggle='modal' data-target='#modalVerUsuario' rel='tooltip' title='' class='btn btn-success btn-link btn-xs' data-original-title='Ver Usuario'>"
-//                                                        + "<i class='fa fa-eye'></i>"
-//                                                    + "</a>"   
-//                                                    + "<a href='/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/editarsector.jsp?_' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
-//                                                        + "<i class='fa fa-edit'></i>"
-//                                                    + "</a>"
-//                                                    + "<a href='#' rel='tooltip' title='' class='btn btn-danger btn-link btn-xs' data-original-title='Eliminar'>"
-//                                                        + "<i class='fa fa-times'></i>"
-//                                                    + "</a>"
-//                                                  + "</td>"
-//                                             + "</tr>");
                     countRows++;
-
                 }
                 
-                
+                Query queryPromedioIngresoUsuario = sesion.createQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM Ingreso WHERE Tipo='Ingreso' and "+UsuariosQuery+"");
+                List<Object> listaIngreso = queryPromedioIngresoUsuario.list();
+                for (Object datos : listaIngreso) {
+
+                    promedioEntrada = datos.toString();
+
+                }
+                Query queryPromedioSalidaUsuario = sesion.createSQLQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM ingreso WHERE Tipo='Salida' and "+UsuariosQuery+"");
+                List<Object> listaSalida = queryPromedioSalidaUsuario.list();
+                for (Object datos : listaSalida) {
+
+                    promedioSalida = datos.toString();
+                    
+                }
                 
                 JSONArray usuarioJson = new JSONArray();
                 usuarioJson.add(countRows);
-                usuarioJson.add(""+horaIngreso+":"+minutosIngreso+":"+segundosIngresos+"");
-                usuarioJson.add(""+horaSalida/salidaCount+"");
+                usuarioJson.add(""+promedioEntrada+"");
+                usuarioJson.add(""+promedioSalida+"");
+                //usuarioJson.add(""+promedio+"");
                 
                 response.getWriter().write(usuarioJson.toJSONString());
                 
             }
+            
+            sesion.close();
             
         }catch(HibernateException ex){
         

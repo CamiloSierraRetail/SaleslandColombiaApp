@@ -180,6 +180,8 @@ public class usuario extends HttpServlet {
                 
             }
             
+            sesion.close();
+            
         }catch(Exception e){
             System.err.println(e);
             response.getWriter().write("500");
@@ -271,6 +273,8 @@ public class usuario extends HttpServlet {
 
                 response.getWriter().write("404");
             }
+            
+            sesion.close();
         }catch(Exception e){
             System.err.println(e);
             response.getWriter().write("500");
@@ -501,6 +505,7 @@ public class usuario extends HttpServlet {
                 
             }
             
+            sesion.close();
         }catch(Exception e){
         
             System.err.println(e);
@@ -537,6 +542,8 @@ public class usuario extends HttpServlet {
             }else{
                 response.getWriter().write("1");
             }
+            
+            s.close();
         }catch(Exception ex){
             System.out.println(ex);
         }
@@ -565,7 +572,7 @@ public class usuario extends HttpServlet {
             
             request.getSession().setAttribute("UsuarioIngresado", objUsuario);
             response.getWriter().write("1");
-            
+            s.close();
         }catch(Exception ex){
             System.out.println(ex);
             response.getWriter().write("0");
@@ -601,6 +608,7 @@ public class usuario extends HttpServlet {
             
             response.getWriter().write(usuarioJson.toJSONString());
         
+            sesion.close();
         }catch(HibernateException ex){
         
             System.err.println(ex);

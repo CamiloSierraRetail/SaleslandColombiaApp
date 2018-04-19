@@ -85,6 +85,7 @@ public class sector extends HttpServlet {
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             Query query = sesion.createQuery("FROM Sector");                        
             List<Sector> listaSector = query.list();
+            sesion.close();
             
 //            Gson gson = new Gson();
 //            String json = gson.toJson(listaSector);
@@ -122,7 +123,7 @@ public class sector extends HttpServlet {
                 countRows++;
                 
             }
-        
+                    
         }catch(Exception e){
         
             System.err.println(e);

@@ -35,6 +35,9 @@ public class Ingreso {
     @Column(name = "Observacion")
     private String Observacion;
     
+    @Column(name = "Horario")
+    private String Horario;
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Usuario")
     private Usuario Usuario;
@@ -42,13 +45,14 @@ public class Ingreso {
     public Ingreso() {
     }
 
-    public Ingreso(String Dia, Date Fecha, Date Hora, String Tipo, String Modalidad, String Observacion, Usuario Usuario) {
+    public Ingreso(String Dia, Date Fecha, Date Hora, String Tipo, String Modalidad, String Observacion, String Horario, Usuario Usuario) {
         this.Dia = Dia;
         this.Fecha = Fecha;
         this.Hora = Hora;
         this.Tipo = Tipo;
         this.Modalidad = Modalidad;
         this.Observacion = Observacion;
+        this.Horario = Horario;
         this.Usuario = Usuario;
     }
 
@@ -108,6 +112,14 @@ public class Ingreso {
         this.Observacion = Observacion;
     }
 
+    public String getHorario() {
+        return Horario;
+    }
+
+    public void setHorario(String Horario) {
+        this.Horario = Horario;
+    }
+
     public Usuario getUsuario() {
         return Usuario;
     }
@@ -116,5 +128,6 @@ public class Ingreso {
         this.Usuario = Usuario;
     }
 
+   
     
 }

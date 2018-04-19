@@ -2055,6 +2055,7 @@ $("#cmbTipo").change(function (){
             $("#lblNumeroEmpleados").text(dt[0]);
             $("#lblPromedioEntrada").text(dt[1]);
             $("#lblPromedioSalida").text(dt[2]);
+            //$("#lblPromedioHorasTrabajadas").text(dt[3]);
             
         }
          

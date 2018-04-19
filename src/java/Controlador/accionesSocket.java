@@ -167,9 +167,9 @@ public class accionesSocket {
         
         Session sesion = HibernateUtil.getSessionFactory().openSession();
         Query queryUsuarios = sesion.createQuery("FROM Usuario WHERE Cargo="+idCargo+" AND idUsuario != "+idUsuario+"");
-        List<Usuario> listaUsuarios = queryUsuarios.list();       
-        return listaUsuarios;        
-    
+        List<Usuario> listaUsuarios = queryUsuarios.list();    
+        return listaUsuarios;  
+        
     }
     
     
@@ -255,8 +255,8 @@ public class accionesSocket {
     private void getJsonUsuarios(List<Usuario> listaUsuarios, String fecha){
     
         
-        for(Usuario usuario : listaUsuarios){
-                    
+        for(Usuario usuario : listaUsuarios){                    
+            
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             String entrada = "Ingreso: 1970-01-0 00:00:00", salida = "Salida: 1970-01-0 00:00:00";
 
