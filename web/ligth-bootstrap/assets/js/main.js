@@ -2063,6 +2063,26 @@ $("#cmbTipo").change(function (){
      
  }
  
+ 
+ /////////////////// FUNCION PARA CARGAR EL MODAL DEL PROMEDIO DE INGRESOS /////////////////////////////////////
+$(".cargarPromedioEntrada").click(function (){
+    
+    $("#lblTituloPromedio").text("PROMEDIO DE ENTRADA");
+    
+    $.post("/SaleslandColombiaApp/ingreso/cargarPromedios",{Accion:"Entrada"},function (responseText) {
+        alert(responseText);
+        var dt = JSON.parse(responseText); 
+        alert(dt);
+        
+    });
+    
+    alert("promedio Entrdad");
+});
 
-
+ /////////////////// FUNCION PARA CARGAR EL MODAL DEL PROMEDIO DE INGRESOS /////////////////////////////////////
+ $(".cargarPromedioSalida").click(function (){
+     
+     $("#lblTituloPromedio").text("PROMEDIO DE SALIDA");
+    alert("promedio salida");
+ });
 

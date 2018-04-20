@@ -56,7 +56,7 @@
                                                     <table class="table table-hover">
                                                         <tbody>
                                                             
-                                                            <tr style="cursor: pointer" data-toggle="modal" data-target="#modalEntrada">
+                                                            <tr class="cargarPromedioEntrada" style="cursor: pointer" data-toggle="modal" data-target="#modalPromedios">
                                                                 <td>
                                                                     <div class="flag">
                                                                         <i class="material-icons" style="color: #FFA534">brightness_5</i>
@@ -71,7 +71,7 @@
                                                                 </td>
                                                             </tr>
                                                             
-                                                            <tr style="cursor: pointer" data-toggle="modal" data-target="#modalSalida">
+                                                            <tr class="cargarPromedioSalida" style="cursor: pointer" data-toggle="modal" data-target="#modalPromedios">
                                                                 <td>
                                                                     <div class="flag">
                                                                         <i class="material-icons" style="color: #006A84">brightness_3</i>
@@ -120,7 +120,7 @@
                 <%@include  file="../includes/footer.jsp" %>
                 
                 <!-- Mini Modal -->
-                <div class="modal fade modal-primary" id="modalEntrada" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal fade modal-primary" id="modalPromedios" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">                        
                         <div class="modal-content">                                                        
                             <div class="modal-body text-center">
@@ -129,7 +129,7 @@
                                     <div class="col-md-12">
                                         <div class="card card-wizard">
                                             <div class="card-header ">
-                                                <h4 class="card-title text-center">PROMEDIO DE ENTRADA</h4>                                                
+                                                <h4 class="card-title text-center" id="lblTituloPromedio">PROMEDIO DE ENTRADA</h4>                                                
                                             </div>
                                             <div class="card-body ">
                                                 <ul class="nav nav-tabs nav-pills">
@@ -236,26 +236,6 @@
                 </div>
                 <!--  End Modal -->
                 
-                <!-- Mini Modal -->
-                <div class="modal fade modal-mini modal-primary" id="modalSalida" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header justify-content-center">
-                                <div class="modal-profile">
-                                    <i class="material-icons" style="color: #006A84">brightness_3</i>
-                                </div>
-                            </div>
-                            <div class="modal-body text-center">
-                                <p>Modal Salida</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-link btn-simple">Back</button>
-                                <button type="button" class="btn btn-link btn-simple" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--  End Modal -->
                 
                 <!-- Mini Modal -->
                 <div class="modal fade modal-mini modal-primary" id="modalHorasTrabajadas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

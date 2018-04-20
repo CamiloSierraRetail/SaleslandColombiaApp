@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +24,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 
 public class ingreso extends HttpServlet {
@@ -58,6 +60,10 @@ public class ingreso extends HttpServlet {
                     break;
                 case "cargarPromedioEmpleados" :
                     cargarPromedioEmpleados(request, response);
+                    break;
+                case "cargarPromedios":
+                    cargarPromedios(request, response);
+                    
                     break;
                 default:
                     response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/ingreso/ingresousuario.jsp");
@@ -453,6 +459,8 @@ public class ingreso extends HttpServlet {
     
         try{
     
+            String UsuariosQuery = "";            
+            int contador = 0;
             int countRows = 1;
             List<Usuario> listaUsuario = null;     
             Usuario objUsuario = (Usuario) request.getSession().getAttribute("UsuarioIngresado");
@@ -460,6 +468,8 @@ public class ingreso extends HttpServlet {
             
             String promedioEntrada = "", promedioSalida = "";
             
+            
+            /////////////////////////////// DIRECTOR ////////////////////////////////////////////////////////////
             if (objUsuario.getCargo().getTipo().equals("Director")) {
                 
                 Query querySector_Cargo = sesion.createQuery("FROM Sector_Cargo WHERE Cargo="+objUsuario.getCargo().getIdCargo()+"");
@@ -501,11 +511,164 @@ public class ingreso extends HttpServlet {
                     
                 }
                 
-                String UsuariosQuery = "";            
-                int contador = 0;
                 
-                //////////// CONTINUARA.............
-                //int contador = 0
+                
+                for(Usuario usuario : listaUsuario){
+            
+                    if (contador == 0) {
+                        
+                        UsuariosQuery = "Usuario = "+usuario.getIdUsuario()+"";
+                        contador++;
+                        
+                    }else{
+                    
+                        UsuariosQuery = UsuariosQuery + " OR Usuario = "+usuario.getIdUsuario()+"";
+                    
+                    }
+                    countRows++;
+                }
+                
+                Query queryPromedioIngresoUsuario = sesion.createQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM Ingreso WHERE Tipo='Ingreso' and "+UsuariosQuery+"");
+                List<Object> listaIngreso = queryPromedioIngresoUsuario.list();
+                for (Object datos : listaIngreso) {
+
+                    promedioEntrada = datos.toString();
+
+                }
+                Query queryPromedioSalidaUsuario = sesion.createSQLQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM ingreso WHERE Tipo='Salida' and "+UsuariosQuery+"");
+                List<Object> listaSalida = queryPromedioSalidaUsuario.list();
+                for (Object datos : listaSalida) {
+
+                    promedioSalida = datos.toString();
+                    
+                }
+                
+                JSONArray usuarioJson = new JSONArray();
+                usuarioJson.add(countRows);
+                usuarioJson.add(""+promedioEntrada+"");
+                usuarioJson.add(""+promedioSalida+"");
+                //usuarioJson.add(""+promedio+"");
+                
+                response.getWriter().write(usuarioJson.toJSONString());
+                
+                
+            /////////////////////////////// JEFE DE CANAL - COORDINADOR DE CANAL ////////////////////////////////////////////////////////////
+            }else if (objUsuario.getCargo().getTipo().equals("JefeCanal") || objUsuario.getCargo().getTipo().equals("CoordinadorCanal")) {
+                
+                Query queryCanalCargo1 = sesion.createQuery("FROM Canal_Cargo WHERE Cargo = "+objUsuario.getCargo().getIdCargo()+"");
+                List<Canal_Cargo> listaCanal_Cargo1 = queryCanalCargo1.list();
+                for(Canal_Cargo canal_cargo1 : listaCanal_Cargo1){
+                
+                    Query queryCanal_Cargo = sesion.createQuery("FROM Canal_Cargo WHERE Canal = "+canal_cargo1.getCanal().getIdCanal()+"");
+                    List<Canal_Cargo> listaCanal_Cargo = queryCanal_Cargo.list();
+                    
+                    for(Canal_Cargo canal_cargo : listaCanal_Cargo){                        
+                        
+                        if (objUsuario.getCargo().getTipo().equals("CoordinadorCanal") && canal_cargo.getCargo().getTipo().equals("JefeCanal")) {
+                            
+                            ///////////////////////////// ELIMINAR ESTE IF, OPTIMIZAR CODE /////////////////////////////
+                            System.out.println("jejefesote xd alv");
+                            
+                        }else{
+                        
+                            List<Usuario> listaUsuariosBuscados = buscarUsuario(canal_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario());
+                        
+                            if (listaUsuario == null) {
+
+                                listaUsuario = listaUsuariosBuscados;
+
+                            }else{
+                                listaUsuario.addAll(listaUsuariosBuscados);
+
+                            }
+                            
+                        }
+                        
+                    }
+
+                    Query queryArea = sesion.createQuery("FROM Area WHERE Canal = "+canal_cargo1.getCanal().getIdCanal()+"");
+                    List<Area> listaArea = queryArea.list();
+                    System.out.println("AREA AREA AREa aREA AREA arEAR arEA ARAEARARAERAEARAEARAEAREARAEARAE          " + listaArea.size());
+                    for(Area area : listaArea){
+
+                        Query queryArea_Cargo = sesion.createQuery("FROM Area_Cargo WHERE Area="+area.getIdArea()+"");
+                        List<Area_Cargo> listaArea_Cargo = queryArea_Cargo.list();
+                        for(Area_Cargo area_cargo : listaArea_Cargo){
+
+                            listaUsuario.addAll(buscarUsuario(area_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario()));
+
+                        }
+
+                    }
+                    
+                }
+                
+                for(Usuario usuario : listaUsuario){
+            
+                    if (contador == 0) {
+                        
+                        UsuariosQuery = "Usuario = "+usuario.getIdUsuario()+"";
+                        contador++;
+                        
+                    }else{
+                    
+                        UsuariosQuery = UsuariosQuery + " OR Usuario = "+usuario.getIdUsuario()+"";
+                    
+                    }
+                    countRows++;
+                }
+                
+                Query queryPromedioIngresoUsuario = sesion.createQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM Ingreso WHERE Tipo='Ingreso' and "+UsuariosQuery+"");
+                List<Object> listaIngreso = queryPromedioIngresoUsuario.list();
+                for (Object datos : listaIngreso) {
+
+                    promedioEntrada = datos.toString();
+
+                }
+                Query queryPromedioSalidaUsuario = sesion.createSQLQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM ingreso WHERE Tipo='Salida' and "+UsuariosQuery+"");
+                List<Object> listaSalida = queryPromedioSalidaUsuario.list();
+                for (Object datos : listaSalida) {
+
+                    promedioSalida = datos.toString();
+                    
+                }
+                
+                JSONArray usuarioJson = new JSONArray();
+                usuarioJson.add(countRows);
+                usuarioJson.add(""+promedioEntrada+"");
+                usuarioJson.add(""+promedioSalida+"");
+                //usuarioJson.add(""+promedio+"");
+                
+                response.getWriter().write(usuarioJson.toJSONString());
+                
+                
+            /////////////////////////////// JEFE DE AREA ////////////////////////////////////////////////////////////
+            }else if (objUsuario.getCargo().getTipo().equals("JefeArea")) {
+            
+                Query queryArea_Cargo1 = sesion.createQuery("FROM Area_Cargo WHERE Cargo="+objUsuario.getCargo().getIdCargo()+"");
+                List<Area_Cargo> listaArea_Cargo1 = queryArea_Cargo1.list();
+                for(Area_Cargo area_cargo1 : listaArea_Cargo1){
+                
+                    Query queryArea_Cargo = sesion.createQuery("FROM Area_Cargo WHERE Area="+area_cargo1.getArea().getIdArea()+"");
+                    List<Area_Cargo> listaArea_Cargo = queryArea_Cargo.list();
+                    for(Area_Cargo area_cargo : listaArea_Cargo){
+                        
+                        
+                        List<Usuario> listaUsuariosBuscados = buscarUsuario(area_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario());
+                            
+                        if (listaUsuario == null) {
+
+                            listaUsuario = listaUsuariosBuscados;
+
+                        }else{
+                            listaUsuario.addAll(listaUsuariosBuscados);
+
+                        }
+                         
+                    }
+                
+                }
+                
                 for(Usuario usuario : listaUsuario){
             
                     if (contador == 0) {
@@ -571,6 +734,113 @@ public class ingreso extends HttpServlet {
             System.err.println(ex);
         }
         return listaUsuarios;
+    }
+    
+    
+    ///////////////////////////// METODO PARA CARGAR LOS PROMEDIO DE ENTRADA Y SALIDA DE LOS USUARIOS ////////////////////
+    protected void cargarPromedios(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+        
+        try{
+        
+            String accion = request.getParameter("Accion");
+            String UsuariosQuery = "";            
+            int contador = 0;
+            int countRows = 1;
+            List<Usuario> listaUsuario = null;     
+            Usuario objUsuario = (Usuario) request.getSession().getAttribute("UsuarioIngresado");
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            
+            /////////////////////////////// DIRECTOR ////////////////////////////////////////////////////////////
+            if (objUsuario.getCargo().getTipo().equals("Director")) {
+                
+                Query querySector_Cargo = sesion.createQuery("FROM Sector_Cargo WHERE Cargo="+objUsuario.getCargo().getIdCargo()+"");
+                List<Sector_Cargo> listaSector_Cargo = querySector_Cargo.list();
+                for(Sector_Cargo sector_cargo : listaSector_Cargo){
+                
+                    listaUsuario = buscarUsuario(sector_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario());
+                    
+                    
+                    Query queryCanal = sesion.createQuery("FROM Canal WHERE Sector="+sector_cargo.getSector().getIdSector()+"");
+                    List<Canal> listaCanal = queryCanal.list();
+                    for(Canal canal : listaCanal){
+                    
+                        Query queryCanal_Cargo = sesion.createQuery("FROM Canal_Cargo WHERE Canal="+canal.getIdCanal()+"");
+                        List<Canal_Cargo> listaCanal_Cargo = queryCanal_Cargo.list();
+                        for(Canal_Cargo canal_cargo : listaCanal_Cargo){
+                        
+                            listaUsuario.addAll(buscarUsuario(canal_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario()));
+                            
+                        }
+                        
+                        Query queryArea = sesion.createQuery("FROM Area WHERE Canal="+canal.getIdCanal()+"");
+                        List<Area> listaArea = queryArea.list();
+                        for(Area area : listaArea){
+                        
+                            Query queryArea_Cargo = sesion.createQuery("FROM Area_Cargo WHERE Area = "+area.getIdArea()+"");
+                            List<Area_Cargo> listaArea_Cargo = queryArea_Cargo.list();
+                            for(Area_Cargo area_cargo : listaArea_Cargo){
+                            
+                                System.out.println("***************************************   area arae arae    ------>    " + listaArea_Cargo.size() + "          -------------------------   " + area_cargo.getCargo().getNombreCargo() + " /////////////////////    " + canal.getNombreCanal());
+                                
+                                listaUsuario.addAll(buscarUsuario(area_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario()));
+                            
+                            }
+                        
+                        }
+                    
+                    }
+                    
+                }
+                
+                
+                
+                for(Usuario usuario : listaUsuario){
+            
+                    if (contador == 0) {
+                        
+                        UsuariosQuery = "Usuario = "+usuario.getIdUsuario()+"";
+                        contador++;
+                        
+                    }else{
+                    
+                        UsuariosQuery = UsuariosQuery + " OR Usuario = "+usuario.getIdUsuario()+"";
+                    
+                    }
+                    countRows++;
+                }
+                                               
+                
+                Query queryUsuarios = sesion.createQuery("SELECT ingreso.Usuario, Usuario.Foto, Usuario.Nombre, Usuario.Apellido, ingreso.Hora, SEC_TO_TIME(AVG(TIME_TO_SEC(ingreso.Hora))) as Promedio_Ingreso FROM Ingreso as ingreso INNER JOIN Usuario WHERE "+UsuariosQuery+" AND ingreso.Horario = 'A' AND ingreso.Tipo = '"+accion+"' GROUP BY ingreso.Usuario ORDER BY Promedio_Ingreso DESC");
+                queryUsuarios.setMaxResults(3);
+                ArrayList<String> listaSalida = (ArrayList) queryUsuarios.list();
+                JSONArray usuarioJson = new JSONArray();
+                
+                
+              
+                String dato = "";
+                
+                for (Object datos : listaSalida) {
+                   
+                    dato = datos.toString();
+                    usuarioJson.add(dato);
+
+                }
+                
+                response.getWriter().write(usuarioJson.toJSONString());
+                
+                
+            /////////////////////////////// JEFE DE CANAL - COORDINADOR DE CANAL ////////////////////////////////////////////////////////////
+            }
+            
+            
+            sesion.close();
+        }catch(Exception ex){
+        
+            response.getWriter().write("500");
+            System.err.println(ex);
+        }
+    
     }
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
