@@ -65,6 +65,10 @@ public class ingreso extends HttpServlet {
                     cargarPromedios(request, response);
                     
                     break;
+                case "cargarChartPeomedioEmpleados":
+                    cargarChartPeomedioEmpleados(request, response);
+                    
+                    break;
                 default:
                     response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/ingreso/ingresousuario.jsp");
             }
@@ -743,7 +747,12 @@ public class ingreso extends HttpServlet {
         
         try{
         
+            // HORARIO A O B
+            String tipoHorario = request.getParameter("Horario");
+            System.out.println(tipoHorario);
+            // LA ACCION PUEDE SER ENTRADA Y SALIDA
             String accion = request.getParameter("Accion");
+            System.out.println(accion);
             String UsuariosQuery = "";            
             int contador = 0;
             int countRows = 1;
@@ -811,20 +820,28 @@ public class ingreso extends HttpServlet {
                 }
                                                
                 
-                Query queryUsuarios = sesion.createQuery("SELECT ingreso.Usuario, Usuario.Foto, Usuario.Nombre, Usuario.Apellido, ingreso.Hora, SEC_TO_TIME(AVG(TIME_TO_SEC(ingreso.Hora))) as Promedio_Ingreso FROM Ingreso as ingreso INNER JOIN Usuario WHERE "+UsuariosQuery+" AND ingreso.Horario = 'A' AND ingreso.Tipo = '"+accion+"' GROUP BY ingreso.Usuario ORDER BY Promedio_Ingreso DESC");
-                queryUsuarios.setMaxResults(3);
-                ArrayList<String> listaSalida = (ArrayList) queryUsuarios.list();
-                JSONArray usuarioJson = new JSONArray();
+                JSONArray usuarioJson = new JSONArray();                
+                Query queryIngreso = sesion.createQuery("FROM Ingreso WHERE (Horario = '"+tipoHorario+"' AND Tipo = '"+accion+"' AND ("+UsuariosQuery+")) GROUP BY Usuario ORDER BY SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) DESC");
+                queryIngreso.setMaxResults(3);
+                List<Ingreso> listaIngreso = queryIngreso.list();
+                for(Ingreso ingreso : listaIngreso){
                 
-                
-              
-                String dato = "";
-                
-                for (Object datos : listaSalida) {
-                   
-                    dato = datos.toString();
-                    usuarioJson.add(dato);
+                    String nombre [] = ingreso.getUsuario().getNombre().split(" ");
+                    String apellido [] = ingreso.getUsuario().getApellido().split(" ");
+                    
+                    usuarioJson.add(ingreso.getUsuario().getIdUsuario());
+                    usuarioJson.add(ingreso.getUsuario().getFoto());
+                    usuarioJson.add(nombre[0]);
+                    usuarioJson.add(apellido[0]);
+                    
+                    Query queryPromedioUsuario = sesion.createQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM Ingreso WHERE Tipo='"+accion+"' AND Usuario = "+ingreso.getUsuario().getIdUsuario()+"");                    
+                    List<Object> promedioUsuario = queryPromedioUsuario.list();
+                    for (Object datos : promedioUsuario) {
 
+                        usuarioJson.add(datos.toString());
+
+                    }
+                    
                 }
                 
                 response.getWriter().write(usuarioJson.toJSONString());
@@ -833,7 +850,7 @@ public class ingreso extends HttpServlet {
             /////////////////////////////// JEFE DE CANAL - COORDINADOR DE CANAL ////////////////////////////////////////////////////////////
             }
             
-            
+            ////////////// PENDIENTE POR HACER LOS OTROS USUARIOS
             sesion.close();
         }catch(Exception ex){
         
@@ -841,6 +858,92 @@ public class ingreso extends HttpServlet {
             System.err.println(ex);
         }
     
+    }
+    protected void cargarChartPeomedioEmpleados(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    
+        try{
+            String Accion = request.getParameter("Accion");
+            String Horario = request.getParameter("Horario");
+            String UsuariosQuery = "";            
+            int contador = 0;
+            int countRows = 1;
+            List<Usuario> listaUsuario = null;     
+            Usuario objUsuario = (Usuario) request.getSession().getAttribute("UsuarioIngresado");
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            
+            /////////////////////////////// DIRECTOR ////////////////////////////////////////////////////////////
+            if (objUsuario.getCargo().getTipo().equals("Director")) {
+                
+                Query querySector_Cargo = sesion.createQuery("FROM Sector_Cargo WHERE Cargo="+objUsuario.getCargo().getIdCargo()+"");
+                List<Sector_Cargo> listaSector_Cargo = querySector_Cargo.list();
+                for(Sector_Cargo sector_cargo : listaSector_Cargo){
+                
+                    listaUsuario = buscarUsuario(sector_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario());
+                    
+                    
+                    Query queryCanal = sesion.createQuery("FROM Canal WHERE Sector="+sector_cargo.getSector().getIdSector()+"");
+                    List<Canal> listaCanal = queryCanal.list();
+                    for(Canal canal : listaCanal){
+                    
+                        Query queryCanal_Cargo = sesion.createQuery("FROM Canal_Cargo WHERE Canal="+canal.getIdCanal()+"");
+                        List<Canal_Cargo> listaCanal_Cargo = queryCanal_Cargo.list();
+                        for(Canal_Cargo canal_cargo : listaCanal_Cargo){
+                        
+                            listaUsuario.addAll(buscarUsuario(canal_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario()));
+                            
+                        }
+                        
+                        Query queryArea = sesion.createQuery("FROM Area WHERE Canal="+canal.getIdCanal()+"");
+                        List<Area> listaArea = queryArea.list();
+                        for(Area area : listaArea){
+                        
+                            Query queryArea_Cargo = sesion.createQuery("FROM Area_Cargo WHERE Area = "+area.getIdArea()+"");
+                            List<Area_Cargo> listaArea_Cargo = queryArea_Cargo.list();
+                            for(Area_Cargo area_cargo : listaArea_Cargo){
+                                                            
+                                listaUsuario.addAll(buscarUsuario(area_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario()));
+                            
+                            }
+                        
+                        }
+                    
+                    }
+                    
+                }
+            }
+        
+            for(Usuario usuario : listaUsuario){
+            
+                if (contador == 0) {
+
+                    UsuariosQuery = "Usuario = "+usuario.getIdUsuario()+"";
+                    contador++;
+
+                }else{
+
+                    UsuariosQuery = UsuariosQuery + " OR Usuario = "+usuario.getIdUsuario()+"";
+
+                }
+                countRows++;
+            }
+            
+            JSONArray usuarioJson = new JSONArray();
+            Query queryPromedioChartUsuarios = sesion.createQuery("SELECT COUNT(Observacion) FROM Ingreso WHERE Tipo = '"+Accion+"' AND Horario = '"+Horario+"' GROUP BY Observacion");
+            List<Object> listaIngreso = queryPromedioChartUsuarios.list();
+            for (Object datos : listaIngreso) {
+
+                usuarioJson.add(datos);
+
+            }
+            sesion.close();
+            response.getWriter().write(usuarioJson.toJSONString());
+            
+        }catch(Exception ex){
+        
+            System.err.println(ex);
+            response.getWriter().write("500");
+        }
     }
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

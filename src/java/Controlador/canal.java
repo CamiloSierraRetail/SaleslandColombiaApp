@@ -125,7 +125,7 @@ public class canal extends HttpServlet {
                 countRows++;
                 
             }
-            
+            sesion.close();
         }catch(Exception e){
             System.err.println(e);
             response.getWriter().write("500");
@@ -154,6 +154,8 @@ public class canal extends HttpServlet {
                 canalJson.add(canal.getSector().getEstado());
                 
             }
+            
+            sesion.close();
             response.getWriter().write(canalJson.toJSONString());
             
         }catch(Exception e){
@@ -244,6 +246,7 @@ public class canal extends HttpServlet {
                 canalJson.add(canal.getIdCanal());
                 canalJson.add(canal.getNombreCanal());            
             }
+            sesion.close();
             response.getWriter().write(canalJson.toJSONString());    
         }catch(Exception e){
         
@@ -273,7 +276,7 @@ public class canal extends HttpServlet {
                 canalJson.add(canal.getNombreCanal());
                 
             }
-            
+            sesion.close();
             response.getWriter().write(canalJson.toJSONString());
             
         }catch(Exception e){

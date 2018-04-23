@@ -1,11 +1,8 @@
 
 package Controlador;
 
-import Controlador.HibernateUtil;
 import Modelo.Area;
 import Modelo.Canal;
-import Modelo.Sector;
-import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -15,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 
 public class area extends HttpServlet {
@@ -162,7 +157,7 @@ public class area extends HttpServlet {
                 countRows++;
                 
             }
-            
+            sesion.close();
         }catch(Exception e){
             System.err.println(e);
             response.getWriter().write("500");
@@ -191,6 +186,9 @@ public class area extends HttpServlet {
                 canalJson.add(area.getCanal().getNombreCanal());
                 
             }
+            
+            sesion.close();
+            
             response.getWriter().write(canalJson.toJSONString());
             
         }catch(Exception e){
@@ -249,6 +247,8 @@ public class area extends HttpServlet {
                 areaJson.add(area.getIdArea());
                 areaJson.add(area.getNombreArea());            
             }
+            sesion.close();
+            
             response.getWriter().write(areaJson.toJSONString());    
         }catch(Exception e){
         
@@ -274,7 +274,7 @@ public class area extends HttpServlet {
                 areaJson.add(area.getIdArea());
                 areaJson.add(area.getNombreArea());
             }
-            
+            sesion.close();
             response.getWriter().write(areaJson.toJSONString());
         
         }catch(Exception e){

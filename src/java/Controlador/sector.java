@@ -123,7 +123,7 @@ public class sector extends HttpServlet {
                 countRows++;
                 
             }
-                    
+            sesion.close();
         }catch(Exception e){
         
             System.err.println(e);
@@ -144,6 +144,7 @@ public class sector extends HttpServlet {
             String json = gson.toJson(listaSector);
             response.getWriter().write(json);
             
+            sesion.close();
         
         }catch(Exception e){
             System.err.println(e);
@@ -258,6 +259,7 @@ public class sector extends HttpServlet {
             String json = gson.toJson(listaSector);
             response.getWriter().write(json);
             
+            sesion.close();
         }catch(Exception e){
         
             System.err.println(e);

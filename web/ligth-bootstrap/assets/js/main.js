@@ -2068,21 +2068,242 @@ $("#cmbTipo").change(function (){
 $(".cargarPromedioEntrada").click(function (){
     
     $("#lblTituloPromedio").text("PROMEDIO DE ENTRADA");
+    cargarChartPeomedioEmpleados();
+    $.post("/SaleslandColombiaApp/ingreso/cargarPromedios",{Accion:"Ingreso", Horario:"A"},function (responseText) {
+        
+        if (responseText == "500") {
+            
+            swal("Ocurrio un error", "Lo sentimos, los datos de los empleados no se lograron cargar, por favor intentalo nuevamente", "error");
+            
+        }else{
+            var contador = 0;
+            var dt = JSON.parse(responseText);            
+            $("#tblIngresoHA").html("");
+            for (var i = 0, max = dt.length; i < max; i++) {
+                
+                if (contador == 0) {
+                    
+                    $("#tblIngresoHA").append("<tr>"
+                                            +"<td>"
+                                                +"<div class='flag'>"
+                                                    +"<img style='height: 40px; width: 40px; border-radius: 50%;' src='../../assets/img/imagenesDePerfil/"+dt[i+1]+"'>"
+                                                +"</div>"
+                                            +"</td>"
+                                            +"<td>"
+                                                +""+dt[i+2]+" "+dt[i+3]+""
+                                            +"</td>"                                            
+                                            +"<td>"+dt[i+4]+"</dt>"
+                                       +"</tr>");
+                    contador++;
+                }else if (contador == 4) {
+                    
+                    contador = 0;
+                }else{
+                    
+                    contador++;
+                }                
+            }                        
+        }        
+    });
     
-    $.post("/SaleslandColombiaApp/ingreso/cargarPromedios",{Accion:"Entrada"},function (responseText) {
-        alert(responseText);
-        var dt = JSON.parse(responseText); 
-        alert(dt);
+    
+    $.post("/SaleslandColombiaApp/ingreso/cargarPromedios",{Accion:"Ingreso", Horario:"B"},function (responseText) {
+        
+        if (responseText == "500") {
+            
+            swal("Ocurrio un error", "Lo sentimos, los datos de los empleados no se lograron cargar, por favor intentalo nuevamente", "error");
+            
+        }else{
+            var contador = 0;
+            var dt2 = JSON.parse(responseText);            
+            $("#tblIngresoHB").html("");            
+            for (var i = 0, max = dt2.length; i < max; i++) {
+                $("#tblIngresoHB").append("que le den ");
+                if (contador == 0) {
+                    
+                    $("#tblIngresoHB").append("<tr>"
+                                            +"<td>"
+                                                +"<div class='flag'>"
+                                                    +"<img style='height: 40px; width: 40px; border-radius: 50%;' src='../../assets/img/imagenesDePerfil/"+dt2[i+1]+"'>"
+                                                +"</div>"
+                                            +"</td>"
+                                            +"<td>"
+                                                +""+dt2[i+2]+" "+dt2[i+3]+""
+                                            +"</td>"                                            
+                                            +"<td>"+dt2[i+4]+"</dt>"
+                                       +"</tr>");
+                    contador++;
+                }else if (contador == 4) {
+                    
+                    contador = 0;
+                }else{
+                    
+                    contador++;
+                }                
+            }
+        }        
+    });
+    
+});
+
+function cargarChartPeomedioEmpleados(){
+    alert("lolllll");
+    $.post("/SaleslandColombiaApp/ingreso/cargarChartPeomedioEmpleados",{Accion:"Ingreso", Horario:"A"},function (responseText) {
+        alert("yes");
+       alert(responseText);
+        if (responseText == "500") {
+            
+            swal("Ocurrio un error", "Lo sentimos, los datos de los empleados no se lograron cargar, por favor intentalo nuevamente", "error");
+        }else{
+            
+            var dt = JSON.parse(responseText);
+            
+            var total = dt[0] + dt[1] + dt[2];
+            
+            
+            var correctosPorcentaje = Math.round((dt[0]/total)*100);
+            var erroneosPorcentaje = Math.round((dt[1]/total)*100); 
+            var justoPorcentaje = Math.round((dt[2]/total)*100);
+
+            var chart = new Chartist.Pie('#chartPromedioHorarios', {
+              series: [correctosPorcentaje, erroneosPorcentaje, justoPorcentaje],
+              labels: ["%"+correctosPorcentaje+"", "%"+erroneosPorcentaje+"", "%"+justoPorcentaje+""]
+            }, {
+              donut: true,
+              showLabel: true,
+              donutWidth: 50  
+            });
+
+            chart.on('draw', function(data) {
+              if(data.type === 'slice') {
+                // Get the total path length in order to use for dash array animation
+                var pathLength = data.element._node.getTotalLength();
+
+                // Set a dasharray that matches the path length as prerequisite to animate dashoffset
+                data.element.attr({
+                  'stroke-dasharray': pathLength + 'px ' + pathLength + 'px'
+                });
+
+                // Create animation definition while also assigning an ID to the animation for later sync usage
+                var animationDefinition = {
+                  'stroke-dashoffset': {
+                    id: 'anim' + data.index,
+                    dur: 1900,
+                    from: -pathLength + 'px',
+                    to:  '0px',
+                    easing: Chartist.Svg.Easing.easeOutQuint,
+                    // We need to use `fill: 'freeze'` otherwise our animation will fall back to initial (not visible)
+                    fill: 'freeze'
+                  }
+                };
+
+                // If this was not the first slice, we need to time the animation so that it uses the end sync event of the previous animation
+                if(data.index !== 0) {
+                  animationDefinition['stroke-dashoffset'].begin = 'anim' + (data.index - 1) + '.end';
+                }
+
+                // We need to set an initial value before the animation starts as we are not in guided mode which would do that for us
+                data.element.attr({
+                  'stroke-dashoffset': -pathLength + 'px'
+                });
+
+                // We can't use guided mode as the animations need to rely on setting begin manually
+                // See http://gionkunz.github.io/chartist-js/api-documentation.html#chartistsvg-function-animate
+                data.element.animate(animationDefinition, false);
+              }
+            });
+            
+            
+            
+            console.log(dt);
+            
+        }
         
     });
     
-    alert("promedio Entrdad");
-});
+}
+
+
 
  /////////////////// FUNCION PARA CARGAR EL MODAL DEL PROMEDIO DE INGRESOS /////////////////////////////////////
  $(".cargarPromedioSalida").click(function (){
      
-     $("#lblTituloPromedio").text("PROMEDIO DE SALIDA");
-    alert("promedio salida");
+    $("#lblTituloPromedio").text("PROMEDIO DE SALIDA");
+        
+    $.post("/SaleslandColombiaApp/ingreso/cargarPromedios",{Accion:"Salida", Horario:"A"},function (responseText) {
+        
+        if (responseText == "500") {
+            
+            swal("Ocurrio un error", "Lo sentimos, los datos de los empleados no se lograron cargar, por favor intentalo nuevamente", "error");
+            
+        }else{
+            var contador = 0;
+            var dt = JSON.parse(responseText);            
+            $("#tblIngresoHA").html("");
+            for (var i = 0, max = dt.length; i < max; i++) {
+                
+                if (contador == 0) {
+                    
+                    $("#tblIngresoHA").append("<tr>"
+                                            +"<td>"
+                                                +"<div class='flag'>"
+                                                    +"<img style='height: 40px; width: 40px; border-radius: 50%;' src='../../assets/img/imagenesDePerfil/"+dt[i+1]+"'>"
+                                                +"</div>"
+                                            +"</td>"
+                                            +"<td>"
+                                                +""+dt[i+2]+" "+dt[i+3]+""
+                                            +"</td>"                                            
+                                            +"<td>"+dt[i+4]+"</dt>"
+                                       +"</tr>");
+                    contador++;
+                }else if (contador == 4) {
+                    
+                    contador = 0;
+                }else{
+                    
+                    contador++;
+                }                
+            }                        
+        }        
+    });
+    
+    
+//    $.post("/SaleslandColombiaApp/ingreso/cargarPromedios",{Accion:"Salida", Horario:"B"},function (responseText) {
+//        
+//        if (responseText == "500") {
+//            
+//            swal("Ocurrio un error", "Lo sentimos, los datos de los empleados no se lograron cargar, por favor intentalo nuevamente", "error");
+//            
+//        }else{
+//            var contador = 0;
+//            var dt = JSON.parse(responseText);            
+//            $("#tblIngresoHB").html("");
+//            for (var i = 0, max = dt.length; i < max; i++) {
+//                
+//                if (contador == 0) {
+//                    
+//                    $("#tblIngresoHB").append("<tr>"
+//                                            +"<td>"
+//                                                +"<div class='flag'>"
+//                                                    +"<img style='height: 40px; width: 40px; border-radius: 50%;' src='../../assets/img/imagenesDePerfil/"+dt[i+1]+"'>"
+//                                                +"</div>"
+//                                            +"</td>"
+//                                            +"<td>"
+//                                                +""+dt[i+2]+" "+dt[i+3]+""
+//                                            +"</td>"                                            
+//                                            +"<td>"+dt[i+4]+"</dt>"
+//                                       +"</tr>");
+//                    contador++;
+//                }else if (contador == 4) {
+//                    
+//                    contador = 0;
+//                }else{
+//                    
+//                    contador++;
+//                }                
+//            }                        
+//        }        
+//    });
+    
  });
 

@@ -117,7 +117,7 @@ public class cargo extends HttpServlet {
                         + "</tr>");
                 countRows++;            
             }
-                        
+            sesion.close();
         } catch (Exception e) {
 
             System.err.println(e);
@@ -183,6 +183,7 @@ public class cargo extends HttpServlet {
                 canalJson.add(cargo.getEstado());
                 
             }
+            sesion.close();
             response.getWriter().write(canalJson.toJSONString());
 
         } catch (Exception e) {
@@ -202,7 +203,7 @@ public class cargo extends HttpServlet {
             int IdCargo = Integer.parseInt(id);
             System.out.println(IdCargo);
             String estado = request.getParameter("Estado");
-             String nombreCargo = request.getParameter("NombreCargo");
+            String nombreCargo = request.getParameter("NombreCargo");
             String descripcion = request.getParameter("Descripcion");            
             String tipo = request.getParameter("Tipo");
             String sector = request.getParameter("Sector");

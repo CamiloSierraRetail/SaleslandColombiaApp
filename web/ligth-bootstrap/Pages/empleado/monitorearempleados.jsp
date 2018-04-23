@@ -142,84 +142,65 @@
                                                 </ul>
                                                 <div class="tab-content">
                                                     <div class="tab-pane fade show active" id="tab1" role="tabpanel">
-                                                        <p class="text-center">sdffffffffffffff</p>
+                                                        <p class="text-center text-muted card-category">Este es el promedio de los trabajadores menos ranqueados dentro de tu equipo de trabajo.</p><br>
                                                         <div class="row">
                                                             <div class="col-md-8">
-                                                                <div class="row">
-                                                                    
-                                                                    <div class="col-md-6">
-                                                                        
+                                                                <div class="row">                                                                    
+                                                                    <div class="col-md-8">                                                                        
                                                                         <div class="table-responsive">
                                                                             <table class="table table-hover">
-                                                                                <tbody>
+                                                                                <tbody id="tblIngresoHA">
 
-                                                                                    <tr>
-                                                                                        <td>
-                                                                                            <div class="flag">
-                                                                                                <img style="height: 40px; width: 40px; border-radius: 50%;" src="../../assets/img/imagenesDePerfil/mujerDefaultImageProfile.png">
-                                                                                            </div>
-                                                                                        </td>
-                                                                                        <td>Promedio de Entrada</td>
-                                                                                        <td class="text-right">
-                                                                                            <h4 class="card-title"></h4>
-                                                                                        </td>
-                                                                                        <td class="text-right">
-                                                                                            <h4 class="card-title" id="lblPromedioEntrada">0</h4>
-                                                                                        </td>
-                                                                                    </tr>
-
-                                                                                    <tr>
-                                                                                        <td>
-                                                                                            <div class="flag">
-                                                                                                <i class="material-icons" style="color: #006A84">brightness_3</i>
-                                                                                            </div>
-                                                                                        </td>
-                                                                                        <td>Promedio de Salida</td>
-                                                                                        <td class="text-right">
-
-                                                                                        </td>
-                                                                                        <td class="text-right">
-                                                                                            <h4 class="card-title" id="lblPromedioSalida">0</h4>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td>
-                                                                                            <div class="flag">
-                                                                                                <i class="material-icons" style="color: #23CCEF">alarm</i>
-                                                                                            </div>
-                                                                                        </td>
-                                                                                        <td>Promedio de Horas Trabajadas</td>
-                                                                                        <td class="text-right">
-
-                                                                                        </td>
-                                                                                        <td class="text-right">
-                                                                                            <h4 class="card-title" id="lblPromedioHorasTrabajadas">0</h4>
-                                                                                        </td>
-                                                                                    </tr>                                                            
+                                                                                                                                             
                                                                                 </tbody>
                                                                             </table>
-                                                                        </div>
-                                                                        
-                                                                        
-                                                                    </div>
-                                                                    
+                                                                        </div>                                                                                                                                                
+                                                                    </div>                                                                    
                                                                     <div class="col-md-6">
                                                                         
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            
+                                                            </div>                                                            
                                                             <div class="col-md-4">
                                                                 
+                                                                <!-- CODIGO PARA LA GRAFICA -->
+                                                                <div id="chartPromedioHorarios" class="ct-chart ct-perfect-fourth">
+                                                                    
+                                                                    
+                                                                </div>
+                                                                
                                                             </div>
-                                                        </div>
-                                                        
+                                                        </div>                                                        
                                                     </div>
                                                     
                                                     
                                                     
                                                     <div class="tab-pane fade" id="tab2" role="tabpanel">
-                                                        <p class="text-center">aaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+                                                        <p class="text-center text-muted">aaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>                                                        
+                                                        <div class="row">
+                                                            <div class="col-md-8">
+                                                                <div class="row">                                                                    
+                                                                    <div class="col-md-8">                                                                        
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-hover">
+                                                                                <tbody id="tblIngresoHB">
+
+                                                                                                                                             
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>                                                                                                                                                
+                                                                    </div>                                                                    
+                                                                    <div class="col-md-6">
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                            </div>                                                            
+                                                            <div class="col-md-4">
+                                                                
+                                                                
+                                                                
+                                                            </div>
+                                                        </div>                                                                                                                
                                                     </div>
                                                 </div>
                                             </div>

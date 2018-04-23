@@ -156,6 +156,8 @@ public class accionesSocket {
                 
             }
           
+            sesion.close();
+            
         }catch(Exception ex){
             System.err.println(ex);            
         }
@@ -167,7 +169,8 @@ public class accionesSocket {
         
         Session sesion = HibernateUtil.getSessionFactory().openSession();
         Query queryUsuarios = sesion.createQuery("FROM Usuario WHERE Cargo="+idCargo+" AND idUsuario != "+idUsuario+"");
-        List<Usuario> listaUsuarios = queryUsuarios.list();    
+        List<Usuario> listaUsuarios = queryUsuarios.list();        
+        sesion.close();
         return listaUsuarios;  
         
     }
@@ -244,7 +247,7 @@ public class accionesSocket {
                     contador++;
                 }
             }
-            
+            sesion.close();
         }catch(Exception ex){
         
             System.err.println(ex);
@@ -255,7 +258,7 @@ public class accionesSocket {
     private void getJsonUsuarios(List<Usuario> listaUsuarios, String fecha){
     
         
-        for(Usuario usuario : listaUsuarios){                    
+        for(Usuario usuario : listaUsuarios){
             
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             String entrada = "Ingreso: 1970-01-0 00:00:00", salida = "Salida: 1970-01-0 00:00:00";
@@ -329,7 +332,9 @@ public class accionesSocket {
                 usuarioJson.add(salida);
 
             }
-
+            
+            sesion.close();
+            
         }
     
     }

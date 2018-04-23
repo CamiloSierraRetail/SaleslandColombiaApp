@@ -223,7 +223,7 @@ public class usuario extends HttpServlet {
 
             }
 
-            
+            sesion.close();
         }catch(Exception ex){
         
             System.err.println(ex);
@@ -521,7 +521,7 @@ public class usuario extends HttpServlet {
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             Query queryUsuario = sesion.createQuery("FROM Usuario WHERE Cargo="+cargo+" AND idUsuario != "+usuarioEnSesion+"");            
             listaUsuarios = queryUsuario.list();
-                        
+            sesion.close();
         }catch(HibernateException ex){
         
             System.err.println(ex);

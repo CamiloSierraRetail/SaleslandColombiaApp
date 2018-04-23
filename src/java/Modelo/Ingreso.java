@@ -127,7 +127,7 @@ public class Ingreso {
     public void setUsuario(Usuario Usuario) {
         this.Usuario = Usuario;
     }
-
+  
    
     
 }
