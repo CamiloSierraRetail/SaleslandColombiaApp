@@ -134,43 +134,51 @@
                                             <div class="card-body ">
                                                 <ul class="nav nav-tabs nav-pills">
                                                     <li class="nav-item" style="width: 50%;">
-                                                        <a class="nav-link active" href="#tab1" data-toggle="tab" role="tab" aria-controls="tab1" aria-selected="true">de 08:00 a 18:00</a>
+                                                        <a class="nav-link active" id="linkTab1" href="#tab1" data-toggle="tab" role="tab" aria-controls="tab1" aria-selected="true">de 08:00 a 18:00</a>
                                                     </li>
                                                     <li class="nav-item" style="width: 50%;">
-                                                        <a class="nav-link" href="#tab2" data-toggle="tab" role="tab" aria-controls="tab2" aria-selected="true">de 07:00 a 17:00</a>
+                                                        <a class="nav-link" href="#tab2" id="linkTab2" data-toggle="tab" role="tab" aria-controls="tab2" aria-selected="true">de 07:00 a 17:00</a>
                                                     </li>
                                                 </ul>
                                                 <div class="tab-content">
                                                     <div class="tab-pane fade show active" id="tab1" role="tabpanel">
                                                         <p class="text-center text-muted card-category">Este es el promedio de los trabajadores menos ranqueados dentro de tu equipo de trabajo.</p><br>
                                                         <div class="row">
-                                                            <div class="col-md-8">
-                                                                <div class="row">                                                                    
-                                                                    <div class="col-md-8">                                                                        
-                                                                        <div class="table-responsive">
-                                                                            <table class="table table-hover">
-                                                                                <tbody id="tblIngresoHA">
+                                                            <div class="col-md-7">
+                                                                <div class="card">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-hover">
+                                                                            <tbody id="tblIngresoHA">
 
-                                                                                                                                             
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div>                                                                                                                                                
-                                                                    </div>                                                                    
-                                                                    <div class="col-md-6">
-                                                                        
+
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>                                                                
+                                                            </div>                                                               
+                                                            <div class="col-md-5">
+                                                                <div class="card ">                                                                    
+                                                                    <div class="card-body ">
+                                                                        <div class="table-responsive">
+                                                                            
+                                                                            <!-- CODIGO PARA LA GRAFICA -->
+                                                                            <div id="chartPromedioHorariosA" class="ct-chart ct-perfect-fourth">
+
+
+                                                                            </div>                                                                                
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card-footer" style="margin-top: -50px;">                                                
+                                                                        <hr>
+                                                                        <div class="legend">
+                                                                            <i class="fa fa-circle text-info"></i> Temprano
+                                                                            <i class="fa fa-circle text-danger"></i> Tarde
+                                                                            <i class="fa fa-circle text-warning"></i> Justo
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>                                                            
-                                                            <div class="col-md-4">
-                                                                
-                                                                <!-- CODIGO PARA LA GRAFICA -->
-                                                                <div id="chartPromedioHorarios" class="ct-chart ct-perfect-fourth">
-                                                                    
-                                                                    
-                                                                </div>
-                                                                
                                                             </div>
-                                                        </div>                                                        
+                                                        </div>
                                                     </div>
                                                     
                                                     
@@ -178,29 +186,45 @@
                                                     <div class="tab-pane fade" id="tab2" role="tabpanel">
                                                         <p class="text-center text-muted">aaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>                                                        
                                                         <div class="row">
-                                                            <div class="col-md-8">
-                                                                <div class="row">                                                                    
-                                                                    <div class="col-md-8">                                                                        
-                                                                        <div class="table-responsive">
-                                                                            <table class="table table-hover">
-                                                                                <tbody id="tblIngresoHB">
+                                                            <div class="col-md-7">
+                                                                <div class="card">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-hover">
+                                                                            <tbody id="tblIngresoHB">
 
-                                                                                                                                             
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div>                                                                                                                                                
-                                                                    </div>                                                                    
-                                                                    <div class="col-md-6">
-                                                                        
+
+                                                                            </tbody>
+                                                                        </table>
                                                                     </div>
                                                                 </div>
-                                                            </div>                                                            
-                                                            <div class="col-md-4">
                                                                 
-                                                                
-                                                                
+                                                            </div>   
+                                                                                                                        
+                                                            <div class="col-md-5">
+                                                                <div class="card ">                                                                    
+                                                                    <div class="card-body ">
+                                                                        <div class="table-responsive">
+                                                                            
+                                                                            <!-- CODIGO PARA LA GRAFICA -->
+                                                                            <div id="chartPromedioHorariosB" class="ct-chart ct-perfect-fourth">
+
+
+                                                                            </div>                                                                                
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card-footer" style="margin-top: -50px;">                                                
+                                                                        <hr>
+                                                                        <div class="legend">
+                                                                            <i class="fa fa-circle text-info"></i> Temprano
+                                                                            <i class="fa fa-circle text-danger"></i> Tarde
+                                                                            <i class="fa fa-circle text-warning"></i> Justo
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>                                                                                                                
+                                                        </div>
+                                                        
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -255,7 +279,7 @@
                 cargarPromedioEmpleados();
                 
                 //cargarPromedio();
-                loadWeeklyData($("#txtIdUsuario").val());
+                //loadWeeklyData($("#txtIdUsuario").val());
 
                 var fullDate = new Date();
                 var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);

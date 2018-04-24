@@ -732,7 +732,7 @@ public class ingreso extends HttpServlet {
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             Query queryUsuario = sesion.createQuery("FROM Usuario WHERE Cargo="+cargo+" AND idUsuario != "+usuarioEnSesion+"");            
             listaUsuarios = queryUsuario.list();
-                        
+            sesion.close();
         }catch(HibernateException ex){
         
             System.err.println(ex);
@@ -748,11 +748,17 @@ public class ingreso extends HttpServlet {
         try{
         
             // HORARIO A O B
-            String tipoHorario = request.getParameter("Horario");
-            System.out.println(tipoHorario);
+            String tipoHorario = request.getParameter("Horario");            
             // LA ACCION PUEDE SER ENTRADA Y SALIDA
             String accion = request.getParameter("Accion");
-            System.out.println(accion);
+            String orden = "";
+            if (accion.equals("Ingreso")) {
+            
+                orden="DESC";
+            }else{
+                orden = "ASC";
+            }
+            
             String UsuariosQuery = "";            
             int contador = 0;
             int countRows = 1;
@@ -821,8 +827,8 @@ public class ingreso extends HttpServlet {
                                                
                 
                 JSONArray usuarioJson = new JSONArray();                
-                Query queryIngreso = sesion.createQuery("FROM Ingreso WHERE (Horario = '"+tipoHorario+"' AND Tipo = '"+accion+"' AND ("+UsuariosQuery+")) GROUP BY Usuario ORDER BY SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) DESC");
-                queryIngreso.setMaxResults(3);
+                Query queryIngreso = sesion.createQuery("FROM Ingreso WHERE (Horario = '"+tipoHorario+"' AND Tipo = '"+accion+"' AND ("+UsuariosQuery+")) GROUP BY Usuario ORDER BY SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) "+orden+"");
+                queryIngreso.setMaxResults(4);
                 List<Ingreso> listaIngreso = queryIngreso.list();
                 for(Ingreso ingreso : listaIngreso){
                 

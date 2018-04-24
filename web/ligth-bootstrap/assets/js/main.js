@@ -2067,6 +2067,11 @@ $("#cmbTipo").change(function (){
  /////////////////// FUNCION PARA CARGAR EL MODAL DEL PROMEDIO DE INGRESOS /////////////////////////////////////
 $(".cargarPromedioEntrada").click(function (){
     
+    $("#tab1").addClass("show active");
+    $("#linkTab1").addClass("active");
+    $("#tab2").removeClass("show active");
+    $("#linkTab2").removeClass("active");
+    
     $("#lblTituloPromedio").text("PROMEDIO DE ENTRADA");
     cargarChartPeomedioEmpleados();
     $.post("/SaleslandColombiaApp/ingreso/cargarPromedios",{Accion:"Ingreso", Horario:"A"},function (responseText) {
@@ -2102,7 +2107,14 @@ $(".cargarPromedioEntrada").click(function (){
                     
                     contador++;
                 }                
-            }                        
+            }  
+            
+            if (dt.length > 0) {
+                
+                setTimeout(function(){
+                    cargarChartPeomedioEmpleados("Ingreso","A","#chartPromedioHorariosA");
+                }, 150);                 
+            }
         }        
     });
     
@@ -2141,37 +2153,52 @@ $(".cargarPromedioEntrada").click(function (){
                     contador++;
                 }                
             }
+            
+            if (dt2.length > 0) {
+                
+                setTimeout(function(){
+                    cargarChartPeomedioEmpleados("Ingreso","B","#chartPromedioHorariosB");
+                }, 1000);                                
+            }
+            
         }        
     });
     
 });
+//$("#linkTab2").click(function (){
+//    
+//    if () {
+//        
+//    }
+//    
+//});
 
-function cargarChartPeomedioEmpleados(){
-    alert("lolllll");
-    $.post("/SaleslandColombiaApp/ingreso/cargarChartPeomedioEmpleados",{Accion:"Ingreso", Horario:"A"},function (responseText) {
-        alert("yes");
-       alert(responseText);
+function cargarChartPeomedioEmpleados(accion, horario, idChart){
+    
+    $.post("/SaleslandColombiaApp/ingreso/cargarChartPeomedioEmpleados",{Accion:accion, Horario:horario},function (responseText) {
+        
         if (responseText == "500") {
             
             swal("Ocurrio un error", "Lo sentimos, los datos de los empleados no se lograron cargar, por favor intentalo nuevamente", "error");
         }else{
+            $(""+idChart+"").html("");
             
             var dt = JSON.parse(responseText);
             
             var total = dt[0] + dt[1] + dt[2];
             
             
-            var correctosPorcentaje = Math.round((dt[0]/total)*100);
+            var correctosPorcentaje = Math.round((dt[2]/total)*100);
             var erroneosPorcentaje = Math.round((dt[1]/total)*100); 
-            var justoPorcentaje = Math.round((dt[2]/total)*100);
+            var justoPorcentaje = Math.round((dt[0]/total)*100);
 
-            var chart = new Chartist.Pie('#chartPromedioHorarios', {
+            var chart = new Chartist.Pie(""+idChart+"", {
               series: [correctosPorcentaje, erroneosPorcentaje, justoPorcentaje],
-              labels: ["%"+correctosPorcentaje+"", "%"+erroneosPorcentaje+"", "%"+justoPorcentaje+""]
+              labels: ["%"+correctosPorcentaje+"", "%"+erroneosPorcentaje+"", "%"+justoPorcentaje+""]            
             }, {
               donut: true,
               showLabel: true,
-              donutWidth: 50  
+              donutWidth: 40
             });
 
             chart.on('draw', function(data) {
@@ -2188,7 +2215,7 @@ function cargarChartPeomedioEmpleados(){
                 var animationDefinition = {
                   'stroke-dashoffset': {
                     id: 'anim' + data.index,
-                    dur: 1900,
+                    dur: 1500,
                     from: -pathLength + 'px',
                     to:  '0px',
                     easing: Chartist.Svg.Easing.easeOutQuint,
@@ -2213,10 +2240,6 @@ function cargarChartPeomedioEmpleados(){
               }
             });
             
-            
-            
-            console.log(dt);
-            
         }
         
     });
@@ -2227,6 +2250,11 @@ function cargarChartPeomedioEmpleados(){
 
  /////////////////// FUNCION PARA CARGAR EL MODAL DEL PROMEDIO DE INGRESOS /////////////////////////////////////
  $(".cargarPromedioSalida").click(function (){
+     
+    $("#tab1").addClass("show active");
+    $("#linkTab1").addClass("active");
+    $("#tab2").removeClass("show active");
+    $("#linkTab2").removeClass("active");
      
     $("#lblTituloPromedio").text("PROMEDIO DE SALIDA");
         
@@ -2263,7 +2291,15 @@ function cargarChartPeomedioEmpleados(){
                     
                     contador++;
                 }                
-            }                        
+            }
+            
+            if (dt.length > 0) {
+                
+                setTimeout(function(){
+                    cargarChartPeomedioEmpleados("Salida","A","#chartPromedioHorariosA");
+                }, 120);                    
+                
+            }
         }        
     });
     
