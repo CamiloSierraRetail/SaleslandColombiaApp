@@ -51,59 +51,63 @@
                                                 <p class="card-category">Este es el promedio general de los empleados que tienes a cargo.</p>
                                             </div>
                                             <div class="card-body ">
-                                                
-                                                <div class="table-responsive">
-                                                    <table class="table table-hover">
-                                                        <tbody>
+                                                <div class="row">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover">
                                                             
-                                                            <tr class="cargarPromedioEntrada" style="cursor: pointer" data-toggle="modal" data-target="#modalPromedios">
-                                                                <td>
-                                                                    <div class="flag">
-                                                                        <i class="material-icons" style="color: #FFA534">brightness_5</i>
-                                                                    </div>
-                                                                </td>
-                                                                <td>Promedio de Entrada</td>
-                                                                <td class="text-right">
-                                                                    <h4 class="card-title"></h4>
-                                                                </td>
-                                                                <td class="text-right">
-                                                                    <h4 class="card-title" id="lblPromedioEntrada">0</h4>
-                                                                </td>
-                                                            </tr>
-                                                            
-                                                            <tr class="cargarPromedioSalida" style="cursor: pointer" data-toggle="modal" data-target="#modalPromedios">
-                                                                <td>
-                                                                    <div class="flag">
-                                                                        <i class="material-icons" style="color: #006A84">brightness_3</i>
-                                                                    </div>
-                                                                </td>
-                                                                <td>Promedio de Salida</td>
-                                                                <td class="text-right">
-                                                                    
-                                                                </td>
-                                                                <td class="text-right">
-                                                                    <h4 class="card-title" id="lblPromedioSalida">0</h4>
-                                                                </td>
-                                                            </tr>
-                                                            <tr style="cursor: pointer" data-toggle="modal" data-target="#modalHorasTrabajadas">
-                                                                <td>
-                                                                    <div class="flag">
-                                                                        <i class="material-icons" style="color: #23CCEF">alarm</i>
-                                                                    </div>
-                                                                </td>
-                                                                <td>Promedio de Horas Trabajadas</td>
-                                                                <td class="text-right">
-                                                                    
-                                                                </td>
-                                                                <td class="text-right">
-                                                                    <h4 class="card-title" id="lblPromedioHorasTrabajadas">0</h4>
-                                                                </td>
-                                                            </tr>                                                            
-                                                        </tbody>
-                                                    </table>
+                                                            <tbody>
+
+                                                                <tr class="cargarPromedioEntrada" style="cursor: pointer" data-toggle="modal" data-target="#modalPromedios">
+                                                                    <td>
+                                                                        <div class="flag">
+                                                                            <i class="material-icons" style="color: #FFA534">brightness_5</i>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>Promedio de Entrada</td>
+                                                                    <td rel="tooltip" data-original-title="Promedio ingreso horario A" href="#" aria-haspopup="true" aria-expanded="false">
+                                                                        <p class="text-muted" id="lblPromedioEntrada_A">0</p>
+                                                                    </td>
+                                                                    <td rel="tooltip" data-original-title="Promedio ingreso horario B" href="#" aria-haspopup="true" aria-expanded="false">
+                                                                        <p class="text-muted" id="lblPromedioEntrada_B">0</p>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr class="cargarPromedioSalida" style="cursor: pointer" data-toggle="modal" data-target="#modalPromedios">
+                                                                    <td>
+                                                                        <div class="flag">
+                                                                            <i class="material-icons" style="color: #006A84">brightness_3</i>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>Promedio de Salida</td>
+                                                                    <td rel="tooltip" data-original-title="Promedio salida horario A" href="#" aria-haspopup="true" aria-expanded="false">
+                                                                        <p class="text-muted" id="lblPromedioSalida_A">0</p>
+                                                                    </td>
+                                                                    <td rel="tooltip" data-original-title="Promedio salida horario B" href="#" aria-haspopup="true" aria-expanded="false">
+                                                                        <p class="text-muted" id="lblPromedioSalida_B">0</p>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr style="cursor: pointer" data-toggle="modal" data-target="#modalHorasTrabajadas">
+                                                                    <td>
+                                                                        <div class="flag">
+                                                                            <i class="material-icons" style="color: #23CCEF">alarm</i>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>Promedio de Horas Trabajadas</td>
+                                                                    <td class="text-right">
+
+                                                                    </td>
+                                                                    <td class="text-right">
+                                                                        <h4 class="card-title" id="lblPromedioHorasTrabajadas">0</h4>
+                                                                    </td>
+                                                                </tr>                                                            
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
+                                                
                                             </div>
-                                            <div class="card-footer" style="margin-top: -40px;">                                                
+                                            <div class="card-footer" style="margin-top: -40px;">
                                                 <hr>
                                                 <div class="stats">
                                                     <i class="fa fa-question"></i> Da click en cualquera de estos items para ver la informacion más detallada.
@@ -134,16 +138,16 @@
                                             <div class="card-body ">
                                                 <ul class="nav nav-tabs nav-pills">
                                                     <li class="nav-item" style="width: 50%;">
-                                                        <a class="nav-link active" id="linkTab1" href="#tab1" data-toggle="tab" role="tab" aria-controls="tab1" aria-selected="true">de 08:00 a 18:00</a>
+                                                        <a class="nav-link active" id="linkTab1" href="#tab1" data-toggle="tab" role="tab" aria-controls="tab1" aria-selected="true">Horario A <small>(08:00 - 18:00)</small></a>
                                                     </li>
                                                     <li class="nav-item" style="width: 50%;">
-                                                        <a class="nav-link" href="#tab2" id="linkTab2" data-toggle="tab" role="tab" aria-controls="tab2" aria-selected="true">de 07:00 a 17:00</a>
+                                                        <a class="nav-link" href="#tab2" id="linkTab2" data-toggle="tab" role="tab" aria-controls="tab2" aria-selected="true">Horario B <small>(07:00 - 17:00)</small></a>
                                                     </li>
                                                 </ul>
                                                 <div class="tab-content">
                                                     <div class="tab-pane fade show active" id="tab1" role="tabpanel">
-                                                        <p class="text-center text-muted card-category">Este es el promedio de los trabajadores menos ranqueados dentro de tu equipo de trabajo.</p><br>
-                                                        <div class="row">
+                                                        <p class="text-center text-muted card-category" id="lblDescripcionTabA">Este es el promedio de los trabajadores menos ranqueados dentro de tu equipo de trabajo.</p><br>
+                                                        <div class="row" id="contentTabA">
                                                             <div class="col-md-7">
                                                                 <div class="card">
                                                                     <div class="table-responsive">
@@ -184,8 +188,8 @@
                                                     
                                                     
                                                     <div class="tab-pane fade" id="tab2" role="tabpanel">
-                                                        <p class="text-center text-muted">aaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>                                                        
-                                                        <div class="row">
+                                                        <p class="text-center text-muted" id="lblDescripcionTabB">aaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>                                                        
+                                                        <div class="row" id="contentTabB">
                                                             <div class="col-md-7">
                                                                 <div class="card">
                                                                     <div class="table-responsive">
@@ -232,10 +236,6 @@
                                     </div>                                    
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-link btn-simple">Back</button>
-                                <button type="button" class="btn btn-link btn-simple" data-dismiss="modal">Close</button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -276,6 +276,7 @@
                 $("#monitorearEmpleadosNav").addClass("active");
                 $("#tituloPagina").text("MONITOREAR EMPLEADOS");    
                 
+                cargarChartPromedioDias();
                 cargarPromedioEmpleados();
                 
                 //cargarPromedio();

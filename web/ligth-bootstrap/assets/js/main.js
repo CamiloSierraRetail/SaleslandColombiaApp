@@ -2052,10 +2052,10 @@ $("#cmbTipo").change(function (){
             
             var dt = JSON.parse(responseText); 
             
-            $("#lblNumeroEmpleados").text(dt[0]);
-            $("#lblPromedioEntrada").text(dt[1]);
-            $("#lblPromedioSalida").text(dt[2]);
-            //$("#lblPromedioHorasTrabajadas").text(dt[3]);
+            $("#lblPromedioEntrada_A").text(dt[0]);
+            $("#lblPromedioEntrada_B").text(dt[1]);
+            $("#lblPromedioSalida_A").text(dt[2]);
+            $("#lblPromedioSalida_B").text(dt[3]);
             
         }
          
@@ -2072,9 +2072,48 @@ $(".cargarPromedioEntrada").click(function (){
     $("#tab2").removeClass("show active");
     $("#linkTab2").removeClass("active");
     
-    $("#lblTituloPromedio").text("PROMEDIO DE ENTRADA");
-    cargarChartPeomedioEmpleados();
-    $.post("/SaleslandColombiaApp/ingreso/cargarPromedios",{Accion:"Ingreso", Horario:"A"},function (responseText) {
+    $("#lblTituloPromedio").text("PROMEDIO DE ENTRADA");    
+    cargarRankingUsuarios("Ingreso","A", "#chartPromedioHorariosA", "#tblIngresoHA");
+    
+});
+
+ /////////////////// FUNCION PARA CARGAR EL MODAL DEL PROMEDIO DE INGRESOS /////////////////////////////////////
+ $(".cargarPromedioSalida").click(function (){
+     
+    $("#tab1").addClass("show active");
+    $("#linkTab1").addClass("active");
+    $("#tab2").removeClass("show active");
+    $("#linkTab2").removeClass("active");
+     
+    $("#lblTituloPromedio").text("PROMEDIO DE SALIDA");
+    cargarRankingUsuarios("Salida","A", "#chartPromedioHorariosA", "#tblIngresoHA");
+    
+ });
+
+$("#linkTab2").click(function (){
+    
+    var pagina = $("#lblTituloPromedio").text();
+    if (pagina == "PROMEDIO DE ENTRADA") {
+        
+        if ($("#tblIngresoHA").text() == "") {
+            
+            cargarRankingUsuarios("Ingreso","B", "#chartPromedioHorariosB", "#tblIngresoHB");
+            
+        }
+        
+    }else{
+        
+        if ($("#tblIngresoHA").html() == "") {
+            
+            cargarRankingUsuarios("Salida","B", "#chartPromedioHorariosB", "#tblIngresoHB");
+            
+        }
+    }
+    
+});
+function cargarRankingUsuarios(accion, horario, idChart, idTablaUSuarios){
+    
+    $.post("/SaleslandColombiaApp/ingreso/cargarPromedios",{Accion:accion, Horario:horario},function (responseText) {
         
         if (responseText == "500") {
             
@@ -2083,12 +2122,12 @@ $(".cargarPromedioEntrada").click(function (){
         }else{
             var contador = 0;
             var dt = JSON.parse(responseText);            
-            $("#tblIngresoHA").html("");
+            $(idTablaUSuarios).html("");
             for (var i = 0, max = dt.length; i < max; i++) {
                 
                 if (contador == 0) {
                     
-                    $("#tblIngresoHA").append("<tr>"
+                    $(idTablaUSuarios).append("<tr>"
                                             +"<td>"
                                                 +"<div class='flag'>"
                                                     +"<img style='height: 40px; width: 40px; border-radius: 50%;' src='../../assets/img/imagenesDePerfil/"+dt[i+1]+"'>"
@@ -2106,73 +2145,55 @@ $(".cargarPromedioEntrada").click(function (){
                 }else{
                     
                     contador++;
-                }                
-            }  
+                }
+            }
             
             if (dt.length > 0) {
                 
-                setTimeout(function(){
-                    cargarChartPeomedioEmpleados("Ingreso","A","#chartPromedioHorariosA");
-                }, 150);                 
-            }
-        }        
-    });
-    
-    
-    $.post("/SaleslandColombiaApp/ingreso/cargarPromedios",{Accion:"Ingreso", Horario:"B"},function (responseText) {
-        
-        if (responseText == "500") {
-            
-            swal("Ocurrio un error", "Lo sentimos, los datos de los empleados no se lograron cargar, por favor intentalo nuevamente", "error");
-            
-        }else{
-            var contador = 0;
-            var dt2 = JSON.parse(responseText);            
-            $("#tblIngresoHB").html("");            
-            for (var i = 0, max = dt2.length; i < max; i++) {
-                $("#tblIngresoHB").append("que le den ");
-                if (contador == 0) {
+                if (horario == "A") {
                     
-                    $("#tblIngresoHB").append("<tr>"
-                                            +"<td>"
-                                                +"<div class='flag'>"
-                                                    +"<img style='height: 40px; width: 40px; border-radius: 50%;' src='../../assets/img/imagenesDePerfil/"+dt2[i+1]+"'>"
-                                                +"</div>"
-                                            +"</td>"
-                                            +"<td>"
-                                                +""+dt2[i+2]+" "+dt2[i+3]+""
-                                            +"</td>"                                            
-                                            +"<td>"+dt2[i+4]+"</dt>"
-                                       +"</tr>");
-                    contador++;
-                }else if (contador == 4) {
+                    $("#contentTabA").show();
+                    if (accion == "Ingreso") {
+                        
+                        $("#lblDescripcionTabA").text("Este es el promedio de entrada de los trabajadores menor ranqueados dentro de tu equipo de trabajo.");
+                        
+                    }else{
+                        
+                        $("#lblDescripcionTabA").text("Este es el promedio de Salida de los trabajadores menor ranqueados dentro de tu equipo de trabajo.");
+                    }
                     
-                    contador = 0;
                 }else{
                     
-                    contador++;
-                }                
-            }
-            
-            if (dt2.length > 0) {
+                    $("#contentTabB").show();
+                    if (accion == "Salida") {
+                        
+                        $("#lblDescripcionTabB").text("Este es el promedio de salida de los trabajadores menor ranqueados dentro de tu equipo de trabajo.");
+                        
+                    }else{
+                        
+                        $("#lblDescripcionTabB").text("Este es el promedio de entrada de los trabajadores menor ranqueados dentro de tu equipo de trabajo.");
+                    }
+                }
                 
                 setTimeout(function(){
-                    cargarChartPeomedioEmpleados("Ingreso","B","#chartPromedioHorariosB");
-                }, 1000);                                
+                    cargarChartPeomedioEmpleados(accion, horario, idChart);
+                }, 150);                 
+            }else{
+                
+                if (horario == "A") {
+                    
+                    $("#lblDescripcionTabA").text("Por el momento no hay estadisticas de tu equipo de trajajo.");
+                    $("#contentTabA").hide();
+                    
+                }else{
+                    $("#lblDescripcionTabB").text("Por el momento no hay estadisticas de tu equipo de trajajo.");
+                    $("#contentTabB").hide();
+                }
             }
-            
         }        
     });
     
-});
-//$("#linkTab2").click(function (){
-//    
-//    if () {
-//        
-//    }
-//    
-//});
-
+}
 function cargarChartPeomedioEmpleados(accion, horario, idChart){
     
     $.post("/SaleslandColombiaApp/ingreso/cargarChartPeomedioEmpleados",{Accion:accion, Horario:horario},function (responseText) {
@@ -2242,104 +2263,25 @@ function cargarChartPeomedioEmpleados(accion, horario, idChart){
             
         }
         
-    });
-    
+    });    
 }
 
-
-
- /////////////////// FUNCION PARA CARGAR EL MODAL DEL PROMEDIO DE INGRESOS /////////////////////////////////////
- $(".cargarPromedioSalida").click(function (){
-     
-    $("#tab1").addClass("show active");
-    $("#linkTab1").addClass("active");
-    $("#tab2").removeClass("show active");
-    $("#linkTab2").removeClass("active");
-     
-    $("#lblTituloPromedio").text("PROMEDIO DE SALIDA");
-        
-    $.post("/SaleslandColombiaApp/ingreso/cargarPromedios",{Accion:"Salida", Horario:"A"},function (responseText) {
-        
+function cargarChartPromedioDias(){
+    
+    $.post("/SaleslandColombiaApp/ingreso/cargarChartPromedioDias", function (responseText){
+       
         if (responseText == "500") {
             
             swal("Ocurrio un error", "Lo sentimos, los datos de los empleados no se lograron cargar, por favor intentalo nuevamente", "error");
             
         }else{
-            var contador = 0;
-            var dt = JSON.parse(responseText);            
-            $("#tblIngresoHA").html("");
-            for (var i = 0, max = dt.length; i < max; i++) {
-                
-                if (contador == 0) {
-                    
-                    $("#tblIngresoHA").append("<tr>"
-                                            +"<td>"
-                                                +"<div class='flag'>"
-                                                    +"<img style='height: 40px; width: 40px; border-radius: 50%;' src='../../assets/img/imagenesDePerfil/"+dt[i+1]+"'>"
-                                                +"</div>"
-                                            +"</td>"
-                                            +"<td>"
-                                                +""+dt[i+2]+" "+dt[i+3]+""
-                                            +"</td>"                                            
-                                            +"<td>"+dt[i+4]+"</dt>"
-                                       +"</tr>");
-                    contador++;
-                }else if (contador == 4) {
-                    
-                    contador = 0;
-                }else{
-                    
-                    contador++;
-                }                
-            }
             
-            if (dt.length > 0) {
-                
-                setTimeout(function(){
-                    cargarChartPeomedioEmpleados("Salida","A","#chartPromedioHorariosA");
-                }, 120);                    
-                
-            }
-        }        
+            
+            
+        }
+        
     });
     
-    
-//    $.post("/SaleslandColombiaApp/ingreso/cargarPromedios",{Accion:"Salida", Horario:"B"},function (responseText) {
-//        
-//        if (responseText == "500") {
-//            
-//            swal("Ocurrio un error", "Lo sentimos, los datos de los empleados no se lograron cargar, por favor intentalo nuevamente", "error");
-//            
-//        }else{
-//            var contador = 0;
-//            var dt = JSON.parse(responseText);            
-//            $("#tblIngresoHB").html("");
-//            for (var i = 0, max = dt.length; i < max; i++) {
-//                
-//                if (contador == 0) {
-//                    
-//                    $("#tblIngresoHB").append("<tr>"
-//                                            +"<td>"
-//                                                +"<div class='flag'>"
-//                                                    +"<img style='height: 40px; width: 40px; border-radius: 50%;' src='../../assets/img/imagenesDePerfil/"+dt[i+1]+"'>"
-//                                                +"</div>"
-//                                            +"</td>"
-//                                            +"<td>"
-//                                                +""+dt[i+2]+" "+dt[i+3]+""
-//                                            +"</td>"                                            
-//                                            +"<td>"+dt[i+4]+"</dt>"
-//                                       +"</tr>");
-//                    contador++;
-//                }else if (contador == 4) {
-//                    
-//                    contador = 0;
-//                }else{
-//                    
-//                    contador++;
-//                }                
-//            }                        
-//        }        
-//    });
-    
- });
+}
+
 
