@@ -2093,21 +2093,24 @@ $(".cargarPromedioEntrada").click(function (){
 $("#linkTab2").click(function (){
     
     var pagina = $("#lblTituloPromedio").text();
+    
     if (pagina == "PROMEDIO DE ENTRADA") {
         
-        if ($("#tblIngresoHA").text() == "") {
-            
+        //alert("d"+$("#chartPromedioHorariosB").text()+"a");
+        
+        //if ($("#tblIngresoHB").text() == "") {
+            //alert("Entrada b");
             cargarRankingUsuarios("Ingreso","B", "#chartPromedioHorariosB", "#tblIngresoHB");
             
-        }
+        //}
         
     }else{
         
-        if ($("#tblIngresoHA").html() == "") {
-            
+        //if ($("#tblIngresoHB").text() == "") {
+            //alert("salida B");
             cargarRankingUsuarios("Salida","B", "#chartPromedioHorariosB", "#tblIngresoHB");
             
-        }
+        //}
     }
     
 });
@@ -2180,15 +2183,19 @@ function cargarRankingUsuarios(accion, horario, idChart, idTablaUSuarios){
                 }, 150);                 
             }else{
                 
+                
                 if (horario == "A") {
                     
+                    $("#contentTabA").hide();                      
                     $("#lblDescripcionTabA").text("Por el momento no hay estadisticas de tu equipo de trajajo.");
-                    $("#contentTabA").hide();
                     
                 }else{
+                    
+                    $("#contentTabB").hide();                     
                     $("#lblDescripcionTabB").text("Por el momento no hay estadisticas de tu equipo de trajajo.");
-                    $("#contentTabB").hide();
+                    
                 }
+                
             }
         }        
     });
@@ -2266,6 +2273,8 @@ function cargarChartPeomedioEmpleados(accion, horario, idChart){
     });    
 }
 
+
+/////////////////////// FUNCION PARA CARGAR CHART DE PROMEDIO POR DIAS ////////////////////////////////
 function cargarChartPromedioDias(){
     
     $.post("/SaleslandColombiaApp/ingreso/cargarChartPromedioDias", function (responseText){
@@ -2275,8 +2284,287 @@ function cargarChartPromedioDias(){
             swal("Ocurrio un error", "Lo sentimos, los datos de los empleados no se lograron cargar, por favor intentalo nuevamente", "error");
             
         }else{
+                  
+            var LunesIn_A, LunesOut_A, LunIn_A, LunOut_A;
+            var MartesIn_A, MartesOut_A, MarIn_A, MarOut_A;
+            var MiercolesIn_A, MiercolesOut_A, MierIn_A, MierOut_A;
+            var JuevesIn_A, JuevesOut_A, JueIn_A, JueOut_A;
+            var ViernesIn_A, ViernesOut_A, VierIn_A, VierOut_A;
+            
+            var LunesIn_B, LunesOut_B, LunIn_B, LunOut_B;
+            var MartesIn_B, MartesOut_B, MarIn_B, MarOut_B;
+            var MiercolesIn_B, MiercolesOut_B, MierIn_B, MierOut_B;
+            var JuevesIn_B, JuevesOut_B, JueIn_B, JueOut_B;
+            var ViernesIn_B, ViernesOut_B, VierIn_B, VierOut_B;
             
             
+            var dt = JSON.parse(responseText);
+            
+            
+            for (var i = 0, max = dt.length; i < max; i++) {
+                
+                var data = dt[i].split(" ");
+                var hora = data[3].split(":");
+                
+                if (data[0] == "A") {
+                    
+                    if (data[2] == "Ingreso") {
+                        
+                        if (data[1] == "Lunes") {
+                            LunIn_A = hora[0];
+                            LunesIn_A =  data[3];
+                        }else if (data[1] == "Martes") {
+                            MarIn_A = hora[0];
+                            MartesIn_A = data[3]
+                        }else if (data[1] == "Miercoles") {
+                            MierIn_A = hora[0];
+                            MiercolesIn_A = data[3];
+                        }else if (data[1] == "Jueves") {
+                            JueIn_A = hora[0];
+                            JuevesIn_A = data[3];
+                        }else if (data[1] == "Viernes") {
+                            VierIn_A = hora[0];
+                            ViernesIn_A = data[3];                        
+                        }
+                        
+                    }else if (data[2] == "Salida") {
+                        
+                        if (data[1] == "Lunes") {
+                            LunOut_A = hora[0];
+                            LunesOut_A =  data[3];
+                        }else if (data[1] == "Martes") {
+                            MarOut_A = hora[0];
+                            MartesOut_A = data[3]
+                        }else if (data[1] == "Miercoles") {
+                            MierOut_A = hora[0];
+                            MiercolesOut_A = data[3];
+                        }else if (data[1] == "Jueves") {
+                            JueOut_A = hora[0];
+                            JuevesOut_A = data[3];
+                        }else if (data[1] == "Viernes") {
+                            VierOut_A = hora[0];
+                            ViernesOut_A = data[3];                        
+                        }
+                        
+                    }
+                    
+                }else if (data[0] == "B") {
+                    
+                    if (data[2] == "Ingreso") {
+                        
+                        if (data[1] == "Lunes") {
+                            LunIn_B = hora[0];
+                            LunesIn_B =  data[3];
+                        }else if (data[1] == "Martes") {
+                            MarIn_B = hora[0];
+                            MartesIn_B = data[3]
+                        }else if (data[1] == "Miercoles") {
+                            MierIn_B = hora[0];
+                            MiercolesIn_B = data[3];
+                        }else if (data[1] == "Jueves") {
+                            JueIn_B = hora[0];
+                            JuevesIn_B = data[3];
+                        }else if (data[1] == "Viernes") {
+                            VierIn_B = hora[0];
+                            ViernesIn_B = data[3];                        
+                        }
+                        
+                    }else if (data[2] == "Salida") {
+                        
+                        if (data[1] == "Lunes") {
+                            LunOut_B = hora[0];
+                            LunesOut_B =  data[3];
+                        }else if (data[1] == "Martes") {
+                            MarOut_B = hora[0];
+                            MartesOut_B = data[3]
+                        }else if (data[1] == "Miercoles") {
+                            MierOut_B = hora[0];
+                            MiercolesOut_B = data[3];
+                        }else if (data[1] == "Jueves") {
+                            JueOut_B = hora[0];
+                            JuevesOut_B = data[3];
+                        }else if (data[1] == "Viernes") {
+                            VierOut_B = hora[0];
+                            ViernesOut_B = data[3];                        
+                        }
+                        
+                    }
+                    
+                }
+                
+            }
+            
+            var chart = new Chartist.Line('.ct-chart', {
+                labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'],                
+                series: [
+                    //Chart series para los ingresos _A
+                    [
+                        {meta: LunesIn_A, value: LunIn_A},
+                        {meta: MartesIn_A, value: MarIn_A},
+                        {meta: MiercolesIn_A, value: MierIn_A},
+                        {meta: JuevesIn_A, value: JueIn_A},
+                        {meta: ViernesIn_A, value: VierIn_A}
+                    ],
+                    //Chart series para las salidas _A
+                    [
+                        {meta: LunesOut_A, value: LunOut_A},
+                        {meta: MartesOut_A, value: MarOut_A},
+                        {meta: MiercolesOut_A, value: MierOut_A},
+                        {meta: JuevesOut_A, value: JueOut_A},
+                        {meta: ViernesOut_A, value: VierOut_A}
+                    ],
+                    //Chart series para los ingresos _B
+                    [
+                        {meta: LunesIn_B, value: LunIn_B},
+                        {meta: MartesIn_B, value: MarIn_B},
+                        {meta: MiercolesIn_B, value: MierIn_B},
+                        {meta: JuevesIn_B, value: JueIn_B},
+                        {meta: ViernesIn_B, value: VierIn_B}
+                    ],
+                    //Chart series para las salidas _B
+                    [
+                        {meta: LunesOut_B, value: LunOut_B},
+                        {meta: MartesOut_B, value: MarOut_B},
+                        {meta: MiercolesOut_B, value: MierOut_B},
+                        {meta: JuevesOut_B, value: JueOut_B},
+                        {meta: ViernesOut_B, value: VierOut_B}
+                    ]
+                ]
+            },{
+                low: 0,
+                axisY: {
+                    onlyInteger:true, 
+                    labelInterpolationFnc: function(value) {
+                        
+                        return (value +":00");
+                        
+                    }
+                },
+                plugins: [
+                    Chartist.plugins.tooltip({
+                        pointClass: 'customTooltipOnPoint',
+                    })
+                ]
+            });
+            // Let's put a sequence number aside so we can use it in the event callbacks
+            var seq = 0,
+                delays = 80,
+                durations = 500;
+
+            // Once the chart is fully created we reset the sequence
+            chart.on('created', function() {
+                seq = 0;
+            });
+
+            // On each drawn element by Chartist we use the Chartist.Svg API to trigger SMIL animations
+            chart.on('draw', function(data) {
+                seq++;
+
+                if(data.type === 'line') {
+                  // If the drawn element is a line we do a simple opacity fade in. This could also be achieved using CSS3 animations.
+                  data.element.animate({
+                    opacity: {
+                      // The delay when we like to start the animation
+                      begin: seq * delays + 1000,
+                      // Duration of the animation
+                      dur: durations,
+                      // The value where the animation should start
+                      from: 0,
+                      // The value where it should end
+                      to: 1
+                    }
+                  });
+                } else if(data.type === 'label' && data.axis === 'x') {
+                  data.element.animate({
+                    y: {
+                      begin: seq * delays,
+                      dur: durations,
+                      from: data.y + 100,
+                      to: data.y,
+                      // We can specify an easing function from Chartist.Svg.Easing
+                      easing: 'easeOutQuart'
+                    }
+                  });
+                } else if(data.type === 'label' && data.axis === 'y') {
+                  data.element.animate({
+                    x: {
+                      begin: seq * delays,
+                      dur: durations,
+                      from: data.x - 100,
+                      to: data.x,
+                      easing: 'easeOutQuart'
+                    }
+                  });
+                }else if(data.type === 'point') {
+                    var v;
+
+                    var circle = new Chartist.Svg('circle', {
+                        cx: [data.x],
+                        cy: [data.y],
+                        r: [5],
+                        'ct:value': v,
+                        'ct:meta': data.meta,
+                        class: 'customTooltipOnPoint'
+                    }, 'ct-point');
+
+                    // With data.element we get the Chartist SVG wrapper and we can replace the original point drawn by Chartist with our newly created triangle
+                    data.element.replace(circle);
+
+                    data.element.animate({
+                        x1: {
+                          begin: seq * delays,
+                          dur: durations,
+                          from: data.x - 10,
+                          to: data.x,
+                          easing: 'easeOutQuart'
+                        },
+                        x2: {
+                          begin: seq * delays,
+                          dur: durations,
+                          from: data.x - 10,
+                          to: data.x,
+                          easing: 'easeOutQuart'
+                        },
+                        opacity: {
+                          begin: seq * delays,
+                          dur: durations,
+                          from: 0,
+                          to: 1,
+                          easing: 'easeOutQuart'
+                        }
+                    });
+                } else if(data.type === 'grid') {
+                  // Using data.axis we get x or y which we can use to construct our animation definition objects
+                  var pos1Animation = {
+                    begin: seq * delays,
+                    dur: durations,
+                    from: data[data.axis.units.pos + '1'] - 30,
+                    to: data[data.axis.units.pos + '1'],
+                    easing: 'easeOutQuart'
+                  };
+
+                  var pos2Animation = {
+                    begin: seq * delays,
+                    dur: durations,
+                    from: data[data.axis.units.pos + '2'] - 100,
+                    to: data[data.axis.units.pos + '2'],
+                    easing: 'easeOutQuart'
+                  };
+
+                  var animations = {};
+                  animations[data.axis.units.pos + '1'] = pos1Animation;
+                  animations[data.axis.units.pos + '2'] = pos2Animation;
+                  animations['opacity'] = {
+                    begin: seq * delays,
+                    dur: durations,
+                    from: 0,
+                    to: 1,
+                    easing: 'easeOutQuart'
+                  };
+
+                  data.element.animate(animations);
+                }
+              });
             
         }
         

@@ -992,7 +992,7 @@ public class ingreso extends HttpServlet {
         throws ServletException, IOException {
     
         try{
-        
+            JSONArray usuarioJson = new JSONArray();
             String UsuariosQuery = "";            
             int contador = 0;
             int countRows = 1;
@@ -1056,32 +1056,23 @@ public class ingreso extends HttpServlet {
                 countRows++;
             }
             
-            Query queryPromedioDias_A = sesion.createQuery("SELECT Dia, Tipo, SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM Ingreso WHERE Horario = 'B' GROUP BY Dia, Tipo");
-            List<?> listaPromedioDias_A = queryPromedioDias_A.list();
+            Query queryPromedioDias_A = sesion.createQuery("SELECT Horario, Dia, Tipo, SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM Ingreso WHERE Horario = 'A' GROUP BY Dia, Tipo");
+            List<Object[]> listaPromedioDias_A = queryPromedioDias_A.list();
+            
+            Query queryPromedioDias_B = sesion.createQuery("SELECT Horario, Dia, Tipo, SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM Ingreso WHERE Horario = 'B' GROUP BY Dia, Tipo");
+            List<Object[]> listaPromedioDias_B = queryPromedioDias_B.list();
            
-            
-            // CONTINUARÁ _____________________________________
-            
-            
-            
-            
-            
-            
-            for (int i = 0; i < listaPromedioDias_A.size(); i++) {
+            for (Object[] datos : listaPromedioDias_A) {
                 
-                System.out.println("aaaaaaaaaaa4$$$$$$$$$ %%%%%%%%%%%          "+String.valueOf(listaPromedioDias_A.get(i)));
-                
-                
-                
+                usuarioJson.add(datos[0] + " " + datos[1]+ " " + datos[2]+ " " + datos[3]);
             }
             
-            for (Object datos : listaPromedioDias_A) {
-
-                Object[] objectArray = (Object []) datos;
-                                
-                System.out.println("!!!!!!!!!!!!__________________________________ --------------------->       " + String.valueOf(datos));
-
+            for (Object[] datos : listaPromedioDias_B) {
+                
+                usuarioJson.add(datos[0] + " " + datos[1]+ " " + datos[2]+ " " + datos[3]);
             }
+            
+            response.getWriter().write(usuarioJson.toJSONString());
             
         }catch(Exception ex){
         

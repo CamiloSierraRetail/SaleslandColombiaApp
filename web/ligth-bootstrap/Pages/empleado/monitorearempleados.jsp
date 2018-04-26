@@ -25,7 +25,7 @@
                                         <div class="card">
                                             <div class="card-header ">
                                                 <h4 class="card-title">Promedio semanal</h4>
-                                                <p class="card-category">Este es el promedio de entrada y salida de los empleados.</p>
+                                                <p class="card-category">Este es el promedio del ingreso del personal en cada uno de los dias de la semana.</p>
                                             </div>
                                             <div class="card-body">
                                                 <div class="ct-chart ct-octave">
@@ -34,8 +34,8 @@
                                             </div>
                                             <div class="card-footer ">
                                                 <div class="legend">
-                                                    <i class="fa fa-circle text-info"></i> Ingreso
-                                                    <i class="fa fa-circle text-danger"></i> Salida
+                                                    <i class="fa fa-circle text-info" rel="tooltip" data-original-title="Ingreso Horario A (08:00 - 18:00)" href="#" aria-haspopup="true" aria-expanded="false"></i><i class="fa fa-circle text-warning" rel="tooltip" data-original-title="Ingreso horario B (07:00 - 17:00)" href="#" aria-haspopup="true" aria-expanded="false"></i> Ingreso &nbsp &nbsp
+                                                    <i class="fa fa-circle text-danger" rel="tooltip" data-original-title="Salida horario A (08:00 - 18:00)" href="#" aria-haspopup="true" aria-expanded="false"></i><i class="fa fa-circle text-primary" rel="tooltip" data-original-title="Salida horario B (07:00 - 17:00)" href="#" aria-haspopup="true" aria-expanded="false"></i> Salida
                                                 </div>
                                                 <hr>
                                                 <div class="stats">
@@ -188,7 +188,7 @@
                                                     
                                                     
                                                     <div class="tab-pane fade" id="tab2" role="tabpanel">
-                                                        <p class="text-center text-muted" id="lblDescripcionTabB">aaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>                                                        
+                                                        <p class="text-center text-muted card-category" id="lblDescripcionTabB">aaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>                                                        
                                                         <div class="row" id="contentTabB">
                                                             <div class="col-md-7">
                                                                 <div class="card">
@@ -266,7 +266,7 @@
             </div>
         </div>
                 
-        <%@include file="../includes/jsInclude.jsp" %>
+        <%@include file="../includes/jsInclude.jsp" %>        
         <script>
 
             $(document).ready(function (){
@@ -279,9 +279,6 @@
                 cargarChartPromedioDias();
                 cargarPromedioEmpleados();
                 
-                //cargarPromedio();
-                //loadWeeklyData($("#txtIdUsuario").val());
-
                 var fullDate = new Date();
                 var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
                 var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
