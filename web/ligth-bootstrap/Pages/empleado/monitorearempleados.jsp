@@ -86,21 +86,22 @@
                                                                         <p class="text-muted" id="lblPromedioSalida_B">0</p>
                                                                     </td>
                                                                 </tr>
-
+                                                                
                                                                 <tr style="cursor: pointer" data-toggle="modal" data-target="#modalHorasTrabajadas">
                                                                     <td>
                                                                         <div class="flag">
                                                                             <i class="material-icons" style="color: #23CCEF">alarm</i>
                                                                         </div>
                                                                     </td>
-                                                                    <td>Promedio de Horas Trabajadas</td>
-                                                                    <td class="text-right">
-
+                                                                    <td>Promedio de Horas</td>
+                                                                    <td rel="tooltip" data-original-title="Promedio de horas trabajadas horario A" href="#" aria-haspopup="true" aria-expanded="false">
+                                                                        <p class="text-muted" id="lblPromedioHorasTrabajadas_A">0</p>
                                                                     </td>
-                                                                    <td class="text-right">
-                                                                        <h4 class="card-title" id="lblPromedioHorasTrabajadas">0</h4>
+                                                                    <td rel="tooltip" data-original-title="Promedio de horas trabajadas horario B" href="#" aria-haspopup="true" aria-expanded="false">
+                                                                        <p class="text-muted" id="lblPromedioHorasTrabajadas_B">0</p>
                                                                     </td>
-                                                                </tr>                                                            
+                                                                </tr>
+                                                                                                                          
                                                             </tbody>
                                                         </table>
                                                     </div>

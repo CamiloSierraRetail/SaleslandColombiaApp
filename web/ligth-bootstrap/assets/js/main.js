@@ -2051,12 +2051,12 @@ $("#cmbTipo").change(function (){
         }else{
             
             var dt = JSON.parse(responseText); 
-            
             $("#lblPromedioEntrada_A").text(dt[0]);
             $("#lblPromedioEntrada_B").text(dt[1]);
             $("#lblPromedioSalida_A").text(dt[2]);
             $("#lblPromedioSalida_B").text(dt[3]);
-            
+            $("#lblPromedioHorasTrabajadas_A").html("&nbsp &nbsp &nbsp &nbsp;"+dt[4])+"";
+            $("#lblPromedioHorasTrabajadas_B").html("&nbsp &nbsp &nbsp &nbsp;"+dt[5])+"";
         }
          
      });

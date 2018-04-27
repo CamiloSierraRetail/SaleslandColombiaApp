@@ -582,11 +582,37 @@ public class ingreso extends HttpServlet {
                     }
                     
                 }
+                String horas_A = "0", horas_B = "0";
+                ////////////////////_____________________________QUERY'S XD PARA SACAR LAS HORAS TRABAJADAS______________ //////////////////////////
+                Query queryHorasTrabajadas_A = sesion.createSQLQuery("SELECT TIMESTAMPDIFF(HOUR, '2003-05-01 "+promedioEntradaA+"', '2003-05-01 "+promedioSalidaA+"')");
+                List<Object> Horas_A = queryHorasTrabajadas_A.list();
+                for (Object datos : Horas_A) {
+
+                    if (datos != null) {
+                        
+                        horas_A = datos.toString();
+                    }
+                    
+                }
+                
+                Query queryHorasTrabajadas_B = sesion.createSQLQuery("SELECT TIMESTAMPDIFF(HOUR, '2003-05-01 "+promedioEntradaB+"', '2003-05-01 "+promedioSalidaB+"')");
+                List<Object> Horas_B = queryHorasTrabajadas_B.list();
+                for (Object datos : Horas_B) {
+
+                    if (datos != null) {
+                        
+                        horas_B = datos.toString();
+                        
+                    }
+                    
+                }
                 
                 usuarioJson.add(promedioEntradaA);
                 usuarioJson.add(promedioEntradaB);
                 usuarioJson.add(promedioSalidaA);
                 usuarioJson.add(promedioSalidaB);
+                usuarioJson.add(horas_A);
+                usuarioJson.add(horas_B);
                 
                 response.getWriter().write(usuarioJson.toJSONString());
                 
