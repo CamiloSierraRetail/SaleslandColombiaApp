@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <div class="navbar-wrapper">
                 <div class="navbar-minimize">
-                    <button id="minimizeSidebar" class="btn btn-warning btn-fill btn-round btn-icon d-none d-lg-block">
+                    <button id="minimizeSidebar" class="btn btn-info-corp btn-fill btn-round btn-icon d-none d-lg-block">
                         <i class="fa fa-ellipsis-v visible-on-sidebar-regular"></i>
                         <i class="fa fa-navicon visible-on-sidebar-mini"></i>
                     </button>

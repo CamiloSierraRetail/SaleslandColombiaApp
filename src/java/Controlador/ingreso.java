@@ -52,10 +52,7 @@ public class ingreso extends HttpServlet {
                     
                 case "weeklyChart":
                     weeklyChart(request, response);
-                    break;
-                case "usuariosingresados":
-                    usuariosIngresados(request, response);
-                    break;
+                    break;               
                 case "cargarPromedioEmpleados" :
                     cargarPromedioEmpleados(request, response);
                     break;
@@ -71,7 +68,7 @@ public class ingreso extends HttpServlet {
                     cargarChartPromedioDias(request, response);
                     break;
                 default:
-                    response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/ingreso/ingresousuario.jsp");
+                    response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/login.jsp");
             }
             
         }
@@ -219,6 +216,7 @@ public class ingreso extends HttpServlet {
     }
     protected void promedioIngresos(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
+        HibernateUtil.inicializarSesion();
         String fechaUltimoIngreso_Salida = "", horaUltimoIngreso_Salida="", fechaCorrecto = "", horaCorrecto="", fechaErroneo = "", horaErroneo="", fechaJusto = "", horaJusto="";
         try{
             int totalIngresos = 0, ingresosBien = 0, ingresosMal = 0, ingresosJusto = 0;
@@ -303,10 +301,14 @@ public class ingreso extends HttpServlet {
             System.err.println(e);
         }
         
+        HibernateUtil.closeSessionFactory();
     }
     
     protected void weeklyChart(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
+                
+        HibernateUtil.inicializarSesion();
+        
         try{
             String tipo = "", tipo1 = "";
             String idusuario = request.getParameter("idusuario");
@@ -416,49 +418,10 @@ public class ingreso extends HttpServlet {
         catch(Exception ex){
             System.out.println(ex);
         }
+        
+        HibernateUtil.closeSessionFactory();
     }
-    
-    protected void usuariosIngresados(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    
-        try{
-            
-//            Usuario objUsuario = (Usuario) request.getSession().getAttribute("UsuarioIngresado");
-//            
-//            Session sesion = HibernateUtil.getSessionFactory().openSession();
-//            if (objUsuario.getCargo().getTipo().equals("Director")) {
-//                
-//                Query query = sesion.createQuery("FROM Sector_Cargo WHERE Cargo = "+objUsuario.getCargo()+"");
-//                List<Sector_Cargo> listaSector_Cargo = query.list();
-//                for(Sector_Cargo sector_cargo : listaSector_Cargo){
-//                
-//                    //String usuario = sector_cargo.getSector().get
-//                
-//                }
-//                
-//                
-//                
-//                //Query query = sesion.createQuery("FROM Usuario WHERE Cago = "+objUsuario.get+"")
-//                
-//                
-//            }
-            
-            
-        }catch(Exception e){
-            System.err.println(e);
-            response.getWriter().write("500");
-        }
-    
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
+        
     protected void cargarPromedioEmpleados(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
     

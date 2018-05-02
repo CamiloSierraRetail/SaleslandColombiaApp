@@ -72,7 +72,7 @@ public class usuario extends HttpServlet {
             throws ServletException, IOException {
         
         try{
-        
+            HibernateUtil.inicializarSesion();
             String TipoDocumento = request.getParameter("TipoDocumentoUsuario");//Check
             String Documento = request.getParameter("DocumentoUsuario");//Check
             String Nombre = request.getParameter("NombreUsuario");//Check
@@ -130,12 +130,12 @@ public class usuario extends HttpServlet {
 
                 sesion.beginTransaction();
                 sesion.save(objUsuario);
-                sesion.getTransaction().commit();
-                sesion.close();
+                sesion.getTransaction().commit();                
                 response.getWriter().write("200");
                 
             }
-            
+            sesion.close();
+            HibernateUtil.closeSessionFactory();
         }catch(Exception e){
         
             System.err.println(e);
@@ -147,7 +147,7 @@ public class usuario extends HttpServlet {
             throws ServletException, IOException {
     
         try{
-            
+            HibernateUtil.inicializarSesion();
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             Query query =  sesion.createQuery("FROM Sector WHERE Estado='Activo'");
             List<Sector> listaSector = query.list();
@@ -181,7 +181,7 @@ public class usuario extends HttpServlet {
             }
             
             sesion.close();
-            
+            HibernateUtil.closeSessionFactory();
         }catch(Exception e){
             System.err.println(e);
             response.getWriter().write("500");
@@ -192,7 +192,7 @@ public class usuario extends HttpServlet {
         String resultadoBusqueda = "", tipo = "";
         
         try{            
-            
+            HibernateUtil.inicializarSesion();
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             
             Query queryCargo = sesion.createQuery("FROM Cargo WHERE idCargo="+idCargo+" AND Estado='Activo' ");
@@ -222,7 +222,7 @@ public class usuario extends HttpServlet {
                                      + "</tr>";
 
             }
-
+            HibernateUtil.closeSessionFactory();
             sesion.close();
         }catch(Exception ex){
         
@@ -235,6 +235,8 @@ public class usuario extends HttpServlet {
     
     protected void iniciarSesion(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        HibernateUtil.inicializarSesion();
         
         try{
             String Usuario = request.getParameter("Usuario");
@@ -273,13 +275,13 @@ public class usuario extends HttpServlet {
 
                 response.getWriter().write("404");
             }
-            
+         
             sesion.close();
         }catch(Exception e){
             System.err.println(e);
-            response.getWriter().write("500");
-        }
-    
+             response.getWriter().write("500");
+         }
+        HibernateUtil.closeSessionFactory();
     }
     protected void cerrarSesion(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -300,6 +302,7 @@ public class usuario extends HttpServlet {
             throws ServletException, IOException {
         
         try{
+            HibernateUtil.inicializarSesion();
             int countRows = 1;
             List<Usuario> listaUsuario = null;            
             Session sesion = HibernateUtil.getSessionFactory().openSession();
@@ -506,6 +509,7 @@ public class usuario extends HttpServlet {
             }
             
             sesion.close();
+            HibernateUtil.closeSessionFactory();
         }catch(Exception e){
         
             System.err.println(e);
@@ -518,10 +522,12 @@ public class usuario extends HttpServlet {
     
         List<Usuario> listaUsuarios = null;
         try{
+            HibernateUtil.inicializarSesion();
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             Query queryUsuario = sesion.createQuery("FROM Usuario WHERE Cargo="+cargo+" AND idUsuario != "+usuarioEnSesion+"");            
             listaUsuarios = queryUsuario.list();
             sesion.close();
+            HibernateUtil.closeSessionFactory();
         }catch(HibernateException ex){
         
             System.err.println(ex);
@@ -532,6 +538,7 @@ public class usuario extends HttpServlet {
     protected void verificarEmail(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try{
+            HibernateUtil.inicializarSesion();
             String email = request.getParameter("email");
             String idusuario = request.getParameter("idusuario");
             Session s = HibernateUtil.getSessionFactory().openSession();
@@ -544,6 +551,7 @@ public class usuario extends HttpServlet {
             }
             
             s.close();
+            HibernateUtil.closeSessionFactory();
         }catch(Exception ex){
             System.out.println(ex);
         }
@@ -552,6 +560,7 @@ public class usuario extends HttpServlet {
     protected void actualizarPerfil(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try{
+            HibernateUtil.inicializarSesion();
             String idusuario = request.getParameter("idUsuario");
             String nombre = request.getParameter("nombres");
             String apellidos = request.getParameter("apellidos");
@@ -573,6 +582,7 @@ public class usuario extends HttpServlet {
             request.getSession().setAttribute("UsuarioIngresado", objUsuario);
             response.getWriter().write("1");
             s.close();
+            HibernateUtil.closeSessionFactory();
         }catch(Exception ex){
             System.out.println(ex);
             response.getWriter().write("0");
@@ -583,6 +593,7 @@ public class usuario extends HttpServlet {
             throws ServletException, IOException {
     
         try{
+            HibernateUtil.inicializarSesion();
             String rolUsuario = "";
             String idUsuario = request.getParameter("IdUsuario");
         
@@ -609,6 +620,7 @@ public class usuario extends HttpServlet {
             response.getWriter().write(usuarioJson.toJSONString());
         
             sesion.close();
+            HibernateUtil.closeSessionFactory();
         }catch(HibernateException ex){
         
             System.err.println(ex);

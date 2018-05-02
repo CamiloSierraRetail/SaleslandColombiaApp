@@ -1,4 +1,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    try{      
+        if(session.getAttribute("UsuarioIngresado").equals("") || session.getAttribute("UsuarioIngresado").equals(null)){
+            response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/sesionBloqueada.jsp");
+        }
+        else{
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -136,8 +143,8 @@
                                             </div>
                                             <div class="card-footer ">
                                                 <div class="legend">
-                                                    <i class="fa fa-circle text-info"></i> Ingreso
-                                                    <i class="fa fa-circle text-danger"></i> Salida
+                                                    <i class="fa fa-circle blue-corp"></i> Ingreso
+                                                    <i class="fa fa-circle gray-corp"></i> Salida
                                                 </div>
                                                 <hr>
                                                 <div class="stats">
@@ -157,9 +164,9 @@
                                             </div>
                                             <div class="card-footer ">
                                                 <div class="legend">
-                                                    <i class="fa fa-circle text-info"></i> Correctos
-                                                    <i class="fa fa-circle text-danger"></i> Erroneos
-                                                    <i class="fa fa-circle text-warning"></i> A tiempo
+                                                    <i class="fa fa-circle blue-corp"></i> Correctos
+                                                    <i class="fa fa-circle gray-corp"></i> Erroneos
+                                                    <i class="fa fa-circle orange-corp"></i> A tiempo
                                                 </div>
                                                 <hr>
                                                 <div class="stats">
@@ -177,7 +184,7 @@
                 <%@include  file="../includes/footer.jsp" %>
             </div>
         </div>
-        <%@include file="../includes/jsInclude.jsp" %>
+        <%@include file="../includes/jsInclude.jsp" %>        
         <script>
             
             $(document).ready(function (){
@@ -185,8 +192,8 @@
                 localStorage.name = $(".spanName").val();
                 $("#home").addClass("active");
                 $("#tituloPagina").text("Inicio");              
-                cargarPromedio();
-                loadWeeklyData($("#txtIdUsuario").val());
+                /*cargarPromedio();
+                loadWeeklyData($("#txtIdUsuario").val());*/
                 
                 var fullDate = new Date();
                 var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
@@ -196,3 +203,9 @@
         </script>
     </body>
 </html> 
+<%        }
+    }  
+    catch(NullPointerException ex){
+        response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/sesionBloqueada.jsp");
+    }
+%>

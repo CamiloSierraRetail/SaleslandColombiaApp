@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 
 public class sector extends HttpServlet {
@@ -56,17 +57,17 @@ public class sector extends HttpServlet {
             throws ServletException, IOException {
         
         try{
-            
+            HibernateUtil.inicializarSesion();
             String nombreSector = request.getParameter("NombreSector");
             String descripcionSector = request.getParameter("DescripcionSector");      
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Session sesion = HibernateUtil.getSessionFactory().openSession();            
             Sector objSector = new Sector(nombreSector, descripcionSector, "Activo");
             sesion.beginTransaction();
             sesion.save(objSector);
             sesion.getTransaction().commit();
+            response.getWriter().write("200");            
             sesion.close();
-            response.getWriter().write("200");
-        
+            HibernateUtil.closeSessionFactory();
         }catch(Exception e){
         
             System.err.println(e);
@@ -78,45 +79,33 @@ public class sector extends HttpServlet {
 
     protected void versectores(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+                        
         try{
-        
+            HibernateUtil.inicializarSesion();
             int countRows = 1;
             Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.flush();
             Query query = sesion.createQuery("FROM Sector");                        
-            List<Sector> listaSector = query.list();
-            sesion.close();
-            
-//            Gson gson = new Gson();
-//            String json = gson.toJson(listaSector);
-//            response.getWriter().write(json);
-//            
+            List<Sector> listaSector = query.list();            
+                        
             response.setCharacterEncoding("UTF-8");
-            response.setContentType("text/plain");
+            response.setContentType("text/html");
             for(Sector sector : listaSector){
             
                 response.getWriter().write("<tr>"
                                               + "<td class='text-center'>"+countRows+"</td>"
                                               + "<td>"+sector.getNombreSector()+"</td>"
                                               + "<td>"+sector.getDescripcionSector()+"</td>"
-                                              + "<td class='text-right'>"+sector.getEstado()
-                                                      
-                                                   /*+ "<div class='row'>"
-                                                      + "<div class='col-md-12'>"
-                                                        + "<input type='checkbox' checked='' data-toggle='switch' data-on-color='info' data-off-color='info'>"
-                                                        + "<span class='toggle'></span>"
-                                                      + "</div>"
-                                                   + "</div>"*/
-                                              + "</td>"
-                                              + "<td class='td-actions text-right'>"
+                                              + "<td class='text-right'>"+sector.getEstado()+ "</td>"
+                                              + "<td class='td-actions text-center'>"
                                                 + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='Ver Sector'>"
-                                                    + "<i class='fa fa-user'></i>"
+                                                    + "<i class='fa fa-eye'></i>"
                                                 + "</a>"   
                                                 + "<button onclick='verDatosSector("+sector.getIdSector()+")' data-toggle='modal' data-target='#ModalEditarSector' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
                                                     + "<i class='fa fa-edit'></i>"
                                                 + "</button>"
-                                                + "<a href='#' rel='tooltip' title='' class='btn btn-danger btn-link btn-xs' data-original-title='Eliminar'>"
-                                                    + "<i class='fa fa-times'></i>"
+                                                + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='Ver Sector'>"
+                                                    + "<i class='fa fa-bar-chart'></i>"
                                                 + "</a>"
                                               + "</td>"
                                          + "</tr>");
@@ -124,17 +113,19 @@ public class sector extends HttpServlet {
                 
             }
             sesion.close();
+            HibernateUtil.closeSessionFactory();
         }catch(Exception e){
         
             System.err.println(e);
-            response.getWriter().write("500");
+            response.getWriter().write("500");          
+            
         }
     
     }
     protected void cargardatossector(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try{
-            
+            HibernateUtil.inicializarSesion();
             String idSector = request.getParameter("idSector");
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             Query query = sesion.createQuery("FROM Sector WHERE IdSector = "+idSector+"");
@@ -145,7 +136,7 @@ public class sector extends HttpServlet {
             response.getWriter().write(json);
             
             sesion.close();
-        
+            HibernateUtil.closeSessionFactory();
         }catch(Exception e){
             System.err.println(e);
             response.getWriter().write("500");
@@ -155,6 +146,7 @@ public class sector extends HttpServlet {
             throws ServletException, IOException {
     
         try{
+            HibernateUtil.inicializarSesion();
             String id = request.getParameter("IdSector");
             
             int idEstado = Integer.parseInt(id);
@@ -237,7 +229,7 @@ public class sector extends HttpServlet {
             sesion.close();
            
             response.getWriter().write("200");
-            
+            HibernateUtil.closeSessionFactory();
         }catch(Exception e){
             response.getWriter().write("500");
             System.err.println(e);
@@ -249,8 +241,7 @@ public class sector extends HttpServlet {
             throws ServletException, IOException {
     
         try{
-        
-            System.out.println("asdasdas combo sector");
+            HibernateUtil.inicializarSesion();
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             Query query = sesion.createQuery("FROM Sector WHERE Estado='Activo'");
             List<Sector> listaSector = query.list();
@@ -260,6 +251,7 @@ public class sector extends HttpServlet {
             response.getWriter().write(json);
             
             sesion.close();
+            HibernateUtil.closeSessionFactory();
         }catch(Exception e){
         
             System.err.println(e);

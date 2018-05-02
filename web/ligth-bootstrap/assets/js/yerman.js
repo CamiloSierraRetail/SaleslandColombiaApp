@@ -314,7 +314,7 @@ $(document).ready(function(){
             },
             dataType:"json"
         }).done(function(data){
-            if(data !== undefined){
+            if(data !== undefined){                
                 initIngresosChart(data);
             }else{
                 swal('Error', 'Algo ocurrio al momento de solicitar los datos', 'error');
@@ -384,11 +384,9 @@ $(document).ready(function(){
             axisY: {
                 onlyInteger:true, 
                 labelInterpolationFnc: function(value) {
-                    if(value < 12){
-                        return (value +"AM");
-                    }else{
-                        return (value +"PM");
-                    }
+                    
+                    return (value +":00");
+                    
                 }
             },
             plugins: [

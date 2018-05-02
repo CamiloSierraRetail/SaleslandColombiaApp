@@ -34,8 +34,8 @@
                                             </div>
                                             <div class="card-footer ">
                                                 <div class="legend">
-                                                    <i class="fa fa-circle text-info" rel="tooltip" data-original-title="Ingreso Horario A (08:00 - 18:00)" href="#" aria-haspopup="true" aria-expanded="false"></i><i class="fa fa-circle text-warning" rel="tooltip" data-original-title="Ingreso horario B (07:00 - 17:00)" href="#" aria-haspopup="true" aria-expanded="false"></i> Ingreso &nbsp &nbsp
-                                                    <i class="fa fa-circle text-danger" rel="tooltip" data-original-title="Salida horario A (08:00 - 18:00)" href="#" aria-haspopup="true" aria-expanded="false"></i><i class="fa fa-circle text-primary" rel="tooltip" data-original-title="Salida horario B (07:00 - 17:00)" href="#" aria-haspopup="true" aria-expanded="false"></i> Salida
+                                                    <i class="fa fa-circle blue-corp" rel="tooltip" data-original-title="Ingreso Horario A (08:00 - 18:00)" href="#" aria-haspopup="true" aria-expanded="false"></i><i class="fa fa-circle text-warning" rel="tooltip" data-original-title="Ingreso horario B (07:00 - 17:00)" href="#" aria-haspopup="true" aria-expanded="false"></i> Ingreso &nbsp &nbsp
+                                                    <i class="fa fa-circle gray-corp" rel="tooltip" data-original-title="Salida horario A (08:00 - 18:00)" href="#" aria-haspopup="true" aria-expanded="false"></i><i class="fa fa-circle text-primary" rel="tooltip" data-original-title="Salida horario B (07:00 - 17:00)" href="#" aria-haspopup="true" aria-expanded="false"></i> Salida
                                                 </div>
                                                 <hr>
                                                 <div class="stats">
@@ -176,9 +176,9 @@
                                                                     <div class="card-footer" style="margin-top: -50px;">                                                
                                                                         <hr>
                                                                         <div class="legend">
-                                                                            <i class="fa fa-circle text-info"></i> Temprano
-                                                                            <i class="fa fa-circle text-danger"></i> Tarde
-                                                                            <i class="fa fa-circle text-warning"></i> Justo
+                                                                            <i class="fa fa-circle blue-corp"></i> Temprano
+                                                                            <i class="fa fa-circle gray-corp"></i> Tarde
+                                                                            <i class="fa fa-circle orange-corp"></i> Justo
                                                                         </div>
                                                                     </div>
                                                                 </div>

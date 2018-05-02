@@ -52,6 +52,7 @@ public class cargo extends HttpServlet {
 
         try {
 
+            HibernateUtil.inicializarSesion();
             int countRows = 1;
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             Query query = sesion.createQuery("FROM Cargo");
@@ -118,6 +119,7 @@ public class cargo extends HttpServlet {
                 countRows++;            
             }
             sesion.close();
+            HibernateUtil.closeSessionFactory();
         } catch (Exception e) {
 
             System.err.println(e);
@@ -167,9 +169,9 @@ public class cargo extends HttpServlet {
 
     private void cargaDatosCargo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            System.out.println("...............................................");
-            String IdCargo = request.getParameter("idCargo");
-            System.out.println("----------------> " + IdCargo);
+            
+            HibernateUtil.inicializarSesion();
+            String IdCargo = request.getParameter("idCargo");            
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             Query query = sesion.createQuery("FROM Cargo WHERE idCargo=" + IdCargo + "");
             JSONArray canalJson = new JSONArray();
@@ -185,7 +187,7 @@ public class cargo extends HttpServlet {
             }
             sesion.close();
             response.getWriter().write(canalJson.toJSONString());
-
+            HibernateUtil.closeSessionFactory();
         } catch (Exception e) {
 
             System.err.println(e);
@@ -196,10 +198,10 @@ public class cargo extends HttpServlet {
     
     private void editarCargo(HttpServletRequest request, HttpServletResponse response)
          throws ServletException, IOException {
-                 System.out.println("ENTRasdasdasdsadsadsadassdOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+                 
         try{
-            String id = request.getParameter("IdCargo");
-             System.out.println("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+            HibernateUtil.inicializarSesion();
+            String id = request.getParameter("IdCargo");             
             int IdCargo = Integer.parseInt(id);
             System.out.println(IdCargo);
             String estado = request.getParameter("Estado");
@@ -218,7 +220,7 @@ public class cargo extends HttpServlet {
             sesion.close();
            
             response.getWriter().write("200");
-            
+            HibernateUtil.closeSessionFactory();
         }catch(Exception e){
             response.getWriter().write("500");
             System.err.println(e);
@@ -228,6 +230,8 @@ public class cargo extends HttpServlet {
     private void registrarcargo(HttpServletRequest request, HttpServletResponse response)  
             throws ServletException, IOException {
         try {
+            HibernateUtil.inicializarSesion();
+            
             String NombreCargo = request.getParameter("NombreCargo");
             String Descripcion = request.getParameter("Descripcion");            
             String Tipo = request.getParameter("Tipo");
@@ -278,7 +282,7 @@ public class cargo extends HttpServlet {
 
             sesion.close();
             response.getWriter().write("200");
-
+            HibernateUtil.closeSessionFactory();
         } catch (Exception e) {
 
             System.err.println(e);

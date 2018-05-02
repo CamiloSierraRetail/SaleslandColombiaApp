@@ -8,6 +8,7 @@ import Modelo.Ingreso;
 import Modelo.Sector_Cargo;
 import Modelo.Usuario;
 import java.util.List;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.json.simple.JSONArray;
@@ -18,12 +19,12 @@ public class accionesSocket {
     JSONArray usuarioJson = new JSONArray();
     public String mostrarEmpleados(int idUsuario, String fecha){
     
-        List<Usuario> listaUsuarios = null;
-        
+        List<Usuario> listaUsuarios = null;        
         usuarioJson.add("muchos");
+        HibernateUtil.inicializarSesion();
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
         try{
-        
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            
             Usuario objUsuario = (Usuario)sesion.createQuery("FROM Usuario WHERE idUsuario="+idUsuario+"").uniqueResult();
             
             if (objUsuario.getCargo().getTipo().equals("Director")) {
@@ -42,13 +43,10 @@ public class accionesSocket {
 
                     }
 
-                    
-                    
                     Query queryCanal = sesion.createQuery("FROM Canal WHERE Sector = "+sector_cargo.getSector().getIdSector()+"");
                     List<Canal> listaCanal = queryCanal.list();
                     for(Canal canal : listaCanal){
-                    
-                        
+                                            
                         Query queryCanal_Cargo = sesion.createQuery("FROM Canal_Cargo WHERE Canal = "+canal.getIdCanal()+"");
                         List<Canal_Cargo> listaCanal_Cargo = queryCanal_Cargo.list();
                         for(Canal_Cargo canal_cargo : listaCanal_Cargo){                        
@@ -128,8 +126,7 @@ public class accionesSocket {
                 getJsonUsuarios(listaUsuarios, fecha);
                 
             }else if (objUsuario.getCargo().getTipo().equals("JefeArea")) {
-                
-                
+                                
                 Query queryArea_Cargo1 = sesion.createQuery("FROM Area_Cargo WHERE Cargo="+objUsuario.getCargo().getIdCargo()+"");
                 List<Area_Cargo> listaArea_Cargo1 = queryArea_Cargo1.list();
                 for(Area_Cargo area_cargo1 : listaArea_Cargo1){
@@ -155,36 +152,46 @@ public class accionesSocket {
                 }                
                 
             }
-          
-            sesion.close();
             
         }catch(Exception ex){
             System.err.println(ex);            
-        }
-        
+        }finally{
+            sesion.close();
+            HibernateUtil.closeSessionFactory();
+        }       
         return usuarioJson.toJSONString();
     }
         
     private List<Usuario> getUsuarios(int idUsuario, int idCargo){
         
-        Session sesion = HibernateUtil.getSessionFactory().openSession();
-        Query queryUsuarios = sesion.createQuery("FROM Usuario WHERE Cargo="+idCargo+" AND idUsuario != "+idUsuario+"");
-        List<Usuario> listaUsuarios = queryUsuarios.list();        
-        sesion.close();
-        return listaUsuarios;  
+        List<Usuario> listaUsuarios = null;
+        try{
         
+            HibernateUtil.inicializarSesion();
+            
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Query queryUsuarios = sesion.createQuery("FROM Usuario WHERE Cargo="+idCargo+" AND idUsuario != "+idUsuario+"");
+            listaUsuarios = queryUsuarios.list();        
+            sesion.close();
+            
+            HibernateUtil.closeSessionFactory();
+            
+            
+        }catch(HibernateException ex){
+            System.err.println(ex);
+        }          
+        return listaUsuarios;
     }
     
     
     ///////////////////////// METODOS PARA REALIZAR EL REGISTRO DEL INGRESO DE LOS USUARIOS //////////////////////////
     public String ingresoEmpleado(String idEmpleado, String fecha){
-    
-        
-        JSONArray usuarioJson = new JSONArray();
-        
+            
+        JSONArray usuarioJson = new JSONArray();  
+        HibernateUtil.inicializarSesion();
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
         try{
-                        
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            
             Usuario objUsuario = (Usuario) sesion.createQuery("FROM Usuario WHERE Documento="+idEmpleado+"").uniqueResult();
             
             String entrada = "Ingreso: 1970-01-0 00:00:00", salida = "Salida: 1970-01-0 00:00:00";
@@ -213,7 +220,6 @@ public class accionesSocket {
                     usuarioJson.add(objUsuario.getFoto());
                     usuarioJson.add(entrada);
                     usuarioJson.add(salida);
-
 
                 }
 
@@ -247,64 +253,42 @@ public class accionesSocket {
                     contador++;
                 }
             }
-            sesion.close();
+            
+            
         }catch(Exception ex){
         
             System.err.println(ex);
+        }finally{
+            sesion.close();
+            HibernateUtil.closeSessionFactory();
         }
         return usuarioJson.toJSONString();        
     }
     
     private void getJsonUsuarios(List<Usuario> listaUsuarios, String fecha){
     
+        HibernateUtil.inicializarSesion();
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        try{
         
-        for(Usuario usuario : listaUsuarios){
-            
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
-            String entrada = "Ingreso: 1970-01-0 00:00:00", salida = "Salida: 1970-01-0 00:00:00";
+            for(Usuario usuario : listaUsuarios){
+                
+                String entrada = "Ingreso: 1970-01-0 00:00:00", salida = "Salida: 1970-01-0 00:00:00";
 
-            Query queryIngreso = sesion.createQuery("FROM Ingreso WHERE Usuario="+usuario.getIdUsuario()+" AND Fecha='"+fecha+"'");
-            List<Ingreso> listaIngreso = queryIngreso.list();
+                Query queryIngreso = sesion.createQuery("FROM Ingreso WHERE Usuario="+usuario.getIdUsuario()+" AND Fecha='"+fecha+"'");
+                List<Ingreso> listaIngreso = queryIngreso.list();
 
-            int contador = 0;
+                int contador = 0;
 
-            if (listaIngreso.size() == 1) {
+                if (listaIngreso.size() == 1) {
 
-                for(Ingreso ingreso : listaIngreso){
-                    
-                    if (ingreso.getTipo().equals("Ingreso")) {
+                    for(Ingreso ingreso : listaIngreso){
 
-                        entrada = "Ingreso: " + String.valueOf(ingreso.getHora());
-
-                    }else if (ingreso.getTipo().equals("Salida")) {
-
-
-                        salida = "Salida: " + String.valueOf(ingreso.getHora());
-                    }
-
-                    usuarioJson.add(usuario.getIdUsuario());
-                    usuarioJson.add(usuario.getNombre());
-                    usuarioJson.add(usuario.getApellido());
-                    usuarioJson.add(usuario.getFoto());
-                    usuarioJson.add(entrada);
-                    usuarioJson.add(salida);
-
-                }
-
-            }else if (listaIngreso.size() == 2) {
-
-                for(Ingreso ingreso : listaIngreso){
-
-                    if (contador == 0) {
                         if (ingreso.getTipo().equals("Ingreso")) {
 
                             entrada = "Ingreso: " + String.valueOf(ingreso.getHora());
 
-                        }
-
-                    }else if (contador == 1) {
-
-                        if (ingreso.getTipo().equals("Salida")) {
+                        }else if (ingreso.getTipo().equals("Salida")) {
 
 
                             salida = "Salida: " + String.valueOf(ingreso.getHora());
@@ -317,26 +301,59 @@ public class accionesSocket {
                         usuarioJson.add(entrada);
                         usuarioJson.add(salida);
 
-
                     }
-                    contador++;
-                }
 
-            }else if (listaIngreso.size() == 0){
+                }else if (listaIngreso.size() == 2) {
 
-                usuarioJson.add(usuario.getIdUsuario());
-                usuarioJson.add(usuario.getNombre());
-                usuarioJson.add(usuario.getApellido());
-                usuarioJson.add(usuario.getFoto());
-                usuarioJson.add(entrada);
-                usuarioJson.add(salida);
+                    for(Ingreso ingreso : listaIngreso){
+
+                        if (contador == 0) {
+                            if (ingreso.getTipo().equals("Ingreso")) {
+
+                                entrada = "Ingreso: " + String.valueOf(ingreso.getHora());
+
+                            }
+
+                        }else if (contador == 1) {
+
+                            if (ingreso.getTipo().equals("Salida")) {
+
+
+                                salida = "Salida: " + String.valueOf(ingreso.getHora());
+                            }
+
+                            usuarioJson.add(usuario.getIdUsuario());
+                            usuarioJson.add(usuario.getNombre());
+                            usuarioJson.add(usuario.getApellido());
+                            usuarioJson.add(usuario.getFoto());
+                            usuarioJson.add(entrada);
+                            usuarioJson.add(salida);
+
+
+                        }
+                        contador++;
+                    }
+
+                }else if (listaIngreso.size() == 0){
+
+                    usuarioJson.add(usuario.getIdUsuario());
+                    usuarioJson.add(usuario.getNombre());
+                    usuarioJson.add(usuario.getApellido());
+                    usuarioJson.add(usuario.getFoto());
+                    usuarioJson.add(entrada);
+                    usuarioJson.add(salida);
+
+                }                     
 
             }
             
+        }catch(HibernateException ex){
+            System.err.println(ex);
+        }finally{
             sesion.close();
-            
+            HibernateUtil.closeSessionFactory();
         }
-    
+       
     }
     
 }

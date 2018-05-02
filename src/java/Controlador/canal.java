@@ -62,7 +62,7 @@ public class canal extends HttpServlet {
             throws ServletException, IOException {
     
         try{
-        
+            HibernateUtil.inicializarSesion();
             String SectorCanal = request.getParameter("SectorCanal");
             String NombreCanal = request.getParameter("NombreCanal");
             String DescripcionCanal = request.getParameter("DescripcionCanal");
@@ -78,7 +78,7 @@ public class canal extends HttpServlet {
             sesion.getTransaction().commit();
             sesion.close();
             response.getWriter().write("200");
-        
+            HibernateUtil.closeSessionFactory();
         }catch(Exception e){
         
             System.err.println(e);
@@ -90,6 +90,7 @@ public class canal extends HttpServlet {
             throws ServletException, IOException {
     
         try{
+            HibernateUtil.inicializarSesion();
             int countRows = 1;
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             Query query = sesion.createQuery("FROM Canal");
@@ -126,6 +127,7 @@ public class canal extends HttpServlet {
                 
             }
             sesion.close();
+            HibernateUtil.closeSessionFactory();
         }catch(Exception e){
             System.err.println(e);
             response.getWriter().write("500");
@@ -136,7 +138,9 @@ public class canal extends HttpServlet {
     protected void cargaDatosCanal(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try{
-            System.out.println("...............................................");
+            
+            HibernateUtil.inicializarSesion();
+            
             String idCanal = request.getParameter("idCanal");
             System.out.println("----------------> "+idCanal);
             Session sesion = HibernateUtil.getSessionFactory().openSession();
@@ -157,7 +161,7 @@ public class canal extends HttpServlet {
             
             sesion.close();
             response.getWriter().write(canalJson.toJSONString());
-            
+            HibernateUtil.closeSessionFactory();
         }catch(Exception e){
         
             System.err.println(e);
@@ -169,7 +173,7 @@ public class canal extends HttpServlet {
             throws ServletException, IOException {
     
         try{
-            
+            HibernateUtil.inicializarSesion();
             String idCanal = request.getParameter("IdCanal");
             String Estado = request.getParameter("EstadoCanal");
             String Nombre = request.getParameter("NombreCanal");
@@ -221,7 +225,7 @@ public class canal extends HttpServlet {
             sesion.close();
             
             response.getWriter().write("200");
-            
+            HibernateUtil.closeSessionFactory();
         }catch(Exception e){
         
             System.err.println(e);
@@ -233,8 +237,8 @@ public class canal extends HttpServlet {
         throws ServletException, IOException {
     
         try{
-        
-            System.out.println("Combo asas Canal");
+            HibernateUtil.inicializarSesion();
+            
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             
             Query query = sesion.createQuery("FROM Canal WHERE Estado='Activo'");
@@ -248,6 +252,7 @@ public class canal extends HttpServlet {
             }
             sesion.close();
             response.getWriter().write(canalJson.toJSONString());    
+            HibernateUtil.closeSessionFactory();
         }catch(Exception e){
         
             System.err.println(e);
@@ -261,9 +266,8 @@ public class canal extends HttpServlet {
     
         try{
     
-            String idSector = request.getParameter("idSector");
-            
-            System.out.println("------------------->       " + idSector);
+            HibernateUtil.inicializarSesion();
+            String idSector = request.getParameter("idSector");                        
             
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             Query query = sesion.createQuery("FROM Canal WHERE Sector="+idSector+"");
@@ -278,7 +282,7 @@ public class canal extends HttpServlet {
             }
             sesion.close();
             response.getWriter().write(canalJson.toJSONString());
-            
+            HibernateUtil.closeSessionFactory();
         }catch(Exception e){
         
             response.getWriter().write("500");

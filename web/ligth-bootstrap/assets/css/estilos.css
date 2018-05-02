@@ -22,13 +22,25 @@ div.error{
 }
 .ct-series-a .customTooltipOnPoint:hover{
   r:7;
-  fill:#23CCEF;
+  fill: #006A85;
   stroke-opacity: 0.5;
   stroke-width: 20px;
 }
 .ct-series-b .customTooltipOnPoint:hover{    
   r:7;
-  fill:red;
+  fill: #A8A3A0;
+  stroke-opacity: 0.5;
+  stroke-width: 20px;
+}
+.ct-series-c .customTooltipOnPoint:hover{    
+  r:7;
+  fill: #fa983a;
+  stroke-opacity: 0.5;
+  stroke-width: 20px;
+}
+.ct-series-d .customTooltipOnPoint:hover{    
+  r:7;
+  fill: #60a3bc;
   stroke-opacity: 0.5;
   stroke-width: 20px;
 }
@@ -296,7 +308,41 @@ div.error{
     color: #006A84;
     
 }
+/*//////////////////////// ESTILOS PARA LA GRAFICA //////////////////////////////////////*/
+.ct-series-a .ct-bar, .ct-series-a .ct-line, .ct-series-a .ct-point, .ct-series-a .ct-slice-donut{
+                
+    stroke: #006A85;
+}
 
+.ct-series-b .ct-bar, .ct-series-b .ct-line, .ct-series-b .ct-point, .ct-series-b .ct-slice-donut{
 
+    stroke: #A8A3A0;
 
+}
+.ct-series-c .ct-bar, .ct-series-c .ct-line, .ct-series-c .ct-point, .ct-series-c .ct-slice-donut{
 
+    stroke: #fa983a;
+
+}
+.ct-series-d .ct-bar, .ct-series-d .ct-line, .ct-series-d .ct-point, .ct-series-d .ct-slice-donut{
+
+    stroke: #38ada9;
+
+}
+/*  ESTILOS PARA LOS ICONOS  */
+.blue-corp{    
+    color: #006A85;    
+}
+.gray-corp{    
+    color: #A8A3A0;
+}
+.orange-corp{    
+    color: #fa983a;
+}
+/*  ESTILOS DE PRUEBA   */
+.btn-info-corp {
+    border: 1px solid #797979;
+    color: #FFFFFF;
+    background-color: #797979;
+    cursor: pointer;
+}

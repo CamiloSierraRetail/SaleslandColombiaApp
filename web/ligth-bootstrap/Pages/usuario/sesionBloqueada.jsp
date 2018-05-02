@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Bloqueo | SaleslandColombia</title>
+        <title>Sesión bloqueada - SaleslandColombia</title>
         <%@include file="../includes/cssInclude.jsp" %>
     </head>
     <body>
@@ -12,7 +12,7 @@
             <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute">
                 <div class="container">
                     <div class="navbar-wrapper">
-                        <a class="navbar-brand" href="#"><strong>SALESLAND</strong>COLOMBIA</a>
+                        <a href="#" class="navbar-brand"><img style="height: 30px; white-space: 100px;" src="../../assets/img/LOGO_SALESLAND_NEGATIVO.png"></a>
                         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-bar burger-lines"></span>
                             <span class="navbar-toggler-bar burger-lines"></span>
@@ -36,7 +36,7 @@
                 </div>
             </nav>
             <!-- End Navbar -->
-            <div class="full-page lock-page" data-color="black" data-image="../../assets/img/SpaceBackground.jpg">
+            <div class="full-page lock-page" data-color="" data-image="../../assets/img/defaultImage.jpg">
                 <!--   you can change the color of the filter page using: data-color="blue | azure | green | orange | red | purple" -->
                 <div class="content">
                     <div class="container">
@@ -69,6 +69,18 @@
         <%@include file="../includes/jsInclude.jsp" %>
         <script>
             $(document).ready(function() {
+                $.notify({
+                    icon: "nc-icon nc-fav-remove",
+                    message: "Tú sesión ha sido bloqueada por inactividad, por favor ingresa tu contraseña para volver a ingresar al sistema."
+                },{
+                    type: 'danger',
+                    timer: 2500,
+                    placement: {
+                        from: 'bottom',
+                        align: 'right'
+                    }
+                });
+                
                 demo.checkFullPageBackgroundImage();
                 $("#txtUserUnlock").val(localStorage.docEmail);
                 $('#imgLock').attr('src','/SaleslandColombiaApp/ligth-bootstrap/assets/img/imagenesDePerfil/'+localStorage.imgPerfil+'');

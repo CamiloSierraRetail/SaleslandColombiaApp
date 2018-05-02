@@ -2,7 +2,7 @@
     rules: {
         NombreSector: {
             required: true,
-            minlength: 5
+            minlength: 2
         },
         DescripcionSector: {
             required: true,
@@ -13,7 +13,7 @@
 
         NombreSector: {
             required: "Este campo es requerido",
-            minlength: "Ingresa 5 caracteres como minimo"
+            minlength: "Ingresa 2 caracteres como minimo"
         },
         DescripcionSector: {
             required: "Este campo es requerido",
@@ -31,23 +31,12 @@
     }, submitHandler: function () {
 
         swal({
-            title: "Confirmar Datos",
-            text: "¿Está seguro que desea realizar el registro?",
-            icon: "info",
-            buttons: {
-                cancel:{
-                    text: "Cancelar",
-                    value: true,
-                    visible: true,
-                    closeModal: true
-                },
-                confirm: {
-                    text: "Sí",
-                    value: true,
-                    visible: true,
-                    closeModal: false
-                }
-            }
+        title: "Confirmar Datos",
+        text: "¿Estás seguro que desea realizar el registro?",
+        icon: "info",
+        buttons: true,
+        closeonconfirm: false,
+        buttons: ["No, Cancelar", "Sí"]
         }).then((willDelete) => {
             if (willDelete) {
 
@@ -62,7 +51,9 @@
                                 $("body").removeClass('modal-open');
                                 $("body").css("padding-right","");
                                 $("div").removeClass('modal-backdrop');
+                                                                                                   
                                 listarSectores();
+                                
                                 $("#txtNombreSector").val("");
                                 $("#txtDescripcionSector").val("");
                             }
@@ -221,6 +212,7 @@ $('#frmEditarSector').validate({
 });
 ////////////////// LISTAR TODOS LOS SECTORES ////////////////////////////
 function listarSectores() {
+    alert("Estamos listando");
     $("#tablaModificada").html("");
     $("#tablaModificada").append("<div class='toolbar' id='toolbar'>"
                                     +"<button class='btn btn-outline btn-round' data-toggle='modal' data-target='#modalRegistrarSector'>"                                                
@@ -253,12 +245,11 @@ function listarSectores() {
             swal("Ocurrio un error", "Lo sentimos tus datos no fueron registrados, por favor intentalo nuevamente.", "error");
 
         } else {
-            
             $("#listadoSectores").append(responseText);
         }
         // orden de datos tamaño,showRefresh, search, showToggle, showColumns, alineacion, texto
-        //tamanio,showRefresh, search, showToggle, showColumns, alineacion, texto
-        botstrapPaginacionTabla(5, false, true, true, true, 'right');
+        //tamanio,showRefresh, search, showToggle, showColumns, alineacion, texto        
+        botstrapPaginacionTabla(5,false, true, true, true, 'right');
        
     });
 
