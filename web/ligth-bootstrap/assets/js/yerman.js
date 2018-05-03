@@ -313,13 +313,13 @@ $(document).ready(function(){
                 idusuario: idUsuario
             },
             dataType:"json"
-        }).done(function(data){
+        }).done(function(data){            
             if(data !== undefined){                
                 initIngresosChart(data);
             }else{
                 swal('Error', 'Algo ocurrio al momento de solicitar los datos', 'error');
             }
-        });
+        }); 
     }
 
 //Funcion para inicializar chart de ingresos y salidas a lo largo de la semana

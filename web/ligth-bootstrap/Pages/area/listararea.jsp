@@ -1,4 +1,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    try{      
+        if(session.getAttribute("UsuarioIngresado").equals("") || session.getAttribute("UsuarioIngresado").equals(null)){
+            response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/sesionBloqueada.jsp");
+        }
+        else{
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -194,3 +201,9 @@
         </script>
     </body>            
 </html>
+<%        }
+    }  
+    catch(NullPointerException ex){
+        response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/sesionBloqueada.jsp");
+    }
+%>

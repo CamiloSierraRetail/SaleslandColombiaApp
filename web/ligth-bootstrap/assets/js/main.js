@@ -211,8 +211,7 @@ $('#frmEditarSector').validate({
     }        
 });
 ////////////////// LISTAR TODOS LOS SECTORES ////////////////////////////
-function listarSectores() {
-    alert("Estamos listando");
+function listarSectores() {    
     $("#tablaModificada").html("");
     $("#tablaModificada").append("<div class='toolbar' id='toolbar'>"
                                     +"<button class='btn btn-outline btn-round' data-toggle='modal' data-target='#modalRegistrarSector'>"                                                
@@ -2056,7 +2055,7 @@ $("#cmbTipo").change(function (){
  
  
  /////////////////// FUNCION PARA CARGAR EL MODAL DEL PROMEDIO DE INGRESOS /////////////////////////////////////
-$(".cargarPromedioEntrada").click(function (){
+$(".cargarPromedioEntrada").click(function (){    
     
     $("#tab1").addClass("show active");
     $("#linkTab1").addClass("active");
@@ -2107,8 +2106,7 @@ $("#linkTab2").click(function (){
 });
 function cargarRankingUsuarios(accion, horario, idChart, idTablaUSuarios){
     
-    $.post("/SaleslandColombiaApp/ingreso/cargarPromedios",{Accion:accion, Horario:horario},function (responseText) {
-        
+    $.post("/SaleslandColombiaApp/ingreso/cargarPromedios",{Accion:accion, Horario:horario},function (responseText) {        
         if (responseText == "500") {
             
             swal("Ocurrio un error", "Lo sentimos, los datos de los empleados no se lograron cargar, por favor intentalo nuevamente", "error");

@@ -11,6 +11,8 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.AnnotationConfiguration;
 import org.json.simple.JSONArray;
 
 
@@ -20,11 +22,14 @@ public class accionesSocket {
     public String mostrarEmpleados(int idUsuario, String fecha){
     
         List<Usuario> listaUsuarios = null;        
-        usuarioJson.add("muchos");
-        HibernateUtil.inicializarSesion();
-        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        usuarioJson.add("muchos");        
+        SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+        
         try{
-            
+            System.out.println("TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY ");
+            HibernateUtil.openSessionFactory();
+            System.out.println("pasó el open session factory AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            Session sesion = objSessionFactory.openSession();
             Usuario objUsuario = (Usuario)sesion.createQuery("FROM Usuario WHERE idUsuario="+idUsuario+"").uniqueResult();
             
             if (objUsuario.getCargo().getTipo().equals("Director")) {
@@ -152,34 +157,30 @@ public class accionesSocket {
                 }                
                 
             }
-            
+        sesion.close();
+        objSessionFactory.close();
         }catch(Exception ex){
             System.err.println(ex);            
-        }finally{
-            sesion.close();
-            HibernateUtil.closeSessionFactory();
-        }       
+        }
+        
         return usuarioJson.toJSONString();
     }
         
     private List<Usuario> getUsuarios(int idUsuario, int idCargo){
         
-        List<Usuario> listaUsuarios = null;
+        List<Usuario> listaUsuarios = null;        
         try{
-        
-            HibernateUtil.inicializarSesion();
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
             
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Session sesion = objSessionFactory.openSession();
             Query queryUsuarios = sesion.createQuery("FROM Usuario WHERE Cargo="+idCargo+" AND idUsuario != "+idUsuario+"");
             listaUsuarios = queryUsuarios.list();        
+            
             sesion.close();
-            
-            HibernateUtil.closeSessionFactory();
-            
-            
+            objSessionFactory.close();
         }catch(HibernateException ex){
             System.err.println(ex);
-        }          
+        }
         return listaUsuarios;
     }
     
@@ -188,8 +189,9 @@ public class accionesSocket {
     public String ingresoEmpleado(String idEmpleado, String fecha){
             
         JSONArray usuarioJson = new JSONArray();  
-        HibernateUtil.inicializarSesion();
-        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        
+        SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+        Session sesion = objSessionFactory.openSession();
         try{
             
             Usuario objUsuario = (Usuario) sesion.createQuery("FROM Usuario WHERE Documento="+idEmpleado+"").uniqueResult();
@@ -259,18 +261,19 @@ public class accionesSocket {
         
             System.err.println(ex);
         }finally{
-            sesion.close();
-            HibernateUtil.closeSessionFactory();
+            sesion.close();            
+            objSessionFactory.close();
         }
         return usuarioJson.toJSONString();        
     }
     
     private void getJsonUsuarios(List<Usuario> listaUsuarios, String fecha){
-    
-        HibernateUtil.inicializarSesion();
-        Session sesion = HibernateUtil.getSessionFactory().openSession();
-        try{
+            
         
+        try{
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();
+            
             for(Usuario usuario : listaUsuarios){
                 
                 String entrada = "Ingreso: 1970-01-0 00:00:00", salida = "Salida: 1970-01-0 00:00:00";
@@ -346,12 +349,10 @@ public class accionesSocket {
                 }                     
 
             }
-            
+        sesion.close();
+        objSessionFactory.close();
         }catch(HibernateException ex){
             System.err.println(ex);
-        }finally{
-            sesion.close();
-            HibernateUtil.closeSessionFactory();
         }
        
     }

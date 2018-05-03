@@ -220,9 +220,9 @@
                                                                     <div class="card-footer" style="margin-top: -50px;">                                                
                                                                         <hr>
                                                                         <div class="legend">
-                                                                            <i class="fa fa-circle text-info"></i> Temprano
-                                                                            <i class="fa fa-circle text-danger"></i> Tarde
-                                                                            <i class="fa fa-circle text-warning"></i> Justo
+                                                                            <i class="fa fa-circle blue-corp"></i> Temprano
+                                                                            <i class="fa fa-circle gray-corp"></i> Tarde
+                                                                            <i class="fa fa-circle orange-corp"></i> Justo
                                                                         </div>
                                                                     </div>
                                                                 </div>

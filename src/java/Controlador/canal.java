@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.AnnotationConfiguration;
 import org.json.simple.JSONArray;
 
 
@@ -61,8 +63,7 @@ public class canal extends HttpServlet {
     protected void registrarCanal(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     
-        try{
-            HibernateUtil.inicializarSesion();
+        try{            
             String SectorCanal = request.getParameter("SectorCanal");
             String NombreCanal = request.getParameter("NombreCanal");
             String DescripcionCanal = request.getParameter("DescripcionCanal");
@@ -70,15 +71,15 @@ public class canal extends HttpServlet {
             Sector objSector = new Sector();
             objSector.setIdSector(Integer.parseInt(SectorCanal));
             
-            
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();
             Canal objCanal = new Canal(NombreCanal, DescripcionCanal, "Activo", objSector);
             sesion.beginTransaction();
             sesion.save(objCanal);
             sesion.getTransaction().commit();
             sesion.close();
-            response.getWriter().write("200");
-            HibernateUtil.closeSessionFactory();
+            objSessionFactory.close();
+            response.getWriter().write("200");            
         }catch(Exception e){
         
             System.err.println(e);
@@ -89,10 +90,10 @@ public class canal extends HttpServlet {
     protected void verCanales(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     
-        try{
-            HibernateUtil.inicializarSesion();
+        try{            
             int countRows = 1;
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();
             Query query = sesion.createQuery("FROM Canal");
             List<Canal> listaCanal = query.list();
             for(Canal canal : listaCanal){
@@ -126,8 +127,8 @@ public class canal extends HttpServlet {
                 countRows++;
                 
             }
-            sesion.close();
-            HibernateUtil.closeSessionFactory();
+            sesion.close();    
+            objSessionFactory.close();
         }catch(Exception e){
             System.err.println(e);
             response.getWriter().write("500");
@@ -137,13 +138,10 @@ public class canal extends HttpServlet {
     
     protected void cargaDatosCanal(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try{
-            
-            HibernateUtil.inicializarSesion();
-            
+        try{                        
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
             String idCanal = request.getParameter("idCanal");
-            System.out.println("----------------> "+idCanal);
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Session sesion = objSessionFactory.openSession();
             Query query = sesion.createQuery("FROM Canal WHERE idCanal="+idCanal+"");
             JSONArray  canalJson = new JSONArray();
             List<Canal> listaCanal = query.list();
@@ -160,8 +158,8 @@ public class canal extends HttpServlet {
             }
             
             sesion.close();
-            response.getWriter().write(canalJson.toJSONString());
-            HibernateUtil.closeSessionFactory();
+            objSessionFactory.close();
+            response.getWriter().write(canalJson.toJSONString());            
         }catch(Exception e){
         
             System.err.println(e);
@@ -172,8 +170,7 @@ public class canal extends HttpServlet {
     protected void editarCanal(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     
-        try{
-            HibernateUtil.inicializarSesion();
+        try{            
             String idCanal = request.getParameter("IdCanal");
             String Estado = request.getParameter("EstadoCanal");
             String Nombre = request.getParameter("NombreCanal");
@@ -185,7 +182,8 @@ public class canal extends HttpServlet {
             Canal objCanal = new Canal(Nombre, Descripcion, Estado, objSector);
             objCanal.setIdCanal(Integer.parseInt(idCanal));
             
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();
             
             
             /// ACTUALIZA EL ESTADO DEL AREA /////////////
@@ -223,9 +221,8 @@ public class canal extends HttpServlet {
             sesion.update(objCanal);
             sesion.getTransaction().commit();
             sesion.close();
-            
-            response.getWriter().write("200");
-            HibernateUtil.closeSessionFactory();
+            objSessionFactory.close();
+            response.getWriter().write("200");            
         }catch(Exception e){
         
             System.err.println(e);
@@ -236,10 +233,9 @@ public class canal extends HttpServlet {
       private void cargacomboCanal(HttpServletRequest request, HttpServletResponse response)   
         throws ServletException, IOException {
     
-        try{
-            HibernateUtil.inicializarSesion();
-            
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+        try{            
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();
             
             Query query = sesion.createQuery("FROM Canal WHERE Estado='Activo'");
             JSONArray  canalJson = new JSONArray();
@@ -251,8 +247,8 @@ public class canal extends HttpServlet {
                 canalJson.add(canal.getNombreCanal());            
             }
             sesion.close();
-            response.getWriter().write(canalJson.toJSONString());    
-            HibernateUtil.closeSessionFactory();
+            objSessionFactory.close();
+            response.getWriter().write(canalJson.toJSONString());                
         }catch(Exception e){
         
             System.err.println(e);
@@ -264,12 +260,11 @@ public class canal extends HttpServlet {
     protected void cargarCanalesDependientes(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     
-        try{
-    
-            HibernateUtil.inicializarSesion();
+        try{                
             String idSector = request.getParameter("idSector");                        
             
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();
             Query query = sesion.createQuery("FROM Canal WHERE Sector="+idSector+"");
             List<Canal> listaCanal = query.list();
             JSONArray canalJson = new JSONArray();
@@ -281,8 +276,8 @@ public class canal extends HttpServlet {
                 
             }
             sesion.close();
-            response.getWriter().write(canalJson.toJSONString());
-            HibernateUtil.closeSessionFactory();
+            objSessionFactory.close();
+            response.getWriter().write(canalJson.toJSONString());            
         }catch(Exception e){
         
             response.getWriter().write("500");

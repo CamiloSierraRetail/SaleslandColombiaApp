@@ -6,8 +6,6 @@
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/saleslandcolombiadb</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.transaction.flush_before_completion">true</property>
-    <property name="hibernate.current_session_context_class">thread</property>
     <mapping class="Modelo.Area"/>
     <mapping class="Modelo.Canal"/>
     <mapping class="Modelo.Cargo"/>

@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.AnnotationConfiguration;
 import org.json.simple.JSONArray;
 
 
@@ -76,15 +77,17 @@ public class ingreso extends HttpServlet {
     }
     protected void usuarioIngreso(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-    
-        try{
+                    
+        try{            
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            
             String Dia = request.getParameter("Dia");
             System.out.println(Dia);
             String UsuarioID = request.getParameter("UsuarioID");
             String Fecha = request.getParameter("Fecha");
             String hora = request.getParameter("Hora");
-            String Minutos = request.getParameter("Minutos");
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            String Minutos = request.getParameter("Minutos");            
             Query query = sesion.createQuery("FROM Usuario WHERE Documento='"+UsuarioID+"'");
             List<Usuario> listaUsuario = query.list();
             
@@ -137,8 +140,7 @@ public class ingreso extends HttpServlet {
                             Ingreso objIngreso = new Ingreso(Dia, new Date(), new Date(), "Ingreso", "Lector", observacionIngreso, usuario.getHorario(), objUsuario);
                             sesion.beginTransaction();
                             sesion.save(objIngreso);
-                            sesion.getTransaction().commit();
-                            sesion.close();
+                            sesion.getTransaction().commit();                            
 
 
                             response.getWriter().write("Ingreso"+observacionIngreso);
@@ -185,8 +187,7 @@ public class ingreso extends HttpServlet {
                                     Ingreso objIngreso = new Ingreso(Dia,new Date(), new Date(), "Salida", "Lector", observacionIngreso, usuario.getHorario(), objUsuario);
                                     sesion.beginTransaction();
                                     sesion.save(objIngreso);
-                                    sesion.getTransaction().commit();
-                                    sesion.close();
+                                    sesion.getTransaction().commit();                                    
 
 
                                     response.getWriter().write("Salida"+observacionIngreso);
@@ -209,6 +210,9 @@ public class ingreso extends HttpServlet {
             }else if (listaUsuario.size() == 0) {
                 response.getWriter().write("404");
             }
+            sesion.close();
+            objSessionFactory.close();
+            
         }catch(Exception e){
             System.err.println(e);
             response.getWriter().write("500");
@@ -216,14 +220,17 @@ public class ingreso extends HttpServlet {
     }
     protected void promedioIngresos(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-        HibernateUtil.inicializarSesion();
+        
         String fechaUltimoIngreso_Salida = "", horaUltimoIngreso_Salida="", fechaCorrecto = "", horaCorrecto="", fechaErroneo = "", horaErroneo="", fechaJusto = "", horaJusto="";
-        try{
+        
+        try{                        
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            
             int totalIngresos = 0, ingresosBien = 0, ingresosMal = 0, ingresosJusto = 0;
             
             Usuario objUsuario = (Usuario) request.getSession().getAttribute("UsuarioIngresado");
             
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Session sesion = objSessionFactory.openSession();
             Query query = sesion.createQuery("FROM Ingreso WHERE Usuario = "+objUsuario.getIdUsuario()+"");
             List<Ingreso> ListaIngreso = query.list();
             totalIngresos = ListaIngreso.size();
@@ -296,20 +303,21 @@ public class ingreso extends HttpServlet {
                 response.getWriter().write("undefined");
             }
             sesion.close();
+            objSessionFactory.close();
         }catch(Exception e){
             response.getWriter().write("500");
             System.err.println(e);
         }
         
-        HibernateUtil.closeSessionFactory();
     }
     
     protected void weeklyChart(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-                
-        HibernateUtil.inicializarSesion();
+        throws ServletException, IOException {                        
         
-        try{
+        try{       
+            SessionFactory objSessionFactory;                        
+            objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();                               
+            
             String tipo = "", tipo1 = "";
             String idusuario = request.getParameter("idusuario");
             String inLunes = "", inMartes = "", inMiercoles = "", inJueves = "", inViernes = "", inSabado = "", inDomingo = "",
@@ -330,7 +338,7 @@ public class ingreso extends HttpServlet {
             if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) finalDate = ld.getYear()+"-"+"0"+ld.getMonthValue()+"-"+String.valueOf(ld.getDayOfMonth()-6);
             if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) finalDate = ld.getYear()+"-"+"0"+ld.getMonthValue()+"-"+String.valueOf(ld.getDayOfMonth()-7);
             
-            Session s = HibernateUtil.getSessionFactory().openSession();
+            Session s = objSessionFactory.openSession();
             Query q = s.createQuery("FROM Ingreso WHERE Usuario = '"+idusuario+"' AND Fecha > '"+finalDate+"'");
             List<Ingreso> listInOut = q.list();
             for (Ingreso item : listInOut) {
@@ -414,12 +422,11 @@ public class ingreso extends HttpServlet {
             response.getWriter().write(jsonIngresos.toJSONString());
             
             s.close();
+            objSessionFactory.close();
         }
         catch(Exception ex){
             System.out.println(ex);
         }
-        
-        HibernateUtil.closeSessionFactory();
     }
         
     protected void cargarPromedioEmpleados(HttpServletRequest request, HttpServletResponse response)
@@ -432,7 +439,9 @@ public class ingreso extends HttpServlet {
             int countRows = 1;
             List<Usuario> listaUsuario = null;     
             Usuario objUsuario = (Usuario) request.getSession().getAttribute("UsuarioIngresado");
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();
             
             String promedioEntradaA = "00:00:00", promedioSalidaA = "00:00:00", promedioEntradaB = "00:00:00", promedioSalidaB = "00:00:00";
             
@@ -739,6 +748,7 @@ public class ingreso extends HttpServlet {
 //            }
             
             sesion.close();
+            objSessionFactory.close();
             }  
         }catch(HibernateException ex){
         
@@ -754,10 +764,12 @@ public class ingreso extends HttpServlet {
     
         List<Usuario> listaUsuarios = null;
         try{
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();
             Query queryUsuario = sesion.createQuery("FROM Usuario WHERE Cargo="+cargo+" AND idUsuario != "+usuarioEnSesion+"");            
             listaUsuarios = queryUsuario.list();
             sesion.close();
+            objSessionFactory.close();
         }catch(HibernateException ex){
         
             System.err.println(ex);
@@ -789,7 +801,8 @@ public class ingreso extends HttpServlet {
             int countRows = 1;
             List<Usuario> listaUsuario = null;     
             Usuario objUsuario = (Usuario) request.getSession().getAttribute("UsuarioIngresado");
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();
             
             /////////////////////////////// DIRECTOR ////////////////////////////////////////////////////////////
             if (objUsuario.getCargo().getTipo().equals("Director")) {
@@ -883,6 +896,7 @@ public class ingreso extends HttpServlet {
             
             ////////////// PENDIENTE POR HACER LOS OTROS USUARIOS
             sesion.close();
+            objSessionFactory.close();
         }catch(Exception ex){
         
             response.getWriter().write("500");
@@ -901,7 +915,8 @@ public class ingreso extends HttpServlet {
             int countRows = 1;
             List<Usuario> listaUsuario = null;     
             Usuario objUsuario = (Usuario) request.getSession().getAttribute("UsuarioIngresado");
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();
             
             /////////////////////////////// DIRECTOR ////////////////////////////////////////////////////////////
             if (objUsuario.getCargo().getTipo().equals("Director")) {
@@ -958,16 +973,29 @@ public class ingreso extends HttpServlet {
                 }
                 countRows++;
             }
-            
+            int temprano = 0, tarde = 0, justo = 0;
             JSONArray usuarioJson = new JSONArray();
-            Query queryPromedioChartUsuarios = sesion.createQuery("SELECT COUNT(Observacion) FROM Ingreso WHERE Tipo = '"+Accion+"' AND Horario = '"+Horario+"' GROUP BY Observacion");
-            List<Object> listaIngreso = queryPromedioChartUsuarios.list();
-            for (Object datos : listaIngreso) {
+            Query queryPromedioChartUsuarios = sesion.createQuery("SELECT Observacion ,COUNT(Observacion) FROM Ingreso WHERE Tipo = '"+Accion+"' AND Horario = '"+Horario+"' GROUP BY Observacion");
+            List<Object[]> listaIngreso = queryPromedioChartUsuarios.list();
+            for (Object[] datos : listaIngreso) {
 
-                usuarioJson.add(datos);
+                if (datos[0].equals("Tarde")) {
+                    tarde = Integer.parseInt(String.valueOf(datos[1]));
+                }else if (datos[0].equals("Temprano")) {
+                    temprano = Integer.parseInt(String.valueOf(datos[1]));
+                }else if (datos[0].equals("Justo")) {
+                    justo = Integer.parseInt(String.valueOf(datos[1]));
+                }
+                
+                //usuarioJson.add(datos);
+                System.out.println("Los datos para cargar el chart son:     ??¡¡¡¡¡¡¡¡¡¡¡??????¡¡¡¡¡¡¡¿¿¿¿¿¿¿¿¿¿¿¿¿    ->>>>>>>    " + datos[0] + "        " + datos[1]);
 
             }
+            usuarioJson.add(justo);
+            usuarioJson.add(tarde);
+            usuarioJson.add(temprano);
             sesion.close();
+            objSessionFactory.close();
             response.getWriter().write(usuarioJson.toJSONString());
             
         }catch(Exception ex){
@@ -987,7 +1015,8 @@ public class ingreso extends HttpServlet {
             int countRows = 1;
             List<Usuario> listaUsuario = null;     
             Usuario objUsuario = (Usuario) request.getSession().getAttribute("UsuarioIngresado");
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();
             
             /////////////////////////////// DIRECTOR ////////////////////////////////////////////////////////////
             if (objUsuario.getCargo().getTipo().equals("Director")) {
@@ -1060,7 +1089,9 @@ public class ingreso extends HttpServlet {
                 
                 usuarioJson.add(datos[0] + " " + datos[1]+ " " + datos[2]+ " " + datos[3]);
             }
-            
+                        
+            sesion.close();
+            objSessionFactory.close();
             response.getWriter().write(usuarioJson.toJSONString());
             
         }catch(Exception ex){

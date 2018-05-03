@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.AnnotationConfiguration;
 import org.json.simple.JSONArray;
 
 
@@ -99,8 +101,7 @@ public class area extends HttpServlet {
         
         
         
-        try{
-            HibernateUtil.inicializarSesion();
+        try{            
             
             String CanalArea = request.getParameter("CanalArea");
             String NombreArea = request.getParameter("NombreArea");
@@ -109,16 +110,16 @@ public class area extends HttpServlet {
             Canal objCanal = new Canal();
             objCanal.setIdCanal(Integer.parseInt(CanalArea));
             
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();
             Area objArea = new Area(NombreArea, DescripcionArea, "Activo", objCanal);
             sesion.beginTransaction();
             sesion.save(objArea);
-            sesion.getTransaction().commit();
-            sesion.close();
+            sesion.getTransaction().commit();            
             response.getWriter().write("200");
             
-            HibernateUtil.closeSessionFactory();
-            
+            sesion.close();
+            objSessionFactory.close();
         }catch(Exception e){   
             System.err.println(e);
             response.getWriter().write("500");
@@ -126,11 +127,11 @@ public class area extends HttpServlet {
     }
     private void verArea(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-        try{
-            HibernateUtil.inicializarSesion();
+        try{            
             
             int countRows = 1;
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();
             Query query = sesion.createQuery("FROM Area");
             List<Area> listaArea = query.list();
             for(Area area : listaArea){
@@ -164,8 +165,8 @@ public class area extends HttpServlet {
                 countRows++;
                 
             }
-            sesion.close();
-            HibernateUtil.closeSessionFactory();
+            sesion.close(); 
+            objSessionFactory.close();
         }catch(Exception e){
             System.err.println(e);
             response.getWriter().write("500");
@@ -177,10 +178,11 @@ public class area extends HttpServlet {
     private void cargaDatosArea(HttpServletRequest request, HttpServletResponse response)   
             throws ServletException, IOException {
         try{
-            HibernateUtil.inicializarSesion();
+            
             String idArea = request.getParameter("idArea");
             System.out.println("----------------> "+idArea);
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();
             Query query = sesion.createQuery("FROM Area WHERE idArea="+idArea+"");
             JSONArray  canalJson = new JSONArray();
             List<Area> listaArea = query.list();
@@ -195,8 +197,8 @@ public class area extends HttpServlet {
                 
             }
             
-            sesion.close();
-            HibernateUtil.closeSessionFactory();
+            sesion.close();  
+            objSessionFactory.close();
             response.getWriter().write(canalJson.toJSONString());
             
         }catch(Exception e){
@@ -210,7 +212,7 @@ public class area extends HttpServlet {
     private void editarArea(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
     
         try{
-            HibernateUtil.inicializarSesion();
+            
             String idArea = request.getParameter("IdArea");
             String Estado = request.getParameter("EstadoArea");
             String Nombre = request.getParameter("NombreArea");
@@ -223,14 +225,15 @@ public class area extends HttpServlet {
             objArea.setIdArea(Integer.parseInt(idArea));
             objCanal.setIdCanal(Integer.parseInt(Canal));
             
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();
             sesion.beginTransaction();
             sesion.update(objArea);
             sesion.getTransaction().commit();
             sesion.close();
-            
+            objSessionFactory.close();
             response.getWriter().write("200");
-            HibernateUtil.closeSessionFactory();
+            
         }catch(Exception e){
         
             System.err.println(e);
@@ -242,9 +245,8 @@ public class area extends HttpServlet {
             throws ServletException, IOException {
     
         try{
-        
-            HibernateUtil.inicializarSesion();
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();
             
             Query query = sesion.createQuery("FROM Area WHERE Estado='Activo'");
             JSONArray  areaJson = new JSONArray();
@@ -255,8 +257,8 @@ public class area extends HttpServlet {
                 areaJson.add(area.getIdArea());
                 areaJson.add(area.getNombreArea());            
             }
-            sesion.close();
-            HibernateUtil.closeSessionFactory();
+            sesion.close();   
+            objSessionFactory.close();
             response.getWriter().write(areaJson.toJSONString());    
         }catch(Exception e){
         
@@ -268,11 +270,11 @@ public class area extends HttpServlet {
     }
     private void cargarAreasDependientes(HttpServletRequest request, HttpServletResponse response)  
             throws ServletException, IOException {
-        try{
-            HibernateUtil.inicializarSesion();
+        try{            
             String idCanal = request.getParameter("idCanal");
             
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();
             Query query = sesion.createQuery("FROM Area WHERE Canal="+idCanal+"");
             List<Area> ListaArea = query.list();
             JSONArray areaJson = new JSONArray();
@@ -283,8 +285,8 @@ public class area extends HttpServlet {
                 areaJson.add(area.getNombreArea());
             }
             sesion.close();
+            objSessionFactory.close();
             response.getWriter().write(areaJson.toJSONString());
-            HibernateUtil.closeSessionFactory();
         }catch(Exception e){
             response.getWriter().write("500");
             System.err.println("e");

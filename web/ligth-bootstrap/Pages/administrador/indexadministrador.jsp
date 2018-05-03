@@ -19,7 +19,7 @@
             <%@include file="../includes/navLateral.jsp" %>
             <div class="main-panel">
                 <!-- Include Nav Superior -->
-                <%@include file="../includes/navSuperior.jsp" %>   
+                <%@include file="../includes/navSuperior.jsp" %>
                 <!-- Include div Ingresos -->
                 <%@include file="../includes/divIngresos.jsp" %>
                 
@@ -192,8 +192,9 @@
                 localStorage.name = $(".spanName").val();
                 $("#home").addClass("active");
                 $("#tituloPagina").text("Inicio");              
-                /*cargarPromedio();
-                loadWeeklyData($("#txtIdUsuario").val());*/
+              
+                loadWeeklyData($("#txtIdUsuario").val());
+                cargarPromedio();
                 
                 var fullDate = new Date();
                 var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
@@ -202,7 +203,7 @@
             });
         </script>
     </body>
-</html> 
+</html>
 <%        }
     }  
     catch(NullPointerException ex){

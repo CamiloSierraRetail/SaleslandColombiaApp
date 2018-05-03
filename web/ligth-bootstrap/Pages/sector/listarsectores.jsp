@@ -177,10 +177,10 @@
                 localStorage.imgPerfil = $("#imgPerfilNavLateral").val();
                 localStorage.name = $(".spanName").val();
 
-                /*var fullDate = new Date();
+                var fullDate = new Date();
                 var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
                 var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
-                websocket.send("CargarUsuarios-"+<%=objUsuario.getIdUsuario()%>+"-"+currentDate);*/
+                websocket.send("CargarUsuarios-"+<%=objUsuario.getIdUsuario()%>+"-"+currentDate);
             });
             
         </script>

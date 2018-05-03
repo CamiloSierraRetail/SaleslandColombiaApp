@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.AnnotationConfiguration;
 
 
 public class sector extends HttpServlet {
@@ -56,18 +57,18 @@ public class sector extends HttpServlet {
     protected void registrarsector(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        try{
-            HibernateUtil.inicializarSesion();
+        try{            
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
             String nombreSector = request.getParameter("NombreSector");
             String descripcionSector = request.getParameter("DescripcionSector");      
-            Session sesion = HibernateUtil.getSessionFactory().openSession();            
+            Session sesion = objSessionFactory.openSession();            
             Sector objSector = new Sector(nombreSector, descripcionSector, "Activo");
             sesion.beginTransaction();
             sesion.save(objSector);
             sesion.getTransaction().commit();
             response.getWriter().write("200");            
-            sesion.close();
-            HibernateUtil.closeSessionFactory();
+            sesion.close();  
+            objSessionFactory.close();
         }catch(Exception e){
         
             System.err.println(e);
@@ -80,16 +81,14 @@ public class sector extends HttpServlet {
     protected void versectores(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
                         
-        try{
-            HibernateUtil.inicializarSesion();
+        try{            
             int countRows = 1;
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
-            sesion.flush();
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();            
             Query query = sesion.createQuery("FROM Sector");                        
             List<Sector> listaSector = query.list();            
                         
             response.setCharacterEncoding("UTF-8");
-            response.setContentType("text/html");
             for(Sector sector : listaSector){
             
                 response.getWriter().write("<tr>"
@@ -113,7 +112,7 @@ public class sector extends HttpServlet {
                 
             }
             sesion.close();
-            HibernateUtil.closeSessionFactory();
+            objSessionFactory.close();
         }catch(Exception e){
         
             System.err.println(e);
@@ -125,9 +124,9 @@ public class sector extends HttpServlet {
     protected void cargardatossector(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try{
-            HibernateUtil.inicializarSesion();
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
             String idSector = request.getParameter("idSector");
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Session sesion = objSessionFactory.openSession();
             Query query = sesion.createQuery("FROM Sector WHERE IdSector = "+idSector+"");
             
             List<Sector> listaSector = query.list();
@@ -136,7 +135,7 @@ public class sector extends HttpServlet {
             response.getWriter().write(json);
             
             sesion.close();
-            HibernateUtil.closeSessionFactory();
+            objSessionFactory.close();
         }catch(Exception e){
             System.err.println(e);
             response.getWriter().write("500");
@@ -146,7 +145,8 @@ public class sector extends HttpServlet {
             throws ServletException, IOException {
     
         try{
-            HibernateUtil.inicializarSesion();
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            
             String id = request.getParameter("IdSector");
             
             int idEstado = Integer.parseInt(id);
@@ -155,7 +155,7 @@ public class sector extends HttpServlet {
             String nombre = request.getParameter("NombreSector");
             String descripcion = request.getParameter("DescripcionSector");
             
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Session sesion = objSessionFactory.openSession();
             
             Query querySector = sesion.createQuery("FROM Sector WHERE idSector = "+id+"");
             List<Sector> listaSector = querySector.list();
@@ -227,9 +227,8 @@ public class sector extends HttpServlet {
             sesion.getTransaction().commit();
             
             sesion.close();
-           
+            objSessionFactory.close();
             response.getWriter().write("200");
-            HibernateUtil.closeSessionFactory();
         }catch(Exception e){
             response.getWriter().write("500");
             System.err.println(e);
@@ -241,8 +240,8 @@ public class sector extends HttpServlet {
             throws ServletException, IOException {
     
         try{
-            HibernateUtil.inicializarSesion();
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();
             Query query = sesion.createQuery("FROM Sector WHERE Estado='Activo'");
             List<Sector> listaSector = query.list();
             
@@ -251,7 +250,7 @@ public class sector extends HttpServlet {
             response.getWriter().write(json);
             
             sesion.close();
-            HibernateUtil.closeSessionFactory();
+            objSessionFactory.close();
         }catch(Exception e){
         
             System.err.println(e);
