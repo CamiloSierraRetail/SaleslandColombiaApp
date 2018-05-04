@@ -36,7 +36,7 @@
         icon: "info",
         buttons: true,
         closeonconfirm: false,
-        buttons: ["No, Cancelar", "Sí"]
+        buttons: ["Cancelar", "Sí"]
         }).then((willDelete) => {
             if (willDelete) {
 
@@ -192,10 +192,7 @@ $('#frmEditarSector').validate({
                         swal("Sector Actualizado", "Los datos del sector se han actualizado satisfactoriamente.", "success").then((willDelete) => {
                           if (willDelete) {
                               
-                              $("#ModalEditarSector").removeClass('show');
-                              $("body").removeClass('modal-open');
-                              $("body").css("padding-right","");
-                              $("div").removeClass('modal-backdrop');
+                              $("#ModalEditarSector").modal('toggle');                             
                               listarSectores();
                           }
                         });
@@ -304,7 +301,6 @@ function listarCargos() {
 function cargarSectores(){
     
     $.post("/SaleslandColombiaApp/sector/cargarcombosector",function (responseText){
-        
         if (responseText == 500) {
             swal("Ocurrio un error", "Lo ocuttió un error al intentar cargar los sectores.", "error");
         }else{
@@ -321,11 +317,12 @@ function cargarSectores(){
     });
 }
 ///////////////////////// REGISTRAR CANAL ///////////////////////////////////////
-$('#frmRegistrarCanal').validate({
+$('#frmRegistrarCanal').validate({    
     rules: {
+        
         NombreCanal: {
             required: true,
-            minlength: 5
+            minlength: 3
         },
         DescripcionCanal: {
             required: true,
@@ -336,10 +333,10 @@ $('#frmRegistrarCanal').validate({
             required: true
         }
     }, messages: {
-
+                        
         NombreCanal: {
             required: "Este campo es requerido",
-            minlength: "Ingresa 5 caracteres como minimo"
+            minlength: "Ingresa 3 caracteres como minimo"
         },
         DescripcionCanal: {
             required: "Este campo es requerido",
@@ -357,52 +354,47 @@ $('#frmRegistrarCanal').validate({
         } else {
             error.insertAfter(element);
         }
-    }, submitHandler: function () {
+    },submitHandler: function () {
+        if ($("#cmbSector").val() == "Selecciona el sector") {
+                    
+            swal("Selecciona el sector", "Para poder continuar con el registro por favor selecciona el sector.", "warning");
 
-        swal({
+        }else{
+            
+            swal({
             title: "Confirmar Datos",
-            text: "¿Está seguro que desea realizar el registro?",
+            text: "¿Estás seguro que desea realizar el registro?",
             icon: "info",
-            buttons: {
-                cancel:{
-                    text: "Cancelar",
-                    value: true,
-                    visible: true,
-                    closeModal: true
-                },
-                confirm: {
-                    text: "Sí",
-                    value: true,
-                    visible: true,
-                    closeModal: false
+            buttons: true,
+            closeonconfirm: false,
+            buttons: ["Cancelar", "Sí"]
+            }).then((willDelete) => {
+                if (willDelete) {
+
+                    var sectorCanal = $("#cmbSector").val();
+                    var nombreCanal = $("#txtNombreCanal").val();
+                    var descripcionCanal = $("#txtDescripcionCanal").val();
+                    $.post("/SaleslandColombiaApp/canal/registrar",{SectorCanal:sectorCanal,NombreCanal:nombreCanal,DescripcionCanal:descripcionCanal},function (responsetext) {
+                        if(responsetext == "200"){
+
+                            swal("Registro exitoso", "El canal ha sido registrado exitosamente", "success").then((willDelete) => {
+                                if (willDelete) {
+                                    $("#modalRegistrarCanal").removeClass('show');
+                                    $("body").removeClass('modal-open');
+                                    $("body").css("padding-right","");
+                                    $("div").removeClass('modal-backdrop');
+                                    listarCanales();
+                                }
+                            });
+
+                        } else {
+                            swal("Ocurrio un error", "Lo sentimos tus datos no fueron registrados, por favor intentalo nuevamente.", "error");
+                        }
+                    });                                                                   
                 }
-            }
-        })
-        .then((willDelete) => {
-            if (willDelete) {
-                
-                var sectorCanal = $("#cmbSector").val();
-                var nombreCanal = $("#txtNombreCanal").val();
-                var descripcionCanal = $("#txtDescripcionCanal").val();
-                $.post("/SaleslandColombiaApp/canal/registrar",{SectorCanal:sectorCanal,NombreCanal:nombreCanal,DescripcionCanal:descripcionCanal},function (responsetext) {
-                    if(responsetext == "200"){
-
-                        swal("Registro exitoso", "El canal ha sido registrado exitosamente", "success").then((willDelete) => {
-                            if (willDelete) {
-                                $("#modalRegistrarCanal").removeClass('show');
-                                $("body").removeClass('modal-open');
-                                $("body").css("padding-right","");
-                                $("div").removeClass('modal-backdrop');
-                                listarCanales();
-                            }
-                        });
-
-                    } else {
-                        swal("Ocurrio un error", "Lo sentimos tus datos no fueron registrados, por favor intentalo nuevamente.", "error");
-                    }
-                });
-            }
-        });
+            });
+            
+        }        
     }
 });
 ////////////////// LISTAR TODOS LOS CANALES ////////////////////////////
@@ -460,19 +452,27 @@ function verDatosCanal(id){
             
             var dt = JSON.parse(responseText);
             
-            if (dt[3] == "Activo") {
+            if (dt[3] == "Activo") {                
                 $("#cmbEditarEstadoCanal").val('Activo');
+                $("#cmbEditarEstadoCanal").attr("disabled", false);
+                $("#lblSector").show();
+                $("#cmbEditarSector").show();
+                 
             }else{
                 if (dt[6] == "Inactivo") {
                     
                     $("#cmbEditarEstadoCanal").attr("disabled", "disabled");
                 }
                 $("#cmbEditarEstadoCanal").val('Inactivo');
+                $("#lblSector").hide();
+                $("#cmbEditarSector").hide();
+                
                 
             }
             $("#txtEditarNombreCanal").val(dt[1]);
-            $("#txtEditarDescripcionCanal").val(dt[2]);            
+            $("#txtEditarDescripcionCanal").val(dt[2]);    
             $("#cmbEditarSector").val(""+dt[4]+"");
+            
         }
         
     });
@@ -487,7 +487,7 @@ $('#frmEditarCanal').validate({
         },
         EditarNombreCanal:{
             required:true,
-            minlength:5
+            minlength:3
         },
         EditarDescripcionCanal:{
             
@@ -507,7 +507,7 @@ $('#frmEditarCanal').validate({
         },
         EditarNombreCanal:{
             required:"Este campo es requerido",
-            minlength:"Ingresa 5 caracteres como minimo"
+            minlength:"Ingresa 3 caracteres como minimo"
         },
         EditarDescripcionCanal:{
             required:"Este campo es requerido",
@@ -528,54 +528,41 @@ $('#frmEditarCanal').validate({
         }
     }, submitHandler: function () {
 
+        
         swal({
-
-        title: "Editar Canal",
-        text: "¿Está seguro que desea reemplazar los datos del canal?",
-        icon: "info",
-        buttons: true,
-        buttons: {
-            cancel:{
-                text: "Cancelar",
-                value: true,
-                visible: true,
-                closeModal: true
-            },
-            confirm: {
-                text: "Sí",
-                value: true,
-                visible: true,
-                closeModal: false
-            }
-        }
-        })
-        .then((willDelete) => {
+            title: "Editar Canal",
+            text: "¿Estás seguro que deseas reemplazar los datos del canal?",
+            icon: "info",
+            buttons: true,
+            closeonconfirm: false,
+            buttons: ["Cancelar", "Sí"]
+        }).then((willDelete) => {
             if (willDelete) {
-              var idCanal = $("#idCanal").val();
-              var nombreCanal = $("#txtEditarNombreCanal").val();
-              var descripcionCanal = $("#txtEditarDescripcionCanal").val();
-              var estadoCanal = $("#cmbEditarEstadoCanal").val();
-              var sectorCanal = $("#cmbEditarSector").val();
-              $.post("/SaleslandColombiaApp/canal/editarcanal",{IdCanal:idCanal,NombreCanal:nombreCanal,DescripcionCanal:descripcionCanal,EstadoCanal:estadoCanal,SectorCanal:sectorCanal},function (responsetext) {
-                   if(responsetext == "200"){
+
+                var idCanal = $("#idCanal").val();
+                var nombreCanal = $("#txtEditarNombreCanal").val();
+                var descripcionCanal = $("#txtEditarDescripcionCanal").val();
+                var estadoCanal = $("#cmbEditarEstadoCanal").val();
+                var sectorCanal = $("#cmbEditarSector").val();
+                $.post("/SaleslandColombiaApp/canal/editarcanal",{IdCanal:idCanal,NombreCanal:nombreCanal,DescripcionCanal:descripcionCanal,EstadoCanal:estadoCanal,SectorCanal:sectorCanal},function (responsetext) {
+                     if(responsetext == "200"){
 
                         swal("Cambios Guardados", "Los cambios del sector han guardado exitosamente", "success").then((willDelete) => {
-                          if (willDelete) {
-                              
-                                $("#ModalEditarCanal").removeClass('show');
-                                $("body").removeClass('modal-open');
-                                $("body").css("padding-right","");
-                                $("div").removeClass('modal-backdrop');
+                            if (willDelete) {
+
+                                $("#ModalEditarCanal").modal('toggle');                                  
                                 listarCanales();
-                          }
+                            }
                         });
 
                     }else{                    
                         swal("Ocurrio un error", "Lo sentimos tus datos no fueron registrados, por favor intentalo nuevamente.", "error");                                        
                     }                        
-                });          
+                });  
+
+
             }
-        });                        
+        });                                
     }        
 });
 ///////////////////////// CARGAR COMBO CARGO ////////////////////// BORRAR
@@ -1479,7 +1466,7 @@ $('#frmRegistrarArea').validate({
     rules: {
         NombreArea: {
             required: true,
-            minlength: 5
+            minlength: 3
         },
         DescripcionArea: {
             required: true,
@@ -1493,7 +1480,7 @@ $('#frmRegistrarArea').validate({
 
         NombreArea: {
             required: "Este campo es requerido",
-            minlength: "Ingresa 5 caracteres como minimo"
+            minlength: "Ingresa 3 caracteres como minimo"
         },
         DescripcionArea: {
             required: "Este campo es requerido",
@@ -1512,56 +1499,54 @@ $('#frmRegistrarArea').validate({
             error.insertAfter(element);
         }
     }, submitHandler: function () {
+        
+    
+        if ($("#cmbCanal").val() == "Selecciona el canal") {
+                    
+            swal("Selecciona el canal", "Para poder continuar con el registro por favor selecciona el canal.", "warning");
 
-        swal({
-            title: "Confirmar Datos",
-            text: "¿Está seguro que desea realizar el registro?",
-            icon: "info",
-            buttons: {
-                cancel:{
-                    text: "Cancelar",
-                    value: true,
-                    visible: true,
-                    closeModal: true
-                },
-                confirm: {
-                    text: "Sí",
-                    value: true,
-                    visible: true,
-                    closeModal: false
+        }else{
+            
+            swal({
+                title: "Confirmar Datos",
+                text: "¿Está seguro que desea realizar el registro?",
+                icon: "info",
+                buttons: true,
+                closeonconfirm: false,
+                buttons: ["Cancelar", "Sí"]
+            }).then((willDelete) => {
+                if (willDelete) {
+
+                    var canalArea = $("#cmbCanal").val();
+                    var nombreArea = $("#txtNombreArea").val();
+                    var descripcionArea = $("#txtDescripcionArea").val();
+                    $.post("/SaleslandColombiaApp/area/registrararea", {CanalArea: canalArea, NombreArea: nombreArea, descripcionArea: descripcionArea}, function (responsetext) {
+                        if (responsetext == "200") {
+                            swal("Registro exitoso", "El Area ha sido registrada exitosamente", "success").then((willDelete) => {
+                                if (willDelete) {
+
+                                    $("#modalRegistrarArea").removeClass('show');
+                                    $("body").removeClass('modal-open');
+                                    $("body").css("padding-right","");
+                                    $("div").removeClass('modal-backdrop');
+                                    listarArea();
+
+                                    $("#cmbCanal").val("");
+                                    $("#txtNombreArea").val("");
+                                    $("#txtDescripcionArea").val("");
+
+                                }
+                            });
+
+                        } else {
+                            swal("Ocurrio un error", "Lo sentimos tus datos no fueron registrados, por favor intentalo nuevamente.", "error");
+                        }
+                    });                                
                 }
-            }
-        })
-        .then((willDelete) => {
-            if (willDelete) {
-
-                var canalArea = $("#cmbCanal").val();
-                var nombreArea = $("#txtNombreArea").val();
-                var descripcionArea = $("#txtDescripcionArea").val();
-                $.post("/SaleslandColombiaApp/area/registrararea", {CanalArea: canalArea, NombreArea: nombreArea, descripcionArea: descripcionArea}, function (responsetext) {
-                    if (responsetext == "200") {
-                        swal("Registro exitoso", "El Area ha sido registrada exitosamente", "success").then((willDelete) => {
-                            if (willDelete) {
-                                
-                                $("#modalRegistrarArea").removeClass('show');
-                                $("body").removeClass('modal-open');
-                                $("body").css("padding-right","");
-                                $("div").removeClass('modal-backdrop');
-                                listarArea();
-                                
-                                $("#cmbCanal").val("");
-                                $("#txtNombreArea").val("");
-                                $("#txtDescripcionArea").val("");
-                                
-                            }
-                        });
-
-                    } else {
-                        swal("Ocurrio un error", "Lo sentimos tus datos no fueron registrados, por favor intentalo nuevamente.", "error");
-                    }
-                });
-            }
-        });
+            }); 
+            
+        }
+           
     }
 });
 ////////////////// LISTAR TODAS LAS AREAS ////////////////////////////
@@ -1621,13 +1606,20 @@ function verDatosArea(id) {
         } else {
 
             var dt = JSON.parse(responseText);                        
-            
-            if (dt[3] == "Activo") {
+                        
+            if (dt[3] == "Activo") {                                
                 $("#cmbEditarEstadoArea").val('Activo');
-            } else {
-
+                $("#cmbEditarEstadoArea").attr("disabled", false);
+                $("#lblCanal").show();
+                $("#cmbCanalEditar").show();                 
+            }else{                                
+                
                 $("#cmbEditarEstadoArea").val('Inactivo');
+                $("#cmbEditarEstadoArea").attr("disabled", "disabled");                
+                $("#lblCanal").hide();
+                $("#cmbCanalEditar").hide();                
             }
+                                  
             $("#txtEditarNombreArea").val(dt[1]);
             $("#txtEditarDescripcionArea").val(dt[2]);            
             $("#cmbCanalEditar").val("" + dt[4] + "");
@@ -1646,7 +1638,7 @@ $('#frmEditarArea').validate({
         },
         EditarNombreArea: {
             required: true,
-            minlength: 5
+            minlength: 3
         },
         EditarDescripcionArea: {
 
@@ -1656,7 +1648,7 @@ $('#frmEditarArea').validate({
         },
         EditarEstadoCanalArea: {
 
-            required: true,
+            required: true
 
         }
     }, messages: {
@@ -1666,7 +1658,7 @@ $('#frmEditarArea').validate({
         },
         EditarNombreArea: {
             required: "Este campo es requerido",
-            minlength: "Ingresa 5 caracteres como minimo"
+            minlength: "Ingresa 3 caracteres como minimo"
         },
         EditarDescripcionArea: {
             required: "Este campo es requerido",
@@ -1674,7 +1666,7 @@ $('#frmEditarArea').validate({
             maxlength: "Ingresa 80 caracteres como maximo"
         },
         EditarEstadoCanalArea: {
-            required: "Este campo es requerido",
+            required: "Este campo es requerido"
 
         }
     }, errorElement: 'div',
@@ -1688,29 +1680,15 @@ $('#frmEditarArea').validate({
     }, submitHandler: function () {
 
         swal({
-
-            title: "Editar Area",
-            text: "¿Está seguro que desea reemplazar los datos del Area?",
+            title: "Editar Canal",
+            text: "¿Estás seguro que deseas reemplazar los datos del canal?",
             icon: "info",
             buttons: true,
-            buttons: {
-                cancel:{
-                    text: "Cancelar",
-                    value: true,
-                    visible: true,
-                    closeModal: true
-                },
-                confirm: {
-                    text: "Sí",
-                    value: true,
-                    visible: true,
-                    closeModal: false
-                }
-            }
-        })
-        .then((willDelete) => {
+            closeonconfirm: false,
+            buttons: ["Cancelar", "Sí"]
+        }).then((willDelete) => {
             if (willDelete) {
-
+                
                 var idArea = $("#idArea").val();
                 var nombreArea = $("#txtEditarNombreArea").val();
                 var descripcionArea = $("#txtEditarDescripcionArea").val();
@@ -1722,10 +1700,7 @@ $('#frmEditarArea').validate({
                         swal("Cambios Guardados", "Los cambios del area han guardado exitosamente", "success").then((willDelete) => {
                             if (willDelete) {
                                 
-                                $("#ModalEditarArea").removeClass('show');
-                                $("body").removeClass('modal-open');
-                                $("body").css("padding-right","");
-                                $("div").removeClass('modal-backdrop');
+                                $("#ModalEditarArea").modal('toggle');                                  
                                 listarArea();
                                 
                             }
@@ -1737,6 +1712,7 @@ $('#frmEditarArea').validate({
                         });
                     }
                 });
+                
             }
         });
     }

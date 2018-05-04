@@ -134,6 +134,7 @@ public class area extends HttpServlet {
             Session sesion = objSessionFactory.openSession();
             Query query = sesion.createQuery("FROM Area");
             List<Area> listaArea = query.list();
+            response.setCharacterEncoding("UTF-8");
             for(Area area : listaArea){
             
                 response.getWriter().write("<tr>"
@@ -141,24 +142,16 @@ public class area extends HttpServlet {
                                               + "<td>"+area.getNombreArea()+"</td>"
                                               + "<td>"+area.getDescripcion()+"</td>"
                                               + "<td>"+area.getCanal().getNombreCanal()+"</td>"
-                                              + "<td class='text-right'>"+area.getEstado()
-                                                      
-                                                   /*+ "<div class='row'>"
-                                                      + "<div class='col-md-12'>"
-                                                        + "<input type='checkbox' checked='' data-toggle='switch' data-on-color='info' data-off-color='info'>"
-                                                        + "<span class='toggle'></span>"
-                                                      + "</div>"
-                                                   + "</div>"*/
-                                              + "</td>"
+                                              + "<td class='text-right'>"+area.getEstado()+ "</td>"
                                               + "<td class='td-actions text-right'>"
-                                                + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='Ver Sector'>"
-                                                    + "<i class='fa fa-user'></i>"
+                                                + "<a href='#' rel='tooltip' title='' class='btn btn-link btn-xs' data-original-title='Ver Sector'>"
+                                                    + "<i class='fa fa-eye blue-corp'></i>"
                                                 + "</a>"   
                                                 + "<button onclick='verDatosArea("+area.getIdArea()+")' data-toggle='modal' data-target='#ModalEditarArea' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
-                                                    + "<i class='fa fa-edit'></i>"
+                                                    + "<i class='fa fa-edit gray-corp'></i>"
                                                 + "</button>"
                                                 + "<a href='#' rel='tooltip' title='' class='btn btn-danger btn-link btn-xs' data-original-title='Eliminar'>"
-                                                    + "<i class='fa fa-times'></i>"
+                                                    + "<i class='fa fa-bar-chart orange-corp'></i>"
                                                 + "</a>"
                                               + "</td>"
                                          + "</tr>");
@@ -179,8 +172,7 @@ public class area extends HttpServlet {
             throws ServletException, IOException {
         try{
             
-            String idArea = request.getParameter("idArea");
-            System.out.println("----------------> "+idArea);
+            String idArea = request.getParameter("idArea");            
             SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
             Session sesion = objSessionFactory.openSession();
             Query query = sesion.createQuery("FROM Area WHERE idArea="+idArea+"");

@@ -1,7 +1,9 @@
 package Controlador;
 
 import Modelo.Area;
+import Modelo.Area_Cargo;
 import Modelo.Canal;
+import Modelo.Canal_Cargo;
 import Modelo.Cargo;
 import Modelo.Sector;
 import com.google.gson.Gson;
@@ -96,15 +98,15 @@ public class sector extends HttpServlet {
                                               + "<td>"+sector.getNombreSector()+"</td>"
                                               + "<td>"+sector.getDescripcionSector()+"</td>"
                                               + "<td class='text-right'>"+sector.getEstado()+ "</td>"
-                                              + "<td class='td-actions text-center'>"
-                                                + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='Ver Sector'>"
-                                                    + "<i class='fa fa-eye'></i>"
+                                              + "<td class='td-actions text-right'>"
+                                                + "<a href='#' rel='tooltip' title='' class='btn btn-link btn-xs' data-original-title='Ver Sector'>"
+                                                    + "<i class='fa fa-eye blue-corp'></i>"
                                                 + "</a>"   
-                                                + "<button onclick='verDatosSector("+sector.getIdSector()+")' data-toggle='modal' data-target='#ModalEditarSector' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
-                                                    + "<i class='fa fa-edit'></i>"
+                                                + "<button onclick='verDatosSector("+sector.getIdSector()+")' data-toggle='modal' data-target='#ModalEditarSector' rel='tooltip' title='' class='btn btn-link btn-xs' data-original-title='Editar'>"
+                                                    + "<i class='fa fa-edit gray-corp'></i>"
                                                 + "</button>"
                                                 + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='Ver Sector'>"
-                                                    + "<i class='fa fa-bar-chart'></i>"
+                                                    + "<i class='fa fa-bar-chart orange-corp'></i>"
                                                 + "</a>"
                                               + "</td>"
                                          + "</tr>");
@@ -149,8 +151,7 @@ public class sector extends HttpServlet {
             
             String id = request.getParameter("IdSector");
             
-            int idEstado = Integer.parseInt(id);
-            System.out.println(idEstado);
+            int idEstado = Integer.parseInt(id);            
             String estado = request.getParameter("EstadoSector");
             String nombre = request.getParameter("NombreSector");
             String descripcion = request.getParameter("DescripcionSector");
@@ -163,6 +164,8 @@ public class sector extends HttpServlet {
             
                 if (!sector.getEstado().equals(estado)) {
                 
+                    System.out.println("Esta cambiando el estado");
+                    
                     sesion.beginTransaction();
                     Query queryActualizarCanal = sesion.createSQLQuery("UPDATE Canal SET Estado='"+estado+"' WHERE Sector="+id+"");
                     queryActualizarCanal.executeUpdate();
@@ -186,12 +189,12 @@ public class sector extends HttpServlet {
                     for(Canal canal : listaCanalUsuarios){
                     
                         ////////////////7COORECCIN DEL CODIGO DE ABAJO ///////////////
-                        Query queryCargo = sesion.createQuery("FROM Cargo WHERE Canal='"+canal.getIdCanal()+"'");
-                        List<Cargo>ListaCargo = queryCargo.list();
-                        for(Cargo cargo : ListaCargo){
+                        Query queryCargo = sesion.createQuery("FROM Canal_Cargo WHERE Canal='"+canal.getIdCanal()+"'");
+                        List<Canal_Cargo>ListaCargo = queryCargo.list();
+                        for(Canal_Cargo canal_cargo : ListaCargo){
                         
                             sesion.beginTransaction();
-                            Query queryActuzalizarUsuario = sesion.createSQLQuery("UPDATE usuario SET Estado='"+estado+"' WHERE Cargo="+cargo.getIdCargo()+"");
+                            Query queryActuzalizarUsuario = sesion.createSQLQuery("UPDATE usuario SET Estado='"+estado+"' WHERE Cargo="+canal_cargo.getCargo().getIdCargo()+"");
                             queryActuzalizarUsuario.executeUpdate();
                             sesion.getTransaction().commit();
                         }
@@ -202,12 +205,12 @@ public class sector extends HttpServlet {
                         for(Area area : ListaArea){
                             
                             ////////////////7COORECCIN DEL CODIGO DE ABAJO ///////////////
-                            Query queryCargoPro = sesion.createQuery("FROM Cargo WHERE Area='"+area.getIdArea()+"'");
-                            List<Cargo>ListaCargoPro = queryCargoPro.list();
-                            for(Cargo cargo : ListaCargoPro){
+                            Query queryCargoPro = sesion.createQuery("FROM Area_Cargo WHERE Area='"+area.getIdArea()+"'");
+                            List<Area_Cargo>ListaCargoPro = queryCargoPro.list();
+                            for(Area_Cargo area_cargo : ListaCargoPro){
 
                                 sesion.beginTransaction();
-                                Query queryActuzalizarUsuario = sesion.createSQLQuery("UPDATE usuario SET Estado='"+estado+"' WHERE Cargo="+cargo.getIdCargo()+"");
+                                Query queryActuzalizarUsuario = sesion.createSQLQuery("UPDATE usuario SET Estado='"+estado+"' WHERE Cargo="+area_cargo.getCargo().getIdCargo()+"");
                                 queryActuzalizarUsuario.executeUpdate();
                                 sesion.getTransaction().commit();
                             }    
@@ -218,7 +221,6 @@ public class sector extends HttpServlet {
 
                 }
                 
-            
             }
             
             sesion.beginTransaction();

@@ -123,7 +123,7 @@
                         <div class="modal-body text-center">
                             <h5 class="category">ACTUALIZA LOS DATOS DEL SECTOR</h5>
                             <div class="col-md-12 mr-auto ml-auto">
-                                <input id="idSector" type="password" style="display: none" >
+                                <input id="idSector" style="display: none">
                                 <fieldset>  
                                     <div class="form-group">
                                         <div class="row">
@@ -173,9 +173,6 @@
                 $("#empresaItemNav").addClass("show");
                 $("#sectoresItemNav").addClass('active');
                 $("#tituloPagina").text("SECTORES");
-
-                localStorage.imgPerfil = $("#imgPerfilNavLateral").val();
-                localStorage.name = $(".spanName").val();
 
                 var fullDate = new Date();
                 var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);

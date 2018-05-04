@@ -83,7 +83,7 @@
                                                 <div class="row">
                                                     <small class="control-label"><strong>Canal *</strong></small>                                                            
                                                     <select id="cmbCanal" name="Canal" class="form-control" data-title="Selecciona el Canal" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
-
+                                                        <option>Selecciona el canal</option>
                                                     </select>                                                            
                                                 </div>
                                             </div>
@@ -160,7 +160,7 @@
                                         <fieldset>  
                                             <div class="form-group">
                                                 <div class="row">
-                                                    <small class="control-label"><strong>Canal *</strong></small>                                                    
+                                                    <small class="control-label" id="lblCanal"><strong>Canal *</strong></small>                                                    
                                                     <select id="cmbCanalEditar" name="EditarCanal" class="form-control" data-title="Seleccionar Canal" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">                                                                                                                                                                                               
 
                                                     </select>                                                    

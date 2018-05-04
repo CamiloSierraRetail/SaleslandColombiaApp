@@ -1,6 +1,7 @@
 package Controlador;
 
 import Modelo.Area;
+import Modelo.Area_Cargo;
 import Modelo.Canal;
 import Modelo.Cargo;
 import Modelo.Sector;
@@ -96,6 +97,7 @@ public class canal extends HttpServlet {
             Session sesion = objSessionFactory.openSession();
             Query query = sesion.createQuery("FROM Canal");
             List<Canal> listaCanal = query.list();
+            response.setCharacterEncoding("UTF-8");
             for(Canal canal : listaCanal){
             
                 response.getWriter().write("<tr>"
@@ -103,24 +105,16 @@ public class canal extends HttpServlet {
                                               + "<td>"+canal.getNombreCanal()+"</td>"
                                               + "<td>"+canal.getDescripcion()+"</td>"
                                               + "<td>"+canal.getSector().getNombreSector()+"</td>"
-                                              + "<td class='text-right'>"+canal.getEstado()
-                                                      
-                                                   /*+ "<div class='row'>"
-                                                      + "<div class='col-md-12'>"
-                                                        + "<input type='checkbox' checked='' data-toggle='switch' data-on-color='info' data-off-color='info'>"
-                                                        + "<span class='toggle'></span>"
-                                                      + "</div>"
-                                                   + "</div>"*/
-                                              + "</td>"
+                                              + "<td class='text-right'>"+canal.getEstado()+ "</td>"
                                               + "<td class='td-actions text-right'>"
-                                                + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='Ver Sector'>"
-                                                    + "<i class='fa fa-user'></i>"
+                                                + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='Ver Canal'>"
+                                                    + "<i class='fa fa-eye blue-corp'></i>"
                                                 + "</a>"   
                                                 + "<button onclick='verDatosCanal("+canal.getIdCanal()+")' data-toggle='modal' data-target='#ModalEditarCanal' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
-                                                    + "<i class='fa fa-edit'></i>"
+                                                    + "<i class='fa fa-edit gray-corp'></i>"
                                                 + "</button>"
-                                                + "<a href='#' rel='tooltip' title='' class='btn btn-danger btn-link btn-xs' data-original-title='Eliminar'>"
-                                                    + "<i class='fa fa-times'></i>"
+                                                + "<a href='#' rel='tooltip' title='' class='btn btn-danger btn-link btn-xs' data-original-title='Estadisticas'>"
+                                                    + "<i class='fa fa-bar-chart orange-corp'></i>"
                                                 + "</a>"
                                               + "</td>"
                                          + "</tr>");
@@ -175,51 +169,50 @@ public class canal extends HttpServlet {
             String Estado = request.getParameter("EstadoCanal");
             String Nombre = request.getParameter("NombreCanal");
             String Descripcion = request.getParameter("DescripcionCanal");
-            String Sector = request.getParameter("SectorCanal");
-            
-            Sector objSector = new Sector();
-            objSector.setIdSector(Integer.parseInt(Sector));
-            Canal objCanal = new Canal(Nombre, Descripcion, Estado, objSector);
-            objCanal.setIdCanal(Integer.parseInt(idCanal));
+            String Sector = request.getParameter("SectorCanal");                        
             
             SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
             Session sesion = objSessionFactory.openSession();
+                        
+            Query querySector = sesion.createQuery("FROM Canal WHERE idCanal = "+idCanal+"");
+            List<Canal> listaCanal = querySector.list();
+            for(Canal canal : listaCanal){
             
-            
-            /// ACTUALIZA EL ESTADO DEL AREA /////////////
-            Query queyBuscarAreas = sesion.createQuery("FROM Area WHERE Canal="+idCanal+"");
-            List<Area> listaAreas = queyBuscarAreas.list();
-            for(Area area : listaAreas){
-            
-                Query queryCargo = sesion.createQuery("FROM Cargo WHERE area='"+area.getIdArea()+"'");
-                List<Cargo>ListaCargo = queryCargo.list();
-                for(Cargo cargo : ListaCargo){
+                if (!canal.getEstado().equals(Estado)) {
                 
-                    Query query = sesion.createSQLQuery("UPDATE usuario SET Estado='"+Estado+"' WHERE cargo="+cargo.getIdCargo()+"");
+                    sesion.beginTransaction();
+                    Query queryActualizarArea = sesion.createSQLQuery("UPDATE Area SET Estado = '"+Estado+"' WHERE Canal="+idCanal+"");
+                    queryActualizarArea.executeUpdate();
+                    sesion.getTransaction().commit();
+                    
+                    
+                    ///////////// STATUS PARA AREAS /////////////////
+                    Query queryArea = sesion.createQuery("FROM Area WHERE Canal= "+canal.getIdCanal()+"");
+                    List<Area>ListaArea = queryArea.list();
+                    for(Area area : ListaArea){
+
+                        ////////////////7COORECCIN DEL CODIGO DE ABAJO ///////////////
+                        Query queryCargoPro = sesion.createQuery("FROM Area_Cargo WHERE Area='"+area.getIdArea()+"'");
+                        List<Area_Cargo>ListaCargoPro = queryCargoPro.list();
+                        for(Area_Cargo area_cargo : ListaCargoPro){
+
+                            sesion.beginTransaction();
+                            Query queryActuzalizarUsuario = sesion.createSQLQuery("UPDATE usuario SET Estado='"+Estado+"' WHERE Cargo="+area_cargo.getCargo().getIdCargo()+"");
+                            queryActuzalizarUsuario.executeUpdate();
+                            sesion.getTransaction().commit();
+                        }    
+
+                    }
+                
                 }
-                
-//                Query queryEmpleado = sesion.createQuery("FROM Empleado WHERE Area = "+area.getIdArea()+"");
-//                List<Empleado> listaEmpleado = queryEmpleado.list();
-//                for(Empleado empleado : listaEmpleado){
-//                
-//                    /// ACTUALIZA EL ESTADO DE LOS USUARIOS QUE PERTENESCAN A ESTA AREA ///////////////
-//                    sesion.beginTransaction();
-//                    Query queryUsuario = sesion.createSQLQuery("UPDATE usuario SET Estado='"+Estado+"' WHERE idUsuario="+empleado.getUsuario().getIdUsuario()+"");
-//                    queryUsuario.executeUpdate();
-//                    sesion.getTransaction().commit();
-//                }
-                
+            
             }
-            
+
             sesion.beginTransaction();
-            Query queryAreas = sesion.createSQLQuery("UPDATE area SET Estado='"+Estado+"' WHERE Canal="+idCanal+"");
-            queryAreas.executeUpdate();
+            Query query = sesion.createSQLQuery("UPDATE canal SET Estado='"+Estado+"', NombreCanal='"+Nombre+"', Descripcion='"+Descripcion+"' WHERE idCanal="+idCanal+"");
+            query.executeUpdate();
             sesion.getTransaction().commit();
             
-            
-            sesion.beginTransaction();
-            sesion.update(objCanal);
-            sesion.getTransaction().commit();
             sesion.close();
             objSessionFactory.close();
             response.getWriter().write("200");            

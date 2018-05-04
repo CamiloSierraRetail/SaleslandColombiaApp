@@ -86,7 +86,7 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <small class="control-label"><strong>Sector *</strong></small>                                                            
-                                                    <select id="cmbSector" name="Sector" class="form-control">
+                                                    <select id="cmbSector" name="Sector" class="form-control" required="true">
                                                         <option>Selecciona el sector</option>
                                                     </select>                                                            
                                                 </div>
@@ -133,7 +133,8 @@
                                 <div class="modal-body text-center">
                                     <h5 class="category">ACTUALIZA LOS DATOS DEL CANAL</h5>
                                     <div class="col-md-12 mr-auto ml-auto">
-                                        <input id="idCanal" type="password" style="display: none">
+                                        <input id="idCanal" style="display: none">
+                                        
                                         <fieldset>  
                                             <div class="form-group">
                                                 <div class="row">
@@ -164,7 +165,7 @@
                                         <fieldset>
                                             <div class="form-group">
                                                 <div class="row">
-                                                    <small class="control-label"><strong>Sector *</strong></small>                                                            
+                                                    <small class="control-label" id="lblSector"><strong>Sector *</strong></small>                                                            
                                                     <select id="cmbEditarSector" name="EditarSectorCanal" class="form-control">
 
                                                     </select>                                                           
@@ -194,9 +195,6 @@
                 $("#canalesItemNav").addClass('active');
                 $("#empresaItemNav").addClass("show");
                 cargarSectores();
-
-                localStorage.imgPerfil = $("#imgPerfilNavLateral").val();
-                localStorage.name = $(".spanName").val();
 
                 var fullDate = new Date();
                 var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
