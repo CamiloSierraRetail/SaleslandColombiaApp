@@ -101,8 +101,8 @@
                             </div>   
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-link btn-simple" data-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-info btn-fill pull-right">Guardar</button>
+                            <button type="button" class="btn btn-simple" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-blue_corp btn-fill pull-right">Guardar</button>
                         </div>
                     </form>
                 </div>
@@ -155,8 +155,8 @@
                             </div>   
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-link btn-simple" data-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-info btn-fill pull-right">Guardar cambios</button>
+                            <button type="button" class="btn btn-simple" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-blue_corp btn-fill pull-right">Guardar cambios</button>
                         </div>
                     </form>
                 </div>

@@ -12,11 +12,12 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Bryan%20Ossa/Desktop/REPO/SaleslandColombiaApp/web/ligth-bootstrap/Pages/area/listararea.jsp</file>
+            <file>file:/C:/Users/Bryan%20Ossa/Desktop/REPO/SaleslandColombiaApp/src/java/Controlador/cargo.java</file>
+            <file>file:/C:/Users/Bryan%20Ossa/Desktop/REPO/SaleslandColombiaApp/web/ligth-bootstrap/Pages/includes/navLateral.jsp</file>
             <file>file:/C:/Users/Bryan%20Ossa/Desktop/REPO/SaleslandColombiaApp/web/ligth-bootstrap/assets/js/main.js</file>
-            <file>file:/C:/Users/Bryan%20Ossa/Desktop/REPO/SaleslandColombiaApp/src/java/Controlador/area.java</file>
-            <file>file:/C:/Users/Bryan%20Ossa/Desktop/REPO/SaleslandColombiaApp/src/java/Controlador/canal.java</file>
-            <file>file:/C:/Users/Bryan%20Ossa/Desktop/REPO/SaleslandColombiaApp/src/java/Controlador/sector.java</file>
+            <file>file:/C:/Users/Bryan%20Ossa/Desktop/REPO/SaleslandColombiaApp/web/ligth-bootstrap/assets/js/main2.js</file>
+            <file>file:/C:/Users/Bryan%20Ossa/Desktop/REPO/SaleslandColombiaApp/src/java/Modelo/Sector_Cargo.java</file>
+            <file>file:/C:/Users/Bryan%20Ossa/Desktop/REPO/SaleslandColombiaApp/web/ligth-bootstrap/Pages/cargo/listarcargo.jsp</file>
         </group>
     </open-files>
 </project-private>

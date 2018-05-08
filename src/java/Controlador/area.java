@@ -191,6 +191,7 @@ public class area extends HttpServlet {
             
             sesion.close();  
             objSessionFactory.close();
+            response.setCharacterEncoding("UTF-8");
             response.getWriter().write(canalJson.toJSONString());
             
         }catch(Exception e){
@@ -251,6 +252,7 @@ public class area extends HttpServlet {
             }
             sesion.close();   
             objSessionFactory.close();
+            response.setCharacterEncoding("UTF-8");
             response.getWriter().write(areaJson.toJSONString());    
         }catch(Exception e){
         
@@ -278,6 +280,7 @@ public class area extends HttpServlet {
             }
             sesion.close();
             objSessionFactory.close();
+            response.setCharacterEncoding("UTF-8");
             response.getWriter().write(areaJson.toJSONString());
         }catch(Exception e){
             response.getWriter().write("500");

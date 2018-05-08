@@ -123,7 +123,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <button type="submit" class="btn btn-info btn-fill pull-right">Actualizar Perfil</button>
+                                                    <button type="submit" class="btn btn-blue_corp btn-fill pull-right">Actualizar Perfil</button>
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>

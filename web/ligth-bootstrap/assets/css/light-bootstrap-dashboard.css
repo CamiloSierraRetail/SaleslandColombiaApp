@@ -3848,7 +3848,7 @@ fieldset[disabled] .form-control {
     content: "\f046";
     text-align: center;
     opacity: 0;
-    color: #23CCEF;
+    color: #006A85;
     border: 0;
     background-color: inherit;
     margin-left: -23px;
@@ -5195,7 +5195,7 @@ fieldset[disabled] .form-control {
 }
 
 .card-wizard .nav-tabs .nav-item .nav-link.active {
-    background-color: #23CCEF;
+    background-color: #006A85;
 }
 
 .progress {

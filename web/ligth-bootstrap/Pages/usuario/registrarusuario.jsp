@@ -24,7 +24,7 @@
                                         <div class="card card-wizard">
                                             <div class="card-header ">
                                                 <h3 class="card-title text-center">Registro de usuario</h3>
-                                                <p class="card-category text-center">Para continuar con el proceso de registro te agradecemos seguir cada uno de estos pasos en el orden establecido <i class="material-icons" style="font-size: 12px; color: orangered;">filter_drama</i></p>
+                                                <p class="card-category text-center">Para continuar con el proceso de registro te agradecemos seguir cada uno de estos pasos en el orden establecido</p>
                                             </div>
                                             <div class="card-body ">
                                                 <ul class="nav nav-tabs nav-pills">
@@ -46,13 +46,10 @@
                                                             <div class="col-md-5 ">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Tipo de Documento <star>*</star></label>                                    
-                                                                    <select id="cmbTipoDocumentoUsuario" name="TipoDocumentoUsuario" class="selectpicker" data-title="Seleccionar Tipo De Documento" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                                                    <select id="cmbTipoDocumentoUsuario" name="TipoDocumentoUsuario" class="selectpicker form-control" data-title="Seleccionar Tipo De Documento" data-menu-style="dropdown-blue">
                                                                         <option value="T.I">Tarjeta de indentidad (T.I)</option>
                                                                         <option value="C.C">Cedula de ciudadanía (C.C)</option> 
                                                                         <option value="C.E">Cedula de extranjería (C.E)</option> 
-                                                                        <option value="NIT">Nit</option> 
-                                                                        <option value="PASAPORTE">Pasaporte</option> 
-                                                                        <option value="RUC">Reg. unico de contribuyentes (RUC)</option> 
                                                                         <option value="OTRO">Otro</option>
                                                                     </select>
                                                                     
@@ -212,8 +209,8 @@
                                             </div>
                                             <div class="card-footer text-center">
                                                 <button type="button" class="btn btn-default btn-wd btn-back pull-left">Volver</button>
-                                                <button type="button" class="btn btn-info btn-wd btn-next pull-right">Siguiente</button>
-                                                <button type="submit" class="btn btn-info btn-wd btn-finish pull-right" style="display: none;">Finalizar</button>
+                                                <button type="button" class="btn btn-blue_corp btn-wd btn-next pull-right">Siguiente</button>
+                                                <button type="submit" class="btn btn-blue_corp btn-wd btn-finish pull-right" style="display: none;">Finalizar</button>
                                                 <div class="clearfix"></div>
                                             </div>
                                         </div>
@@ -237,5 +234,6 @@
             cargarCargosSectores();
             InicializarFormularioRegistro();
         });
+        
     </script>         
 </html>

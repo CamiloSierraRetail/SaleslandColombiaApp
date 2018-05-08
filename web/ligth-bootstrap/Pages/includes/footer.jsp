@@ -23,7 +23,7 @@
                 <script>
                     document.write(new Date().getFullYear())
                 </script>
-                <a href="https://www.salesland.net/" target="_blank">Powered by Salesland Colombia</a>, made with love for a better web <i class="material-icons" style="font-size: 10px; color: tomato;">favorite</i>
+                <a class="blue-corp" href="https://www.salesland.net/" target="_blank">Powered by Salesland Colombia</a>, made with love for a better web <i class="material-icons" style="font-size: 10px; color: tomato;">favorite</i>
             </p>
         </nav>
     </div>

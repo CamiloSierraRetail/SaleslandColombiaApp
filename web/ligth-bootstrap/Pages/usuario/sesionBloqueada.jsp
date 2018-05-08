@@ -56,7 +56,7 @@
                                         </div>
                                     </div>
                                     <div class="card-footer ">
-                                        <button type="submit" class="btn btn-info btn-round">Desbloquear</button>
+                                        <button type="submit" class="btn btn-blue_corp btn-round">Desbloquear</button>
                                     </div>
                                 </form>
                             </div>

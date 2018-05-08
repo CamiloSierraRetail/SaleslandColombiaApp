@@ -134,10 +134,11 @@ public class sector extends HttpServlet {
             List<Sector> listaSector = query.list();
             Gson gson = new Gson();
             String json = gson.toJson(listaSector);
+            response.setCharacterEncoding("UTF-8");
             response.getWriter().write(json);
             
             sesion.close();
-            objSessionFactory.close();
+            objSessionFactory.close();            
         }catch(Exception e){
             System.err.println(e);
             response.getWriter().write("500");
@@ -249,6 +250,7 @@ public class sector extends HttpServlet {
             
             Gson gson = new Gson();
             String json = gson.toJson(listaSector);
+            response.setCharacterEncoding("UTF-8");
             response.getWriter().write(json);
             
             sesion.close();

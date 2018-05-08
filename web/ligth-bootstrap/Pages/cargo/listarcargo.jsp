@@ -1,9 +1,16 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%    
+    try{      
+        if(session.getAttribute("UsuarioIngresado").equals("") || session.getAttribute("UsuarioIngresado").equals(null)){
+            response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/sesionBloqueada.jsp");
+        }
+        else{
+%>
 <!DOCTYPE html>
 <html>
     <head>
         <%@include file="../includes/cssInclude.jsp" %>
-        <title>Listado de Cargos SaleslandColombia</title>       
+        <title>Cargos - Salesland Colombia</title>       
     </head>
     <body>   
         <div class="wrapper">
@@ -22,7 +29,7 @@
                                 <div class="card bootstrap-table">
                                 <div class="card-header">
                                     <h4 class="card-title">Nuestros Cargos</h4>
-                                    <p class="card-category">En este listado se muestran todas los cargos registrados en la empresa.</p>
+                                    <p class="card-category">En este listado se muestran todos los cargos registrados en la empresa.</p>
                                 </div>
                                     <div class="modal-body text-center" id="tablaModificada">
                                         <div class="toolbar" id="toolbar">
@@ -62,7 +69,7 @@
                 <%@include  file="../includes/footer.jsp" %>
             </div>
         </div>
-        <!-- MODAL PARA CREAR UN SECTOR -->
+        <!-- MODAL PARA CREAR UN CARGO -->
         <div class="modal fade modal-primary" id="modalRegistrarCargo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -145,28 +152,133 @@
                             </div>   
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-link btn-simple" data-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-info btn-fill pull-right">Guardar</button>
+                            <button type="button" class="btn btn-simple" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-blue_corp btn-fill pull-right">Guardar</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
         <!--  End Modal -->
+        
+        
+        <!--________________________________________   MODAL PARA Editar UN CARGO _____________________________________________-->
+        <div class="modal fade modal-primary" id="modalEditarCargo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-center">
+                        <div class="modal-profile">
+                            <i class="nc-icon nc-puzzle-10"></i>
+                        </div>
+                    </div>
+                    <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmEditarCargo" name="frmEditarCargo">
+                        <div class="modal-body text-center">
+                            <h5 class="category">Actualiza los datos del cargo</h5>
+                            <div class="col-md-12 mr-auto ml-auto">
+                                <input id="idCargo" style="display: none;">
+                                <fieldset>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <small class="control-label"><strong>Nombre del Cargo *</strong></small>
+                                            <input id="txtEditarNombreCargo" name="EditarNombreCargo" type="text" class="form-control">                                                        
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <small class="control-label"><strong>Descripción *</strong></small>
+                                            <textarea id="txtEditarDescripcionCargo" name="EditarDescripcionCargo" class="form-control textArea"></textarea>                                                       
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <small class="control-label"><strong>Estado *</strong></small>
+                                            <select name="EditarEstado" id="cmbEditarEstadoCargo" class="form-control">                                                      
+                                                <option value="Activo">Activo</option>                                                       
+                                                <option value="Inactivo">Inactivo</option>                                            
+                                            </select>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <small class="control-label"><strong>Selecciona tipo de Usuario *</strong></small>
+                                            <select name="EditarOpciones" id="cmbEditarTipo" class="form-control" data-title="Seleccionar Tipo" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" >                                                      
+                                                <option value="Director">Director</option>                                                       
+                                                <option value="JefeCanal">Jefe Canal</option>
+                                                <option value="CoordinadorCanal">Coordinador</option>                                                       
+                                                <option value="JefeArea">Jefe Area</option>
+                                                <option value="Empleado">Empleado</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div id="nEditarSector">
+                                        <div class="form-group">                                                
+                                            <div class="row">
+                                                <small class="control-label"><strong>Sector *</strong></small>
+                                                <select name="EditarSector" id="cmbEditarSector" class="form-control" data-title="Seleccionar" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" >                                                           
+                                                    <option>Seleccione el sector</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div id="nEditarCanal">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <small class="control-label"><strong>Canal *</strong></small>
+                                                <select name="EditarCanal" id="cmbEditarCanal" class="form-control" data-title="Seleccionar">
+                                                    <option>Seleccione el canal</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div id="nEditarArea">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <small class="control-label"><strong>Area *</strong></small>
+                                                <select name="EditarArea" id="cmbEditarArea" class="form-control" data-title="Seleccionar">
+                                                    <option>Seleccione el area</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-simple" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-blue_corp btn-fill pull-right">Guardar Cambios</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--  End Modal -->
+        
+        
+        
+        
+        
+        
         <%@include file="../includes/jsInclude.jsp" %>
         <script>
-            $(document).ready(function (){
-                
+            $(document).ready(function (){               
                 listarCargos();
                 $("#nsector").hide();
                 $("#ncanal").hide();
                 $("#narea").hide();           
                 $("#cargosEmpleadosNav").addClass('active');
                 $("#tituloPagina").text("Cargos");
-
-
-                localStorage.imgPerfil = $("#imgPerfilNavLateral").val();
-                localStorage.name = $(".spanName").val();
 
                 var fullDate = new Date();
                 var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
@@ -177,3 +289,9 @@
         </script>
     </body>        
 </html>
+<%        }
+    }  
+    catch(NullPointerException ex){
+        response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/sesionBloqueada.jsp");        
+    }
+%>

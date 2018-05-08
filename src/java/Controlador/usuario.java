@@ -337,8 +337,6 @@ public class usuario extends HttpServlet {
                             List<Area_Cargo> listaArea_Cargo = queryArea_Cargo.list();
                             for(Area_Cargo area_cargo : listaArea_Cargo){
                             
-                                System.out.println("***************************************   area arae arae    ------>    " + listaArea_Cargo.size() + "          -------------------------   " + area_cargo.getCargo().getNombreCargo() + " /////////////////////    " + canal.getNombreCanal());
-                                
                                 listaUsuario.addAll(buscarUsuario(area_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario()));
                             
                             }
@@ -357,18 +355,16 @@ public class usuario extends HttpServlet {
                                                   + "<td>"+usuario.getNombre()+" "+usuario.getApellido()+"</td>"
                                                   + "<td>"+usuario.getCelular()+"</td>"
                                                   + "<td>"+usuario.getEmail()+"</td>"
-                                                  + "<td class='text-right'>"+usuario.getEstado()
-
-                                                  + "</td>"
+                                                  + "<td class='text-right'>"+usuario.getEstado()+ "</td>"
                                                   + "<td class='td-actions text-right'>"
                                                     + "<a href='#' onclick='VerUsuariosTabla("+usuario.getIdUsuario()+")' data-toggle='modal' data-target='#modalVerUsuario' rel='tooltip' title='' class='btn btn-success btn-link btn-xs' data-original-title='Ver Usuario'>"
-                                                        + "<i class='fa fa-eye'></i>"
+                                                        + "<i class='fa fa-eye blue-corp'></i>"
                                                     + "</a>"   
                                                     + "<a href='/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/editarsector.jsp?_' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
-                                                        + "<i class='fa fa-edit'></i>"
+                                                        + "<i class='fa fa-edit gray-corp'></i>"
                                                     + "</a>"
                                                     + "<a href='#' rel='tooltip' title='' class='btn btn-danger btn-link btn-xs' data-original-title='Eliminar'>"
-                                                        + "<i class='fa fa-times'></i>"
+                                                        + "<i class='fa fa-times orange-corp'></i>"
                                                     + "</a>"
                                                   + "</td>"
                                              + "</tr>");

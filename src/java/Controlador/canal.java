@@ -153,6 +153,7 @@ public class canal extends HttpServlet {
             
             sesion.close();
             objSessionFactory.close();
+            response.setCharacterEncoding("UTF-8");
             response.getWriter().write(canalJson.toJSONString());            
         }catch(Exception e){
         
@@ -241,6 +242,7 @@ public class canal extends HttpServlet {
             }
             sesion.close();
             objSessionFactory.close();
+            response.setCharacterEncoding("UTF-8");
             response.getWriter().write(canalJson.toJSONString());                
         }catch(Exception e){
         
@@ -270,6 +272,7 @@ public class canal extends HttpServlet {
             }
             sesion.close();
             objSessionFactory.close();
+            response.setCharacterEncoding("UTF-8");
             response.getWriter().write(canalJson.toJSONString());            
         }catch(Exception e){
         

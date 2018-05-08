@@ -266,12 +266,12 @@ function listarCargos() {
                                     +"<thead>"
                                         +"<tr>"
                                             +"<th class='text-center'>#</th>"
-                                            +"<th>Nombre</th>"
-                                            +"<th>Descripción</th>"                                            
-                                            +"<th>Tipo</th>"
-                                            +"<th>Sector</th>"
-                                            +"<th>Canal</th>"
-                                            +"<th>Area</th>"
+                                            +"<th class='text-center'>Nombre</th>"
+                                            +"<th class='text-center'>Descripción</th>"                                            
+                                            +"<th class='text-center'>Tipo</th>"
+                                            +"<th class='text-center'>Sector</th>"
+                                            +"<th class='text-center'>Canal</th>"
+                                            +"<th class='text-center'>Area</th>"
                                             +"<th class='text-right'>Estado</th>"
                                             +"<th class='text-right'>Acciones</th>"
                                         +"</tr>"
@@ -291,12 +291,85 @@ function listarCargos() {
             
             $("#listadoCargos").append(responseText);  
             // orden de datos tamaño,showRefresh, search, showToggle, showColumns, alineacion, texto
-            //tamanio,showRefresh, search, showToggle, showColumns, alineacion, texto
-            botstrapPaginacionTabla(5, false, true, true, true, 'right');
+            //botstrapPaginacionTabla(tamanio,showRefresh, search, showToggle, showColumns, alineacion){
+            botstrapPaginacionTabla(5, false, true, false, true, 'right');
         }
         
     });
 }
+
+//////////////////////////   FUNCION PARA CARGAR LOS DATOS DEL CARGO ////////////////////////////////////
+function verDatosCargo(id){
+    
+    $.post("/SaleslandColombiaApp/cargo/cargarCargo",{id:id},function (responseText) {
+       
+        if (responseText == "500") {
+            swal("Ocurrio un error", "Lo ocurrió un error al intentar cargar los datos del cargo.", "error");
+        }else{
+            
+            var dt = JSON.parse(responseText);
+            
+            $("#idCargo").val(dt[0]);
+            $("#txtEditarNombreCargo").val(dt[1]);
+            $("#txtEditarDescripcionCargo").val(dt[2]);
+            $("#cmbEditarTipo").val(dt[3]);
+            $("#cmbEditarEstadoCargo").val(dt[4]);
+            
+            
+            $("#cmbEditarTipo").prop('disabled', true);
+            if (dt[3] == "Director") {
+                
+                $("#nEditarSector").show();
+                $("#nEditarCanal").hide();
+                $("#nEditarArea").hide();
+                
+                cargarSectores();
+                
+                $("#cmbEditarSector").val(dt[5]);
+                $("#cmbEditarSector").prop('disabled', true);
+            }else if (dt[3] == "JefeCanal" || dt[3] == "CoordinadorCanal") {
+                                
+                $("#nEditarSector").show();
+                $("#nEditarCanal").show();
+                $("#nEditarArea").hide();
+                
+                cargarSectores();
+                cargarCanal();
+                
+                $("#cmbEditarSector").val(dt[5]);
+                $("#cmbEditarSector").prop('disabled', true);
+                $("#cmbEditarCanal").val(dt[6]);
+                $("#cmbEditarCanal").prop('disabled', true);
+                
+            }else if (dt[3] == "JefeArea" || dt[3] == "Empleado") {
+                    
+                cargarAreas();
+                cargarSectores();
+                cargarCanal();                
+                
+                
+                $("#nEditarSector").show();
+                $("#nEditarCanal").show();
+                $("#nEditarArea").show();
+                                  
+                $("#cmbEditarSector").val(dt[5]);
+                $("#cmbEditarCanal").val(dt[6]);                
+                setTimeout(function (){                    
+                    $("#cmbEditarArea").val(dt[7]);                    
+                },300);
+                                
+                $("#cmbEditarSector").prop('disabled', true);
+                $("#cmbEditarCanal").prop('disabled', true);
+                $("#cmbEditarArea").prop('disabled', true);
+                                
+            }                                    
+            
+        }
+        
+    });    
+}
+  
+
 ///////////////// CARGAR COMBO DE SECTORES /////////////////////////////////
 function cargarSectores(){
     
@@ -304,18 +377,47 @@ function cargarSectores(){
         if (responseText == 500) {
             swal("Ocurrio un error", "Lo ocuttió un error al intentar cargar los sectores.", "error");
         }else{
-            var dt = JSON.parse(responseText);   
+            $("#cmbEditarSector").html("");
+            $("#cmbSector").html("");
+            var dt = JSON.parse(responseText);
+            
             for (var key in dt) {
                 if (dt.hasOwnProperty(key)) {
                     var val = dt[key];                    
                     $("#cmbEditarSector").append("<option value='"+val['IdSector']+"'>"+val['NombreSector']+"</option>");
-                    $("#cmbSector").append("<option value='"+val['IdSector']+"'>"+val['NombreSector']+"</option>");  
+                    $("#cmbSector").append("<option value='"+val['IdSector']+"'>"+val['NombreSector']+"</option>");                    
                 }
             }
         } 
         
     });
 }
+//////////////// HACE LA CARGA DE LOS SECTORES DEPENDIENTES ////////////////////////////////////
+function cargarSectoresDependientes(){    
+    $.post("/SaleslandColombiaApp/sector/cargarcombosector",function (responseText){
+        if (responseText == 500) {
+            swal("Ocurrio un error", "Lo ocuttió un error al intentar cargar los sectores.", "error");
+        }else{
+            $("#cmbEditarSector").html("");
+            $("#cmbSector").html("");
+            
+            var dt = JSON.parse(responseText);             
+            
+            $("#cmbSector").append("<option>Seleccione el sector</option>");
+            $("#cmbEditarSector").append("<option>Seleccione el sector</option>");
+                                               
+            for (var key in dt) {
+                if (dt.hasOwnProperty(key)) {
+                    var val = dt[key];                    
+                    $("#cmbEditarSector").append("<option value='"+val['IdSector']+"'>"+val['NombreSector']+"</option>");
+                    $("#cmbSector").append("<option value='"+val['IdSector']+"'>"+val['NombreSector']+"</option>");                    
+                }
+            }
+        } 
+        
+    });
+}
+
 ///////////////////////// REGISTRAR CANAL ///////////////////////////////////////
 $('#frmRegistrarCanal').validate({    
     rules: {
@@ -379,10 +481,7 @@ $('#frmRegistrarCanal').validate({
 
                             swal("Registro exitoso", "El canal ha sido registrado exitosamente", "success").then((willDelete) => {
                                 if (willDelete) {
-                                    $("#modalRegistrarCanal").removeClass('show');
-                                    $("body").removeClass('modal-open');
-                                    $("body").css("padding-right","");
-                                    $("div").removeClass('modal-backdrop');
+                                    $("#modalRegistrarCanal").modal('toggle');
                                     listarCanales();
                                 }
                             });
@@ -1078,7 +1177,10 @@ $("#frmIniciarSesion").validate({
         $("#preloader").show();
         var usuario = $("#txtUsuarioSesion").val();
         var contrasenia = $("#txtContraseniaSesion").val();        
-        $.post("/SaleslandColombiaApp/usuario/IniciarSesion",{Usuario:usuario,Contrasenia:contrasenia},function (responsetext) {                       
+        $.post("/SaleslandColombiaApp/usuario/IniciarSesion",{Usuario:usuario,Contrasenia:contrasenia},function (responsetext) {                                               
+            $("#txtUsuarioSesion").prop('disabled', false);
+            $("#txtContraseniaSesion").prop('disabled', false);
+            $("#txtUsuarioSesion").focus();
             if (responsetext == "Empleado") {
                 window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/empleado/indexempleado.jsp";
                 
@@ -1621,8 +1723,8 @@ function verDatosArea(id) {
             }
                                   
             $("#txtEditarNombreArea").val(dt[1]);
-            $("#txtEditarDescripcionArea").val(dt[2]);            
-            $("#cmbCanalEditar").val("" + dt[4] + "");
+            $("#txtEditarDescripcionArea").val(dt[2]);        
+            $("#cmbEditarCanal").val("" + dt[4] + "");
             
         }
 
@@ -1784,27 +1886,15 @@ $('#frmRegistrarCargos').validate({
             title: "Confirmar Datos",
             text: "¿Está seguro que desea realizar el registro?",
             icon: "info",
-            buttons: {
-                cancel:{
-                    text: "Cancelar",
-                    value: true,
-                    visible: true,
-                    closeModal: true
-                },
-                confirm: {
-                    text: "Sí",
-                    value: true,
-                    visible: true,
-                    closeModal: false
-                }
-            }
-        })
-        .then((willDelete) => {
+            buttons: true,
+            closeonconfirm: false,
+            buttons: ["Cancelar", "Sí"]
+        }).then((willDelete) => {
             if (willDelete) {
-                
+
                 if ($("#cmbTipo").val() == "Director") {
                     
-                    if ($("#cmbSector").val() == "Seleccione") {
+                    if ($("#cmbSector").val() == "Seleccione el sector") {
                     
                         swal("El sector es requerido", "Para completar el registro debes seleccionar un sector", "warning");
                      
@@ -1816,9 +1906,9 @@ $('#frmRegistrarCargos').validate({
                     
                 }else if ($("#cmbTipo").val() == "JefeCanal" || $("#cmbTipo").val() == "CoordinadorCanal" ) {
                     
-                    if ($("#cmbSector").val() == "Seleccione" || $("#cmbCanal").val() == "Seleccione") {
+                    if ($("#cmbSector").val() == "Seleccione el sector" || $("#cmbCanal").val() == "Seleccione el canal") {
                     
-                        swal("El sector es requerido y el canal son requeridos", "Para completar el registro debes seleccionar un sector y un canal", "warning");
+                        swal("Completa los campos del registro", "Para completar el registro debes seleccionar un sector y un canal", "warning");
                      
                     }else{
                         
@@ -1827,7 +1917,7 @@ $('#frmRegistrarCargos').validate({
                     
                 }else if ($("#cmbTipo").val() == "Empleado" || $("#cmbTipo").val() == "JefeArea") {
                 
-                    if ($("#cmbSector").val() == "Seleccione" || $("#cmbCanal").val() == "Seleccione" || $("#cmbArea").val() == "Seleccione") {
+                    if ($("#cmbSector").val() == "Seleccione el sector" || $("#cmbCanal").val() == "Seleccione el canal" || $("#cmbArea").val() == "Seleccione el area") {
                     
                         swal("Completa los campos del registro", "Para poder continuar con el registro selecciona los campos solicitados.", "warning");
                      
@@ -1850,10 +1940,14 @@ $('#frmRegistrarCargos').validate({
                             swal("Registro exitoso", "El Cargo ha sido registrado exitosamente", "success").then((willDelete) => {
                                 if (willDelete) {
                                     
-                                    $("#modalRegistrarCargo").removeClass('show');
-                                    $("body").removeClass('modal-open');
-                                    $("body").css("padding-right","");
-                                    $("div").removeClass('modal-backdrop');
+                                    $("#modalRegistrarCargo").modal('toggle');
+                                    $("#txtNombreCargo").val("");
+                                    $("#txtDescripcionCargo").val("");
+                                    $("#cmbTipo").prop('selectedIndex', 0);
+                                    $("#nsector").hide();
+                                    $("#ncanal").hide();
+                                    $("#narea").hide();
+                                    
                                     listarCargos();
                                     
                                 }
@@ -1881,18 +1975,45 @@ $("#cmbTipo").change(function (){
         $("#nsector").show();  
         $("#ncanal").hide();
         $("#narea").hide();
-        cargarSectores();
+        cargarSectoresDependientes();
+        
     }else if (tipo == "JefeCanal" || tipo == "CoordinadorCanal" ) {                                                             
         $("#nsector").show();
         $("#ncanal").show();
         $("#narea").hide();
-        cargarSectores();                   
+        cargarSectoresDependientes();              
     }else if (tipo == "Empleado" || tipo == "JefeArea"){
 
         $("#nsector").show();
         $("#ncanal").show();
         $("#narea").show();
-        cargarSectores();
+        cargarSectoresDependientes();
+    }
+
+ });
+ //////////_____________________________________________________     EDITAR CARGO      ________________________________________/////////
+ $("#cmbEditarTipo").change(function (){    
+    var tipo = $("#cmbEditarTipo").val();    
+    $("#cmbEditarSector").html("<option>Seleccione el sector</option>");
+    $("#cmbEditarCanal").html("<option>Seleccione el canal</option>");
+    $("#cmbEditarArea").html("<option>Seleccione el area</option>");
+
+    if (tipo == "Director") {               
+        $("#nEditarSector").show();  
+        $("#nEditarCanal").hide();
+        $("#nEditarArea").hide();
+        cargarSectoresDependientes();
+    }else if (tipo == "JefeCanal" || tipo == "CoordinadorCanal" ) {                                                             
+        $("#nEditarSector").show();
+        $("#nEditarCanal").show();
+        $("#nEditarArea").hide();
+        cargarSectoresDependientes();             
+    }else if (tipo == "Empleado" || tipo == "JefeArea"){
+
+        $("#nEditarSector").show();
+        $("#nEditarCanal").show();
+        $("#nEditarArea").show();
+        cargarSectoresDependientes();
     }
 
  });
@@ -1900,7 +2021,19 @@ $("#cmbTipo").change(function (){
  $("#cmbSector").change(function (){
      if ($("#cmbTipo").val() != "Director" ) { 
 
-         cargarCanalesDependientes();
+        $("#cmbCanal").html("<option>Seleccione el canal</option>");
+        $("#cmbArea").html("<option>Seleccione el area</option>");
+        cargarCanalesDependientes("#cmbSector","#cmbCanal");
+
+     }                
+ });
+ 
+  $("#cmbEditarSector").change(function (){
+     if ($("#cmbEditarTipo").val() != "Director" ) { 
+
+        $("#cmbEditarCanal").html("<option>Seleccione el canal</option>");
+        $("#cmbEditarArea").html("<option>Seleccione el area</option>");
+        cargarCanalesDependientes("#cmbEditarSector","#cmbEditarCanal");
 
      }                
  });
@@ -1909,13 +2042,21 @@ $("#cmbTipo").change(function (){
  $("#cmbCanal").change(function (){
      if ($("#cmbTipo").val() == "Empleado" || $("#cmbTipo").val() == "JefeArea" ) { 
 
-         cargarAreasDependientes();
+        cargarAreasDependientes("#cmbCanal","#cmbArea");
 
      }                
  });
+ $("#cmbEditarCanal").change(function (){
+     if ($("#cmbEditarTipo").val() == "Empleado" || $("#cmbEditarTipo").val() == "JefeArea" ) { 
+
+        cargarAreasDependientes("#cmbEditarCanal","#cmbEditarArea");
+
+     }                
+ });
+ 
  ///////////////////////////////// FUNCION PARA CARGAR LOS CANALES /////////////////////////////7
- function cargarCanalesDependientes(){
-     var idsector = $("#cmbSector").val();                
+ function cargarCanalesDependientes(idSector, idCanal){
+     var idsector = $(idSector).val();                
      $.post("/SaleslandColombiaApp/canal/cargarcanalesdependientes",{idSector:idsector},function(responseText) {                
          if (responseText == "500") {
 
@@ -1925,7 +2066,7 @@ $("#cmbTipo").change(function (){
              var selectCount = 0;
              var contador = 0;
              var dt = JSON.parse(responseText); 
-             $("#cmbCanal").html("");
+             $(idCanal).html("");
              for (var i = 0, max = dt.length; i < max; i++) {
 
                  if (contador == 1) {
@@ -1934,10 +2075,10 @@ $("#cmbTipo").change(function (){
                  }else{
 
                      if (selectCount == 0) {
-                         $("#cmbCanal").append("<option>Seleccione el canal</option>");
+                         $(idCanal).append("<option>Seleccione el canal</option>");
                          selectCount++;
                      }
-                     $("#cmbCanal").append("<option value='"+dt[i]+"'>"+dt[i+1]+"</option>");
+                     $(idCanal).append("<option value='"+dt[i]+"'>"+dt[i+1]+"</option>");
                      contador++;
                  }
              }
@@ -1947,8 +2088,8 @@ $("#cmbTipo").change(function (){
      });
  }
  ////////////7 FUNCION PARA CARGAR LAS AREAS //////////////////
- function cargarAreasDependientes (){
-     var idCanal = $("#cmbCanal").val(); 
+ function cargarAreasDependientes (idCanal2, idArea){
+     var idCanal = $(idCanal2).val(); 
      $.post("/SaleslandColombiaApp/area/cargarareasdependientes",{idCanal:idCanal},function(responseText) {
          if (responseText == "500") {
 
@@ -1958,11 +2099,11 @@ $("#cmbTipo").change(function (){
              var contador = 0;
              var selectCount = 0;
              var dt = JSON.parse(responseText); 
-             $("#cmbArea").html("");
+             $(idArea).html("");
              for (var i = 0, max = dt.length; i < max; i++) {
 
                  if (selectCount == 0) {
-                     $("#cmbArea").append("<option>Seleccione el area</option>");
+                     $(idArea).append("<option>Seleccione el area</option>");
                      selectCount++;
                  }
 
@@ -1970,7 +2111,7 @@ $("#cmbTipo").change(function (){
                      contador = 0;
 
                  }else{
-                     $("#cmbArea").append("<option value='"+dt[i]+"'>"+dt[i+1]+"</option>");
+                     $(idArea).append("<option value='"+dt[i]+"'>"+dt[i+1]+"</option>");
                      contador++;
                  }
              } 
@@ -2536,5 +2677,36 @@ function cargarChartPromedioDias(){
     });
     
 }
+/////////////////////////    FUNCION PARA ELIMINAR EL CARGO      //////////////////////////////////////////////
+function eliminarCargo(idCargo){
+        
+    swal({
+        title: "Eliminar Cargo",
+        text: "¿Está seguro que desea eliminar el cargo?",
+        icon: "warning",
+        buttons: true,
+        closeonconfirm: false,
+        buttons: ["Cancelar", "Sí"]
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+            
+            $.post("/SaleslandColombiaApp/cargo/eliminarCargo",{IdCargo:idCargo},function (responseText) {
+
+                alert(responseText);
 
 
+                if (responseText == "500") {
+                    swal("Ocurrio un error", "Lo sentimos, los datos de los empleados no se lograron cargar, por favor intentalo nuevamente", "error");
+                }else if (responseText == "200") {
+
+
+                }else if (responseText == "204"){
+
+                    swal("No se puede eliminar este cargo", "No puedes eliminar este cargo porque hay empleados relacionados a este.", "error");
+                }
+                
+            });                            
+        }    
+    });                        
+}

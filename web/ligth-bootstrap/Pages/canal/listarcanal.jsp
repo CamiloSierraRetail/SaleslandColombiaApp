@@ -32,7 +32,7 @@
                             <div class="col-md-12 mr-auto ml-auto">                                
                                 <div class="card bootstrap-table">
                                     <div class="card-header">
-                                        <h4 class="card-title">Nuestros canales</h4>
+                                        <h4 class="card-title">Nuestros Canales</h4>
                                         <p class="card-category">En este listado se muestran todos los canales registrados en la empresa.</p>
                                     </div>
                                     <div class="card-body table-full-width" id="tablaModificada">                                        
@@ -111,8 +111,8 @@
                                     </div>   
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-link btn-simple" data-dismiss="modal">Cerrar</button>
-                                    <button type="submit" class="btn btn-info btn-fill pull-right">Guardar</button>
+                                    <button type="button" class="btn btn-simple" data-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-blue_corp btn-fill pull-right">Guardar</button>
                                 </div>
                             </form>
                         </div>
@@ -175,8 +175,8 @@
                                     </div>   
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-link btn-simple" data-dismiss="modal">Cerrar</button>
-                                    <button type="submit" class="btn btn-info btn-fill pull-right">Guardar cambios</button>
+                                    <button type="button" class="btn btn-simple" data-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-blue_corp btn-fill pull-right">Guardar cambios</button>
                                 </div>
                             </form>
                         </div>

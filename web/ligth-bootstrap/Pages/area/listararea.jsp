@@ -107,8 +107,8 @@
                                     </div>   
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-link btn-simple" data-dismiss="modal">Cerrar</button>
-                                    <button type="submit" class="btn btn-info btn-fill pull-right">Guardar</button>
+                                    <button type="button" class="btn btn-simple" data-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-blue_corp btn-fill pull-right">Guardar</button>
                                 </div>
                             </form>
                         </div>
@@ -161,7 +161,7 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <small class="control-label" id="lblCanal"><strong>Canal *</strong></small>                                                    
-                                                    <select id="cmbCanalEditar" name="EditarCanal" class="form-control" data-title="Seleccionar Canal" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">                                                                                                                                                                                               
+                                                    <select id="cmbEditarCanal" name="EditarCanal" class="form-control" data-title="Seleccionar Canal" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">                                                                                                                                                                                               
 
                                                     </select>                                                    
                                                 </div>
@@ -170,8 +170,8 @@
                                     </div>   
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-link btn-simple" data-dismiss="modal">Cerrar</button>
-                                    <button type="submit" class="btn btn-info btn-fill pull-right">Guardar cambios</button>
+                                    <button type="button" class="btn btn-simple" data-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-blue_corp btn-fill pull-right">Guardar cambios</button>
                                 </div>
                             </form>
                         </div>
