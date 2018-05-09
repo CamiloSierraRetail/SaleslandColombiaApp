@@ -1882,84 +1882,92 @@ $('#frmRegistrarCargos').validate({
         }
     }, submitHandler: function () {
 
-        swal({
-            title: "Confirmar Datos",
-            text: "¿Está seguro que desea realizar el registro?",
-            icon: "info",
-            buttons: true,
-            closeonconfirm: false,
-            buttons: ["Cancelar", "Sí"]
-        }).then((willDelete) => {
-            if (willDelete) {
+        
+        if ($("#cmbTipo").val() == "Seleccione el tipo de usuario") {
+            
+            swal("El tipo de usuarios es requerido", "Para completar el registro debes seleccionar un tipo de usuario", "warning");
+            
+        }else{
+         
+            swal({
+                title: "Confirmar Datos",
+                text: "¿Está seguro que desea realizar el registro?",
+                icon: "info",
+                buttons: true,
+                closeonconfirm: false,
+                buttons: ["Cancelar", "Sí"]
+            }).then((willDelete) => {
+                if (willDelete) {
 
-                if ($("#cmbTipo").val() == "Director") {
-                    
-                    if ($("#cmbSector").val() == "Seleccione el sector") {
-                    
-                        swal("El sector es requerido", "Para completar el registro debes seleccionar un sector", "warning");
-                     
-                    }else{
-                        
-                        realizarRegistro();
-                        
-                    }
-                    
-                }else if ($("#cmbTipo").val() == "JefeCanal" || $("#cmbTipo").val() == "CoordinadorCanal" ) {
-                    
-                    if ($("#cmbSector").val() == "Seleccione el sector" || $("#cmbCanal").val() == "Seleccione el canal") {
-                    
-                        swal("Completa los campos del registro", "Para completar el registro debes seleccionar un sector y un canal", "warning");
-                     
-                    }else{
-                        
-                        realizarRegistro();
-                    }
-                    
-                }else if ($("#cmbTipo").val() == "Empleado" || $("#cmbTipo").val() == "JefeArea") {
-                
-                    if ($("#cmbSector").val() == "Seleccione el sector" || $("#cmbCanal").val() == "Seleccione el canal" || $("#cmbArea").val() == "Seleccione el area") {
-                    
-                        swal("Completa los campos del registro", "Para poder continuar con el registro selecciona los campos solicitados.", "warning");
-                     
-                    }else{
-                        realizarRegistro();
-                    }
-                     
-                }
-                
-                function realizarRegistro() {
-                    var nombreCargo = $("#txtNombreCargo").val();
-                    var descripcionCargo = $("#txtDescripcionCargo").val();                    
-                    var tipo = $("#cmbTipo").val();
-                    var sector = $("#cmbSector").val();
-                    var canal = $("#cmbCanal").val();
-                    var area = $("#cmbArea").val();
-                    
-                    $.post("/SaleslandColombiaApp/cargo/registrarcargo", {NombreCargo: nombreCargo, Descripcion: descripcionCargo, Tipo: tipo, Sector: sector, Canal: canal, Area: area }, function (responsetext) {
-                        if (responsetext == "200") {
-                            swal("Registro exitoso", "El Cargo ha sido registrado exitosamente", "success").then((willDelete) => {
-                                if (willDelete) {
-                                    
-                                    $("#modalRegistrarCargo").modal('toggle');
-                                    $("#txtNombreCargo").val("");
-                                    $("#txtDescripcionCargo").val("");
-                                    $("#cmbTipo").prop('selectedIndex', 0);
-                                    $("#nsector").hide();
-                                    $("#ncanal").hide();
-                                    $("#narea").hide();
-                                    
-                                    listarCargos();
-                                    
-                                }
-                            });
+                    if ($("#cmbTipo").val() == "Director") {
 
-                        } else {
-                            swal("Ocurrio un error", "Lo sentimos ha ocurrido un error, por favor intentalo nuevamente.", "error");
+                        if ($("#cmbSector").val() == "Seleccione el sector") {
+
+                            swal("El sector es requerido", "Para completar el registro debes seleccionar un sector", "warning");
+
+                        }else{
+
+                            realizarRegistro();
+
                         }
-                    });
+
+                    }else if ($("#cmbTipo").val() == "JefeCanal" || $("#cmbTipo").val() == "CoordinadorCanal" ) {
+
+                        if ($("#cmbSector").val() == "Seleccione el sector" || $("#cmbCanal").val() == "Seleccione el canal") {
+
+                            swal("Completa los campos del registro", "Para completar el registro debes seleccionar un sector y un canal", "warning");
+
+                        }else{
+
+                            realizarRegistro();
+                        }
+
+                    }else if ($("#cmbTipo").val() == "Empleado" || $("#cmbTipo").val() == "JefeArea") {
+
+                        if ($("#cmbSector").val() == "Seleccione el sector" || $("#cmbCanal").val() == "Seleccione el canal" || $("#cmbArea").val() == "Seleccione el area") {
+
+                            swal("Completa los campos del registro", "Para poder continuar con el registro selecciona los campos solicitados.", "warning");
+
+                        }else{
+                            realizarRegistro();
+                        }
+
+                    }
+
+                    function realizarRegistro() {
+                        var nombreCargo = $("#txtNombreCargo").val();
+                        var descripcionCargo = $("#txtDescripcionCargo").val();                    
+                        var tipo = $("#cmbTipo").val();
+                        var sector = $("#cmbSector").val();
+                        var canal = $("#cmbCanal").val();
+                        var area = $("#cmbArea").val();
+
+                        $.post("/SaleslandColombiaApp/cargo/registrarcargo", {NombreCargo: nombreCargo, Descripcion: descripcionCargo, Tipo: tipo, Sector: sector, Canal: canal, Area: area }, function (responsetext) {
+                            if (responsetext == "200") {
+                                swal("Registro exitoso", "El cargo ha sido registrado exitosamente", "success").then((willDelete) => {
+                                    if (willDelete) {
+
+                                        $("#modalRegistrarCargo").modal('toggle');
+                                        $("#txtNombreCargo").val("");
+                                        $("#txtDescripcionCargo").val("");
+                                        $("#cmbTipo").prop('selectedIndex', 0);
+                                        $("#nsector").hide();
+                                        $("#ncanal").hide();
+                                        $("#narea").hide();
+
+                                        listarCargos();
+
+                                    }
+                                });
+
+                            } else {
+                                swal("Ocurrio un error", "Lo sentimos ha ocurrido un error, por favor intentalo nuevamente.", "error");
+                            }
+                        });
+                    }
                 }
-            }
-        });
+            });                        
+        }        
     }
 });
 
@@ -2692,18 +2700,22 @@ function eliminarCargo(idCargo){
         if (willDelete) {
             
             $.post("/SaleslandColombiaApp/cargo/eliminarCargo",{IdCargo:idCargo},function (responseText) {
-
-                alert(responseText);
-
-
+                
                 if (responseText == "500") {
                     swal("Ocurrio un error", "Lo sentimos, los datos de los empleados no se lograron cargar, por favor intentalo nuevamente", "error");
                 }else if (responseText == "200") {
 
+                    swal("Cargo eliminado", "El cargo se ha eliminado correctamente.", "success").then((willDelete) => {
+                        if (willDelete) {
+                               
+                            listarCargos();
+
+                        }
+                    });
 
                 }else if (responseText == "204"){
 
-                    swal("No se puede eliminar este cargo", "No puedes eliminar este cargo porque hay empleados relacionados a este.", "error");
+                    swal("No se puede eliminar este cargo", "No puedes eliminar este cargo porque hay empleados relacionados a este.", "info");
                 }
                 
             });                            

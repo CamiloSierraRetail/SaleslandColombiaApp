@@ -1,12 +1,9 @@
 package Controlador;
 
-import Modelo.Usuario;
-import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 import javax.websocket.EncodeException;
 import javax.websocket.OnClose;

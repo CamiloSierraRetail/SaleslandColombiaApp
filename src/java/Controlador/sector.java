@@ -254,6 +254,7 @@ public class sector extends HttpServlet {
             response.getWriter().write(json);
             
             sesion.close();
+            response.setCharacterEncoding("UTF-8");
             objSessionFactory.close();
         }catch(Exception e){
         

@@ -19,7 +19,7 @@
                     <div class="container-fluid">
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-md-10 ml-auto mr-auto">
+                                <div class="col-md-11 ml-auto mr-auto">
                                     <form id="frmRegistrarUsuario" method="" action="" novalidate="novalidate">
                                         <div class="card card-wizard">
                                             <div class="card-header ">

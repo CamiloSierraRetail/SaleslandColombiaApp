@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -106,7 +107,7 @@ public class usuario extends HttpServlet {
                 imagenPerfil = ImagenPerfil;
             
             }
-            
+            String encriptPass = DigestUtils.md5Hex(Contrasenia);
             
             String Fecha[] = FechaNacimiento.split("/");
             String newFecha = Fecha[1]+"-"+Fecha[0]+"-"+Fecha[2];
@@ -127,7 +128,7 @@ public class usuario extends HttpServlet {
                 Cargo objCargo = new Cargo();
                 objCargo.setIdCargo(Integer.parseInt(idCargo));
 
-                Usuario objUsuario = new Usuario(TipoDocumento, Documento, Nombre, Apellido, Direccion, Telefono, Celular, Genero, Email, date, Contrasenia, imagenPerfil, "Activo", Horario, objCargo);
+                Usuario objUsuario = new Usuario(TipoDocumento, Documento, Nombre, Apellido, Direccion, Telefono, Celular, Genero, Email, date, encriptPass, imagenPerfil, "Activo", Horario, objCargo);
 
                 sesion.beginTransaction();
                 sesion.save(objUsuario);
@@ -153,6 +154,8 @@ public class usuario extends HttpServlet {
             Query query =  sesion.createQuery("FROM Sector WHERE Estado='Activo'");
             List<Sector> listaSector = query.list();
             
+            response.setCharacterEncoding("UTF-8");
+            
             for(Sector sector : listaSector){
                             
                 Query querySector_Cargo = sesion.createQuery("FROM Sector_Cargo WHERE Sector="+sector.getIdSector()+"");
@@ -163,7 +166,7 @@ public class usuario extends HttpServlet {
                 
                 }
                 
-                Query queryCanal_Cargo = sesion.createQuery("FROM Canal_Cargo WHERE Sector="+sector.getIdSector()+"");
+                Query queryCanal_Cargo = sesion.createQuery("FROM Canal_Cargo WHERE Canal="+sector.getIdSector()+"");
                 List<Canal_Cargo> listaCanal_Cargo = queryCanal_Cargo.list();
                 for(Canal_Cargo canal_Cargo : listaCanal_Cargo){
                     
@@ -243,6 +246,7 @@ public class usuario extends HttpServlet {
             String Usuario = request.getParameter("Usuario");
             String Contrasenia = request.getParameter("Contrasenia");            
             Session sesion = objSessionFactory.openSession();
+            response.setCharacterEncoding("UTF-8");
             Query query = sesion.createQuery("FROM Usuario WHERE ((Email='"+Usuario+"' OR Documento='"+Usuario+"') AND Contrasenia='"+Contrasenia+"')");
             List<Usuario> listaUsuario = query.list();
             if (listaUsuario.size() == 1) {
@@ -307,6 +311,8 @@ public class usuario extends HttpServlet {
             SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
             Session sesion = objSessionFactory.openSession();
             Usuario objUsuario = (Usuario) request.getSession().getAttribute("UsuarioIngresado");
+            
+            response.setCharacterEncoding("UTF-8");
             
             if (objUsuario.getCargo().getTipo().equals("Director")) {
                 
@@ -612,7 +618,7 @@ public class usuario extends HttpServlet {
             usuarioJson.add(nombre[0] + " " + apellido[0]);
             usuarioJson.add(rolUsuario);
             usuarioJson.add(objUsuario.getCargo().getNombreCargo() + ": " + objUsuario.getCargo().getDescripcion());
-            
+                        
             response.getWriter().write(usuarioJson.toJSONString());
         
             sesion.close();

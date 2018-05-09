@@ -192,6 +192,7 @@ public class cargo extends HttpServlet {
             }
             sesion.close();
             objSessionFactory.close();
+            response.setCharacterEncoding("UTF-8");
             response.getWriter().write(canalJson.toJSONString());            
         } catch (Exception e) {
 
@@ -262,31 +263,36 @@ public class cargo extends HttpServlet {
             List<Cargo> listaCargo = queryCargo.list();
             for(Cargo cargo : listaCargo){
             
-                Sector objSector = new Sector();
-                objSector.setIdSector(Integer.parseInt(Sector));
-                Sector_Cargo objSector_Cargo = new Sector_Cargo(cargo, objSector);
-                sesion.beginTransaction();
-                sesion.save(objSector_Cargo);
-                sesion.getTransaction().commit();
                 
-                if (!"Seleccione el canal".equals(Canal)) {
+                if (cargo.getTipo().equals("Director") && !"Seleccione el sector".equals(Sector)) {
+                    
+                    Sector objSector = new Sector();
+                    objSector.setIdSector(Integer.parseInt(Sector));
+                    Sector_Cargo objSector_Cargo = new Sector_Cargo(cargo, objSector);
+                    sesion.beginTransaction();
+                    sesion.save(objSector_Cargo);
+                    sesion.getTransaction().commit();
+                    
+                }
+                
+                if ((cargo.getTipo().equals("JefeCanal") || cargo.getTipo().equals("CoordinadorCanal"))  && !"Seleccione el canal".equals(Canal)) {
                 
                     
                     Canal objCanal = new Canal();
                     objCanal.setIdCanal(Integer.parseInt(Canal));
-                    //Canal_Cargo objCanal_Cargo = new Canal_Cargo(cargo, objCanal);
+                    Canal_Cargo objCanal_Cargo = new Canal_Cargo(cargo, objCanal);
                     sesion.beginTransaction();
-                    //sesion.save(objCanal_Cargo);
+                    sesion.save(objCanal_Cargo);
                     sesion.getTransaction().commit();
                     
                 }
-                if (!"Seleccione el area".equals(Area)) {
+                if ((cargo.getTipo().equals("JefeArea") || cargo.getTipo().equals("Empleado")) && !"Seleccione el area".equals(Area)) {
                     
                     Area objArea = new Area();
                     objArea.setIdArea(Integer.parseInt(Area));
-                    //Area_Cargo objArea_Cargo = new Area_Cargo(cargo, objArea);
+                    Area_Cargo objArea_Cargo = new Area_Cargo(cargo, objArea);
                     sesion.beginTransaction();
-                    //sesion.save(objArea_Cargo);
+                    sesion.save(objArea_Cargo);
                     sesion.getTransaction().commit();
                 }
             
@@ -345,6 +351,7 @@ public class cargo extends HttpServlet {
             cargoJson.add(Canal);
             cargoJson.add(Area);
             
+            response.setCharacterEncoding("UTF-8");
             response.getWriter().write(cargoJson.toJSONString());
             
             
@@ -373,32 +380,28 @@ public class cargo extends HttpServlet {
                 response.getWriter().write("204");
             }else{
             
-                Cargo objCargo1 = (Cargo) sesion.createQuery("FROM Cargo WHERE idCargo = "+idCargo+"").uniqueResult();
-                System.out.println("EL NOMBRE Y TIPO DEL CARGO SON ------------------->      " + objCargo1.getNombreCargo()+"           " + objCargo1.getTipo());
+                Cargo objCargo1 = (Cargo) sesion.createQuery("FROM Cargo WHERE idCargo = "+idCargo+"").uniqueResult();                
                 
                 if (objCargo1.getTipo().equals("Director")) {
-                                        
-                    
+                                                            
                     sesion.beginTransaction();
                     Query deleteSector_Cargo = sesion.createSQLQuery("DELETE FROM sector_cargo WHERE cargo="+idCargo+"");
                     deleteSector_Cargo.executeUpdate();                    
                     sesion.getTransaction().commit();
-                    response.getWriter().write("201");
+                    
                 }else if (objCargo1.getTipo().equals("JefeCanal") || objCargo1.getTipo().equals("CoordinadorCanal")) {
                     
                     sesion.beginTransaction();
                     Query deleteCanal_Cargo = sesion.createSQLQuery("DELETE FROM canal_cargo WHERE cargo="+idCargo+"");
                     deleteCanal_Cargo.executeUpdate();                    
                     sesion.getTransaction().commit();
-                    response.getWriter().write("202");
+                    
                 }else if (objCargo1.getTipo().equals("JefeArea") || objCargo1.getTipo().equals("Empleado")) {
                     
                     sesion.beginTransaction();
                     Query deleteArea_Cargo = sesion.createSQLQuery("DELETE FROM area_cargo WHERE cargo="+idCargo+"");
-                    int df = deleteArea_Cargo.executeUpdate();                    
-                    sesion.getTransaction().commit();
-                    System.out.println("EL RESULTADO DE LA TRANSACCION ES ?????????????????????     " + df);
-                    response.getWriter().write("203");
+                    deleteArea_Cargo.executeUpdate();                    
+                    sesion.getTransaction().commit();                                        
                 }
                                 
                 
@@ -406,14 +409,13 @@ public class cargo extends HttpServlet {
                 Query deleteCargo = sesion.createSQLQuery("DELETE FROM cargo WHERE idCargo="+idCargo+"");
                 int ff = deleteCargo.executeUpdate();
                 sesion.getTransaction().commit();
-                
-                System.out.println("EL RESULTADO DE LA QUERY FINAL ???????==================      " + ff);
-                
+                                
+                response.getWriter().write("200");
             }
-            
-            
+                        
             sesion.close();
-            objSessionFactory.close();
+            objSessionFactory.close();            
+            
         }catch(Exception ex){
             response.getWriter().write("500");
             System.err.println(ex);

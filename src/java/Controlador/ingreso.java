@@ -69,7 +69,7 @@ public class ingreso extends HttpServlet {
                     cargarChartPromedioDias(request, response);
                     break;
                 default:
-                    response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/login.jsp");
+                    //response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/login.jsp");
             }
             
         }
@@ -90,6 +90,7 @@ public class ingreso extends HttpServlet {
             String Minutos = request.getParameter("Minutos");            
             Query query = sesion.createQuery("FROM Usuario WHERE Documento='"+UsuarioID+"'");
             List<Usuario> listaUsuario = query.list();
+            response.setCharacterEncoding("UTF-8");
             
             if (listaUsuario.size() == 1) {
                 for (Usuario usuario : listaUsuario){            
@@ -298,6 +299,7 @@ public class ingreso extends HttpServlet {
                 horasSemanaJson.add(fechaJusto);
                 horasSemanaJson.add(horaJusto);
                 
+                response.setCharacterEncoding("UTF-8");
                 response.getWriter().write(horasSemanaJson.toJSONString());
             }else{
                 response.getWriter().write("undefined");
@@ -419,6 +421,7 @@ public class ingreso extends HttpServlet {
             jsonIngresos.add(inSabado+"/"+tipo+"/"+outSabado+"/"+tipo1);
             jsonIngresos.add(inDomingo+"/"+tipo+"/"+outDomingo+"/"+tipo1);
             
+            response.setCharacterEncoding("UTF-8");
             response.getWriter().write(jsonIngresos.toJSONString());
             
             s.close();
@@ -585,7 +588,7 @@ public class ingreso extends HttpServlet {
                 usuarioJson.add(promedioSalidaB);
                 usuarioJson.add(horas_A);
                 usuarioJson.add(horas_B);
-                
+                response.setCharacterEncoding("UTF-8");
                 response.getWriter().write(usuarioJson.toJSONString());
                 
                 
@@ -803,6 +806,7 @@ public class ingreso extends HttpServlet {
             Usuario objUsuario = (Usuario) request.getSession().getAttribute("UsuarioIngresado");
             SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
             Session sesion = objSessionFactory.openSession();
+            response.setCharacterEncoding("UTF-8");
             
             /////////////////////////////// DIRECTOR ////////////////////////////////////////////////////////////
             if (objUsuario.getCargo().getTipo().equals("Director")) {
@@ -832,9 +836,7 @@ public class ingreso extends HttpServlet {
                         
                             Query queryArea_Cargo = sesion.createQuery("FROM Area_Cargo WHERE Area = "+area.getIdArea()+"");
                             List<Area_Cargo> listaArea_Cargo = queryArea_Cargo.list();
-                            for(Area_Cargo area_cargo : listaArea_Cargo){
-                            
-                                System.out.println("***************************************   area arae arae    ------>    " + listaArea_Cargo.size() + "          -------------------------   " + area_cargo.getCargo().getNombreCargo() + " /////////////////////    " + canal.getNombreCanal());
+                            for(Area_Cargo area_cargo : listaArea_Cargo){                                                            
                                 
                                 listaUsuario.addAll(buscarUsuario(area_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario()));
                             
@@ -844,9 +846,7 @@ public class ingreso extends HttpServlet {
                     
                     }
                     
-                }
-                
-                
+                }                                
                 
                 for(Usuario usuario : listaUsuario){
             
@@ -996,6 +996,8 @@ public class ingreso extends HttpServlet {
             usuarioJson.add(temprano);
             sesion.close();
             objSessionFactory.close();
+            
+            response.setCharacterEncoding("UTF-8");
             response.getWriter().write(usuarioJson.toJSONString());
             
         }catch(Exception ex){
@@ -1092,6 +1094,7 @@ public class ingreso extends HttpServlet {
                         
             sesion.close();
             objSessionFactory.close();
+            response.setCharacterEncoding("UTF-8");
             response.getWriter().write(usuarioJson.toJSONString());
             
         }catch(Exception ex){
