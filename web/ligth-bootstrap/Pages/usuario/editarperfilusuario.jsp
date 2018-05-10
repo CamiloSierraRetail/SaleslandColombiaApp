@@ -159,13 +159,13 @@
                                             <div class="card-footer ">
                                                 <hr>
                                                 <div class="button-container text-center">
-                                                    <button href="#" class="btn btn-simple btn-link btn-icon">
+                                                    <button class="btn btn-simple btn-link btn-icon">
                                                         <i class="fa fa-facebook-square"></i>
                                                     </button>
-                                                    <button href="#" class="btn btn-simple btn-link btn-icon">
+                                                    <button class="btn btn-simple btn-link btn-icon">
                                                         <i class="fa fa-twitter"></i>
                                                     </button>
-                                                    <button href="#" class="btn btn-simple btn-link btn-icon">
+                                                    <button class="btn btn-simple btn-link btn-icon">
                                                         <i class="fa fa-google-plus-square"></i>
                                                     </button>
                                                 </div>

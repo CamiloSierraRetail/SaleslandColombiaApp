@@ -219,7 +219,7 @@
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute">
             <div class="container">
                 <div class="navbar-wrapper">
-                    <a href="/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/login.jsp" class="navbar-brand"><img style="height: 30px; white-space: 100px;" src="../../assets/img/LOGO_SALESLAND_NEGATIVO.png"></a>
+                    <a href="/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/login.jsp" class="navbar-brand"><img style="height: 30px; white-space: 100px;" src="/SaleslandColombiaApp/ligth-bootstrap/assets/img/LOGO_SALESLAND_NEGATIVO.png"></a>
                     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-bar burger-lines"></span>
                         <span class="navbar-toggler-bar burger-lines"></span>
@@ -235,7 +235,7 @@
                 404
             </div>
 
-            <div class="subtitle" data-content="Oops, la pagina que estas buscando no existe.">
+            <div class="subtitle" data-content="Oops, la pagina que estas buscando no">
                 Oops, la pagina que estas buscando no existe.
             </div>
 

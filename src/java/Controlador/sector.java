@@ -49,7 +49,8 @@ public class sector extends HttpServlet {
                     break;
                 case "cargarcombosector":
                     cargarcombosector(request, response);
-                
+                default:
+                    response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/alertas/404.jsp");
             }
             
         }

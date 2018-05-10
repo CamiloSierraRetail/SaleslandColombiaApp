@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -23,11 +23,17 @@ public class Permiso {
     @Column(name = "Descripcion")
     private String Descripcion;
     
-    @Column(name = "Inicio")
-    private Date Inicio;
+    @Column(name = "FechaInicio")
+    private Date FechaInicio;
     
-    @Column(name = "Fin")
-    private Date Fin;
+    @Column(name = "HoraInicio")
+    private Date HoraInicio;
+    
+    @Column(name = "FechaFin")
+    private Date FechaFin;
+    
+    @Column(name = "HoraFin")
+    private Date HoraFin;
     
     @Column(name = "DocAnexo")
     private String DocAnexo;
@@ -35,21 +41,28 @@ public class Permiso {
     @Column(name = "Estado")
     private String Estado;
     
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Usuario")
-    private Usuario Usuario;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "UsuarioEnvia")
+    private Usuario UsuarioEnvia;
+    
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "UsuarioRecibe")
+    private Usuario UsuarioRecibe;
 
     public Permiso() {
     }
 
-    public Permiso(String Motivo, String Descripcion, Date Inicio, Date Fin, String DocAnexo, String Estado, Usuario Usuario) {
+    public Permiso(String Motivo, String Descripcion, Date FechaInicio, Date HoraInicio, Date FechaFin, Date HoraFin, String DocAnexo, String Estado, Usuario UsuarioEnvia, Usuario UsuarioRecibe) {
         this.Motivo = Motivo;
         this.Descripcion = Descripcion;
-        this.Inicio = Inicio;
-        this.Fin = Fin;
+        this.FechaInicio = FechaInicio;
+        this.HoraInicio = HoraInicio;
+        this.FechaFin = FechaFin;
+        this.HoraFin = HoraFin;
         this.DocAnexo = DocAnexo;
         this.Estado = Estado;
-        this.Usuario = Usuario;
+        this.UsuarioEnvia = UsuarioEnvia;
+        this.UsuarioRecibe = UsuarioRecibe;
     }
 
     public int getIdPermiso() {
@@ -76,20 +89,36 @@ public class Permiso {
         this.Descripcion = Descripcion;
     }
 
-    public Date getInicio() {
-        return Inicio;
+    public Date getFechaInicio() {
+        return FechaInicio;
     }
 
-    public void setInicio(Date Inicio) {
-        this.Inicio = Inicio;
+    public void setFechaInicio(Date FechaInicio) {
+        this.FechaInicio = FechaInicio;
     }
 
-    public Date getFin() {
-        return Fin;
+    public Date getHoraInicio() {
+        return HoraInicio;
     }
 
-    public void setFin(Date Fin) {
-        this.Fin = Fin;
+    public void setHoraInicio(Date HoraInicio) {
+        this.HoraInicio = HoraInicio;
+    }
+
+    public Date getFechaFin() {
+        return FechaFin;
+    }
+
+    public void setFechaFin(Date FechaFin) {
+        this.FechaFin = FechaFin;
+    }
+
+    public Date getHoraFin() {
+        return HoraFin;
+    }
+
+    public void setHoraFin(Date HoraFin) {
+        this.HoraFin = HoraFin;
     }
 
     public String getDocAnexo() {
@@ -108,12 +137,19 @@ public class Permiso {
         this.Estado = Estado;
     }
 
-    public Usuario getUsuario() {
-        return Usuario;
+    public Usuario getUsuarioEnvia() {
+        return UsuarioEnvia;
     }
 
-    public void setUsuario(Usuario Usuario) {
-        this.Usuario = Usuario;
+    public void setUsuarioEnvia(Usuario UsuarioEnvia) {
+        this.UsuarioEnvia = UsuarioEnvia;
     }
-    
+
+    public Usuario getUsuarioRecibe() {
+        return UsuarioRecibe;
+    }
+
+    public void setUsuarioRecibe(Usuario UsuarioRecibe) {
+        this.UsuarioRecibe = UsuarioRecibe;
+    }        
 }

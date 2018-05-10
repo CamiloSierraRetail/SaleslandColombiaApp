@@ -56,6 +56,8 @@ public class canal extends HttpServlet {
                 case "cargarcanalesdependientes":                    
                     cargarCanalesDependientes(request, response);
                     break;
+                default:
+                    response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/alertas/404.jsp");
             }
             
         }

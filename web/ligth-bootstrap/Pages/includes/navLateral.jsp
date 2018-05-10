@@ -145,10 +145,10 @@ try{
                                             <span class="sidebar-normal">Editar Perfil</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item" id="">
-                                        <a class="nav-link profile-dropdown" href="#">
-                                            <span class="sidebar-mini">AJ</span>
-                                            <span class="sidebar-normal">Ajustes</span>
+                                    <li class="nav-item" id="misPermisos">
+                                        <a class="nav-link profile-dropdown" href="../permiso/mispermisos.jsp">
+                                            <span class="sidebar-mini">PR</span>
+                                            <span class="sidebar-normal">Mis Permisos</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -220,7 +220,13 @@ try{
                                             <span class="sidebar-mini">M</span>
                                             <span class="sidebar-normal">Monitorear</span>
                                         </a>
-                                    </li>                                
+                                    </li>
+                                    <li class="nav-item" id="mis">
+                                        <a class="nav-link" href="#">
+                                            <span class="sidebar-mini">P</span>
+                                            <span class="sidebar-normal">Permisos</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>

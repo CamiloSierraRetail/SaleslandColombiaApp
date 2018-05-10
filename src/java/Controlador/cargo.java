@@ -51,8 +51,10 @@ public class cargo extends HttpServlet {
                     break;
                 case "eliminarCargo":
                     eliminarCargo(request, response);
-                break;
-                    
+                    break;
+                default:
+                    response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/alertas/404.jsp");
+                
 
             }
         }

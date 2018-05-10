@@ -898,15 +898,14 @@ $("#frmRegistrarUsuario").validate({
         if (cargo) {
             
             swal({
-            title: "Confirmar Datos",
-            text: "¿Estas seguro de que los datos del usuario son correctos?",
-            icon: "info",
-            buttons: true,
-            closeonconfirm: false,
-            buttons: ["No, Cancelar", "Sí"]
-            })
-            .then((willDelete) => {
-                if (willDelete) {
+                title: "Confirmar Datos",
+                text: "¿Estas seguro de que los datos del usuario son correctos?",
+                icon: "info",
+                buttons: true,
+                closeonconfirm: false,
+                buttons: ["Cancelar", "Sí"]
+                }).then((willDelete) => {
+                    if (willDelete) {
                     
                       var TipoDocumento = $("#cmbTipoDocumentoUsuario").val();
                       var Documento = $("#txtDocumentoUsuario").val();
@@ -935,7 +934,7 @@ $("#frmRegistrarUsuario").validate({
                             contentType: false,
                             type: 'POST'
                         });
-                      $.post("/SaleslandColombiaApp/usuario/registrar",{TipoDocumentoUsuario:TipoDocumento,DocumentoUsuario:Documento,NombreUsuario:Nombres,ApellidoUsuario:Apellidos,EmailUsuario:Email,ContraseniaUsuario:Contrasenia,DireccionUsuario:Direccion,GeneroUsuario:Genero,CelularUsuario:Celular,TelefonoUsuario:Telefono,FechaNacimientoUsuario:FechaNacnimiento,ImagenPerfilUsuario:ImagenPerfil,CargoUsuario:cargo,Horario:Horario},function (responsetext) {                                
+                        $.post("/SaleslandColombiaApp/usuario/registrar",{TipoDocumentoUsuario:TipoDocumento,DocumentoUsuario:Documento,NombreUsuario:Nombres,ApellidoUsuario:Apellidos,EmailUsuario:Email,ContraseniaUsuario:Contrasenia,DireccionUsuario:Direccion,GeneroUsuario:Genero,CelularUsuario:Celular,TelefonoUsuario:Telefono,FechaNacimientoUsuario:FechaNacnimiento,ImagenPerfilUsuario:ImagenPerfil,CargoUsuario:cargo,Horario:Horario},function (responsetext) {                                
                             if(responsetext == "200"){
 
                                 swal("Cambios Guardados", "El usuario ha sido registrado exitosamente", "success").then((willDelete) => {
@@ -951,7 +950,7 @@ $("#frmRegistrarUsuario").validate({
                             }else{                    
                                 swal("Ocurrio un error", "Lo sentimos, tus datos no fueron registrados por favor intentalo nuevamente.", "error");                                        
                             }                        
-                    });          
+                        });          
                 }
             });
         }else{
@@ -1820,7 +1819,7 @@ $('#frmEditarArea').validate({
     }
 });
 ////////////////////////////////////////// FUNCIONES PARA CARGOS ////////////////////////////////////////////
-///////////////////////////////METODO REGISTRAR CARGOS ///////////////////////////////////////////
+///////////////////////////////FUNCION REGISTRAR CARGOS ///////////////////////////////////////////
 $('#frmRegistrarCargos').validate({
     rules: {
         NombreCargo: {
@@ -2722,3 +2721,121 @@ function eliminarCargo(idCargo){
         }    
     });                        
 }
+//_________________________________________________________  PERMISOS _______________________________________________________________//
+$("#file").change(function(){
+    archivoPermiso(this);
+});
+
+var fileTypes = ["jpg","jpeg","png","pdf"];
+function archivoPermiso(imagen){
+    if (imagen.files && imagen.files[0]) {
+        var extension = imagen.files[0].name.split('.').pop().toLowerCase(),  //file extension from input file
+        isSuccess = fileTypes.indexOf(extension) > -1;  //is extension in acceptable types
+
+        if (isSuccess) { 
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                //$("#fileImagenUsuarioNombre").val(imagen.files[0].name);
+                //$("#txtFoto").val(imagen.files[0].name);
+            }
+            reader.readAsDataURL(imagen.files[0]);
+        }
+        else{
+            $("#file").val("");
+            swal("Formato incorrecto","El formato del archivo seleccionado no es correcto, solo se admiten formatos jpg, jpeg, png y pdf.","warning");
+        }
+    }
+}
+///////////////////////////////         FUNCION PARA SILICITAR LOS PERMISOS        ///////////////////////////////////////////
+$('#frmSolicitarPermiso').validate({
+    rules: {
+        MotivoPermiso: {
+            required: true,
+            minlength: 5
+        },
+        DescripcionPermiso: {
+            required: true,
+            minlength: 15,
+            maxlength: 80
+        },
+        InicioPermiso: {
+            required: true
+        },
+        FinPermiso: {
+            required: true
+        },
+        ArchivoPermiso: {
+            required: false
+        }
+    }, messages: {
+
+        MotivoPermiso: {
+            required: "Este campo es requerido",
+            minlength: "Ingresa 5 caracteres como minimo"
+        },
+        DescripcionPermiso: {
+            required: "Este campo es requerido",
+            minlength: "Ingresa 15 caracteres como minimo",
+            maxlength: "Ingresa 80 caracteres como maximo"
+        },
+        InicioPermiso: {
+            required: "Este campo es requerido",
+            minlength: "El salario minimo es de 781,242 "
+        },
+        FinPermiso: {
+            required: "Este campo es requerido"
+        },
+        ArchivoPermiso: {
+            required: "Este campo es requerido"
+        }
+
+    }, errorElement: 'div',
+    errorPlacement: function (error, element) {
+        var placement = $(element).data('error');
+        if (placement) {
+            $(placement).append(error);
+        } else {
+            error.insertAfter(element);
+        }
+    }, submitHandler: function () {
+        
+        var motivo = $("#txtMotivoPermiso").val();
+        var descripcion = $("#txtDescripcionPermiso").val();
+        var inicio = $("#datetimepicker").val();
+        var fin = $("#tdFinPermiso").val();
+        var archivo = $("#file").val();
+        
+        $.post("/SaleslandColombiaApp/permiso/registrarPermiso",{Motivo:motivo, Descripcion:descripcion, Inicio:inicio, Fin:fin, Archivo:archivo},function (responseText) {
+            
+            alert(responseText);
+            
+            if (responseText == "500") {
+                alert("error");
+            }else{
+                
+                alert("OK REGISTRO");
+                
+            }
+            
+        });
+    
+    }
+});
+
+(function() {
+  
+  'use strict';
+
+  $('.input-file').each(function() {
+    var $input = $(this),
+        $label = $input.next('.js-labelFile'),
+        labelVal = $label.html();
+    
+   $input.on('change', function(element) {
+      var fileName = '';
+      if (element.target.value) fileName = element.target.value.split('\\').pop();
+      fileName ? $label.addClass('has-file').find('.js-fileName').html(fileName) : $label.removeClass('has-file').html(labelVal);
+   });
+  });
+
+})();

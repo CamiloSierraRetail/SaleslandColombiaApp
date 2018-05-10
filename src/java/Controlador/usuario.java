@@ -66,6 +66,8 @@ public class usuario extends HttpServlet {
                 case "verusuariostabla":
                     listarUsuariosTablas(request, response);
                     break;
+                default:
+                    response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/alertas/404.jsp");
             }
             
         }

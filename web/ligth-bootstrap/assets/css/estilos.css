@@ -425,3 +425,26 @@ fieldset[disabled] .btn-blue_corp.active {
 .btn-warning .caret {
     border-top-color: #006A85;
 }
+
+
+/*                                         */
+/* input file style */
+.input-file {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+.input-file + .js-labelFile {     
+  padding: 10px 10px;
+  cursor: pointer;
+}
+.input-file + .js-labelFile .icon:before {
+  content: "\f093";
+}
+.input-file + .js-labelFile.has-file .icon:before {
+  content: "\f00c";
+  color: #5aac7b;
+}

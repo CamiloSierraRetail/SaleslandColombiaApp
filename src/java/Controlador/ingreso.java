@@ -68,8 +68,8 @@ public class ingreso extends HttpServlet {
                 case "cargarChartPromedioDias":
                     cargarChartPromedioDias(request, response);
                     break;
-                default:
-                    //response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/login.jsp");
+                default:                    
+                    response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/alertas/404.jsp");
             }
             
         }

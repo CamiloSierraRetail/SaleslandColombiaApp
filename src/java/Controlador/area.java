@@ -51,6 +51,8 @@ public class area extends HttpServlet {
                 case "cargarareasdependientes":
                     cargarAreasDependientes(request, response);
                     break;
+                default:
+                    response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/alertas/404.jsp");
              
             }
             
