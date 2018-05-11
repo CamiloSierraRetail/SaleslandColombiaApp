@@ -44,6 +44,10 @@
         <servlet-name>SubirImagenPerfil</servlet-name>
         <servlet-class>Controlador.SubirImagenPerfil</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SubirArchivoPermiso</servlet-name>
+        <servlet-class>Controlador.SubirArchivoPermiso</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>administrador</servlet-name>
         <url-pattern>/administrador/*</url-pattern>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>SubirImagenPerfil</servlet-name>
         <url-pattern>/SubirImagenPerfil</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubirArchivoPermiso</servlet-name>
+        <url-pattern>/SubirArchivoPermiso</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>60</session-timeout>

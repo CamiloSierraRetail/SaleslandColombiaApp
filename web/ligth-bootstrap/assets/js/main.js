@@ -375,7 +375,7 @@ function cargarSectores(){
     
     $.post("/SaleslandColombiaApp/sector/cargarcombosector",function (responseText){
         if (responseText == 500) {
-            swal("Ocurrio un error", "Lo ocuttió un error al intentar cargar los sectores.", "error");
+            swal("Ocurrio un error", "Lo ocurrió un error al intentar cargar los sectores.", "error");
         }else{
             $("#cmbEditarSector").html("");
             $("#cmbSector").html("");
@@ -2726,7 +2726,7 @@ $("#file").change(function(){
     archivoPermiso(this);
 });
 
-var fileTypes = ["jpg","jpeg","png","pdf"];
+var fileTypes = ["pdf"];
 function archivoPermiso(imagen){
     if (imagen.files && imagen.files[0]) {
         var extension = imagen.files[0].name.split('.').pop().toLowerCase(),  //file extension from input file
@@ -2742,7 +2742,7 @@ function archivoPermiso(imagen){
         }
         else{
             $("#file").val("");
-            swal("Formato incorrecto","El formato del archivo seleccionado no es correcto, solo se admiten formatos jpg, jpeg, png y pdf.","warning");
+            swal("Formato incorrecto","El formato del archivo seleccionado no es correcto. Solo se admite formato pdf.","warning");
         }
     }
 }
@@ -2797,30 +2797,111 @@ $('#frmSolicitarPermiso').validate({
         } else {
             error.insertAfter(element);
         }
-    }, submitHandler: function () {
-        
-        var motivo = $("#txtMotivoPermiso").val();
-        var descripcion = $("#txtDescripcionPermiso").val();
-        var inicio = $("#datetimepicker").val();
-        var fin = $("#tdFinPermiso").val();
-        var archivo = $("#file").val();
-        
-        $.post("/SaleslandColombiaApp/permiso/registrarPermiso",{Motivo:motivo, Descripcion:descripcion, Inicio:inicio, Fin:fin, Archivo:archivo},function (responseText) {
-            
-            alert(responseText);
-            
-            if (responseText == "500") {
-                alert("error");
-            }else{
+    }, submitHandler: function () {                       
+                        
+        swal({
+            title: "Solicitar permiso",
+            text: "¿Está seguro que desea solicitar el permiso?",
+            icon: "info",
+            buttons: true,
+            closeonconfirm: false,
+            buttons: ["Cancelar", "Sí"]
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+
+                var motivo = $("#txtMotivoPermiso").val();
+                var descripcion = $("#txtDescripcionPermiso").val();
+                var inicio = $("#datetimepicker").val();
+                var fin = $("#tdFinPermiso").val();                
+                var filename = $('input[type=file]').val().split('\\').pop();
                 
-                alert("OK REGISTRO");
-                
-            }
-            
-        });
-    
+                ////////SUBIR IMAGEN DE ARCHIVO ADJUNTO/////////
+                var data = new FormData();
+                $.each($('#file')[0].files, function(i, file) {
+                    data.append('file-'+i, file);
+                });
+                $.ajax({
+                    url: '/SaleslandColombiaApp/SubirArchivoPermiso',
+                    data: data,
+                    dataType: 'text',
+                    processData: false,
+                    contentType: false,
+                    type: 'POST'
+                });
+
+                $.post("/SaleslandColombiaApp/permiso/registrarPermiso",{Motivo:motivo, Descripcion:descripcion, Inicio:inicio, Fin:fin, Archivo:filename},function (responseText) {
+
+                    alert(responseText);
+
+                    if (responseText == "500") {
+                        swal("Ocurrio un error", "Lo sentimos, no se pudo realizar la solicitud del permiso, por favor intentalo más tarde.", "error");
+                    }else if(responseText == "204"){
+
+                        swal("Ocurrio un error", "La información de los roles está truncada.", "error");
+
+                    }else if (responseText == "200") {
+                    
+                        swal("Permiso solicitado", "El permiso ha sido solicitado, serás notificado cuando eas respondido.", "success").then((willDelete) => {
+                            if (willDelete) {
+
+                                $("#modalRegistrarPermiso").modal('toggle');
+
+                            }
+                        });                                                
+                    }
+
+                });                    
+            }    
+        });            
     }
 });
+////////////////////////////                  FUNCION PARA LISTAR LOS PERMISOS              /////////////////////////////////////////////////
+function listarPermisos() {    
+    $("#tablaModificada").html("");
+    $("#tablaModificada").append("<div class='toolbar' id='toolbar'>"
+                                    +"<button class='btn btn-outline btn-round' data-toggle='modal' data-target='#modalRegistrarPermiso'>"                                                
+                                        +"Nuevo"
+                                            +"<span class='btn-label'>"
+                                                +"<i class='fa fa-plus'></i>"
+                                            +"</span>"
+                                    +"</button>"
+                                    +"<!--        Here you can write extra buttons/actions for the toolbar              -->"
+                                +"</div>"
+                                +"<table id='bootstrap-table' data-toolbar='#toolbar' class='table'>"
+                                    +"<thead>"
+                                        +"<tr>"
+                                            +"<th class='text-center'>#</th>"
+                                            +"<th class='text-center'>Motivo</th>"
+                                            +"<th class='text-center'>Descripción</th>"
+                                            +"<th class='text-center'>Fecha de inicio</th>"
+                                            +"<th class='text-center'>Fecha de fin</th>"
+                                            +"<th class='text-center'>Jefe</th>"
+                                            +"<th class='text-center'>Estado</th>"
+                                            +"<th class='text-center'>Acciones</th>"
+                                        +"</tr>"
+                                    +"</thead>"
+                                    +"<tbody id='listadoPermisos'>"
+
+                                    +"</tbody>"
+                                +"</table>");
+                        
+    $.post("/SaleslandColombiaApp/permiso/listarPermisos", function (responseText) {       
+
+        if (responseText == "500") {
+
+            swal("Ocurrio un error", "Ocurrió un erro mientra intentebamos listar los permisos, por favlo intentelo más tarde.", "error");
+
+        } else {
+            $("#listadoPermisos").append(responseText);
+        }
+        // orden de datos tamaño,showRefresh, search, showToggle, showColumns, alineacion, texto
+        //tamanio,showRefresh, search, showToggle, showColumns, alineacion, texto        
+        botstrapPaginacionTabla(5,false, true, true, true, 'right');
+       
+    });
+
+}
 
 (function() {
   

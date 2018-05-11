@@ -40,7 +40,7 @@
 <script src="/SaleslandColombiaApp/ligth-bootstrap/assets/js/demo.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        // Init Wizard
+         Init Wizard
         // En caso de necesitar alguno de los componentes que necesiten de inicializacion hacer la inicializacion en cada una de las paginas
         //demo.initLBDWizard();
         //demo.initCharts();

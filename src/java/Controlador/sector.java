@@ -47,10 +47,12 @@ public class sector extends HttpServlet {
                 case "editarsector":
                     editarsector(request, response);                    
                     break;
-                case "cargarcombosector":
+                case "cargarcombosector":                    
                     cargarcombosector(request, response);
+                    break;
                 default:
                     response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/alertas/404.jsp");
+                    break;
             }
             
         }
@@ -239,7 +241,6 @@ public class sector extends HttpServlet {
         }
         
     }
-    
     protected void cargarcombosector(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     
@@ -250,12 +251,10 @@ public class sector extends HttpServlet {
             List<Sector> listaSector = query.list();
             
             Gson gson = new Gson();
-            String json = gson.toJson(listaSector);
+            String json = gson.toJson(listaSector);            
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(json);
-            
-            sesion.close();
-            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);            
+            sesion.close();            
             objSessionFactory.close();
         }catch(Exception e){
         

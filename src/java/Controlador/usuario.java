@@ -68,6 +68,7 @@ public class usuario extends HttpServlet {
                     break;
                 default:
                     response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/alertas/404.jsp");
+                    break;
             }
             
         }

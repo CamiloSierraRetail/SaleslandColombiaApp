@@ -49,19 +49,20 @@
                                                     <th class="text-center">#</th>
                                                     <th class="text-center">Motivo</th>
                                                     <th class="text-center">Descripción</th>
-                                                    <th class="text-right">Fecha de inicio</th>
-                                                    <th class="text-right">Fecha de fin</th>
+                                                    <th class="text-center">Desde</th>
+                                                    <th class="text-center">Hasta</th>
+                                                    <th class="text-center">Jefe</th>
                                                     <th class="text-center">Estado</th>
                                                     <th class="text-center">Acciones</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="listadoSectores">
+                                            <tbody id="listadoPermisos">
 
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>                                
-                            </div>
+                            </div>                            
                         </div>                                                                                                            
                     </div>
                 </div>
@@ -74,7 +75,7 @@
                                     <i class="nc-icon nc-satisfied"></i>
                                 </div>
                             </div>
-                            <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmSolicitarPermiso" name="frmSolicitarPermiso">
+                            <form class="form-horizontal" novalidate="novalidate" id="frmSolicitarPermiso" name="frmSolicitarPermiso">
                                 <div class="modal-body text-center">
                                     <h5 class="category">INGRESA LA INFORMACIÓN DEL PERMISO</h5>
                                     <div class="col-md-12 mr-auto ml-auto">
@@ -121,7 +122,7 @@
                                                     <input type="file" name="file" id="file" class="input-file">
                                                     <label for="file" class="btn btn-tertiary js-labelFile" style="margin-top: 23px; margin-left: -50px; width: 450px;">
                                                       <i class="icon fa fa-check"></i>
-                                                      <span class="js-fileName">Selecciona el archivo</span>
+                                                      <span class="js-fileName">Selecciona el archivo (PDF)</span>
                                                     </label>                                                                                                   
                                                 </div>
                                             </div>
@@ -145,11 +146,12 @@
         <%@include file="../includes/jsInclude.jsp" %>        
         <script>
             
-            $(document).ready(function(){                                    
+            $(document).ready(function(){
                 $("#opcionesUsuarioNav").addClass("show");
                 $("#misPermisos").addClass('active');                                
-                $("#tituloPagina").text("Mis permisos");                                
-
+                $("#tituloPagina").text("Mis permisos");                                                                 
+                
+                listarPermisos();
                 var fullDate = new Date();
                 var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
                 var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
