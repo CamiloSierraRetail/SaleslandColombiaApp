@@ -707,10 +707,11 @@ function cargarCargosSectores(){
 ////////// FUNCION PARA VALIDAR EL FORMATO DE LA IMAGEN ////////////////////////////
 $("#fileImagenUsuario").change(function(){
     validarImagen(this);
+    
 });
 
 var fileTypes = ["jpg","jpeg","png"];
-function validarImagen(imagen){
+function validarImagen(imagen){    
     if (imagen.files && imagen.files[0]) {
         var extension = imagen.files[0].name.split('.').pop().toLowerCase(),  //file extension from input file
         isSuccess = fileTypes.indexOf(extension) > -1;  //is extension in acceptable types
@@ -937,7 +938,7 @@ $("#frmRegistrarUsuario").validate({
                         $.post("/SaleslandColombiaApp/usuario/registrar",{TipoDocumentoUsuario:TipoDocumento,DocumentoUsuario:Documento,NombreUsuario:Nombres,ApellidoUsuario:Apellidos,EmailUsuario:Email,ContraseniaUsuario:Contrasenia,DireccionUsuario:Direccion,GeneroUsuario:Genero,CelularUsuario:Celular,TelefonoUsuario:Telefono,FechaNacimientoUsuario:FechaNacnimiento,ImagenPerfilUsuario:ImagenPerfil,CargoUsuario:cargo,Horario:Horario},function (responsetext) {                                
                             if(responsetext == "200"){
 
-                                swal("Cambios Guardados", "El usuario ha sido registrado exitosamente", "success").then((willDelete) => {
+                                swal("Usuario Registrado", "El usuario ha sido registrado exitosamente.", "success").then((willDelete) => {
                                   if (willDelete) {                          
                                     window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/listadousuarios.jsp";
                                   }
@@ -945,10 +946,10 @@ $("#frmRegistrarUsuario").validate({
 
                             }else if(responsetext == "226"){
 
-                                swal("Usuario no registrado", "Es probable que datos personales del usuario correspondan a los datos personales de un usuario registrado anteriormente", "warning");
+                                swal("Usuario no registrado", "Los datos del usuario coinciden con la informacion de un usuario previamente registrado.", "warning");
 
                             }else{                    
-                                swal("Ocurrio un error", "Lo sentimos, tus datos no fueron registrados por favor intentalo nuevamente.", "error");                                        
+                                swal("Ocurrio un error", "Ocurrió un error el realizar el registro, por favor intentalo más tarde.", "error");                                        
                             }                        
                         });          
                 }
@@ -2162,6 +2163,10 @@ $("#cmbTipo").change(function (){
             
             swal("Ocurrio un error", "Lo sentimos, los datos de los empleados no se lograron cargar, por favor intentalo nuevamente", "error");
             
+        }else if(responseText == "204"){
+            
+            swal("No tienes empleados", "Por el momento no tienes trabajadores asignados.", "warning");
+            
         }else{
             
             var dt = JSON.parse(responseText); 
@@ -2726,11 +2731,11 @@ $("#file").change(function(){
     archivoPermiso(this);
 });
 
-var fileTypes = ["pdf"];
-function archivoPermiso(imagen){
+var formato = ["pdf"];
+function archivoPermiso(imagen){    
     if (imagen.files && imagen.files[0]) {
         var extension = imagen.files[0].name.split('.').pop().toLowerCase(),  //file extension from input file
-        isSuccess = fileTypes.indexOf(extension) > -1;  //is extension in acceptable types
+        isSuccess = formato.indexOf(extension) > -1;  //is extension in acceptable types
 
         if (isSuccess) { 
             var reader = new FileReader();
@@ -2846,6 +2851,7 @@ $('#frmSolicitarPermiso').validate({
                             if (willDelete) {
 
                                 $("#modalRegistrarPermiso").modal('toggle');
+                                listarPermisos();
 
                             }
                         });                                                
@@ -2920,3 +2926,46 @@ function listarPermisos() {
   });
 
 })();
+
+
+
+///////////////////////      FUNCION PARA VER LOS PERMISOS SOLICITADOS                ////////////////////////////////
+function listarPermisosSolicitados() {    
+    $("#tablaModificada").html("");
+    $("#tablaModificada").append("<div class='toolbar' id='toolbar'>"                                   
+                                    +"<!--        Here you can write extra buttons/actions for the toolbar              -->"
+                                +"</div>"
+                                +"<table id='bootstrap-table' data-toolbar='#toolbar' class='table'>"
+                                    +"<thead>"
+                                        +"<tr>"
+                                            +"<th class='text-center'>#</th>"
+                                            +"<th class='text-center'>Motivo</th>"
+                                            +"<th class='text-center'>Descripción</th>"
+                                            +"<th class='text-center'>Fecha de inicio</th>"
+                                            +"<th class='text-center'>Fecha de fin</th>"
+                                            +"<th class='text-center'>Jefe</th>"
+                                            +"<th class='text-center'>Estado</th>"
+                                            +"<th class='text-center'>Acciones</th>"
+                                        +"</tr>"
+                                    +"</thead>"
+                                    +"<tbody id='listadoPermisos'>"
+
+                                    +"</tbody>"
+                                +"</table>");
+                        
+    $.post("/SaleslandColombiaApp/permiso/listarPermisosSolicitados", function (responseText) {       
+
+        if (responseText == "500") {
+
+            swal("Ocurrio un error", "Ocurrió un erro mientra intentebamos listar los permisos, por favlo intentelo más tarde.", "error");
+
+        } else {
+            $("#listadoPermisos").append(responseText);
+        }
+        // orden de datos tamaño,showRefresh, search, showToggle, showColumns, alineacion, texto
+        //tamanio,showRefresh, search, showToggle, showColumns, alineacion, texto        
+        botstrapPaginacionTabla(5,false, true, true, true, 'right');
+       
+    });
+
+}

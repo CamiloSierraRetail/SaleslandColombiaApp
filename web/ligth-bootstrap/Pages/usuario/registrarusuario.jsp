@@ -1,4 +1,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    try{      
+        if(session.getAttribute("UsuarioIngresado").equals("") || session.getAttribute("UsuarioIngresado").equals(null)){
+            response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/sesionBloqueada.jsp");
+        }
+        else{
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -20,7 +27,7 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-11 ml-auto mr-auto">
-                                    <form id="frmRegistrarUsuario" method="" action="" novalidate="novalidate">
+                                    <form id="frmRegistrarUsuario" novalidate="novalidate">
                                         <div class="card card-wizard">
                                             <div class="card-header ">
                                                 <h3 class="card-title text-center">Registro de usuario</h3>
@@ -45,7 +52,7 @@
                                                         <div class="row justify-content-center">
                                                             <div class="col-md-5 ">
                                                                 <div class="form-group">
-                                                                    <label class="control-label">Tipo de Documento <star>*</star></label>                                    
+                                                                    <label class="control-label"><strong>Tipo de Documento *</strong></label>                                    
                                                                     <select id="cmbTipoDocumentoUsuario" name="TipoDocumentoUsuario" class="selectpicker form-control" data-title="Seleccionar Tipo De Documento" data-menu-style="dropdown-blue">
                                                                         <option value="T.I">Tarjeta de indentidad (T.I)</option>
                                                                         <option value="C.C">Cedula de ciudadanía (C.C)</option> 
@@ -57,7 +64,7 @@
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <div class="form-group">
-                                                                    <label class="control-label">Documento <star>*</star></label>
+                                                                    <label class="control-label"><strong>Documento *</strong></label>
                                                                     <input class="form-control" type="text" id="txtDocumentoUsuario" name="DocumentoUsuario" placeholder="ej: 1057621548">
                                                                 </div>
                                                             </div>
@@ -65,13 +72,13 @@
                                                         <div class="row justify-content-center">
                                                             <div class="col-md-5 ">
                                                                 <div class="form-group">
-                                                                    <label class="control-label">Nombres <star>*</star></label>
+                                                                    <label class="control-label"><strong>Nombres *</strong></label>
                                                                     <input class="form-control" type="text" id="txtNombreUsuario" name="NombreUsuario" placeholder="ej: Brandon Felipe">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <div class="form-group">
-                                                                    <label class="control-label">Apellidos <star>*</star></label>
+                                                                    <label class="control-label"><strong>Apellidos *</strong></label>
                                                                     <input class="form-control" type="text" id="txtApellidoUsuario" name="ApellidoUsuario" placeholder="ej: Perez Sandoval">
                                                                 </div>
                                                             </div>
@@ -79,23 +86,21 @@
                                                         <div class="row justify-content-center">
                                                             <div class="col-md-10">
                                                                 <div class="form-group">
-                                                                    <label class="control-label">Email
-                                                                        <star>*</star>
-                                                                    </label>
-                                                                    <input class="form-control" type="text" id="txtEmailUsuario" name="EmailUsuario" email="true" placeholder="ej: usuario@salesland.net">
+                                                                    <label class="control-label"><strong>Email *</strong></label>
+                                                                    <input class="form-control" type="text" id="txtEmailUsuario" name="EmailUsuario" placeholder="ej: usuario@salesland.net">
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="row justify-content-center">
                                                             <div class="col-md-5 ">
                                                                 <div class="form-group">
-                                                                    <label class="control-label">Contraseña <star>*</star></label>
+                                                                    <label class="control-label"><strong>Contraseña *</strong></label>
                                                                     <input class="form-control" type="password" id="txtContraseniaUsuario" name="ContraseniaUsuario" placeholder="ej: ****************">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <div class="form-group">
-                                                                    <label class="control-label">Confirmar Contraseña<star>*</star></label>
+                                                                    <label class="control-label"><strong>Confirmar Contraseña *</strong></label>
                                                                     <input class="form-control" type="password" id="txtConfirmarContraseniaUsuario" name="ConfirmarContraseniaUsuario" placeholder="ej: ****************">
                                                                 </div>
                                                             </div>
@@ -106,13 +111,13 @@
                                                         <div class="row justify-content-center">
                                                             <div class="col-md-5 ">
                                                                 <div class="form-group">
-                                                                    <label class="control-label">Direccion <star>*</star></label>
+                                                                    <label class="control-label"><strong>Direccion *</strong></label>
                                                                     <input class="form-control" type="text" id="txtDireccionUsuario" name="DireccionUsuario" placeholder="ej: carrera 16A # 85-64 Bogotá">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <div class="form-group">
-                                                                    <label class="control-label">Genero<star>*</star></label>
+                                                                    <label class="control-label"><strong>Genero *</strong></label>
                                                                     <select id="cmbGeneroUsuario" name="GeneroUsuario" class="selectpicker"  data-title="Selecciona el genero" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
                                                                         <option value="Masculino">Masculino</option>
                                                                         <option value="Femenino">Femenino</option>
@@ -124,13 +129,13 @@
                                                         <div class="row justify-content-center">
                                                             <div class="col-md-5 ">
                                                                 <div class="form-group">
-                                                                    <label class="control-label">Celular <star>*</star></label>
+                                                                    <label class="control-label"><strong>Celular *</strong></label>
                                                                     <input class="form-control" type="tel" id="txtCelularUsuario" name="CelularUsuario" placeholder="ej: 315 8921655">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <div class="form-group">
-                                                                    <label class="control-label">Telefono <star>*</star></label>
+                                                                    <label class="control-label"><strong>Telefono *</strong></label>
                                                                     <input class="form-control" type="tel" id="txtTelefonoUSuario" name="TelefonoUsuario" placeholder="ej: 7435596">
                                                                 </div>
                                                             </div>
@@ -138,7 +143,7 @@
                                                         <div class="row justify-content-center">
                                                             <div class="col-md-5 ">
                                                                 <div class="form-group">
-                                                                    <label class="control-label">Fecha de nacimiento <star>*</star></label>
+                                                                    <label class="control-label"><strong>Fecha de nacimiento *</strong></label>
                                                                     <div class="form-group">
                                                                         <input id="datetimepicker" type="text" class="form-control datepicker" placeholder="Selecciona la fecha de nacimiento" />
                                                                     </div>
@@ -146,29 +151,20 @@
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <div class="form-group">
-                                                                    <!--<div class="photo">
-                                                                        <img src="../../assets/img/default-avatar.png">
-                                                                        <input type="file" id="wizard-picture">
-                                                                    </div>-->
-                                                                    
-                                                                    
-                                                                   
-                                                                    
-                                                                    <!--<div class="user">
-                                                                        <div class="photo">
-                                                                            <img src="../../assets/img/default-avatar.png" style ="border-radius: 50%; height: 80px;width: 80px;">
-                                                                            <input type="file" id="wizard-picture">
-                                                                        </div>
-                                                                    </div>-->
-                                                                    
-                                                                    <label class="control-label">Imagen de perfil <star>*</star></label>
-                                                                    <input class="form-control" type="file" id="fileImagenUsuario" name="ImagenUsuario">
-                                                                    <input type="hidden" id="fileImagenUsuarioNombre">
+                                                                    <label class="control-label"><strong>Imagen de perfil</strong></label>
+                                                                    <div class="form-group">
+
+                                                                        <input type="file" name="file" id="fileImagenUsuario" class="input-file form-control">
+                                                                        <label for="fileImagenUsuario" class="btn btn-outline btn-wd js-labelFile form-control">
+                                                                            <i class="icon fa fa-check" ></i>
+                                                                            <span class="js-fileName" id="fileImagenUsuarioNombre">Selecciona el archivo (PNG, JPG y JPEG)</span>
+                                                                        </label>                                                                              
+                                                                    </div>                                                                                                                                                   
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-10">
                                                                 <div class="form-group">
-                                                                    <label class="control-label">Horario <star>*</star></label>
+                                                                    <label class="control-label"><strong>Horario *</strong></label>
                                                                     <select id="cmbHorarioUsuario" name="HorarioUsuario" class="selectpicker"  data-title="Selecciona el horario" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
                                                                         <option value="A">De 8:00 A.M a 6:00 P.M</option>
                                                                         <option value="B">De 7:00 A.M a 5:00 P.M</option>                                                                        
@@ -224,16 +220,27 @@
                 <%@include  file="../includes/footer.jsp" %>
             </div>
         </div>
-    </body>
-    <%@include file="../includes/jsInclude.jsp" %>  
-    <script>
-        $(document).ready(function (){ 
-            $("#empleadoItemNav").addClass("show");
-            $("#registrarEmpleadosNav").addClass('active');
-            $("#tituloPagina").text("Empleados");
-            cargarCargosSectores();
-            InicializarFormularioRegistro();
-        });
-        
-    </script>         
+            <%@include file="../includes/jsInclude.jsp" %>  
+            <script>                
+                $(document).ready(function (){ 
+                    $("#empleadoItemNav").addClass("show");
+                    $("#registrarEmpleadosNav").addClass('active');
+                    $("#tituloPagina").text("Empleados");
+                    cargarCargosSectores();
+                    InicializarFormularioRegistro();                    
+                                        
+                    var fullDate = new Date();
+                    var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
+                    var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
+                    websocket.send("CargarUsuarios-"+<%=objUsuario.getIdUsuario()%>+"-"+currentDate);
+                    
+                });
+            </script>     
+    </body>        
 </html>
+<%        }
+    }  
+    catch(NullPointerException ex){
+        response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/sesionBloqueada.jsp");
+    }
+%>

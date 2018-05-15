@@ -18,7 +18,7 @@
             <div class="collapse navbar-collapse justify-content-end">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a href="#" class="nav-link btnSideUsers" rel="tooltip" data-original-title="Ingreso de Personal" href="#" aria-haspopup="true" aria-expanded="false">
+                        <a href="#" class="nav-link btnSideUsers blue-corp" rel="tooltip" data-original-title="Ingreso de Personal" href="#" aria-haspopup="true" aria-expanded="false">
                             <i class="material-icons">perm_identity</i>
                             <a href="#"class="d-lg-none btnSideUsers">Empleados</a>
                         </a>
@@ -39,7 +39,7 @@
                         </ul>
                     </li>-->
                     <li class="nav-item">
-                        <a class="nav-link cerrarSesion" rel="tooltip" data-original-title="Cerrar Sesión" href="#" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link cerrarSesion blue-corp" rel="tooltip" data-original-title="Cerrar Sesión" href="#" aria-haspopup="true" aria-expanded="false">
                             <span class="d-lg-none">Cerrar Sesión</span>
                             <i class="material-icons">power_settings_new</i>
                         </a>

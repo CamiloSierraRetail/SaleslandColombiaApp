@@ -7,13 +7,13 @@
                         <form class="navbar-form navbar-left navbar-search-form" role="search">
                             <div class="input-group">
                                 <i class="nc-icon nc-zoom-split" style="color: black; font-size: 20px;"></i>
-                                <input type="text" value="" class="form-control" placeholder="Buscar..." style="color: gray;">
+                                <input type="text" value="" class="form-control" placeholder="Búscar..." style="color: gray;">
                             </div>
                             <br>
                         </form>
                     </div>
                     <div class="col-md-2 pull-right">
-                        <a href="#" class="btnHideRigthSideBar pull-right">
+                        <a href="#" class="btnHideRigthSideBar pull-right blue-corp">
                             <i class="nc-icon nc-simple-remove" style="font-size: 20px;"></i>
                         </a>
                     </div>

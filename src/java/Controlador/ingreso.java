@@ -480,8 +480,6 @@ public class ingreso extends HttpServlet {
                             List<Area_Cargo> listaArea_Cargo = queryArea_Cargo.list();
                             for(Area_Cargo area_cargo : listaArea_Cargo){
                             
-                                System.out.println("***************************************   area arae arae    ------>    " + listaArea_Cargo.size() + "          -------------------------   " + area_cargo.getCargo().getNombreCargo() + " /////////////////////    " + canal.getNombreCanal());
-                                
                                 listaUsuario.addAll(buscarUsuario(area_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario()));
                             
                             }
@@ -512,248 +510,393 @@ public class ingreso extends HttpServlet {
                 
                 JSONArray usuarioJson = new JSONArray();
                 
-                Query queryPromedioIngresoUsuario_A = sesion.createQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM Ingreso WHERE (Horario = 'A' AND Tipo = 'Ingreso' AND ("+UsuariosQuery+"))");
-                List<Object> listaIngreso_A = queryPromedioIngresoUsuario_A.list();                
-                for (Object datos : listaIngreso_A) {
-                   
-                    if (datos != null) {
-                        promedioEntradaA = datos.toString();
-                    }
-                    
-                }
+                System.out.println("LA QUERY DEL ERROR ES:                        " + "SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM Ingreso WHERE (Horario = 'A' AND Tipo = 'Ingreso' AND ("+UsuariosQuery+"))");
                 
-                Query queryPromedioIngresoUsuario_B = sesion.createQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM Ingreso WHERE (Horario = 'B' AND Tipo = 'Ingreso' AND ("+UsuariosQuery+"))");
-                List<Object> listaIngreso_B = queryPromedioIngresoUsuario_B.list();
-                for (Object datos : listaIngreso_B) {
+                if (UsuariosQuery != "") {
+                    
+                    Query queryPromedioIngresoUsuario_A = sesion.createQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM Ingreso WHERE (Horario = 'A' AND Tipo = 'Ingreso' AND ("+UsuariosQuery+"))");
+                    List<Object> listaIngreso_A = queryPromedioIngresoUsuario_A.list();                
+                    for (Object datos : listaIngreso_A) {
 
-                    if (datos != null) {
-                        
-                        promedioEntradaB = datos.toString();
-                        
-                    }
-                    
-                }
-                
-                Query queryPromedioSalidaUsuario_A = sesion.createSQLQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM ingreso WHERE (Horario = 'A' AND Tipo = 'Salida' AND ("+UsuariosQuery+"))");
-                List<Object> listaSalida_A = queryPromedioSalidaUsuario_A.list();
-                for (Object datos : listaSalida_A) {
+                        if (datos != null) {
+                            promedioEntradaA = datos.toString();
+                        }
 
-                    if (datos != null) {
-                        
-                        promedioSalidaA = datos.toString();
-                        
                     }
-                    
-                    
-                }
-                
-                Query queryPromedioSalidaUsuario_B = sesion.createSQLQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM ingreso WHERE (Horario = 'B' AND Tipo = 'Salida' AND ("+UsuariosQuery+"))");
-                List<Object> listaSalida_B = queryPromedioSalidaUsuario_B.list();
-                for (Object datos : listaSalida_B) {
 
-                    if (datos != null) {
-                        
-                        promedioSalidaB = datos.toString();
-                        
-                    }
-                    
-                }
-                String horas_A = "0", horas_B = "0";
-                ////////////////////_____________________________QUERY'S XD PARA SACAR LAS HORAS TRABAJADAS______________ //////////////////////////
-                Query queryHorasTrabajadas_A = sesion.createSQLQuery("SELECT TIMESTAMPDIFF(HOUR, '2003-05-01 "+promedioEntradaA+"', '2003-05-01 "+promedioSalidaA+"')");
-                List<Object> Horas_A = queryHorasTrabajadas_A.list();
-                for (Object datos : Horas_A) {
+                    Query queryPromedioIngresoUsuario_B = sesion.createQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM Ingreso WHERE (Horario = 'B' AND Tipo = 'Ingreso' AND ("+UsuariosQuery+"))");
+                    List<Object> listaIngreso_B = queryPromedioIngresoUsuario_B.list();
+                    for (Object datos : listaIngreso_B) {
 
-                    if (datos != null) {
-                        
-                        horas_A = datos.toString();
-                    }
-                    
-                }
-                
-                Query queryHorasTrabajadas_B = sesion.createSQLQuery("SELECT TIMESTAMPDIFF(HOUR, '2003-05-01 "+promedioEntradaB+"', '2003-05-01 "+promedioSalidaB+"')");
-                List<Object> Horas_B = queryHorasTrabajadas_B.list();
-                for (Object datos : Horas_B) {
+                        if (datos != null) {
 
-                    if (datos != null) {
+                            promedioEntradaB = datos.toString();
+
+                        }
+
+                    }
+
+                    Query queryPromedioSalidaUsuario_A = sesion.createSQLQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM ingreso WHERE (Horario = 'A' AND Tipo = 'Salida' AND ("+UsuariosQuery+"))");
+                    List<Object> listaSalida_A = queryPromedioSalidaUsuario_A.list();
+                    for (Object datos : listaSalida_A) {
+
+                        if (datos != null) {
+
+                            promedioSalidaA = datos.toString();
+
+                        }
+
+
+                    }
+
+                    Query queryPromedioSalidaUsuario_B = sesion.createSQLQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM ingreso WHERE (Horario = 'B' AND Tipo = 'Salida' AND ("+UsuariosQuery+"))");
+                    List<Object> listaSalida_B = queryPromedioSalidaUsuario_B.list();
+                    for (Object datos : listaSalida_B) {
+
+                        if (datos != null) {
+
+                            promedioSalidaB = datos.toString();
+
+                        }
+
+                    }
+                    String horas_A = "0", horas_B = "0";
+                    ////////////////////_____________________________QUERY'S XD PARA SACAR LAS HORAS TRABAJADAS______________ //////////////////////////
+                    Query queryHorasTrabajadas_A = sesion.createSQLQuery("SELECT TIMESTAMPDIFF(HOUR, '2003-05-01 "+promedioEntradaA+"', '2003-05-01 "+promedioSalidaA+"')");
+                    List<Object> Horas_A = queryHorasTrabajadas_A.list();
+                    for (Object datos : Horas_A) {
+
+                        if (datos != null) {
+
+                            horas_A = datos.toString();
+                        }
+
+                    }
+
+                    Query queryHorasTrabajadas_B = sesion.createSQLQuery("SELECT TIMESTAMPDIFF(HOUR, '2003-05-01 "+promedioEntradaB+"', '2003-05-01 "+promedioSalidaB+"')");
+                    List<Object> Horas_B = queryHorasTrabajadas_B.list();
+                    for (Object datos : Horas_B) {
+
+                        if (datos != null) {
+
+                            horas_B = datos.toString();
+
+                        }
+
+                    }
+
+                    usuarioJson.add(promedioEntradaA);
+                    usuarioJson.add(promedioEntradaB);
+                    usuarioJson.add(promedioSalidaA);
+                    usuarioJson.add(promedioSalidaB);
+                    usuarioJson.add(horas_A);
+                    usuarioJson.add(horas_B);
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write(usuarioJson.toJSONString());
+                    
+                }else{
+                
+                    response.getWriter().write("204");
+                
+                }
+                
+                
+                
+                
+                
+            ///////////////////////////// JEFE DE CANAL - COORDINADOR DE CANAL ////////////////////////////////////////////////////////////
+            }else if (objUsuario.getCargo().getTipo().equals("JefeCanal") || objUsuario.getCargo().getTipo().equals("CoordinadorCanal")) {
+                
+                Query queryCanalCargo1 = sesion.createQuery("FROM Canal_Cargo WHERE Cargo = "+objUsuario.getCargo().getIdCargo()+"");
+                List<Canal_Cargo> listaCanal_Cargo1 = queryCanalCargo1.list();
+                for(Canal_Cargo canal_cargo1 : listaCanal_Cargo1){
+                
+                    Query queryCanal_Cargo = sesion.createQuery("FROM Canal_Cargo WHERE Canal = "+canal_cargo1.getCanal().getIdCanal()+"");
+                    List<Canal_Cargo> listaCanal_Cargo = queryCanal_Cargo.list();
+                    
+                    for(Canal_Cargo canal_cargo : listaCanal_Cargo){                        
                         
-                        horas_B = datos.toString();
+                        if (objUsuario.getCargo().getTipo().equals("CoordinadorCanal") && canal_cargo.getCargo().getTipo().equals("JefeCanal")) {
+                            
+                            ///////////////////////////// ELIMINAR ESTE IF, OPTIMIZAR CODE /////////////////////////////
+                            System.out.println("jejefesote xd alv");
+                            
+                        }else{
                         
+                            List<Usuario> listaUsuariosBuscados = buscarUsuario(canal_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario());
+                        
+                            if (listaUsuario == null) {
+
+                                listaUsuario = listaUsuariosBuscados;
+
+                            }else{
+                                listaUsuario.addAll(listaUsuariosBuscados);
+
+                            }
+                            
+                        }
+                        
+                    }
+
+                    Query queryArea = sesion.createQuery("FROM Area WHERE Canal = "+canal_cargo1.getCanal().getIdCanal()+"");
+                    List<Area> listaArea = queryArea.list();
+                    System.out.println("AREA AREA AREa aREA AREA arEAR arEA ARAEARARAERAEARAEARAEAREARAEARAE          " + listaArea.size());
+                    for(Area area : listaArea){
+
+                        Query queryArea_Cargo = sesion.createQuery("FROM Area_Cargo WHERE Area="+area.getIdArea()+"");
+                        List<Area_Cargo> listaArea_Cargo = queryArea_Cargo.list();
+                        for(Area_Cargo area_cargo : listaArea_Cargo){
+
+                            listaUsuario.addAll(buscarUsuario(area_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario()));
+
+                        }
+
                     }
                     
                 }
                 
-                usuarioJson.add(promedioEntradaA);
-                usuarioJson.add(promedioEntradaB);
-                usuarioJson.add(promedioSalidaA);
-                usuarioJson.add(promedioSalidaB);
-                usuarioJson.add(horas_A);
-                usuarioJson.add(horas_B);
-                response.setCharacterEncoding("UTF-8");
-                response.getWriter().write(usuarioJson.toJSONString());
-                
-                
-                
-            /////////////////////////////// JEFE DE CANAL - COORDINADOR DE CANAL ////////////////////////////////////////////////////////////
-//            }else if (objUsuario.getCargo().getTipo().equals("JefeCanal") || objUsuario.getCargo().getTipo().equals("CoordinadorCanal")) {
-//                
-//                Query queryCanalCargo1 = sesion.createQuery("FROM Canal_Cargo WHERE Cargo = "+objUsuario.getCargo().getIdCargo()+"");
-//                List<Canal_Cargo> listaCanal_Cargo1 = queryCanalCargo1.list();
-//                for(Canal_Cargo canal_cargo1 : listaCanal_Cargo1){
-//                
-//                    Query queryCanal_Cargo = sesion.createQuery("FROM Canal_Cargo WHERE Canal = "+canal_cargo1.getCanal().getIdCanal()+"");
-//                    List<Canal_Cargo> listaCanal_Cargo = queryCanal_Cargo.list();
-//                    
-//                    for(Canal_Cargo canal_cargo : listaCanal_Cargo){                        
-//                        
-//                        if (objUsuario.getCargo().getTipo().equals("CoordinadorCanal") && canal_cargo.getCargo().getTipo().equals("JefeCanal")) {
-//                            
-//                            ///////////////////////////// ELIMINAR ESTE IF, OPTIMIZAR CODE /////////////////////////////
-//                            System.out.println("jejefesote xd alv");
-//                            
-//                        }else{
-//                        
-//                            List<Usuario> listaUsuariosBuscados = buscarUsuario(canal_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario());
-//                        
-//                            if (listaUsuario == null) {
-//
-//                                listaUsuario = listaUsuariosBuscados;
-//
-//                            }else{
-//                                listaUsuario.addAll(listaUsuariosBuscados);
-//
-//                            }
-//                            
-//                        }
-//                        
-//                    }
-//
-//                    Query queryArea = sesion.createQuery("FROM Area WHERE Canal = "+canal_cargo1.getCanal().getIdCanal()+"");
-//                    List<Area> listaArea = queryArea.list();
-//                    System.out.println("AREA AREA AREa aREA AREA arEAR arEA ARAEARARAERAEARAEARAEAREARAEARAE          " + listaArea.size());
-//                    for(Area area : listaArea){
-//
-//                        Query queryArea_Cargo = sesion.createQuery("FROM Area_Cargo WHERE Area="+area.getIdArea()+"");
-//                        List<Area_Cargo> listaArea_Cargo = queryArea_Cargo.list();
-//                        for(Area_Cargo area_cargo : listaArea_Cargo){
-//
-//                            listaUsuario.addAll(buscarUsuario(area_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario()));
-//
-//                        }
-//
-//                    }
-//                    
-//                }
-//                
-//                for(Usuario usuario : listaUsuario){
-//            
-//                    if (contador == 0) {
-//                        
-//                        UsuariosQuery = "Usuario = "+usuario.getIdUsuario()+"";
-//                        contador++;
-//                        
-//                    }else{
-//                    
-//                        UsuariosQuery = UsuariosQuery + " OR Usuario = "+usuario.getIdUsuario()+"";
-//                    
-//                    }
-//                    countRows++;
-//                }
-//                
-//                Query queryPromedioIngresoUsuario = sesion.createQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM Ingreso WHERE Tipo='Ingreso' and "+UsuariosQuery+"");
-//                List<Object> listaIngreso = queryPromedioIngresoUsuario.list();
-//                for (Object datos : listaIngreso) {
-//
-//                    promedioEntrada = datos.toString();
-//
-//                }
-//                Query queryPromedioSalidaUsuario = sesion.createSQLQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM ingreso WHERE Tipo='Salida' and "+UsuariosQuery+"");
-//                List<Object> listaSalida = queryPromedioSalidaUsuario.list();
-//                for (Object datos : listaSalida) {
-//
-//                    promedioSalida = datos.toString();
-//                    
-//                }
-//                
-//                JSONArray usuarioJson = new JSONArray();
-//                usuarioJson.add(countRows);
-//                usuarioJson.add(""+promedioEntrada+"");
-//                usuarioJson.add(""+promedioSalida+"");
-//                //usuarioJson.add(""+promedio+"");
-//                
-//                response.getWriter().write(usuarioJson.toJSONString());
-//                
-//                
-//            /////////////////////////////// JEFE DE AREA ////////////////////////////////////////////////////////////
-//            }else if (objUsuario.getCargo().getTipo().equals("JefeArea")) {
-//            
-//                Query queryArea_Cargo1 = sesion.createQuery("FROM Area_Cargo WHERE Cargo="+objUsuario.getCargo().getIdCargo()+"");
-//                List<Area_Cargo> listaArea_Cargo1 = queryArea_Cargo1.list();
-//                for(Area_Cargo area_cargo1 : listaArea_Cargo1){
-//                
-//                    Query queryArea_Cargo = sesion.createQuery("FROM Area_Cargo WHERE Area="+area_cargo1.getArea().getIdArea()+"");
-//                    List<Area_Cargo> listaArea_Cargo = queryArea_Cargo.list();
-//                    for(Area_Cargo area_cargo : listaArea_Cargo){
-//                        
-//                        
-//                        List<Usuario> listaUsuariosBuscados = buscarUsuario(area_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario());
-//                            
-//                        if (listaUsuario == null) {
-//
-//                            listaUsuario = listaUsuariosBuscados;
-//
-//                        }else{
-//                            listaUsuario.addAll(listaUsuariosBuscados);
-//
-//                        }
-//                         
-//                    }
-//                
-//                }
-//                
-//                for(Usuario usuario : listaUsuario){
-//            
-//                    if (contador == 0) {
-//                        
-//                        UsuariosQuery = "Usuario = "+usuario.getIdUsuario()+"";
-//                        contador++;
-//                        
-//                    }else{
-//                    
-//                        UsuariosQuery = UsuariosQuery + " OR Usuario = "+usuario.getIdUsuario()+"";
-//                    
-//                    }
-//                    countRows++;
-//                }
-//                
-//                Query queryPromedioIngresoUsuario = sesion.createQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM Ingreso WHERE Tipo='Ingreso' and "+UsuariosQuery+"");
-//                List<Object> listaIngreso = queryPromedioIngresoUsuario.list();
-//                for (Object datos : listaIngreso) {
-//
-//                    promedioEntrada = datos.toString();
-//
-//                }
-//                Query queryPromedioSalidaUsuario = sesion.createSQLQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM ingreso WHERE Tipo='Salida' and "+UsuariosQuery+"");
-//                List<Object> listaSalida = queryPromedioSalidaUsuario.list();
-//                for (Object datos : listaSalida) {
-//
-//                    promedioSalida = datos.toString();
-//                    
-//                }
-//                
-//                JSONArray usuarioJson = new JSONArray();
-//                usuarioJson.add(countRows);
-//                usuarioJson.add(""+promedioEntrada+"");
-//                usuarioJson.add(""+promedioSalida+"");
-//                //usuarioJson.add(""+promedio+"");
-//                
-//                response.getWriter().write(usuarioJson.toJSONString());
-//                
-//            }
+                for(Usuario usuario : listaUsuario){
             
+                    if (contador == 0) {
+                        
+                        UsuariosQuery = "Usuario = "+usuario.getIdUsuario()+"";
+                        contador++;
+                        
+                    }else{
+                    
+                        UsuariosQuery = UsuariosQuery + " OR Usuario = "+usuario.getIdUsuario()+"";
+                    
+                    }
+                    countRows++;
+                }
+                
+                
+                if (UsuariosQuery != "") {
+                    
+                    JSONArray usuarioJson = new JSONArray();
+                
+                    Query queryPromedioIngresoUsuario_A = sesion.createQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM Ingreso WHERE (Horario = 'A' AND Tipo = 'Ingreso' AND ("+UsuariosQuery+"))");
+                    List<Object> listaIngreso_A = queryPromedioIngresoUsuario_A.list();                
+                    for (Object datos : listaIngreso_A) {
+
+                        if (datos != null) {
+                            promedioEntradaA = datos.toString();
+                        }
+
+                    }
+
+                    Query queryPromedioIngresoUsuario_B = sesion.createQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM Ingreso WHERE (Horario = 'B' AND Tipo = 'Ingreso' AND ("+UsuariosQuery+"))");
+                    List<Object> listaIngreso_B = queryPromedioIngresoUsuario_B.list();
+                    for (Object datos : listaIngreso_B) {
+
+                        if (datos != null) {
+
+                            promedioEntradaB = datos.toString();
+
+                        }
+
+                    }
+
+                    Query queryPromedioSalidaUsuario_A = sesion.createSQLQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM ingreso WHERE (Horario = 'A' AND Tipo = 'Salida' AND ("+UsuariosQuery+"))");
+                    List<Object> listaSalida_A = queryPromedioSalidaUsuario_A.list();
+                    for (Object datos : listaSalida_A) {
+
+                        if (datos != null) {
+
+                            promedioSalidaA = datos.toString();
+
+                        }
+
+
+                    }
+
+                    Query queryPromedioSalidaUsuario_B = sesion.createSQLQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM ingreso WHERE (Horario = 'B' AND Tipo = 'Salida' AND ("+UsuariosQuery+"))");
+                    List<Object> listaSalida_B = queryPromedioSalidaUsuario_B.list();
+                    for (Object datos : listaSalida_B) {
+
+                        if (datos != null) {
+
+                            promedioSalidaB = datos.toString();
+
+                        }
+
+                    }
+                    String horas_A = "0", horas_B = "0";
+                    ////////////////////_____________________________QUERY'S XD PARA SACAR LAS HORAS TRABAJADAS______________ //////////////////////////
+                    Query queryHorasTrabajadas_A = sesion.createSQLQuery("SELECT TIMESTAMPDIFF(HOUR, '2003-05-01 "+promedioEntradaA+"', '2003-05-01 "+promedioSalidaA+"')");
+                    List<Object> Horas_A = queryHorasTrabajadas_A.list();
+                    for (Object datos : Horas_A) {
+
+                        if (datos != null) {
+
+                            horas_A = datos.toString();
+                        }
+
+                    }
+
+                    Query queryHorasTrabajadas_B = sesion.createSQLQuery("SELECT TIMESTAMPDIFF(HOUR, '2003-05-01 "+promedioEntradaB+"', '2003-05-01 "+promedioSalidaB+"')");
+                    List<Object> Horas_B = queryHorasTrabajadas_B.list();
+                    for (Object datos : Horas_B) {
+
+                        if (datos != null) {
+
+                            horas_B = datos.toString();
+
+                        }
+
+                    }
+
+                    usuarioJson.add(promedioEntradaA);
+                    usuarioJson.add(promedioEntradaB);
+                    usuarioJson.add(promedioSalidaA);
+                    usuarioJson.add(promedioSalidaB);
+                    usuarioJson.add(horas_A);
+                    usuarioJson.add(horas_B);
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write(usuarioJson.toJSONString());
+                    
+                }else{
+                    response.getWriter().write("204");
+                }
+                
+                
+                
+                
+                
+            /////////////////////////////// JEFE DE AREA ////////////////////////////////////////////////////////////
+            }else if (objUsuario.getCargo().getTipo().equals("JefeArea")) {
+            
+                Query queryArea_Cargo1 = sesion.createQuery("FROM Area_Cargo WHERE Cargo="+objUsuario.getCargo().getIdCargo()+"");
+                List<Area_Cargo> listaArea_Cargo1 = queryArea_Cargo1.list();
+                for(Area_Cargo area_cargo1 : listaArea_Cargo1){
+                
+                    Query queryArea_Cargo = sesion.createQuery("FROM Area_Cargo WHERE Area="+area_cargo1.getArea().getIdArea()+"");
+                    List<Area_Cargo> listaArea_Cargo = queryArea_Cargo.list();
+                    for(Area_Cargo area_cargo : listaArea_Cargo){
+                        
+                        
+                        List<Usuario> listaUsuariosBuscados = buscarUsuario(area_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario());
+                            
+                        if (listaUsuario == null) {
+
+                            listaUsuario = listaUsuariosBuscados;
+
+                        }else{
+                            listaUsuario.addAll(listaUsuariosBuscados);
+
+                        }
+                         
+                    }
+                
+                }
+                
+                for(Usuario usuario : listaUsuario){
+            
+                    if (contador == 0) {
+                        
+                        UsuariosQuery = "Usuario = "+usuario.getIdUsuario()+"";
+                        contador++;
+                        
+                    }else{
+                    
+                        UsuariosQuery = UsuariosQuery + " OR Usuario = "+usuario.getIdUsuario()+"";
+                    
+                    }
+                    countRows++;
+                }
+                
+                if (UsuariosQuery != "") {
+                    
+                    JSONArray usuarioJson = new JSONArray();
+                
+                    Query queryPromedioIngresoUsuario_A = sesion.createQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM Ingreso WHERE (Horario = 'A' AND Tipo = 'Ingreso' AND ("+UsuariosQuery+"))");
+                    List<Object> listaIngreso_A = queryPromedioIngresoUsuario_A.list();                
+                    for (Object datos : listaIngreso_A) {
+
+                        if (datos != null) {
+                            promedioEntradaA = datos.toString();
+                        }
+
+                    }
+
+                    Query queryPromedioIngresoUsuario_B = sesion.createQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM Ingreso WHERE (Horario = 'B' AND Tipo = 'Ingreso' AND ("+UsuariosQuery+"))");
+                    List<Object> listaIngreso_B = queryPromedioIngresoUsuario_B.list();
+                    for (Object datos : listaIngreso_B) {
+
+                        if (datos != null) {
+
+                            promedioEntradaB = datos.toString();
+
+                        }
+
+                    }
+
+                    Query queryPromedioSalidaUsuario_A = sesion.createSQLQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM ingreso WHERE (Horario = 'A' AND Tipo = 'Salida' AND ("+UsuariosQuery+"))");
+                    List<Object> listaSalida_A = queryPromedioSalidaUsuario_A.list();
+                    for (Object datos : listaSalida_A) {
+
+                        if (datos != null) {
+
+                            promedioSalidaA = datos.toString();
+
+                        }
+
+
+                    }
+
+                    Query queryPromedioSalidaUsuario_B = sesion.createSQLQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM ingreso WHERE (Horario = 'B' AND Tipo = 'Salida' AND ("+UsuariosQuery+"))");
+                    List<Object> listaSalida_B = queryPromedioSalidaUsuario_B.list();
+                    for (Object datos : listaSalida_B) {
+
+                        if (datos != null) {
+
+                            promedioSalidaB = datos.toString();
+
+                        }
+
+                    }
+                    String horas_A = "0", horas_B = "0";
+                    ////////////////////_____________________________QUERY'S XD PARA SACAR LAS HORAS TRABAJADAS______________ //////////////////////////
+                    Query queryHorasTrabajadas_A = sesion.createSQLQuery("SELECT TIMESTAMPDIFF(HOUR, '2003-05-01 "+promedioEntradaA+"', '2003-05-01 "+promedioSalidaA+"')");
+                    List<Object> Horas_A = queryHorasTrabajadas_A.list();
+                    for (Object datos : Horas_A) {
+
+                        if (datos != null) {
+
+                            horas_A = datos.toString();
+                        }
+
+                    }
+
+                    Query queryHorasTrabajadas_B = sesion.createSQLQuery("SELECT TIMESTAMPDIFF(HOUR, '2003-05-01 "+promedioEntradaB+"', '2003-05-01 "+promedioSalidaB+"')");
+                    List<Object> Horas_B = queryHorasTrabajadas_B.list();
+                    for (Object datos : Horas_B) {
+
+                        if (datos != null) {
+
+                            horas_B = datos.toString();
+
+                        }
+
+                    }
+
+                    usuarioJson.add(promedioEntradaA);
+                    usuarioJson.add(promedioEntradaB);
+                    usuarioJson.add(promedioSalidaA);
+                    usuarioJson.add(promedioSalidaB);
+                    usuarioJson.add(horas_A);
+                    usuarioJson.add(horas_B);
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write(usuarioJson.toJSONString());
+                    
+                }else{
+                
+                    response.getWriter().write("204");
+                
+                }                                                
+            }
             sesion.close();
             objSessionFactory.close();
-            }  
         }catch(HibernateException ex){
         
             response.getWriter().write("500");
@@ -1060,6 +1203,80 @@ public class ingreso extends HttpServlet {
                     }
                     
                 }
+            }else if (objUsuario.getCargo().getTipo().equals("JefeCanal") || objUsuario.getCargo().getTipo().equals("CoordinadorCanal")) {
+                               
+                Query queryCanalCargo1 = sesion.createQuery("FROM Canal_Cargo WHERE Cargo = "+objUsuario.getCargo().getIdCargo()+"");
+                List<Canal_Cargo> listaCanal_Cargo1 = queryCanalCargo1.list();
+                for(Canal_Cargo canal_cargo1 : listaCanal_Cargo1){
+                
+                    Query queryCanal_Cargo = sesion.createQuery("FROM Canal_Cargo WHERE Canal = "+canal_cargo1.getCanal().getIdCanal()+"");
+                    List<Canal_Cargo> listaCanal_Cargo = queryCanal_Cargo.list();
+                    
+                    for(Canal_Cargo canal_cargo : listaCanal_Cargo){                        
+                        
+                        if (objUsuario.getCargo().getTipo().equals("CoordinadorCanal") && canal_cargo.getCargo().getTipo().equals("JefeCanal")) {
+                            
+                            System.out.println("jejefesote xd alv");
+                            
+                        }else{
+                        
+                            List<Usuario> listaUsuariosBuscados = buscarUsuario(canal_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario());
+                        
+                            if (listaUsuario == null) {
+
+                                listaUsuario = listaUsuariosBuscados;
+
+                            }else{
+                                listaUsuario.addAll(listaUsuariosBuscados);
+
+                            }
+                            
+                        }
+                        
+                    }
+
+                    Query queryArea = sesion.createQuery("FROM Area WHERE Canal = "+canal_cargo1.getCanal().getIdCanal()+"");
+                    List<Area> listaArea = queryArea.list();
+                    for(Area area : listaArea){
+
+                        Query queryArea_Cargo = sesion.createQuery("FROM Area_Cargo WHERE Area="+area.getIdArea()+"");
+                        List<Area_Cargo> listaArea_Cargo = queryArea_Cargo.list();
+                        for(Area_Cargo area_cargo : listaArea_Cargo){
+
+                            listaUsuario.addAll(buscarUsuario(area_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario()));
+
+                        }
+
+                    }
+                    
+                }                            
+                
+            }else if (objUsuario.getCargo().getTipo().equals("JefeArea")) {
+                                
+                Query queryArea_Cargo1 = sesion.createQuery("FROM Area_Cargo WHERE Cargo="+objUsuario.getCargo().getIdCargo()+"");
+                List<Area_Cargo> listaArea_Cargo1 = queryArea_Cargo1.list();
+                for(Area_Cargo area_cargo1 : listaArea_Cargo1){
+                
+                    Query queryArea_Cargo = sesion.createQuery("FROM Area_Cargo WHERE Area="+area_cargo1.getArea().getIdArea()+"");
+                    List<Area_Cargo> listaArea_Cargo = queryArea_Cargo.list();
+                    for(Area_Cargo area_cargo : listaArea_Cargo){
+                        
+                        
+                        List<Usuario> listaUsuariosBuscados = buscarUsuario(area_cargo.getCargo().getIdCargo(), objUsuario.getIdUsuario());
+                            
+                        if (listaUsuario == null) {
+
+                            listaUsuario = listaUsuariosBuscados;
+
+                        }else{
+                            listaUsuario.addAll(listaUsuariosBuscados);
+
+                        }
+                         
+                    }
+                
+                }                
+                
             }
         
             for(Usuario usuario : listaUsuario){

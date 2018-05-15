@@ -78,7 +78,7 @@
                             <i class="nc-icon nc-puzzle-10"></i>
                         </div>
                     </div>
-                    <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmRegistrarSector" name="frmRegistrarSector">
+                    <form class="form-horizontal" novalidate="novalidate" id="frmRegistrarSector" name="frmRegistrarSector">
                         <div class="modal-body text-center">
                             <h5 class="category">INGRESA LOS DATOS DEL SECTOR</h5>
                             <div class="col-md-12 mr-auto ml-auto">
@@ -119,7 +119,7 @@
                             <i class="nc-icon nc-puzzle-10"></i>
                         </div>
                     </div>
-                    <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmEditarSector" name="frmEditarSector">
+                    <form class="form-horizontal" novalidate="novalidate" id="frmEditarSector" name="frmEditarSector">
                         <div class="modal-body text-center">
                             <h5 class="category">ACTUALIZA LOS DATOS DEL SECTOR</h5>
                             <div class="col-md-12 mr-auto ml-auto">

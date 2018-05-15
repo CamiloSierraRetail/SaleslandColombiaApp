@@ -1,4 +1,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    try{      
+        if(session.getAttribute("UsuarioIngresado").equals("") || session.getAttribute("UsuarioIngresado").equals(null)){
+            response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/sesionBloqueada.jsp");
+        }
+        else{
+%>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -270,9 +277,7 @@
         <%@include file="../includes/jsInclude.jsp" %>        
         <script>
 
-            $(document).ready(function (){
-                localStorage.imgPerfil = $("#imgPerfilNavLateral").val();
-                localStorage.name = $(".spanName").val();
+            $(document).ready(function (){                
                 $("#empleadoItemNav").addClass("show");
                 $("#monitorearEmpleadosNav").addClass("active");
                 $("#tituloPagina").text("MONITOREAR EMPLEADOS");    
@@ -288,3 +293,9 @@
         </script>
     </body>
 </html>
+<%        }
+    }  
+    catch(NullPointerException ex){
+        response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/sesionBloqueada.jsp");
+    }
+%>

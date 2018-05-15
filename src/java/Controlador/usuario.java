@@ -95,7 +95,7 @@ public class usuario extends HttpServlet {
             
             System.out.println("-------------> !!!!!!!!!!!!!!!!!!!! -->   " +ImagenPerfil);
             String imagenPerfil = "";
-            if (ImagenPerfil.equals("")) {
+            if (ImagenPerfil.equals("") || ImagenPerfil == null) {
                 
                 if (Genero.equals("Masculino")) {
                     imagenPerfil = "hombreDefaultImageProfile.png";
@@ -167,23 +167,39 @@ public class usuario extends HttpServlet {
                     
                     response.getWriter().write(buscarCargo(sector_Cargo.getCargo().getIdCargo(), sector_Cargo.getSector().getNombreSector()));
                 
-                }
-                
-                Query queryCanal_Cargo = sesion.createQuery("FROM Canal_Cargo WHERE Canal="+sector.getIdSector()+"");
-                List<Canal_Cargo> listaCanal_Cargo = queryCanal_Cargo.list();
-                for(Canal_Cargo canal_Cargo : listaCanal_Cargo){
                     
-                    response.getWriter().write(buscarCargo(canal_Cargo.getCargo().getIdCargo(), canal_Cargo.getCanal().getSector().getNombreSector()));
-                
-                }
-                                
-                Query queryArea_Cargo = sesion.createQuery("FROM Area_Cargo WHERE Sector="+sector.getIdSector()+"");
-                List<Area_Cargo> listaArea_Cargo = queryArea_Cargo.list();
-                for(Area_Cargo area_Cargo : listaArea_Cargo){
+                    Query queryCanal = sesion.createQuery("FROM Canal WHERE Sector="+sector.getIdSector()+"");
+                    List<Canal> listaCanal = queryCanal.list();
                     
-                    response.getWriter().write(buscarCargo(area_Cargo.getCargo().getIdCargo(), area_Cargo.getArea().getCanal().getSector().getNombreSector()));
-                
-                }
+                    for(Canal canal : listaCanal){
+                        
+                        Query queryCanal_Cargo = sesion.createQuery("FROM Canal_Cargo WHERE Canal="+canal.getIdCanal()+"");
+                        List<Canal_Cargo> listaCanal_Cargo = queryCanal_Cargo.list();
+                        for(Canal_Cargo canal_Cargo : listaCanal_Cargo){
+
+                            response.getWriter().write(buscarCargo(canal_Cargo.getCargo().getIdCargo(), canal_Cargo.getCanal().getSector().getNombreSector()));
+
+                        }
+                        
+                        
+                        Query queryArea = sesion.createQuery("FROM Area WHERE Canal = "+canal.getIdCanal()+"");
+                        List<Area> listaArea = queryArea.list();
+                        for(Area area : listaArea){
+                            
+                            Query queryArea_Cargo = sesion.createQuery("FROM Area_Cargo WHERE Area="+area.getIdArea()+"");
+                            List<Area_Cargo> listaArea_Cargo = queryArea_Cargo.list();
+                            for(Area_Cargo area_Cargo : listaArea_Cargo){
+
+                                response.getWriter().write(buscarCargo(area_Cargo.getCargo().getIdCargo(), area_Cargo.getArea().getCanal().getSector().getNombreSector()));
+
+                            }
+                            
+                        
+                        }
+                    
+                    }                                        
+                    
+                }                                                                                
                 
             }
             
@@ -250,7 +266,7 @@ public class usuario extends HttpServlet {
             String Contrasenia = request.getParameter("Contrasenia");            
             Session sesion = objSessionFactory.openSession();
             response.setCharacterEncoding("UTF-8");
-            Query query = sesion.createQuery("FROM Usuario WHERE ((Email='"+Usuario+"' OR Documento='"+Usuario+"') AND Contrasenia='"+Contrasenia+"')");
+            Query query = sesion.createQuery("FROM Usuario WHERE ((Email='"+Usuario+"' OR Documento='"+Usuario+"') AND Contrasenia='"+DigestUtils.md5Hex(Contrasenia)+"')");
             List<Usuario> listaUsuario = query.list();
             if (listaUsuario.size() == 1) {
                 

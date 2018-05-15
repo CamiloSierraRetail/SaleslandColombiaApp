@@ -81,6 +81,8 @@
                     }
                 });
                 
+                $("#passwordUnlock").focus();
+                
                 demo.checkFullPageBackgroundImage();
                 $("#txtUserUnlock").val(localStorage.docEmail);
                 $('#imgLock').attr('src','/SaleslandColombiaApp/ligth-bootstrap/assets/img/imagenesDePerfil/'+localStorage.imgPerfil+'');

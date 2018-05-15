@@ -17,7 +17,7 @@ try{
         String apellidoUsuario[] = objUsuario.getApellido().split(" ");
 
         if (objUsuario.getCargo().getTipo().equals("Empleado")) {%>
-            <div class="sidebar" data-color="corp" data-image="../../assets/img/navLateral.jpg">
+            <div class="sidebar" data-color="corp" data-image="../../assets/img/defaultImage.jpg">
                 <!--
                     Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
@@ -50,61 +50,23 @@ try{
                                             <span class="sidebar-normal">Editar Perfil</span>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a class="profile-dropdown" href="#pablo">
-                                            <span class="sidebar-mini">A</span>
-                                            <span class="sidebar-normal">Ajustes</span>
-                                        </a>
-                                    </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <ul class="nav">
-                        <li class="nav-item ">
+                        <li class="nav-item" id="inicioItem">
                             <a class="nav-link" href="../empleado/indexempleado.jsp">
                                 <i class="material-icons">dashboard</i>
-                                <p>Inicio (Empleado)</p>
+                                <p>Inicio</p>
                             </a>
-                        </li>                                
-                        <!-- Div xdxdxdxddxddxdxdxdxdx -->
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="collapse" href="#Examples">
-                                <i class="material-icons">date_range</i>
-                                <p>
-                                    Permisos
-                                    <b class="caret"></b>
-                                </p>
-                            </a>
-                            <div class="collapse " id="Examples">
-                                <ul class="nav">
-                                    <li class="nav-item ">
-                                        <a class="nav-link" href="/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/listarsectores.jsp">
-                                            <span class="sidebar-mini">S</span>
-                                            <span class="sidebar-normal">Sectores</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item " id="canalesItemNav">
-                                        <a class="nav-link" href="/SaleslandColombiaApp/ligth-bootstrap/Pages/canal/listarcanal.jsp">
-                                            <span class="sidebar-mini">C</span>
-                                            <span class="sidebar-normal">Canales</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item " id="areasItemNav">
-                                        <a class="nav-link" href="../area/listararea.jsp">
-                                            <span class="sidebar-mini">A</span>
-                                            <span class="sidebar-normal">Areas</span>
-                                        </a>
-                                    </li>                                
-                                </ul>
-                            </div>
                         </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" href="../empleado/indexempleado.jsp">
-                                <i class="material-icons">picture_in_picture</i>
-                                <p>Publicaciones</p>
+                        <li class="nav-item" id="permisosSolicitados">
+                            <a class="nav-link" href="../permiso/mispermisos.jsp">
+                                <i class="material-icons">date_range</i>
+                                <p>Permisos</p>
                             </a>
-                        </li>                                                  
+                        </li>                                                                       
                     </ul>
                 </div>        
             </div>
@@ -145,12 +107,17 @@ try{
                                             <span class="sidebar-normal">Editar Perfil</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item" id="misPermisos">
-                                        <a class="nav-link profile-dropdown" href="../permiso/mispermisos.jsp">
-                                            <span class="sidebar-mini">PR</span>
-                                            <span class="sidebar-normal">Mis Permisos</span>
-                                        </a>
-                                    </li>
+                                    <%if(!objUsuario.getCargo().getTipo().equals("Director")){%>
+                                    
+                                        <li class="nav-item" id="misPermisos">
+                                            <a class="nav-link profile-dropdown" href="../permiso/mispermisos.jsp">
+                                                <span class="sidebar-mini">PR</span>
+                                                <span class="sidebar-normal">Mis Permisos</span>
+                                            </a>
+                                        </li>
+                                    
+                                    <%} %>
+                                    
                                 </ul>
                             </div>
                         </div>
@@ -215,18 +182,18 @@ try{
                                             <span class="sidebar-normal">Registrar</span>
                                         </a>
                                     </li>
+                                    <li class="nav-item" id="permisosSolicitados">
+                                        <a class="nav-link" href="../permiso/permisosSolicitados.jsp">
+                                            <span class="sidebar-mini">P</span>
+                                            <span class="sidebar-normal">Permisos</span>
+                                        </a>
+                                    </li>
                                     <li class="nav-item" id="monitorearEmpleadosNav">
                                         <a class="nav-link" href="../empleado/monitorearempleados.jsp">
                                             <span class="sidebar-mini">M</span>
                                             <span class="sidebar-normal">Monitorear</span>
                                         </a>
-                                    </li>
-                                    <li class="nav-item" id="mis">
-                                        <a class="nav-link" href="#">
-                                            <span class="sidebar-mini">P</span>
-                                            <span class="sidebar-normal">Permisos</span>
-                                        </a>
-                                    </li>
+                                    </li>                                    
                                 </ul>
                             </div>
                         </li>
@@ -264,12 +231,12 @@ try{
                     </ul>
                 </div>        
             </div>
-                                    
-            <input type="hidden" id="txtIdUsuario" value="<%=objUsuario.getIdUsuario()%>">
-            <input type="hidden" id="imgPerfilNavLateral" value="<%=objUsuario.getFoto()%>">                                                   
-            <input type="hidden" class="spanName" value="<%= nombreUSuario[0] +" "+ apellidoUsuario[0]%>">
                                             
       <%}%>
+      
+        <input type="hidden" id="txtIdUsuario" value="<%=objUsuario.getIdUsuario()%>">
+        <input type="hidden" id="imgPerfilNavLateral" value="<%=objUsuario.getFoto()%>">                                                   
+        <input type="hidden" class="spanName" value="<%= nombreUSuario[0] +" "+ apellidoUsuario[0]%>">
 
   <%}    
 }catch(Exception ex){

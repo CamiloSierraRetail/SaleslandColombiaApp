@@ -39,8 +39,7 @@
 <!-- Light Dashboard DEMO methods, don't include it in your project! -->
 <script src="/SaleslandColombiaApp/ligth-bootstrap/assets/js/demo.js"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
-         Init Wizard
+    $(document).ready(function() {         
         // En caso de necesitar alguno de los componentes que necesiten de inicializacion hacer la inicializacion en cada una de las paginas
         //demo.initLBDWizard();
         //demo.initCharts();

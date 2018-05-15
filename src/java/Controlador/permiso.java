@@ -38,6 +38,9 @@ public class permiso extends HttpServlet {
                 case "listarPermisos":
                     listarPermisos(request, response);
                     break;
+                case "listarPermisosSolicitados":
+                    listarPermisosSolicitados(request, response);
+                    break;
                 
             }
             
@@ -191,6 +194,9 @@ public class permiso extends HttpServlet {
             response.setCharacterEncoding("UTF-8");
             for(Permiso permiso : listaPermiso){
                 
+                String hrefDocAnexo = "";
+                String tooltipText = "";
+                
                 String fechaInicio[] = String.valueOf(permiso.getFechaInicio()).split(" ");
                 String horaI[] = String.valueOf(permiso.getHoraInicio()).split(" ");
                 String horaInicio[] = horaI[1].split(":");
@@ -202,6 +208,15 @@ public class permiso extends HttpServlet {
                 String nombre[] = permiso.getUsuarioRecibe().getNombre().split(" ");
                 String apellido[] = permiso.getUsuarioRecibe().getApellido().split(" ");
                 
+                if (permiso.getDocAnexo().equals("")) {
+                    
+                    hrefDocAnexo = "'#''";
+                    tooltipText = "Sin archivo adjunto";
+                }else{
+                    hrefDocAnexo = "'/SaleslandColombiaApp/ligth-bootstrap/assets/filesPermisos/"+permiso.getDocAnexo()+"' target='_blank'";
+                    tooltipText = "Archivo adjunto";
+                }
+                
                 response.getWriter().write("<tr>"
                                               + "<td class='text-center'>"+countRows+"</td>"
                                               + "<td class='text-center'>"+permiso.getMotivo()+"</td>"
@@ -211,7 +226,7 @@ public class permiso extends HttpServlet {
                                               + "<td class='text-center'>"+nombre[0]+ " "+apellido[0]+"</td>"
                                               + "<td class='text-center'>"+permiso.getEstado()+"</td>"
                                               + "<td class='td-actions text-center'>"
-                                                + "<a href='/SaleslandColombiaApp/ligth-bootstrap/assets/filesPermisos/"+permiso.getDocAnexo()+"' target='_blank' rel='tooltip' title='' class='btn btn-link btn-xs' data-original-title='Archivo adjunto'>"
+                                                + "<a href="+hrefDocAnexo+" rel='tooltip' title='' class='btn btn-link btn-xs' data-original-title='"+tooltipText+"'>"
                                                     + "<i class='fa fa-file blue-corp'></i>"
                                                 + "</a>"   
                                                 + "<button onclick='verDatosSector("+permiso.getIdPermiso()+")' data-toggle='modal' data-target='#ModalEditarSector' rel='tooltip' title='' class='btn btn-link btn-xs' data-original-title='Editar'>"
@@ -230,6 +245,77 @@ public class permiso extends HttpServlet {
         }catch(Exception ex){
         
             System.out.println(ex);
+            response.getWriter().write("500");
+        }
+    
+    }
+    protected void listarPermisosSolicitados(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+            
+        try{
+      
+            Usuario objUsuario = (Usuario) request.getSession().getAttribute("UsuarioIngresado");
+            int countRows = 1;
+
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();
+            
+            Query queryPermisos = sesion.createQuery("FROM Permiso WHERE UsuarioRecibe = "+objUsuario.getIdUsuario()+"");
+            List<Permiso> listaPermisos = queryPermisos.list();
+            
+            response.setCharacterEncoding("UTF-8");
+            for(Permiso permiso : listaPermisos){
+                
+                String hrefDocAnexo = "";
+                String tooltipText = "";
+                
+                String fechaInicio[] = String.valueOf(permiso.getFechaInicio()).split(" ");
+                String horaI[] = String.valueOf(permiso.getHoraInicio()).split(" ");
+                String horaInicio[] = horaI[1].split(":");
+                
+                String fechaFin[] = String.valueOf(permiso.getFechaFin()).split(" ");
+                String horaF[] = String.valueOf(permiso.getHoraFin()).split(" ");
+                String horaFin[] = horaF[1].split(":");
+                
+                String nombre[] = permiso.getUsuarioEnvia().getNombre().split(" ");
+                String apellido[] = permiso.getUsuarioEnvia().getApellido().split(" ");
+                
+                if (permiso.getDocAnexo().equals("")) {
+                    
+                    hrefDocAnexo = "'#''";
+                    tooltipText = "Sin archivo adjunto";
+                }else{
+                    hrefDocAnexo = "'/SaleslandColombiaApp/ligth-bootstrap/assets/filesPermisos/"+permiso.getDocAnexo()+"' target='_blank'";
+                    tooltipText = "Archivo adjunto";
+                }
+                
+                response.getWriter().write("<tr>"
+                                              + "<td class='text-center'>"+countRows+"</td>"
+                                              + "<td class='text-center'>"+permiso.getMotivo()+"</td>"
+                                              + "<td class='text-center'>"+permiso.getDescripcion()+"</td>"
+                                              + "<td class='text-center'>"+fechaInicio[0]+"   "+horaInicio[0]+":"+horaInicio[1]+"</td>"
+                                              + "<td class='text-center'>"+fechaFin[0]+"   "+horaFin[0]+":"+horaFin[1]+ "</td>"
+                                              + "<td class='text-center'>"+nombre[0]+ " "+apellido[0]+"</td>"
+                                              + "<td class='text-center'>"+permiso.getEstado()+"</td>"
+                                              + "<td class='td-actions text-center'>"
+                                                + "<a href="+hrefDocAnexo+" rel='tooltip' title='' class='btn btn-link btn-xs' data-original-title='"+tooltipText+"'>"
+                                                    + "<i class='fa fa-file blue-corp'></i>"
+                                                + "</a>"   
+                                                + "<button onclick='verDatosSector("+permiso.getIdPermiso()+")' data-toggle='modal' data-target='#ModalEditarSector' rel='tooltip' title='' class='btn btn-link btn-xs' data-original-title='Editar'>"
+                                                    + "<i class='fa fa-edit gray-corp'></i>"
+                                                + "</button>"
+                                               
+                                              + "</td>"
+                                         + "</tr>");
+                countRows++;                            
+            
+            }
+            
+            sesion.close();
+            objSessionFactory.close();
+            
+        }catch(Exception ex){
+            System.err.println(ex);
             response.getWriter().write("500");
         }
     
