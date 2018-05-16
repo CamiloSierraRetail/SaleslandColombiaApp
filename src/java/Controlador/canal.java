@@ -204,6 +204,11 @@ public class canal extends HttpServlet {
                             Query queryActuzalizarUsuario = sesion.createSQLQuery("UPDATE usuario SET Estado='"+Estado+"' WHERE Cargo="+area_cargo.getCargo().getIdCargo()+"");
                             queryActuzalizarUsuario.executeUpdate();
                             sesion.getTransaction().commit();
+                            
+                            sesion.beginTransaction();
+                            Query queryActualizarCargo = sesion.createSQLQuery("UPDATE Cargo SET Estado='"+Estado+"' WHERE IdCargo="+area_cargo.getCargo().getIdCargo()+"");
+                            queryActualizarCargo.executeUpdate();
+                            sesion.getTransaction().commit();
                         }    
 
                     }

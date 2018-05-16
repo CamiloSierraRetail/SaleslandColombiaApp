@@ -173,8 +173,8 @@ public class sector extends HttpServlet {
                     sesion.beginTransaction();
                     Query queryActualizarCanal = sesion.createSQLQuery("UPDATE Canal SET Estado='"+estado+"' WHERE Sector="+id+"");
                     queryActualizarCanal.executeUpdate();
-                    sesion.getTransaction().commit();
-
+                    sesion.getTransaction().commit();                                        
+                    
                     Query queryCanal = sesion.createQuery("FROM Canal WHERE Sector = "+id+"");
                     List<Canal> listaCanal = queryCanal.list();
                     for (Canal canal : listaCanal){
@@ -183,7 +183,7 @@ public class sector extends HttpServlet {
                         Query queryActualizarArea = sesion.createSQLQuery("UPDATE Area SET Estado = '"+estado+"' WHERE Canal="+canal.getIdCanal()+"");
                         queryActualizarArea.executeUpdate();
                         sesion.getTransaction().commit();
-
+                        
                     }
                     //////////////// STATUS ADMINISTRADORES Y USUARIOS /////////////
                     
@@ -201,6 +201,11 @@ public class sector extends HttpServlet {
                             Query queryActuzalizarUsuario = sesion.createSQLQuery("UPDATE usuario SET Estado='"+estado+"' WHERE Cargo="+canal_cargo.getCargo().getIdCargo()+"");
                             queryActuzalizarUsuario.executeUpdate();
                             sesion.getTransaction().commit();
+                            
+                            sesion.beginTransaction();
+                            Query queryActualizarCargo = sesion.createSQLQuery("UPDATE Cargo SET Estado='"+estado+"' WHERE IdCargo="+canal_cargo.getCargo().getIdCargo()+"");
+                            queryActualizarCargo.executeUpdate();
+                            sesion.getTransaction().commit();
                         }
                         
                         ///////////// STATUS PARA AREAS /////////////////
@@ -216,6 +221,11 @@ public class sector extends HttpServlet {
                                 sesion.beginTransaction();
                                 Query queryActuzalizarUsuario = sesion.createSQLQuery("UPDATE usuario SET Estado='"+estado+"' WHERE Cargo="+area_cargo.getCargo().getIdCargo()+"");
                                 queryActuzalizarUsuario.executeUpdate();
+                                sesion.getTransaction().commit();
+                                
+                                sesion.beginTransaction();
+                                Query queryActualizarCargo = sesion.createSQLQuery("UPDATE Cargo SET Estado='"+estado+"' WHERE IdCargo="+area_cargo.getCargo().getIdCargo()+"");
+                                queryActualizarCargo.executeUpdate();
                                 sesion.getTransaction().commit();
                             }    
                         

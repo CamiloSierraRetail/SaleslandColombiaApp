@@ -124,28 +124,17 @@ $(document).ready(function(){
                 dataType:"json"
             }).done(function(data){
                 console.log(data);
-               if(data > "0"){
-                   swal({
+               if(data > "0"){                   
+                        
+                        swal({
                         title: "Advertencia",
                         text: "¿Toda tu informacion es correcta?",
                         icon: "warning",
                         buttons: true,
-                        buttons: {
-                            cancel:{
-                                text: "Cancelar",
-                                value: true,
-                                visible: true,
-                                closeModal: true
-                            },
-                            confirm: {
-                                text: "Sí",
-                                value: true,
-                                visible: true,
-                                closeModal: false
-                            }
-                        }
-                        }).then((confirm) => {
-                            if (confirm) {
+                        closeonconfirm: false,
+                        buttons: ["Cancelar", "Sí"]
+                        }).then((willDelete) => {
+                            if (willDelete) {
                                 setTimeout(function(){
                                     //Subir Foto
                                     var data = new FormData();
@@ -180,9 +169,12 @@ $(document).ready(function(){
                                     }).done(function(data){
                                         if(data == "1"){
                                             
-                                            setTimeout(function(){
-                                                window.location.href = "/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/editarperfilusuario.jsp";
-                                            }, 3000);
+                                        swal("Información actualizada", "Tus datos se actualizaron correctamente.", "success").then((willDelete) => {
+                                            
+                                            window.location.href = "/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/editarperfilusuario.jsp";                                            
+                                            
+                                        });
+                                            
                                             
                                         }else{
                                             swal("Error","Algo ocurrio al momento de procesar tu solicitud","error");
@@ -219,7 +211,7 @@ $(document).ready(function(){
                 }
         },submitHandler: function () {
             var usuario = $("#txtUserUnlock").val();
-            var contrasenia = $("#passwordUnlock").val();        
+            var contrasenia = $("#passwordUnlock").val();                    
             $.post("/SaleslandColombiaApp/usuario/IniciarSesion",{Usuario:usuario,Contrasenia:contrasenia},function (responsetext) {                       
                 if (responsetext == "Empleado") {
                     window.location = "/SaleslandColombiaApp/ligth-bootstrap/Pages/empleado/indexempleado.jsp";

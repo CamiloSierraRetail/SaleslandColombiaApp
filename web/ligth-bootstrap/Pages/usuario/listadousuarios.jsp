@@ -68,7 +68,7 @@
             </div>
         </div>
                      
-        <!-- MODAL PARA CREAR UN SECTOR -->
+        <!-- MODAL PARA VER EL USUARIO -->
         <div class="modal fade modal-primary" id="modalVerUsuario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">                                  
                     <div class="col-md-9 mr-auto ml-auto">
@@ -89,7 +89,7 @@
                                     </p>
                                 </div>
                                 <p class="card-description text-center" id="lblDescripcionEmpleado">
-                                    <%=objUsuario.getCargo().getNombreCargo()%> : <%=objUsuario.getCargo().getDescripcion()%>
+                                    
                                 </p>
                             </div>
                             <div class="card-footer ">
@@ -110,28 +110,100 @@
                     </div>              
             </div>
         </div>
-        <!--  End Modal -->           
-    </body>        
-    <%@include file="../includes/jsInclude.jsp" %>
-    <script>
+        <!--  End Modal -->
         
-        $(document).ready(function (){
-            
-            $("#empleadoItemNav").addClass("show");
-            $("#listadoEmpleadosNav").addClass('active');
-            $("#tituloPagina").text("EMPLEADOS");
-            listarUsuarios();
-            
-            localStorage.imgPerfil = $("#imgPerfilNavLateral").val();
-            localStorage.name = $(".spanName").val();
-            var fullDate = new Date();
-            var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
-            var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
-            websocket.send("CargarUsuarios-"+<%=objUsuario.getIdUsuario()%>+"-"+currentDate);
-            
-        });
+        
+        <!-- MODAL PARA EDITAR LOS DATOS DEL USUARIO -->
+        <div class="modal fade modal-primary" id="ModalEditarUsuario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-center">
+                        <div class="modal-profile">
+                            <i class="nc-icon nc-puzzle-10"></i>
+                        </div>
+                    </div>
+                    <form class="form-horizontal" novalidate="novalidate" id="frmEditarDatosUsuarios" name="frmEditarDatosUsuarios">
+                        <div class="modal-body ">
+                            <h5 class="category text-center">ACTUALIZA LOS DATOS DEL USUARIO</h5>
+                            <div class="col-md-12">
+                                <input id="idEditarUsuario" type="hidden" style="display: none">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <small class="control-label"><strong>Nombres</strong></small>
+                                            <input class="form-control" type="text" id="txtNombreUsuario" name="NombreUsuario" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <small class="control-label"><strong>Apellidos</strong></small>
+                                            <input class="form-control" type="text" id="txtApellidoUsuario" name="ApellidoUsuario" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <small class="control-label"><strong>Horario *</strong></small>
+                                            <select id="cmbHorarioUsuario" name="HorarioUsuario" class="form-control"  data-title="Selecciona el horario" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                                <option value="A">De 8:00 A.M a 6:00 P.M</option>
+                                                <option value="B">De 7:00 A.M a 5:00 P.M</option>                                                                        
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <small class="control-label"><strong>Estado *</strong></small>
+                                            <select id="cmbEstadoUsuario" name="EstadoUsuario" class="form-control"  data-title="SelecorarioUsuariociona el horario" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                                <option value="Activo">Activo</option>
+                                                <option value="Inactivo">Inactivo</option>                                                                        
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <small class="control-label"><strong>Cargo *</strong></small>
+                                            <select id="cmbCargoUsuario" name="CargoUsuario" class="form-control">
+
+                                            </select>
+                                        </div>
+                                    </div>                                     
+                                </div>                                                                               
+                            </div>   
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-simple" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-blue_corp btn-fill pull-right">Guardar cambios</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--  End Modal -->  
+        <%@include file="../includes/jsInclude.jsp" %>
+        <script>
+
+            $(document).ready(function (){
+
+                $("#empleadoItemNav").addClass("show");
+                $("#listadoEmpleadosNav").addClass('active');
+                $("#tituloPagina").text("EMPLEADOS");
+                listarUsuarios();
+
+                cargarComboCargos();
                 
-    </script>        
+        
+                var fullDate = new Date();
+                var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
+                var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
+                websocket.send("CargarUsuarios-"+<%=objUsuario.getIdUsuario()%>+"-"+currentDate);
+
+            });
+
+        </script> 
+    </body>                  
 </html>
 <%        }
     }  

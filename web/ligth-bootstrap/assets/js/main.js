@@ -1795,7 +1795,7 @@ $('#frmEditarArea').validate({
                 var nombreArea = $("#txtEditarNombreArea").val();
                 var descripcionArea = $("#txtEditarDescripcionArea").val();
                 var estadoArea = $("#cmbEditarEstadoArea").val();
-                var canalArea = $("#cmbCanalEditar").val();
+                var canalArea = $("#cmbEditarCanal").val();
                 $.post("/SaleslandColombiaApp/area/editararea", {IdArea: idArea, NombreArea: nombreArea, DescripcionArea: descripcionArea, EstadoArea: estadoArea, CanalArea: canalArea}, function (responsetext) {
                     if (responsetext == "200") {
 
@@ -2969,3 +2969,129 @@ function listarPermisosSolicitados() {
     });
 
 }
+////////////////////////////// FUNCION PARA CARGAR LOS CARGOS AL MOMENTO DE EDITAR LOS USUARIOS /////////////////////////
+function cargarComboCargos(){
+    
+    $.post("/SaleslandColombiaApp/cargo/cargarComboCargo",function (responseText){
+        
+        if (responseText == "500") {
+            
+            swal("Ocurrio un error", "Ocurrió un erro mientra intentebamos cargar los cargos, por favor intentalo más tarde.", "error");
+            
+        }else{
+            
+            $("#cmbCargoUsuario").html("");            
+            var dt = JSON.parse(responseText);
+            
+            for (var key in dt) {
+                if (dt.hasOwnProperty(key)) {
+                    var val = dt[key];                    
+                    $("#cmbCargoUsuario").append("<option value='"+val['IdCargo']+"'>"+val['NombreCargo']+"</option>");                                      
+                }
+            }
+            
+            
+        }
+        
+    });    
+}
+/////////////////////////////// FUNCION PARA CARGAR LA INFORMACION DEL USUARIO ////////////////////////////////////
+function cargarDatosUsuario(idUsuario){
+    
+    $.post("/SaleslandColombiaApp/usuario/cargarDatosUsuario",{idUsuario:idUsuario},function (responseText) {
+       
+        if (responseText == "500") {
+            
+            swal("Ocurrio un error", "Ocurrió un erro mientra intentebamos cargar la información del usuario.", "error");
+            
+        }else{
+            
+            var dt = JSON.parse(responseText);
+            $("#idEditarUsuario").val(dt[0]);
+            $("#txtNombreUsuario").val(dt[1]);
+            $("#txtApellidoUsuario").val(dt[2]);
+            $("#cmbHorarioUsuario").val(dt[3]);
+            $("#cmbEstadoUsuario").val(dt[4]);
+            if (dt[6] == "Activo") {
+                
+                $("#cmbCargoUsuario").prop('disabled', false);
+                $("#cmbCargoUsuario").val(dt[5]);
+                
+            }else{
+                
+                $("#cmbCargoUsuario").prop('disabled', true);
+                $("#cmbCargoUsuario").val(dt[5]);
+                
+            }            
+        }        
+    });    
+}
+//////////////////////////////////////////// FUNCION PARA QUE EL ADMINISTRADOR EDITE LOS DATOS DEL USUARIO //////////////////////////////////
+$("#frmEditarDatosUsuarios").validate({
+   
+    rules:{
+        
+        HorarioUsuario:{
+            
+            required:true
+            
+        },EstadoUsuario:{
+            
+            required:true
+            
+        },CargoUsuario:{
+            
+            required:true
+        }
+    },messages:{
+        
+        HorarioUsuario:{
+            
+            required:"Este campo es requerido"
+            
+        },EstadoUsuario:{
+            
+            required:"Este campo es requerido"
+            
+        },CargoUsuario:{
+            
+            required:"Este campo es requerido"
+        }
+        
+    },
+    errorElement: 'div',
+    errorPlacement: function (error, element) {
+        var placement = $(element).data('error');
+        if (placement) {
+            $(placement).append(error);
+        } else {
+            error.insertAfter(element);
+        }
+    },
+    submitHandler: function () {
+
+        var idUsuario = $("#idEditarUsuario").val();
+        var horario = $("#cmbHorarioUsuario").val();
+        var estado = $("#cmbEstadoUsuario").val();
+        var cargo = $("#cmbCargoUsuario").val();
+
+        $.post("/SaleslandColombiaApp/usuario/actualizarDatosBasicosUsuario",{IdUsuario:idUsuario, Horario:horario, Estado:estado, Cargo:cargo},function (responseText) {
+           
+            if (responseText == "500") {
+                
+                swal("Ocurrio un error", "Ocurrió un erro mientra intentebamos actualizar la información del usuario.", "error");
+                
+            }else{
+                
+                swal("Información actualizada", "La información del usuario ha sido actualizada.", "success").then((willDelete) => {
+                    if (willDelete) {
+
+                        $('#ModalEditarUsuario').modal('hide');
+
+                    }
+                });                                                
+            }            
+        });        
+    }
+    
+});

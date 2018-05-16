@@ -8,6 +8,7 @@ import Modelo.Cargo;
 import Modelo.Sector;
 import Modelo.Sector_Cargo;
 import Modelo.Usuario;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -51,6 +52,9 @@ public class cargo extends HttpServlet {
                     break;
                 case "eliminarCargo":
                     eliminarCargo(request, response);
+                    break;
+                case "cargarComboCargo":
+                    cargarComboCargo(request, response);
                     break;
                 default:
                     response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/alertas/404.jsp");
@@ -422,6 +426,32 @@ public class cargo extends HttpServlet {
         }catch(Exception ex){
             response.getWriter().write("500");
             System.err.println(ex);
+        }
+        
+    }
+    private void cargarComboCargo(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {        
+        try{
+        
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();
+            
+            
+            Query query = sesion.createQuery("FROM Cargo");
+            List<Cargo> listaCargo = query.list();
+            
+            Gson gson = new Gson();
+            String json = gson.toJson(listaCargo);
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
+            
+            sesion.close();
+            objSessionFactory.close();
+            
+            
+        }catch(Exception ex){
+            System.err.println(ex);
+            response.getWriter().write("500");
         }
         
     }

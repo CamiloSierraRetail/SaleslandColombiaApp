@@ -1,9 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    response.setHeader("Cache-Control","no-cache"); //Forces caches to obtain a new copy of the page from the origin server
-    response.setHeader("Cache-Control","no-store"); //Directs caches not to store the page under any circumstance
-    response.setDateHeader("Expires", 0); //Causes the proxy cache to see the page as "stale"
-    response.setHeader("Pragma","no-cache"); //HTTP 1.0 backward compatibility
     try{      
         if(session.getAttribute("UsuarioIngresado").equals("") || session.getAttribute("UsuarioIngresado").equals(null)){
             response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/sesionBloqueada.jsp");
@@ -11,11 +7,10 @@
         else{
 %>
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
     <head>
         <%@include file="../includes/cssInclude.jsp" %>
-        <title>Editar Perfil | SaleslandColombia</title>
+        <title>Editar Perfil - Salesland Colombia</title>
     </head>
 
     <body>

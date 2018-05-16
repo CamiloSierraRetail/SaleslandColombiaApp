@@ -2,6 +2,7 @@
 package Controlador;
 
 import Modelo.Area;
+import Modelo.Area_Cargo;
 import Modelo.Canal;
 import java.io.IOException;
 import java.util.List;
@@ -223,6 +224,26 @@ public class area extends HttpServlet {
             
             SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
             Session sesion = objSessionFactory.openSession();
+            
+            ////////////////7COORECCIN DEL CODIGO DE ABAJO ///////////////
+            Query queryCargoPro = sesion.createQuery("FROM Area_Cargo WHERE Area="+idArea+"");
+            List<Area_Cargo>ListaCargoPro = queryCargoPro.list();
+            for(Area_Cargo area_cargo : ListaCargoPro){
+
+                sesion.beginTransaction();
+                Query queryActuzalizarUsuario = sesion.createSQLQuery("UPDATE usuario SET Estado='"+Estado+"' WHERE Cargo="+area_cargo.getCargo().getIdCargo()+"");
+                queryActuzalizarUsuario.executeUpdate();
+                sesion.getTransaction().commit();
+
+                sesion.beginTransaction();
+                Query queryActualizarCargo = sesion.createSQLQuery("UPDATE Cargo SET Estado='"+Estado+"' WHERE IdCargo="+area_cargo.getCargo().getIdCargo()+"");
+                queryActualizarCargo.executeUpdate();
+                sesion.getTransaction().commit();
+            }    
+            
+            
+            
+            
             sesion.beginTransaction();
             sesion.update(objArea);
             sesion.getTransaction().commit();

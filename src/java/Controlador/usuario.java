@@ -66,6 +66,12 @@ public class usuario extends HttpServlet {
                 case "verusuariostabla":
                     listarUsuariosTablas(request, response);
                     break;
+                case "cargarDatosUsuario":
+                    cargarDatosUsuario(request, response);
+                    break;
+                case "actualizarDatosBasicosUsuario":           
+                    actualizarDatosBasiucosUsuario(request, response);
+                    break;
                 default:
                     response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/alertas/404.jsp");
                     break;
@@ -259,11 +265,11 @@ public class usuario extends HttpServlet {
     protected void iniciarSesion(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {        
                 
-        try{                           
+        try{    
             SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
             
             String Usuario = request.getParameter("Usuario");
-            String Contrasenia = request.getParameter("Contrasenia");            
+            String Contrasenia = request.getParameter("Contrasenia");                        
             Session sesion = objSessionFactory.openSession();
             response.setCharacterEncoding("UTF-8");
             Query query = sesion.createQuery("FROM Usuario WHERE ((Email='"+Usuario+"' OR Documento='"+Usuario+"') AND Contrasenia='"+DigestUtils.md5Hex(Contrasenia)+"')");
@@ -381,15 +387,12 @@ public class usuario extends HttpServlet {
                                                   + "<td>"+usuario.getCelular()+"</td>"
                                                   + "<td>"+usuario.getEmail()+"</td>"
                                                   + "<td class='text-right'>"+usuario.getEstado()+ "</td>"
-                                                  + "<td class='td-actions text-right'>"
+                                                  + "<td class='td-actions text-center'>"
                                                     + "<a href='#' onclick='VerUsuariosTabla("+usuario.getIdUsuario()+")' data-toggle='modal' data-target='#modalVerUsuario' rel='tooltip' title='' class='btn btn-success btn-link btn-xs' data-original-title='Ver Usuario'>"
                                                         + "<i class='fa fa-eye blue-corp'></i>"
                                                     + "</a>"   
-                                                    + "<a href='/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/editarsector.jsp?_' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
+                                                    + "<a href='#' onclick='cargarDatosUsuario("+usuario.getIdUsuario()+")' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-toggle='modal' data-target='#ModalEditarUsuario' data-original-title='Editar'>"
                                                         + "<i class='fa fa-edit gray-corp'></i>"
-                                                    + "</a>"
-                                                    + "<a href='#' rel='tooltip' title='' class='btn btn-danger btn-link btn-xs' data-original-title='Eliminar'>"
-                                                        + "<i class='fa fa-times orange-corp'></i>"
                                                     + "</a>"
                                                   + "</td>"
                                              + "</tr>");
@@ -462,12 +465,9 @@ public class usuario extends HttpServlet {
                                                     + "<a href='#' onclick='VerUsuariosTabla("+usuario.getIdUsuario()+")' data-toggle='modal' data-target='#modalVerUsuario' rel='tooltip' title='' class='btn btn-success btn-link btn-xs' data-original-title='Ver Usuario'>"
                                                         + "<i class='fa fa-eye'></i>"
                                                     + "</a>"   
-                                                    + "<a href='/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/editarsector.jsp?_' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
+                                                    + "<a href='#' onclick='cargarDatosUsuario("+usuario.getIdUsuario()+")' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
                                                         + "<i class='fa fa-edit'></i>"
-                                                    + "</a>"
-                                                    + "<a href='#' rel='tooltip' title='' class='btn btn-danger btn-link btn-xs' data-original-title='Eliminar'>"
-                                                        + "<i class='fa fa-times'></i>"
-                                                    + "</a>"
+                                                    + "</a>"                                                    
                                                   + "</td>"
                                              + "</tr>");
                     countRows++;
@@ -515,12 +515,9 @@ public class usuario extends HttpServlet {
                                                     + "<a href='#' onclick='VerUsuariosTabla("+usuario.getIdUsuario()+")' data-toggle='modal' data-target='#modalVerUsuario' rel='tooltip' title='' class='btn btn-success btn-link btn-xs' data-original-title='Ver Usuario'>"
                                                         + "<i class='fa fa-eye'></i>"
                                                     + "</a>"   
-                                                    + "<a href='/SaleslandColombiaApp/ligth-bootstrap/Pages/sector/editarsector.jsp?_' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
+                                                    + "<a href='#' onclick='cargarDatosUsuario("+usuario.getIdUsuario()+")' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
                                                         + "<i class='fa fa-edit'></i>"
-                                                    + "</a>"
-                                                    + "<a href='#' rel='tooltip' title='' class='btn btn-danger btn-link btn-xs' data-original-title='Eliminar'>"
-                                                        + "<i class='fa fa-times'></i>"
-                                                    + "</a>"
+                                                    + "</a>"                                                
                                                   + "</td>"
                                              + "</tr>");
                     countRows++;
@@ -600,7 +597,12 @@ public class usuario extends HttpServlet {
             //Actualizar Sesion
             Usuario objUsuario = (Usuario) s.createQuery("FROM Usuario WHERE IdUsuario = '"+idusuario+"'").uniqueResult();
             
+            request.getSession().removeAttribute("UsuarioIngresado");            
             request.getSession().setAttribute("UsuarioIngresado", objUsuario);
+            // NO BORRAR ESTA LINEA, ERROR DESCONOCIDO
+            objUsuario.getCargo().getNombreCargo();
+            
+            
             response.getWriter().write("1");
             s.close();
             objSessionFactory.close();
@@ -649,6 +651,68 @@ public class usuario extends HttpServlet {
         
         }
         
+    
+    }
+    protected void cargarDatosUsuario(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        try{
+                
+            String idUsuario = request.getParameter("idUsuario");
+            
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();
+            
+            Usuario objUsuario = (Usuario) sesion.createQuery("FROM Usuario WHERE IdUsuario = "+idUsuario+"").uniqueResult();
+                      
+            
+            JSONArray usuarioJson = new JSONArray();
+            
+            usuarioJson.add(objUsuario.getIdUsuario());
+            usuarioJson.add(objUsuario.getNombre());
+            usuarioJson.add(objUsuario.getApellido());
+            usuarioJson.add(objUsuario.getHorario());
+            usuarioJson.add(objUsuario.getEstado());
+            usuarioJson.add(objUsuario.getCargo().getIdCargo());
+            usuarioJson.add(objUsuario.getCargo().getEstado());      
+            
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(usuarioJson.toJSONString());
+            
+            
+            sesion.close();
+            objSessionFactory.close();
+        }catch(Exception ex){
+        
+            System.err.println(ex);
+            response.getWriter().write("500");
+        }
+    
+    }
+    protected void actualizarDatosBasiucosUsuario(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {            
+        try{
+        
+            String idUsuario = request.getParameter("IdUsuario");
+            String horario = request.getParameter("Horario");
+            String estado = request.getParameter("Estado");
+            String cargo = request.getParameter("Cargo");
+            
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();
+            
+            sesion.beginTransaction();
+            Query query = sesion.createSQLQuery("UPDATE Usuario SET Horario = '"+horario+"', Estado='"+estado+"', Cargo="+cargo+" WHERE IdUsuario="+idUsuario+"");
+            query.executeUpdate();
+            sesion.getTransaction().commit();
+            
+            
+            sesion.close();
+            objSessionFactory.close();                        
+        }catch(Exception ex){
+            System.err.println(ex);
+            response.getWriter().write("500");
+        }
     
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
