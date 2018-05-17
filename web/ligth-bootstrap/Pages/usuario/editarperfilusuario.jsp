@@ -154,15 +154,14 @@
                                             <div class="card-footer ">
                                                 <hr>
                                                 <div class="button-container text-center">
-                                                    <button class="btn btn-simple btn-link btn-icon">
-                                                        <i class="fa fa-facebook-square"></i>
-                                                    </button>
-                                                    <button class="btn btn-simple btn-link btn-icon">
-                                                        <i class="fa fa-twitter"></i>
-                                                    </button>
-                                                    <button class="btn btn-simple btn-link btn-icon">
-                                                        <i class="fa fa-google-plus-square"></i>
-                                                    </button>
+                                                    
+                                                    <form action='/SaleslandColombiaApp/ligth-bootstrap/Pages/reportes/PdfMiReporte.jsp' target='_blank' method='POST'>
+                                                        <input name='txtparametro' type='hidden' value="<%=objUsuario.getIdUsuario()%>">
+                                                        <button class='btn gray-corp btn-link btn-xs' type='submit' rel='tooltip' title='' data-original-title='Mi Reporte' > 
+                                                            <i class='fa fa-bar-chart gray-corp'></i>
+                                                        </button>
+                                                    </form>
+                                                    
                                                 </div>
                                             </div>
                                         </div>

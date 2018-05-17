@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReportSector" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5fd5adfe-c256-48ec-abee-94f64b67bbf5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="288"/>
+	<parameter name="Hor" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idSec" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fech1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fech2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 
+     *,
+     SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso,
+     ingreso.`Tipo` AS ingreso_Tipo
+FROM
+     `sector_cargo` sector_cargo INNER JOIN `Sector` Sector ON sector_cargo.`Sector` = Sector.`idSector`
+     AND sector_cargo.`Sector` = Sector.`idSector`,
+     `usuario` usuario INNER JOIN `cargo` cargo ON usuario.`cargo` = cargo.`idCargo`
+     INNER JOIN `ingreso` ingreso ON usuario.`idUsuario` = ingreso.`usuario`
+WHERE
+      Fecha BETWEEN $P{fech1} AND $P{fech2} AND idSector = $P{idSec} AND usuario.Horario = $P{Hor} GROUP BY ingreso.Tipo, ingreso.Dia]]>
+	</queryString>
+	<field name="idSector_Cargo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Cargo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Sector" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idSector" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NombreSector" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Descripcion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Estado" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idUsuario" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TipoDocumento" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Documento" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Apellido" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Direccion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Telefono" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Celular" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Genero" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Email" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FechaNacimiento" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Contrasenia" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Foto" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Horario" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idCargo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NombreCargo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Tipo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idIngreso" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Dia" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Fecha" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Hora" class="java.sql.Time">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Modalidad" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Observacion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Usuario" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Promedio_Ingreso" class="java.sql.Time"/>
+	<field name="ingreso_Tipo" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="210" splitType="Stretch">
+			<image>
+				<reportElement x="2" y="2" width="555" height="196" uuid="550bd508-b6bc-4dbc-8072-23da86163d9f"/>
+				<imageExpression><![CDATA["imgreportes\\plantillareporte.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="316" y="80" width="54" height="20" uuid="389671ca-8827-407c-a758-5aad4fd7cf31"/>
+				<textElement>
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[HORARIO:]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="398" y="134" width="200" height="42" uuid="2c3aa824-bf06-45b5-be21-b01e920027c9"/>
+				<subreportParameter name="doc">
+					<subreportParameterExpression><![CDATA[$F{idUsuario}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["PromedioSalidaSub.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="356" y="79" width="100" height="20" uuid="0e9dd7a9-221c-425d-9f37-5ba7f54927c4"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Horario}.toString().equals("A") ? "8:00 a 6:00":"7:00 a 5:00"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="317" y="112" width="124" height="20" uuid="0fb4bb0a-39c1-474c-a001-30ab01dc18c0"/>
+				<textElement>
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[PROMEDIO INGRESO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="258" y="20" width="327" height="31" uuid="86b5088f-9bc8-450e-bfc2-4cbf953c3d4f"/>
+				<textElement>
+					<font fontName="Tahoma" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NombreSector}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="401" y="74" width="226" height="105" uuid="a26a68e4-6159-4ef9-9028-f9d601b004b1"/>
+				<subreportParameter name="doc">
+					<subreportParameterExpression><![CDATA[$F{idUsuario}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["PromedioIngresoSub.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="318" y="147" width="124" height="20" uuid="8294d415-62ef-4542-94e9-9c6c589f3118"/>
+				<textElement>
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[PROMEDIO SALIDA: ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Immediate"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="738" splitType="Immediate">
+			<lineChart>
+				<chart customizerClass="jfre.CustomizandoHora">
+					<reportElement positionType="Float" x="4" y="10" width="550" height="257" forecolor="#333333" uuid="baeb3aa0-3194-41cc-beff-37f214f13c23">
+						<propertyExpression name="HOLA"><![CDATA[]]></propertyExpression>
+					</reportElement>
+					<chartTitle>
+						<font size="12" isBold="true"/>
+						<titleExpression><![CDATA["Ingresos Diarios"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend textColor="#000000" position="Right">
+						<font fontName="Arial"/>
+					</chartLegend>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{ingreso_Tipo}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{Fecha}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{Hora}.getTime()]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot isShowLines="true">
+					<plot labelRotation="70.0">
+						<seriesColor seriesOrder="0" color="#006986"/>
+						<seriesColor seriesOrder="1" color="#8E9091"/>
+						<seriesColor seriesOrder="2" color="#D9FAFF"/>
+						<seriesColor seriesOrder="3" color="#00204A"/>
+					</plot>
+					<categoryAxisFormat labelRotation="70.0">
+						<axisFormat>
+							<labelFont>
+								<font size="12" isBold="true"/>
+							</labelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat tickLabelColor="#000000" axisLineColor="#666666"/>
+					</valueAxisFormat>
+				</linePlot>
+			</lineChart>
+			<bar3DChart>
+				<chart customizerClass="jfre.CustomizandoHora">
+					<reportElement x="4" y="290" width="304" height="202" uuid="a1c18f1c-856e-4ecc-8d18-9585f40998df"/>
+					<chartTitle>
+						<font size="12" isBold="true"/>
+						<titleExpression><![CDATA["Ultima Semana"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{ingreso_Tipo}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{Dia}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{Hora}.getTime()]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<bar3DPlot isShowLabels="true">
+					<plot labelRotation="50.0">
+						<seriesColor seriesOrder="0" color="#006986"/>
+						<seriesColor seriesOrder="1" color="#8E9091"/>
+						<seriesColor seriesOrder="2" color="#D9FAFF"/>
+						<seriesColor seriesOrder="3" color="#00204A"/>
+					</plot>
+					<itemLabel color="#000000">
+						<font size="10" isBold="true"/>
+					</itemLabel>
+					<categoryAxisFormat labelRotation="50.0">
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</bar3DPlot>
+			</bar3DChart>
+			<pieChart>
+				<chart>
+					<reportElement x="308" y="290" width="246" height="202" uuid="d104e89c-b7be-4456-a90c-6b23768f358d"/>
+					<chartTitle>
+						<font size="12" isBold="true"/>
+						<titleExpression><![CDATA["Promedio Ingresos"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{Observacion}]]></keyExpression>
+					<valueExpression><![CDATA[$F{Hora}.getHours()]]></valueExpression>
+				</pieDataset>
+				<piePlot isShowLabels="false" isCircular="true" labelFormat="({2})" legendLabelFormat="{0}">
+					<plot>
+						<seriesColor seriesOrder="0" color="#006986"/>
+						<seriesColor seriesOrder="1" color="#8E9091"/>
+						<seriesColor seriesOrder="2" color="#D9FAFF"/>
+						<seriesColor seriesOrder="3" color="#00204A"/>
+					</plot>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+		</band>
+	</summary>
+</jasperReport>

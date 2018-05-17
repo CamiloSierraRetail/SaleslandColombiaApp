@@ -16,16 +16,17 @@
         <div class="wrapper">
             
             <!-- Include Nav Lateral  -->
-<%@include file="../includes/navLateral.jsp" %>
+            <%@include file="../includes/navLateral.jsp" %>
             
             <div class="main-panel">
                 <!-- Include Nav Superior -->
                 <%@include file="../includes/navSuperior.jsp" %>
+                <!-- Include div Ingresos -->
+                <%@include file="../includes/divIngresos.jsp" %>
                 
                 <div class="content">
                     <div class="container-fluid">
-                        <div class="container-fluid">
-                            <div class="row">
+                        <div class="row">  
                                 <div class="col-md-11 ml-auto mr-auto">
                                     <form id="frmRegistrarUsuario" novalidate="novalidate">
                                         <div class="card card-wizard">
@@ -219,7 +220,6 @@
                 <!-- INCLUDE FOOTER -->
                 <%@include  file="../includes/footer.jsp" %>
             </div>
-        </div>
             <%@include file="../includes/jsInclude.jsp" %>  
             <script>                
                 $(document).ready(function (){ 

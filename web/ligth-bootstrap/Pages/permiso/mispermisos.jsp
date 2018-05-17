@@ -119,11 +119,20 @@
                                             <div class="form-group">
                                                 <div class="row">                                                    
                                                     <small class="card-category"><strong>Archivo</strong></small>
-                                                    <input type="file" name="file" id="file" class="input-file">
-                                                    <label for="file" class="btn btn-tertiary js-labelFile" style="margin-top: 23px; margin-left: -50px; width: 450px;">
-                                                      <i class="icon fa fa-check"></i>
-                                                      <span class="js-fileName">Selecciona el archivo (PDF)</span>
-                                                    </label>                                                                                                   
+                                                    <div class="col-md-12">
+                                                        
+                                                        <div class="form-group">
+                                                        
+                                                            <input type="file" name="file" id="file" class="input-file form-control">
+                                                            <label for="file" class="btn btn-outline btn-wd btn-tertiary js-labelFile form-control">
+                                                              <i class="icon fa fa-check"></i>
+                                                              <span class="js-fileName">Selecciona el archivo (PDF)</span>
+                                                            </label> 
+
+                                                        </div>
+                                                        
+                                                    </div>
+                                                                                                                                                                                                          
                                                 </div>
                                             </div>
                                         </fieldset>                                        

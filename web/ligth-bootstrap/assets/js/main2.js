@@ -407,6 +407,51 @@ $('#frmEditarCargo').validate({
         }      
     }
 });
-
-
-    
+///////////////////////////////  VALIDACION DEL REPORTE DE SECTORES /////////////////////////////////////////////////
+$("#FrmReporteUsuarios").validate({
+   
+    rules:{
+        txtsector:{
+            required:true
+            
+        },txthorario:{
+            required:true
+            
+        },txtfechainicial:{
+            required:true
+            
+        },txtfechafinal:{
+            
+            required:true
+        }
+        
+    },messages:{
+                
+        txtsector:{
+            required:"Este campo es requerido"
+            
+        },txthorario:{
+            required:"Este campo es requerido"
+            
+        },txthorario:{
+            
+            required:"Este campo es requerido"
+        },txtfechainicial:{
+            required:"Este campo es requerido"
+            
+        },txtfechafinal:{
+            
+            required:"Este campo es requerido"
+        }
+        
+    },
+    errorElement: 'div',
+    errorPlacement: function (error, element) {
+        var placement = $(element).data('error');
+        if (placement) {
+            $(placement).append(error);
+        } else {
+            error.insertAfter(element);
+        }
+    }   
+});

@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="394ecaf0-593e-4372-930e-1011df1082e7">
+	<property name="ireport.zoom" value="0.9982500000000053"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="PieChartDataset" uuid="fa46d030-2c3b-4abd-8bed-a2d996c96ee9"/>
+	<subDataset name="New Dataset 1" uuid="5e880273-fa86-4276-a18a-7fb68f69f509">
+		<parameter name="doc" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Salida FROM Ingreso WHERE Tipo='Salida' AND Usuario = $P{doc}]]>
+		</queryString>
+		<field name="Promedio_Salida" class="java.sql.Time"/>
+	</subDataset>
+	<parameter name="fech1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fech2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="doc" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\javie\\Desktop\\REPORTES\\SaleslandColombiaApp\\web\\ligth-bootstrap\\Pages\\reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     *,
+     cargo.`idCargo` AS cargo_idCargo,
+     cargo.`NombreCargo` AS cargo_NombreCargo,
+     cargo.`Descripcion` AS cargo_Descripcion,
+     cargo.`Tipo` AS cargo_Tipo,
+     cargo.`Estado` AS cargo_Estado,
+     usuario.`Horario` AS usuario_Horario
+FROM
+     `ingreso` ingreso INNER JOIN `usuario` usuario ON ingreso.`usuario` = usuario.`idUsuario`
+     INNER JOIN `cargo` cargo ON usuario.`Cargo` = cargo.`idCargo`
+WHERE
+     Fecha BETWEEN $P{fech1} AND $P{fech2}
+ AND documento = $P{doc}
+ORDER BY
+     Fecha ASC]]>
+	</queryString>
+	<field name="idIngreso" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Dia" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Fecha" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Hora" class="java.sql.Time">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Tipo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Modalidad" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Observacion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Horario" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Usuario" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idUsuario" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TipoDocumento" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Documento" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Apellido" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Direccion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Telefono" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Celular" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Genero" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Email" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FechaNacimiento" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Contrasenia" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Foto" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Estado" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Cargo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idCargo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NombreCargo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Descripcion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cargo_idCargo" class="java.lang.Integer"/>
+	<field name="cargo_NombreCargo" class="java.lang.String"/>
+	<field name="cargo_Descripcion" class="java.lang.String"/>
+	<field name="cargo_Tipo" class="java.lang.String"/>
+	<field name="cargo_Estado" class="java.lang.String"/>
+	<field name="usuario_Horario" class="java.lang.String"/>
+	<variable name="nombres" class="java.lang.String">
+		<variableExpression><![CDATA[$F{Nombre}+$F{Apellido}]]></variableExpression>
+	</variable>
+	<variable name="Horario" class="java.lang.String"/>
+	<group name="Dia">
+		<groupExpression><![CDATA[$F{Dia}]]></groupExpression>
+		<groupHeader>
+			<band height="31">
+				<frame>
+					<reportElement mode="Opaque" x="4" y="4" width="551" height="24" forecolor="#B89F7D" backcolor="#006A85" uuid="ef468ba2-a1d5-45a6-a4b8-1bbd1d0e1b4d"/>
+					<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+						<reportElement style="SubTitle" isPrintRepeatedValues="false" x="11" y="1" width="132" height="23" forecolor="#FFFFFF" uuid="445a5718-edd4-4449-9b4a-dc3f0462a88d"/>
+						<textElement>
+							<font fontName="Arial" isBold="true" pdfFontName="Helvetica"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{Dia}]]></textFieldExpression>
+					</textField>
+					<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+						<reportElement positionType="Float" x="117" y="2" width="245" height="20" forecolor="#FFFFFF" uuid="b22bfc23-d217-46d5-b082-2eb78e750f01"/>
+						<textElement>
+							<font fontName="Arial" size="16" isBold="true" pdfFontName="Helvetica-Bold"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{Fecha}]]></textFieldExpression>
+					</textField>
+				</frame>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="8">
+				<line>
+					<reportElement positionType="FixRelativeToBottom" x="2" y="1" width="555" height="1" uuid="341eba94-e210-4ff8-933a-ab420800d9e1"/>
+					<graphicElement>
+						<pen lineWidth="0.5" lineColor="#999999"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Fecha">
+		<groupExpression><![CDATA[$F{Fecha}]]></groupExpression>
+		<groupHeader>
+			<band height="6"/>
+		</groupHeader>
+	</group>
+	<title>
+		<band height="196" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="555" height="196" uuid="c001a697-6449-44d7-916f-7e1a459c10b0"/>
+				<imageExpression><![CDATA["imgreportes\\plantillareporte.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="314" y="80" width="54" height="20" uuid="02839efb-7444-429b-814f-a043f38e1330"/>
+				<textElement>
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[HORARIO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="315" y="110" width="124" height="20" uuid="979fc774-7983-49a4-bb32-ab8510d7c724"/>
+				<textElement>
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[PROMEDIO INGRESO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="316" y="146" width="124" height="20" uuid="cc38d9a9-20c5-4d3b-83d9-2b8dfeae29d1"/>
+				<textElement>
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[PROMEDIO SALIDA: ]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="399" y="72" width="226" height="105" uuid="ced3616d-80a6-42a3-9b45-25b3269521b1"/>
+				<subreportParameter name="doc">
+					<subreportParameterExpression><![CDATA[$F{idUsuario}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["PromedioIngresoSub.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="396" y="133" width="200" height="42" uuid="6112e0e3-3107-42bc-915f-a674a410a088"/>
+				<subreportParameter name="doc">
+					<subreportParameterExpression><![CDATA[$F{idUsuario}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["PromedioSalidaSub.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="271" y="39" width="268" height="20" uuid="a89f91a0-a960-4121-956a-13f02c7b94d6"/>
+				<textFieldExpression><![CDATA[$F{NombreCargo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="354" y="79" width="100" height="20" uuid="ba16913c-0d44-4a6c-9c1b-1e6cc7c1dbff"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuario_Horario}.toString().equals("A") ? "8:00 a 6:00":"7:00 a 5:00"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="256" y="18" width="327" height="31" uuid="8f34d90e-727c-41f0-ba0e-dc08dd433d88"/>
+				<textElement>
+					<font fontName="Tahoma" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nombre}+" "+$F{Apellido}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="14" splitType="Stretch">
+			<frame>
+				<reportElement x="227" y="0" width="575" height="14" uuid="29810bc3-7ba2-4c0a-8057-eb8a9ecf721b"/>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="19" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="h:mm a" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="29" y="3" width="126" height="14" uuid="ebaa1051-d362-47cc-bbb1-1e6bd89d1eb4"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Hora}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="169" y="3" width="114" height="14" uuid="275ac157-2b79-4daa-96e8-2846c60956e7"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Tipo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="434" y="4" width="109" height="14" uuid="5294c71b-9da9-4a75-8be6-be2d8d4419b2"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Observacion}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="299" y="4" width="117" height="14" uuid="f65c85fb-213a-4f21-b567-7a3f5245cf95"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Modalidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="18" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="2" y="0" width="541" height="16" forecolor="#D0B48E" backcolor="#006A85" uuid="0cb211d0-d6bb-48be-bf2a-190c1da5c737"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="481" y="0" width="40" height="16" forecolor="#FFFFFF" uuid="fe9c7c3c-ba6d-4dcc-97fe-5b60c16f7ede"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12" isBold="false" pdfFontName="Helvetica"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="401" y="0" width="80" height="16" forecolor="#FFFFFF" uuid="4cbb61d7-840e-4cde-b441-ede5fcdf0552"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="12" isBold="false" pdfFontName="Helvetica"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="2" y="0" width="197" height="16" forecolor="#FFFFFF" uuid="ce11a415-37c7-4bb6-82a4-3f8cef55f484"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12" isBold="false" pdfFontName="Helvetica"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="802">
+			<rectangle>
+				<reportElement x="4" y="257" width="539" height="280" uuid="14e2c5c3-a5c7-48a8-9106-1692c6cea87f"/>
+			</rectangle>
+			<lineChart>
+				<chart customizerClass="jfre.CustomizandoHora">
+					<reportElement positionType="Float" x="-6" y="0" width="550" height="257" forecolor="#333333" uuid="cc992fbe-7fc6-439c-a57e-0470ca817077">
+						<propertyExpression name="HOLA"><![CDATA[]]></propertyExpression>
+					</reportElement>
+					<chartTitle>
+						<font size="12" isBold="true"/>
+						<titleExpression><![CDATA["Ingresos Diarios"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend textColor="#000000" position="Right">
+						<font fontName="Arial"/>
+					</chartLegend>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{Tipo}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{Fecha}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{Hora}.getTime()]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot isShowLines="true">
+					<plot labelRotation="70.0">
+						<seriesColor seriesOrder="0" color="#006986"/>
+						<seriesColor seriesOrder="1" color="#8E9091"/>
+						<seriesColor seriesOrder="2" color="#D9FAFF"/>
+						<seriesColor seriesOrder="3" color="#00204A"/>
+					</plot>
+					<categoryAxisFormat labelRotation="70.0">
+						<axisFormat>
+							<labelFont>
+								<font size="12" isBold="true"/>
+							</labelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat tickLabelColor="#000000" axisLineColor="#666666"/>
+					</valueAxisFormat>
+				</linePlot>
+			</lineChart>
+			<bar3DChart>
+				<chart customizerClass="jfre.CustomizandoHora">
+					<reportElement x="5" y="277" width="398" height="243" uuid="811e0582-95b2-4190-b04f-f63362e86125"/>
+					<chartTitle>
+						<font size="12" isBold="true"/>
+						<titleExpression><![CDATA["Ultima Semana"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{Tipo}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{Dia}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{Hora}.getTime()]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<bar3DPlot isShowLabels="true">
+					<plot labelRotation="50.0">
+						<seriesColor seriesOrder="0" color="#006986"/>
+						<seriesColor seriesOrder="1" color="#8E9091"/>
+						<seriesColor seriesOrder="2" color="#D9FAFF"/>
+						<seriesColor seriesOrder="3" color="#00204A"/>
+					</plot>
+					<itemLabel color="#000000">
+						<font size="10" isBold="true"/>
+					</itemLabel>
+					<categoryAxisFormat labelRotation="50.0">
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</bar3DPlot>
+			</bar3DChart>
+			<rectangle>
+				<reportElement x="5" y="561" width="539" height="214" uuid="012526ab-8e7f-4fe6-afcf-d089067e004d"/>
+			</rectangle>
+			<pieChart>
+				<chart>
+					<reportElement x="183" y="561" width="361" height="214" uuid="94aad6dc-96f2-47c3-a951-8fc0bc07e373"/>
+					<chartTitle>
+						<font size="12" isBold="true"/>
+						<titleExpression><![CDATA["Promedio Ingresos"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{Observacion}]]></keyExpression>
+					<valueExpression><![CDATA[$F{Hora}.getHours()]]></valueExpression>
+				</pieDataset>
+				<piePlot isShowLabels="false" isCircular="true" labelFormat="({2})" legendLabelFormat="{0}">
+					<plot>
+						<seriesColor seriesOrder="0" color="#006986"/>
+						<seriesColor seriesOrder="1" color="#8E9091"/>
+						<seriesColor seriesOrder="2" color="#D9FAFF"/>
+						<seriesColor seriesOrder="3" color="#00204A"/>
+					</plot>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<staticText>
+				<reportElement x="404" y="318" width="119" height="131" uuid="d80f0c72-ce69-4c75-9d93-cb037d71f443"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Tahoma" size="14"/>
+				</textElement>
+				<text><![CDATA[En esta grafica se puede evidenciar, los ultimos ingresos que tuvo el usuario en la ultima semana ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="606" width="213" height="78" uuid="bdde251d-02ed-4561-ac07-5b81f0f20060"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Tahoma" size="14"/>
+				</textElement>
+				<text><![CDATA[En esta grafica se evidencia el promedio de los usuarios segun las observaciones que obtuvieron en total]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

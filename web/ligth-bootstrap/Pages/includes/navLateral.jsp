@@ -206,19 +206,31 @@ try{
                                 </p>
                             </a>
                             <div class="collapse " id="ExamplesReportes">
-                                <ul class="nav">
-                                    <li class="nav-item ">
-                                        <a class="nav-link" href="../cargo/listarcargo.jsp">
+                                <ul class="nav">                                    
+                                    <li class="nav-item" id="reporteSectores">
+                                        <a class="nav-link" href="../usuario/../reportes/ReporteSector.jsp">
+                                            <span class="sidebar-mini">S</span>
+                                            <span class="sidebar-normal">Sectores</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" id="reporteCanales">
+                                        <a class="nav-link" href="../usuario/../reportes/ReporteCanal.jsp">
+                                            <span class="sidebar-mini">C</span>
+                                            <span class="sidebar-normal">Canales</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" id="reporteAreas">
+                                        <a class="nav-link" href="../usuario/../reportes/ReporteArea.jsp">
+                                            <span class="sidebar-mini">A</span>
+                                            <span class="sidebar-normal">Areas</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" id="reporteUsuarios">
+                                        <a class="nav-link" href="../reportes/ReporteUsuario.jsp">
                                             <span class="sidebar-mini">U</span>
                                             <span class="sidebar-normal">Usuarios</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item ">
-                                        <a class="nav-link" href="../usuario/registrarcargo.jsp">
-                                            <span class="sidebar-mini">S</span>
-                                            <span class="sidebar-normal">Sectores</span>
-                                        </a>
-                                    </li>                                                                     
                                 </ul>
                             </div>
                         </li>                        

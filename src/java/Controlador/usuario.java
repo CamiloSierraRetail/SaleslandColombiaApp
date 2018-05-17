@@ -394,6 +394,10 @@ public class usuario extends HttpServlet {
                                                     + "<a href='#' onclick='cargarDatosUsuario("+usuario.getIdUsuario()+")' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-toggle='modal' data-target='#ModalEditarUsuario' data-original-title='Editar'>"
                                                         + "<i class='fa fa-edit gray-corp'></i>"
                                                     + "</a>"
+                                                    +"<form action='/SaleslandColombiaApp/ligth-bootstrap/Pages/reportes/PdfMiReporte.jsp' target='_blank' method='POST'>"
+                                                        +"<input name='txtparametro' type='hidden' value='"+usuario.getIdUsuario()+"'>"
+                                                        +"<button class='btn btn-warning btn-link btn-xs' type='submit' rel='tooltip' title='' data-original-title='Reporte' > <i class='fa fa-bar-chart orange-corp'></i></button>"                                                        
+                                                    +"</form>"
                                                   + "</td>"
                                              + "</tr>");
                     countRows++;
@@ -458,16 +462,18 @@ public class usuario extends HttpServlet {
                                                   + "<td>"+usuario.getNombre()+" "+usuario.getApellido()+"</td>"
                                                   + "<td>"+usuario.getCelular()+"</td>"
                                                   + "<td>"+usuario.getEmail()+"</td>"
-                                                  + "<td class='text-right'>"+usuario.getEstado()
-
-                                                  + "</td>"
-                                                  + "<td class='td-actions text-right'>"
+                                                  + "<td class='text-right'>"+usuario.getEstado()+ "</td>"
+                                                  + "<td class='td-actions text-center'>"
                                                     + "<a href='#' onclick='VerUsuariosTabla("+usuario.getIdUsuario()+")' data-toggle='modal' data-target='#modalVerUsuario' rel='tooltip' title='' class='btn btn-success btn-link btn-xs' data-original-title='Ver Usuario'>"
-                                                        + "<i class='fa fa-eye'></i>"
+                                                        + "<i class='fa fa-eye blue-corp'></i>"
                                                     + "</a>"   
-                                                    + "<a href='#' onclick='cargarDatosUsuario("+usuario.getIdUsuario()+")' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
-                                                        + "<i class='fa fa-edit'></i>"
-                                                    + "</a>"                                                    
+                                                    + "<a href='#' onclick='cargarDatosUsuario("+usuario.getIdUsuario()+")' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-toggle='modal' data-target='#ModalEditarUsuario' data-original-title='Editar'>"
+                                                        + "<i class='fa fa-edit gray-corp'></i>"
+                                                    + "</a>"
+                                                    +"<form action='/SaleslandColombiaApp/ligth-bootstrap/Pages/reportes/PdfMiReporte.jsp' target='_blank' method='POST'>"
+                                                        +"<input name='txtparametro' type='hidden' value='"+usuario.getIdUsuario()+"'>"
+                                                        +"<button class='btn btn-warning btn-link btn-xs' type='submit' rel='tooltip' title='' data-original-title='Reporte' > <i class='fa fa-bar-chart orange-corp'></i></button>"                                                        
+                                                    +"</form>"
                                                   + "</td>"
                                              + "</tr>");
                     countRows++;
@@ -508,16 +514,18 @@ public class usuario extends HttpServlet {
                                                   + "<td>"+usuario.getNombre()+" "+usuario.getApellido()+"</td>"
                                                   + "<td>"+usuario.getCelular()+"</td>"
                                                   + "<td>"+usuario.getEmail()+"</td>"
-                                                  + "<td class='text-right'>"+usuario.getEstado()
-
-                                                  + "</td>"
-                                                  + "<td class='td-actions text-right'>"
+                                                  + "<td class='text-right'>"+usuario.getEstado()+ "</td>"
+                                                  + "<td class='td-actions text-center'>"
                                                     + "<a href='#' onclick='VerUsuariosTabla("+usuario.getIdUsuario()+")' data-toggle='modal' data-target='#modalVerUsuario' rel='tooltip' title='' class='btn btn-success btn-link btn-xs' data-original-title='Ver Usuario'>"
-                                                        + "<i class='fa fa-eye'></i>"
+                                                        + "<i class='fa fa-eye blue-corp'></i>"
                                                     + "</a>"   
-                                                    + "<a href='#' onclick='cargarDatosUsuario("+usuario.getIdUsuario()+")' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
-                                                        + "<i class='fa fa-edit'></i>"
-                                                    + "</a>"                                                
+                                                    + "<a href='#' onclick='cargarDatosUsuario("+usuario.getIdUsuario()+")' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-toggle='modal' data-target='#ModalEditarUsuario' data-original-title='Editar'>"
+                                                        + "<i class='fa fa-edit gray-corp'></i>"
+                                                    + "</a>"
+                                                    +"<form action='/SaleslandColombiaApp/ligth-bootstrap/Pages/reportes/PdfMiReporte.jsp' target='_blank' method='POST'>"
+                                                        +"<input name='txtparametro' type='hidden' value='"+usuario.getIdUsuario()+"'>"
+                                                        +"<button class='btn btn-warning btn-link btn-xs' type='submit' rel='tooltip' title='' data-original-title='Reporte' > <i class='fa fa-bar-chart orange-corp'></i></button>"                                                        
+                                                    +"</form>"
                                                   + "</td>"
                                              + "</tr>");
                     countRows++;
