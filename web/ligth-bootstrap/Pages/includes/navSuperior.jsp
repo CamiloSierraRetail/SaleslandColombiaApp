@@ -1,3 +1,4 @@
+<%@page import="Modelo.Usuario"%>
 <!-- Navbar -->
     <nav class="navbar navbar-expand-lg ">
         <div class="container-fluid">
@@ -17,12 +18,20 @@
             </button>
             <div class="collapse navbar-collapse justify-content-end">
                 <ul class="navbar-nav">
+                    <%
+                    Usuario objUsuario2 = (Usuario) request.getSession().getAttribute("UsuarioIngresado");    
+                    if (!objUsuario2.getCargo().getTipo().equals("Empleado")) {%>
+                    
+                    
+                    
+                    
                     <li class="nav-item">
                         <a href="#" class="nav-link btnSideUsers blue-corp" rel="tooltip" data-original-title="Ingreso de Personal" href="#" aria-haspopup="true" aria-expanded="false">
                             <i class="material-icons">perm_identity</i>
                             <a href="#"class="d-lg-none btnSideUsers">Empleados</a>
                         </a>
                     </li>
+                    <%}%>
                     <!-- CODIGO PARA LAS NOTIFICACIONES, NO BORRAR
                     <li class="dropdown nav-item">
                         <a href="#" rel="tooltip" data-original-title="Notificaciones" class="dropdown-toggle nav-link" data-toggle="dropdown">

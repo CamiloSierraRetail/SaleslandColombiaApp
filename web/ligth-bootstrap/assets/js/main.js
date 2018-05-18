@@ -2808,7 +2808,6 @@ $('#frmSolicitarPermiso').validate({
             title: "Solicitar permiso",
             text: "¿Está seguro que desea solicitar el permiso?",
             icon: "info",
-            buttons: true,
             closeonconfirm: false,
             buttons: ["Cancelar", "Sí"]
         })
@@ -2836,8 +2835,6 @@ $('#frmSolicitarPermiso').validate({
                 });
 
                 $.post("/SaleslandColombiaApp/permiso/registrarPermiso",{Motivo:motivo, Descripcion:descripcion, Inicio:inicio, Fin:fin, Archivo:filename},function (responseText) {
-
-                    alert(responseText);
 
                     if (responseText == "500") {
                         swal("Ocurrio un error", "Lo sentimos, no se pudo realizar la solicitud del permiso, por favor intentalo más tarde.", "error");
@@ -2943,7 +2940,7 @@ function listarPermisosSolicitados() {
                                             +"<th class='text-center'>Descripción</th>"
                                             +"<th class='text-center'>Fecha de inicio</th>"
                                             +"<th class='text-center'>Fecha de fin</th>"
-                                            +"<th class='text-center'>Jefe</th>"
+                                            +"<th class='text-center'>Empleado</th>"
                                             +"<th class='text-center'>Estado</th>"
                                             +"<th class='text-center'>Acciones</th>"
                                         +"</tr>"
@@ -3094,4 +3091,92 @@ $("#frmEditarDatosUsuarios").validate({
         });        
     }
     
+});
+/////////////////////////   FUNCION PARA CARGAR LOS DATOS DEL PERMISO  ///////////////////////////////////////////////
+function verPermiso(idPermiso){
+    
+    $.post("/SaleslandColombiaApp/permiso/verPermiso",{idPermiso:idPermiso},function (responseText) {
+       
+        if (responseText == "500") {
+            
+            swal("Ocurrio un error", "Ocurrió un erro mientra intentebamos actualizar la información del usuario.", "error");
+            
+        }else{
+                                    
+            var dt = JSON.parse(responseText);                        
+            
+            var fechaInicio = dt[3].split(" ");
+            var hora1 = dt[4].split(" ");
+            var horaInicio = hora1[1].split(":");
+            
+            var fechaFin = dt[5].split(" ");
+            var hora2 = dt[6].split(" ");
+            var horaFin = hora2[1].split(":");
+            
+            $("#idPermiso").val(dt[0]);
+            $("#lblMotivo").text(dt[1]);
+            $("#lblDescripcionPermiso").text(dt[2]);
+            $("#lblDesdePermiso").text(fechaInicio[0]+"  "+horaInicio[0]+":"+horaInicio[1]);
+            $("#lblHastaPermiso").text(fechaFin[0]+"  "+horaFin[0]+":"+horaFin[1]);
+            $("#lblEmpleadoPermiso").text(dt[8]+" "+dt[9]);
+            
+            if (dt[7] == "Enviado") {
+                
+                $("#cmbEstadoPermiso").prop('disabled',false);
+                
+            }else{
+                $("#cmbEstadoPermiso").val(dt[7]);
+                $("#cmbEstadoPermiso").prop('disabled',true);
+            }
+            
+        }
+        
+    });
+    
+}
+////////////////////////////////   FUNCION PARA APROVAR O RECHAZAR LOS PERMISOS ///////////////////////////////////
+$(".permisoEstado").click(function (){
+    var estado = $("#cmbEstadoPermiso").val();
+    
+    if (estado == "" || estado == "Selecciona el estado del permiso") {
+        
+        swal("Selecciona el estado", "Para poder continuar debes seleccionar el estado.", "warning");
+        
+    }else{
+        
+     
+        swal({
+            title: "Confirmar datos",
+            text: "¿Estás seguro que deseas cambiar el estado delpermiso?",
+            icon: "info",
+            closeonconfirm: false,
+            buttons: ["Cancelar", "Sí"]
+        }).then((willDelete) => {
+            if (willDelete) {
+
+                var idPermiso = $("#idPermiso").val();
+
+               $.post("/SaleslandColombiaApp/permiso/actualizarPermiso",{idPermiso:idPermiso, estado:estado},function (responseText) {
+
+                    if (responseText == "500") {
+
+                    }else{
+
+                        swal("Información actualizada", "La información del permiso ha sido actualizada.", "success").then((willDelete) => {
+                            if (willDelete) {
+
+                                $('#modalEditarPermiso').modal('hide');
+                                listarPermisosSolicitados();
+
+                            }
+                        });        
+                    }
+
+                });
+
+            }
+        });   
+        
+        
+    }                     
 });

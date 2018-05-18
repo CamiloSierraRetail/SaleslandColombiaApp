@@ -148,9 +148,9 @@ public class area extends HttpServlet {
                                               + "<td>"+area.getCanal().getNombreCanal()+"</td>"
                                               + "<td class='text-right'>"+area.getEstado()+ "</td>"
                                               + "<td class='td-actions text-right'>"
-                                                + "<a href='#' rel='tooltip' title='' class='btn btn-link btn-xs' data-original-title='Ver Sector'>"
+                                                /*+ "<a href='#' rel='tooltip' title='' class='btn btn-link btn-xs' data-original-title='Ver Sector'>"
                                                     + "<i class='fa fa-eye blue-corp'></i>"
-                                                + "</a>"   
+                                                + "</a>"*/   
                                                 + "<button onclick='verDatosArea("+area.getIdArea()+")' data-toggle='modal' data-target='#ModalEditarArea' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
                                                     + "<i class='fa fa-edit gray-corp'></i>"
                                                 + "</button>"

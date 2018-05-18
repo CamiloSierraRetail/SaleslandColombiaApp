@@ -42,7 +42,7 @@
                                             <div class="card-footer ">
                                                 <div class="legend">
                                                     <i class="fa fa-circle blue-corp" rel="tooltip" data-original-title="Ingreso Horario A (08:00 - 18:00)" href="#" aria-haspopup="true" aria-expanded="false"></i><i class="fa fa-circle text-warning" rel="tooltip" data-original-title="Ingreso horario B (07:00 - 17:00)" href="#" aria-haspopup="true" aria-expanded="false"></i> Ingreso &nbsp &nbsp
-                                                    <i class="fa fa-circle gray-corp" rel="tooltip" data-original-title="Salida horario A (08:00 - 18:00)" href="#" aria-haspopup="true" aria-expanded="false"></i><i class="fa fa-circle text-primary" rel="tooltip" data-original-title="Salida horario B (07:00 - 17:00)" href="#" aria-haspopup="true" aria-expanded="false"></i> Salida
+                                                    <i class="fa fa-circle gray-corp" rel="tooltip" data-original-title="Salida horario A (08:00 - 18:00)" href="#" aria-haspopup="true" aria-expanded="false"></i><i class="fa fa-circle" style="color: #60a3bc;" rel="tooltip" data-original-title="Salida horario B (07:00 - 17:00)" href="#" aria-haspopup="true" aria-expanded="false"></i> Salida
                                                 </div>
                                                 <hr>
                                                 <div class="stats">
@@ -61,7 +61,14 @@
                                                 <div class="row">
                                                     <div class="table-responsive">
                                                         <table class="table table-hover">
-                                                            
+                                                            <thead>
+                                                                <tr>
+                                                                    <th></th>
+                                                                    <th></th>
+                                                                    <th>Horario A</th>
+                                                                    <th>Horario B</th>
+                                                                </tr>
+                                                            </thead>
                                                             <tbody>
 
                                                                 <tr class="cargarPromedioEntrada" style="cursor: pointer" data-toggle="modal" data-target="#modalPromedios">
@@ -154,7 +161,7 @@
                                                 </ul>
                                                 <div class="tab-content">
                                                     <div class="tab-pane fade show active" id="tab1" role="tabpanel">
-                                                        <p class="text-center text-muted card-category" id="lblDescripcionTabA">Este es el promedio de los trabajadores menos ranqueados dentro de tu equipo de trabajo.</p><br>
+                                                        <p class="text-center text-muted card-category" id="lblDescripcionTabA"></p><br>
                                                         <div class="row" id="contentTabA">
                                                             <div class="col-md-7">
                                                                 <div class="card">
@@ -196,7 +203,7 @@
                                                     
                                                     
                                                     <div class="tab-pane fade" id="tab2" role="tabpanel">
-                                                        <p class="text-center text-muted card-category" id="lblDescripcionTabB">aaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>                                                        
+                                                        <p class="text-center text-muted card-category" id="lblDescripcionTabB"></p>                                                        
                                                         <div class="row" id="contentTabB">
                                                             <div class="col-md-7">
                                                                 <div class="card">
@@ -250,7 +257,7 @@
                 <!--  End Modal -->
                 
                 
-                <!-- Mini Modal -->
+                <!-- Mini Modal 
                 <div class="modal fade modal-mini modal-primary" id="modalHorasTrabajadas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">

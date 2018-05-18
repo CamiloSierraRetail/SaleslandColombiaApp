@@ -44,8 +44,8 @@ try{
                             </a>
                             <div class="collapse" id="collapseExample">
                                 <ul class="nav">
-                                    <li>
-                                        <a class="profile-dropdown" href="../usuario/editarperfilusuario.jsp">
+                                    <li class="nav-item" id="editarPerfilUsuario">
+                                        <a class="nav-link profile-dropdown" href="../usuario/editarperfilusuario.jsp">
                                             <span class="sidebar-mini">EP</span>
                                             <span class="sidebar-normal">Editar Perfil</span>
                                         </a>
@@ -61,7 +61,7 @@ try{
                                 <p>Inicio</p>
                             </a>
                         </li>
-                        <li class="nav-item" id="permisosSolicitados">
+                        <li class="nav-item" id="misPermisos">
                             <a class="nav-link" href="../permiso/mispermisos.jsp">
                                 <i class="material-icons">date_range</i>
                                 <p>Permisos</p>

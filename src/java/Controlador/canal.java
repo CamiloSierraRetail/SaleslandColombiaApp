@@ -110,9 +110,9 @@ public class canal extends HttpServlet {
                                               + "<td>"+canal.getSector().getNombreSector()+"</td>"
                                               + "<td class='text-right'>"+canal.getEstado()+ "</td>"
                                               + "<td class='td-actions text-right'>"
-                                                + "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='Ver Canal'>"
+                                                /*+ "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='Ver Canal'>"
                                                     + "<i class='fa fa-eye blue-corp'></i>"
-                                                + "</a>"   
+                                                + "</a>"*/   
                                                 + "<button onclick='verDatosCanal("+canal.getIdCanal()+")' data-toggle='modal' data-target='#ModalEditarCanal' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
                                                     + "<i class='fa fa-edit gray-corp'></i>"
                                                 + "</button>"

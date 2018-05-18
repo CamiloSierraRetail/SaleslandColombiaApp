@@ -66,7 +66,7 @@
                         </div>                                                                                                            
                     </div>
                 </div>
-                <!-- MODAL PARA CREAR UN SECTOR -->
+                <!-- MODAL PARA CREAR UN PERMISO -->
                 <div class="modal fade modal-primary" id="modalRegistrarPermiso" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">

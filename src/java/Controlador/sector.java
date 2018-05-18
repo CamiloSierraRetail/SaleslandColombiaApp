@@ -102,9 +102,9 @@ public class sector extends HttpServlet {
                                               + "<td>"+sector.getDescripcionSector()+"</td>"
                                               + "<td class='text-right'>"+sector.getEstado()+ "</td>"
                                               + "<td class='td-actions text-right'>"
-                                                + "<a href='#' rel='tooltip' title='' class='btn btn-link btn-xs' data-original-title='Ver Sector'>"
+                                                /*+ "<a href='#' rel='tooltip' title='' class='btn btn-link btn-xs' data-original-title='Ver Sector'>"
                                                     + "<i class='fa fa-eye blue-corp'></i>"
-                                                + "</a>"   
+                                                + "</a>"*/   
                                                 + "<button onclick='verDatosSector("+sector.getIdSector()+")' data-toggle='modal' data-target='#ModalEditarSector' rel='tooltip' title='' class='btn btn-link btn-xs' data-original-title='Editar'>"
                                                     + "<i class='fa fa-edit gray-corp'></i>"
                                                 + "</button>"

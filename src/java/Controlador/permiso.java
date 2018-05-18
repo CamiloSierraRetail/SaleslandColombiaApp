@@ -16,6 +16,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.json.simple.JSONArray;
 
 
 public class permiso extends HttpServlet {
@@ -40,6 +41,12 @@ public class permiso extends HttpServlet {
                     break;
                 case "listarPermisosSolicitados":
                     listarPermisosSolicitados(request, response);
+                    break;
+                case "verPermiso":
+                    verPermiso(request, response);
+                    break;
+                case "actualizarPermiso":
+                    actualizarPermiso(request, response);
                     break;
                 
             }
@@ -67,6 +74,8 @@ public class permiso extends HttpServlet {
             String InicioCompmplete [] = inicio.split(" ");
             String FinCompmplete [] = fin.split(" ");
             
+            String fechaInicio [] = InicioCompmplete[0].split("/");
+            String fechaFin [] = FinCompmplete[0].split("/");
             
             System.out.println("sdsdjsjsjsjsjs al archivo es ---->         "+archivo+ "  FECHA DE INICIO ----->     " + inicio+ "        " + fin);
             
@@ -114,7 +123,7 @@ public class permiso extends HttpServlet {
                 
             }else if (objUsuario.getCargo().getTipo().equals("JefeArea")) {
                 
-                Area_Cargo objArea_Cargo = (Area_Cargo)sesion.createQuery("FROM Area_Cargo WHERE Cargo="+objUsuario.getCargo().getIdCargo()+"");
+                Area_Cargo objArea_Cargo = (Area_Cargo)sesion.createQuery("FROM Area_Cargo WHERE Cargo="+objUsuario.getCargo().getIdCargo()+"").uniqueResult();
                 
                 Query queryCanal_Cargo = sesion.createQuery("FROM Canal_Cargo WHERE Canal="+objArea_Cargo.getArea().getCanal().getIdCanal()+"");
                 List<Canal_Cargo> listaCanal_Cargo = queryCanal_Cargo.list();
@@ -141,9 +150,9 @@ public class permiso extends HttpServlet {
                 for(Area_Cargo area_cargo : listaArea_Cargo){
                 
                     
-                    if (area_cargo.getCargo().equals("JefeArea") && area_cargo.getCargo().getEstado().equals("Activo")) {
+                    if (area_cargo.getCargo().getTipo().equals("JefeArea") && area_cargo.getCargo().getEstado().equals("Activo")) {
                         
-                        objJefeDirecto = (Usuario) sesion.createQuery("FROM Usuario WHERE Estado='Actio' AND Cargo = "+area_cargo.getCargo().getIdCargo()+"").uniqueResult();                        
+                        objJefeDirecto = (Usuario) sesion.createQuery("FROM Usuario WHERE Estado='Activo' AND Cargo = "+area_cargo.getCargo().getIdCargo()+"").uniqueResult();                        
                     }
                     
                 }
@@ -155,11 +164,14 @@ public class permiso extends HttpServlet {
                 
                 System.out.println("EL JEFEDIRECTO ES  ------------------------>     "  + objJefeDirecto.getNombre());                        
                 
-                Permiso objPermiso = new Permiso(motivo, descripcion, new Date(), new Date(), new Date(), new Date(), archivo, "Enviado", objUsuario, objJefeDirecto);
-                
+                //Permiso objPermiso = new Permiso(motivo, descripcion, new Date(), new Date(), new Date(), new Date(), archivo, "Enviado", objUsuario, objJefeDirecto);
                 sesion.beginTransaction();
-                sesion.save(objPermiso);
+                Query query = sesion.createSQLQuery("INSERT INTO Permiso (idPermiso, Motivo,Descripcion, FechaInicio, HoraInicio, FechaFin, HoraFin, DocAnexo, Estado, UsuarioEnvia, UsuarioRecibe) VALUES (NULL, '"+motivo+"', '"+descripcion+"', '"+fechaInicio[2]+"/"+fechaInicio[0]+"/"+fechaInicio[1]+"','"+InicioCompmplete[1]+"', '"+fechaFin[2]+"/"+fechaFin[0]+"/"+fechaFin[1]+"', '"+FinCompmplete[1]+"', '"+archivo+"', 'Enviado', '"+objUsuario.getIdUsuario()+"', '"+objJefeDirecto.getIdUsuario()+"')");
+                query.executeUpdate();
+                
+                //sesion.save(objPermiso);
                 sesion.getTransaction().commit();
+                sesion.flush();
                 
                 response.getWriter().write("200");
                 
@@ -188,8 +200,7 @@ public class permiso extends HttpServlet {
             Session sesion = objSessionFactory.openSession();
             
             Query queryPermisos = sesion.createQuery("FROM Permiso WHERE UsuarioEnvia="+objUsuario.getIdUsuario()+"");
-            List<Permiso> listaPermiso = queryPermisos.list();
-            
+            List<Permiso> listaPermiso = queryPermisos.list();                        
             
             response.setCharacterEncoding("UTF-8");
             for(Permiso permiso : listaPermiso){
@@ -229,9 +240,9 @@ public class permiso extends HttpServlet {
                                                 + "<a href="+hrefDocAnexo+" rel='tooltip' title='' class='btn btn-link btn-xs' data-original-title='"+tooltipText+"'>"
                                                     + "<i class='fa fa-file blue-corp'></i>"
                                                 + "</a>"   
-                                                + "<button onclick='verDatosSector("+permiso.getIdPermiso()+")' data-toggle='modal' data-target='#ModalEditarSector' rel='tooltip' title='' class='btn btn-link btn-xs' data-original-title='Editar'>"
+                                                /*+ "<button onclick='verDatosSector("+permiso.getIdPermiso()+")' data-toggle='modal' data-target='#ModalEditarSector' rel='tooltip' title='' class='btn btn-link btn-xs' data-original-title='Editar'>"
                                                     + "<i class='fa fa-edit gray-corp'></i>"
-                                                + "</button>"
+                                                + "</button>"*/
                                                
                                               + "</td>"
                                          + "</tr>");
@@ -301,7 +312,7 @@ public class permiso extends HttpServlet {
                                                 + "<a href="+hrefDocAnexo+" rel='tooltip' title='' class='btn btn-link btn-xs' data-original-title='"+tooltipText+"'>"
                                                     + "<i class='fa fa-file blue-corp'></i>"
                                                 + "</a>"   
-                                                + "<button onclick='verDatosSector("+permiso.getIdPermiso()+")' data-toggle='modal' data-target='#ModalEditarSector' rel='tooltip' title='' class='btn btn-link btn-xs' data-original-title='Editar'>"
+                                                + "<button onclick='verPermiso("+permiso.getIdPermiso()+")' data-toggle='modal' data-target='#modalEditarPermiso' rel='tooltip' title='' class='btn btn-link btn-xs' data-original-title='Editar'>"
                                                     + "<i class='fa fa-edit gray-corp'></i>"
                                                 + "</button>"
                                                
@@ -319,6 +330,70 @@ public class permiso extends HttpServlet {
             response.getWriter().write("500");
         }
     
+    }
+    protected void verPermiso(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+            
+        try{
+            String idPermiso = request.getParameter("idPermiso");
+            
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();                                    
+            
+            Permiso objPermiso = (Permiso) sesion.createQuery("FROM Permiso WHERE IdPermiso = "+idPermiso+"").uniqueResult();
+            
+            JSONArray permisoJson = new JSONArray();
+            permisoJson.add(objPermiso.getIdPermiso());
+            permisoJson.add(objPermiso.getMotivo());
+            permisoJson.add(objPermiso.getDescripcion());
+            permisoJson.add(String.valueOf(objPermiso.getFechaInicio()));
+            permisoJson.add(String.valueOf(objPermiso.getHoraInicio()));
+            permisoJson.add(String.valueOf(objPermiso.getFechaFin()));
+            permisoJson.add(String.valueOf(objPermiso.getHoraFin()));
+            permisoJson.add(objPermiso.getEstado());
+            permisoJson.add(objPermiso.getUsuarioEnvia().getNombre());
+            permisoJson.add(objPermiso.getUsuarioEnvia().getApellido());
+            
+            
+            
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(permisoJson.toJSONString());
+            
+            sesion.close();
+            objSessionFactory.close();
+            
+        }catch(Exception ex){
+        
+            System.err.println(ex);
+            response.getWriter().write("500");
+        }
+    
+    }
+    protected void actualizarPermiso(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+    
+        try{
+            
+            String idPermiso = request.getParameter("idPermiso");
+            String estado = request.getParameter("estado");
+        
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();    
+            
+            sesion.beginTransaction();
+            Query query = sesion.createSQLQuery("UPDATE Permiso SET Estado='"+estado+"' WHERE idPermiso="+idPermiso+"");
+            query.executeUpdate();
+            sesion.getTransaction().commit();
+            
+            response.getWriter().write("200");
+            sesion.close();
+            objSessionFactory.close();
+        }catch(Exception ex){
+        
+            System.err.println(ex);
+            response.getWriter().write("500");
+        }
+        
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
