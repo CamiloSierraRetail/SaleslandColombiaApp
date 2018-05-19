@@ -8,6 +8,13 @@ import Modelo.Usuario;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -160,22 +167,23 @@ public class permiso extends HttpServlet {
             }
             
             if (objJefeDirecto.getDocumento() != null) {
-                
-                
+                                
                 System.out.println("EL JEFEDIRECTO ES  ------------------------>     "  + objJefeDirecto.getNombre());                        
-                
-                //Permiso objPermiso = new Permiso(motivo, descripcion, new Date(), new Date(), new Date(), new Date(), archivo, "Enviado", objUsuario, objJefeDirecto);
+                                
                 sesion.beginTransaction();
                 Query query = sesion.createSQLQuery("INSERT INTO Permiso (idPermiso, Motivo,Descripcion, FechaInicio, HoraInicio, FechaFin, HoraFin, DocAnexo, Estado, UsuarioEnvia, UsuarioRecibe) VALUES (NULL, '"+motivo+"', '"+descripcion+"', '"+fechaInicio[2]+"/"+fechaInicio[0]+"/"+fechaInicio[1]+"','"+InicioCompmplete[1]+"', '"+fechaFin[2]+"/"+fechaFin[0]+"/"+fechaFin[1]+"', '"+FinCompmplete[1]+"', '"+archivo+"', 'Enviado', '"+objUsuario.getIdUsuario()+"', '"+objJefeDirecto.getIdUsuario()+"')");
-                query.executeUpdate();
-                
-                //sesion.save(objPermiso);
+                query.executeUpdate();                                
                 sesion.getTransaction().commit();
-                sesion.flush();
                 
+                String nombre [] = objJefeDirecto.getNombre().split(" ");
+                String ContenidoCorreo = "<h2 style='font-family: sans-serif'>Hola "+nombre[0]+",</h2>"
+                                                +"<p style='font-family: sans-serif'>Te informamos que <b>"+objUsuario.getNombre()+" "+objUsuario.getApellido()+"</b> identificado con el número de "+objUsuario.getTipoDocumento()+" <b>"+objUsuario.getDocumento()+"</b> te ha enviado una solicitud de un permiso desde "+fechaInicio[2]+"-"+fechaInicio[0]+"-"+fechaInicio[1]+" "+InicioCompmplete[1]+" hasta "+fechaFin[2]+"-"+fechaFin[0]+"-"+fechaFin[1]+" "+FinCompmplete[1]+".<br><br> Por favor no olvides ingresar a <a href='#'>Entry Salesland</a> y revisar los permisos solicitados por tu equipo de trabajo.</p>";
+                                                                                                                                                                            
+                correo objCorreo = new correo();
+                objCorreo.enviarCorreo(objJefeDirecto.getEmail(), ContenidoCorreo, "Solicitud de permiso - Entry Salesland");
+                                                
                 response.getWriter().write("200");
-                
-                
+                                
             }else{
             
                 response.getWriter().write("204");
