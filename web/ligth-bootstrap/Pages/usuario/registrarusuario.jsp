@@ -54,7 +54,7 @@
                                                             <div class="col-md-5 ">
                                                                 <div class="form-group">
                                                                     <label class="control-label"><strong>Tipo de Documento *</strong></label>                                    
-                                                                    <select id="cmbTipoDocumentoUsuario" name="TipoDocumentoUsuario" class="selectpicker form-control" data-title="Seleccionar Tipo De Documento" data-menu-style="dropdown-blue">
+                                                                    <select id="cmbTipoDocumentoUsuario" name="TipoDocumentoUsuario" class="selectpicker form-control" data-title="Tipo de Documento" data-menu-style="dropdown-blue">
                                                                         <option value="T.I">Tarjeta de indentidad (T.I)</option>
                                                                         <option value="C.C">Cedula de ciudadanía (C.C)</option> 
                                                                         <option value="C.E">Cedula de extranjería (C.E)</option> 

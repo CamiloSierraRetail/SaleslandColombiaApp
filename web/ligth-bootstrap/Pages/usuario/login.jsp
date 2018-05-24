@@ -79,7 +79,7 @@
                                     <div class="card-footer ml-auto mr-auto" id="divBtn">
                                         <button type="submit" class="btn btn-blue_corp btn-wd">Iniciar</button><br>
                                         <div class="text-center">
-                                            <a class="cuenta" href="#RecuperarCuenta" id="btnRecuperarCuenta">¿Olvidaste tu Cuenta?</a>
+                                            <a class="cuenta" href="#RecuperarCuenta" id="btnRecuperarCuenta" data-toggle="modal" data-target="#ModalRecordarContrasenia">¿Olvidaste tu Contraseña?</a>
                                         </div>
                                     </div>
                                 </div>
@@ -108,7 +108,41 @@
                 </div>
             </div>
             <%@include file="../../Pages/includes/footer.jsp" %>
-        </div>    
+        </div>                        
+        
+        <!-- Mini Modal -->
+        <div class="modal fade modal-primary" id="ModalRecordarContrasenia" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-center">
+                        <div class="modal-profile">
+                            <i class="nc-icon nc-key-25"></i>
+                        </div>
+                    </div>
+                    <form class="form-horizontal" novalidate="novalidate" id="frmRecuperarContrasenia" name="frmRecuperarContrasenia">
+                        <div class="modal-body text-center">
+                            <h5 class="category">RECUPERAR CONTRASEÑA</h5>
+                            <div class="col-md-12 mr-auto ml-auto">                                
+                                <fieldset>  
+                                    <div class="form-group">
+                                        <div class="row">                                                                                                     
+                                            <small class="card-category"><strong>DOCUMENTO *</strong></small>
+                                            <input id="txtDocumentoRecuperarContrasenia" name="DocumentoRecuperarContrasenia" type="text" class="form-control">                                                     
+                                        </div>
+                                    </div>
+                                </fieldset>                               
+                            </div>   
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-simple" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-blue_corp btn-fill pull-right">Recuperar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--  End Modal -->
+                                                        
         <%@include file="../../Pages/includes/jsInclude.jsp" %>
         <script>
             $(document).ready(function () {  

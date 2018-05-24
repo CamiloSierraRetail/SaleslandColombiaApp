@@ -72,7 +72,7 @@
             <%@include file="../includes/footer.jsp" %>
         </div>
         <%@include file="../includes/jsInclude.jsp" %>
-        <script>
+        <script>            
             $(document).ready(function() {
                 demo.checkFullPageBackgroundImage();               
                 
@@ -86,7 +86,7 @@
                 }, 700);
             });
             $("#txtUsuarioIngreso").change(function (){     
-                $("#txtUsuarioIngresoDisabled").val($(this).val());
+                $("#txtUsuarioIngresoDisabled").val($(this).val());                
                 ingreso();
             });
         </script>

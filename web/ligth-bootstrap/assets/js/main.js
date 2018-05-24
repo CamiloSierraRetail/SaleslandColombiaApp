@@ -7,7 +7,7 @@
         DescripcionSector: {
             required: true,
             minlength: 15,
-            maxlength: 80
+            maxlength: 250
         }
     }, messages: {
 
@@ -18,7 +18,7 @@
         DescripcionSector: {
             required: "Este campo es requerido",
             minlength: "Ingresa 15 caracteres como minimo",
-            maxlength: "Ingresa 80 caracteres como maximo"
+            maxlength: "Ingresa 250 caracteres como maximo"
         }
     }, errorElement: 'div',
     errorPlacement: function (error, element) {
@@ -121,7 +121,7 @@ $('#frmEditarSector').validate({
             
             required:true,
             minlength:15,
-            maxlength:80
+            maxlength:250
         },
         EditarEstadoSector:{
             
@@ -137,7 +137,7 @@ $('#frmEditarSector').validate({
         EditarDescripcionSector:{
             required:"Este campo es requerido",
             minlength:"Ingresa 15 caracteres como minimo",
-            maxlength:"Ingresa 80 caracteres como maximo"
+            maxlength:"Ingresa 250 caracteres como maximo"
         },
         EditarEstadoSector:{
             required:"Este campo es requerido",          
@@ -163,24 +163,9 @@ $('#frmEditarSector').validate({
         title: "Actualizar Sector",
         text: "¿Está seguro que desea reemplazar los datos del sector?",
         icon: "warning",
-        buttons: true,
-        buttons: {
-            cancel:{
-                text: "Cancelar",
-                value: true,
-                visible: true,
-                closeModal: true
-            },
-            confirm: {
-                text: "Sí",
-                value: true,
-                visible: true,
-                closeModal: false
-            }
-        }
-        })
-        .then((willDelete) => {
-            if (willDelete) {
+        buttons: ["Cancelar", "Sí"]
+        }).then((willDelete) => {
+                if (willDelete) {
 
               var idSector = $("#idSector").val();
               var nombreSector = $("#txtEditarNombreSector").val();
@@ -429,7 +414,7 @@ $('#frmRegistrarCanal').validate({
         DescripcionCanal: {
             required: true,
             minlength: 15,
-            maxlength: 80
+            maxlength: 250
         },
         Sector:{
             required: true
@@ -443,7 +428,7 @@ $('#frmRegistrarCanal').validate({
         DescripcionCanal: {
             required: "Este campo es requerido",
             minlength: "Ingresa 15 caracteres como minimo",
-            maxlength: "Ingresa 80 caracteres como maximo"
+            maxlength: "Ingresa 250 caracteres como maximo"
         },
         Sector:{
             required: "Este campo es requerido"
@@ -592,7 +577,7 @@ $('#frmEditarCanal').validate({
             
             required:true,
             minlength:15,
-            maxlength:80
+            maxlength:250
         },
         EditarSectorCanal:{
             
@@ -611,7 +596,7 @@ $('#frmEditarCanal').validate({
         EditarDescripcionCanal:{
             required:"Este campo es requerido",
             minlength:"Ingresa 15 caracteres como minimo",
-            maxlength:"Ingresa 80 caracteres como maximo"
+            maxlength:"Ingresa 250 caracteres como maximo"
         },
         EditarSectorCanal:{
             required:"Este campo es requerido",          
@@ -784,7 +769,7 @@ $("#frmRegistrarUsuario").validate({
         },DocumentoUsuario:{
             required:true,
             maxlength:15,
-            minlength:10            
+            minlength:6         
         },NombreUsuario:{
             required:true,
             minlength:3,
@@ -841,7 +826,7 @@ $("#frmRegistrarUsuario").validate({
         },DocumentoUsuario:{
             required:"Este campo es requerido",
             maxlength:"Ingresa 15 caracteres como maximo",
-            minlength:"Ingresa 10 caracteres como minimo"
+            minlength:"Ingresa 6 caracteres como minimo"
 
         },NombreUsuario:{
             required:"Este campo es requerido",
@@ -985,7 +970,7 @@ function InicializarFormularioRegistro() {
             var $wizard = navigation.closest('.card-wizard');
 
             $first_li = navigation.find('li:first-child a').html();
-            $moving_div = $('<div class="moving-tab">' + $first_li + '</div>');
+            $moving_div = $('<div class="moving-tab' + $first_li + '</div>');
             $('.card-wizard .wizard-navigation').append($moving_div);
 
             refreshAnimation($wizard, index);
@@ -1265,8 +1250,7 @@ $(".cerrarSesion").click(function (){
     
 });
 ////////////////////// INGRESO Y SALIDA DEL USUARIO ////////////////////////
-function ingreso(){
-    
+function ingreso(){    
     var fullDate = new Date();
     var weekday = new Array(7);
     weekday[0] = "Domingo";
@@ -1286,7 +1270,7 @@ function ingreso(){
     
     var UsuarioID = $("#txtUsuarioIngreso").val();
     $.post("/SaleslandColombiaApp/ingreso/ingresousuario",{UsuarioID:UsuarioID,Fecha:currentDate,Hora:hora,Minutos:minutos, Dia:n},function (responseText) {
-        //alert(responseText);
+        //alert("FUNCION INGRESO  ------------>        "+responseText);
         websocket.send("IngresarUsuario-"+UsuarioID+"-"+currentDate);
         if (responseText == "500") {
             swal("Error", "Ocurrió un error mientras estabamos tratando de ingresa tus datos", "error");
@@ -1306,8 +1290,7 @@ function ingreso(){
                     align: 'right'
                 }
             });
-        }else if (responseText == "404") {
-            //alert("Usuario no encontrado");
+        }else if (responseText == "404") {            
             $.notify({
                 icon: "nc-icon nc-spaceship",
                 message: "El ingreso del usuario no ha sido registrado, por favor confirme que este registrado."
@@ -1330,11 +1313,8 @@ function ingreso(){
                     from: 'bottom',
                     align: 'right'
                 }
-            });
-            //websocket2.send("IngresarUsuario-"+UsuarioID);
-        }else if(responseText == "IngresoTemprano"){
-            
-            
+            });            
+        }else if(responseText == "IngresoTemprano"){                        
             $.notify({
                 icon: "nc-icon nc-spaceship",
                 message: "Usuario ingresado temprano"
@@ -1346,9 +1326,7 @@ function ingreso(){
                     align: 'right'
                 }
             });
-        }else if(responseText == "IngresoJusto"){
-            
-            
+        }else if(responseText == "IngresoJusto"){                        
             $.notify({
                 icon: "nc-icon nc-spaceship",
                 message: "Usuario ingresado a tiempo"
@@ -1360,9 +1338,7 @@ function ingreso(){
                     align: 'right'
                 }
             });
-        }else if(responseText == "SalidaTarde"){
-            
-            
+        }else if(responseText == "SalidaTarde"){                        
             $.notify({
                 icon: "nc-icon nc-spaceship",
                 message: "Salida registrada."
@@ -1374,9 +1350,7 @@ function ingreso(){
                     align: 'right'
                 }
             });
-        }else if(responseText == "SalidaTemprano"){
-            
-            
+        }else if(responseText == "SalidaTemprano"){                        
             $.notify({
                 icon: "nc-icon nc-spaceship",
                 message: "Salida temprana."
@@ -1388,9 +1362,7 @@ function ingreso(){
                     align: 'right'
                 }
             });
-        }else if(responseText == "SalidaJusto"){
-            
-            
+        }else if(responseText == "SalidaJusto"){                        
             $.notify({
                 icon: "nc-icon nc-spaceship",
                 message: "Salida justo a tiempo."
@@ -1573,7 +1545,7 @@ $('#frmRegistrarArea').validate({
         DescripcionArea: {
             required: true,
             minlength: 15,
-            maxlength: 80
+            maxlength: 250
         },
         Canal: {
             required: true
@@ -1587,7 +1559,7 @@ $('#frmRegistrarArea').validate({
         DescripcionArea: {
             required: "Este campo es requerido",
             minlength: "Ingresa 15 caracteres como minimo",
-            maxlength: "Ingresa 80 caracteres como maximo"
+            maxlength: "Ingresa 250 caracteres como maximo"
         },
         Canal: {
             required: "Este campo es requerido"
@@ -1746,7 +1718,7 @@ $('#frmEditarArea').validate({
 
             required: true,
             minlength: 15,
-            maxlength: 80
+            maxlength: 250
         },
         EditarEstadoCanalArea: {
 
@@ -1765,7 +1737,7 @@ $('#frmEditarArea').validate({
         EditarDescripcionArea: {
             required: "Este campo es requerido",
             minlength: "Ingresa 15 caracteres como minimo",
-            maxlength: "Ingresa 80 caracteres como maximo"
+            maxlength: "Ingresa 250 caracteres como maximo"
         },
         EditarEstadoCanalArea: {
             required: "Este campo es requerido"
@@ -3099,7 +3071,7 @@ function verPermiso(idPermiso){
        
         if (responseText == "500") {
             
-            swal("Ocurrio un error", "Ocurrió un erro mientra intentebamos actualizar la información del usuario.", "error");
+            swal("Ocurrio un error", "Ocurrió un error mientras intentebamos actualizar la información del usuario.", "error");
             
         }else{
                                     
@@ -3159,7 +3131,7 @@ $(".permisoEstado").click(function (){
                $.post("/SaleslandColombiaApp/permiso/actualizarPermiso",{idPermiso:idPermiso, estado:estado},function (responseText) {
 
                     if (responseText == "500") {
-
+                        swal("Ocurrio un error", "Ocurrió un error mientras intentebamos actualizar el estado del permiso.", "error");
                     }else{
 
                         swal("Información actualizada", "La información del permiso ha sido actualizada.", "success").then((willDelete) => {
@@ -3180,3 +3152,66 @@ $(".permisoEstado").click(function (){
         
     }                     
 });
+//////////////////// FUNCION PARA RECUPERAR LA CONTRASEÑA ////////////////////////////////////////
+/*$('#frmRecuperarContrasenia').validate({
+    rules:{
+        DocumentoRecuperarContrasenia:{
+            
+          required:true,
+          minlength:6 
+        }
+    },messages:{
+        DocumentoRecuperarContrasenia:{
+            
+          required:"Este campo es requerido",
+          minlength:"Documento no valido"
+        }
+    }, errorElement: 'div',
+    errorPlacement: function (error, element) {
+        var placement = $(element).data('error');
+        if (placement) {
+            $(placement).append(error);
+        } else {
+            error.insertAfter(element);
+        }
+    }, submitHandler: function () {
+        
+        swal({
+            title: "RECUPERAR CONTRASEÑA",
+            text: "¿Estás seguro que deseas recuperar tu contraseña?",
+            icon: "info",            
+            closeonconfirm: false,
+            buttons: ["Cancelar", "Sí"]
+        }).then((willDelete) => {
+            if (willDelete) {
+
+                long = parseInt(8);
+                var caracteres = "abcdefghijkmnpqrtuvwxyzABCDEFGHIJKLMNPQRTUVWXYZ012346789";
+                var contraseña = "";
+                for (i = 0; i<long; i++) contraseña += caracteres.charAt(Math.floor(Math.random()*caracteres.length));                
+                var documento = $("#txtDocumentoRecuperarContrasenia").val();
+                
+                $.post("/SaleslandColombiaApp/usuario/recuperarContrasenia",{Documento:documento, Contrasenia:contraseña},function (responseText) {
+                   
+                   
+                    if (responseText == "500") {
+                        swal("Ocurrio un error", "Ocurrió un erro mientra intentebamos recuperar tu contraseña.", "error");
+                    }else if (responseText == "403") {
+                        swal("Usuario inactivo", "Lo sentimos, no podemos recuperar tu contraseña porque tu estado actual es inactivo.", "warning");
+                    }else if (responseText == "404") {
+                        swal("El usuario no existe", "Lo sentimos, no podemos recuperar tu contraseña porque no hay información relacionada con el documento ingresado.", "error");
+                    }else if ( responseText == "200") {
+                        
+                        swal("Contraseña recuperada", "Se ha enviado un correo con la nueva contraseña.", "success").then((willDelete) => {
+                            if (willDelete) {
+
+                                $('#ModalRecordarContrasenia').modal('hide');                                
+                                $("#txtDocumentoRecuperarContrasenia").val("");
+                            }
+                        });                        
+                    }                                       
+                });             
+            }
+        });                                
+    }        
+});*/

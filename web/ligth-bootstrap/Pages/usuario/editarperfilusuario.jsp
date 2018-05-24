@@ -155,9 +155,9 @@
                                                 <hr>
                                                 <div class="button-container text-center">
                                                     
-                                                    <form action='/SaleslandColombiaApp/ligth-bootstrap/Pages/reportes/PdfMiReporte.jsp' target='_blank' method='POST'>
+                                                    <form action='/SaleslandColombiaApp/ligth-bootstrap/Pages/reportes/PdfMiReporte.jsp' target='_blank' method='GET'>
                                                         <input name='txtparametro' type='hidden' value="<%=objUsuario.getIdUsuario()%>">
-                                                        <button class='btn gray-corp btn-link btn-xs' type='submit' rel='tooltip' title='' data-original-title='Mi Reporte' > 
+                                                        <button class='btn gray-corp btn-link btn-xs' type='submit' rel='tooltip' data-original-title='Mi Reporte' > 
                                                             <i class='fa fa-bar-chart gray-corp'></i>
                                                         </button>
                                                     </form>

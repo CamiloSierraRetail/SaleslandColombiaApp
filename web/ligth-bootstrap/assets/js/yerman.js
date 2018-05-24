@@ -11,7 +11,7 @@ $(document).ready(function(){
         maxScrollbarLength: 500,
         wheelSpeed: 1
     });
-    /// NO BORRAR ///
+    /// NO BORRAR (CAMILO) ///
     $("body").css({"overflow-y":"scroll"});
     
     //LocalStorage para el recuerdame almacenando el documento o email
@@ -33,11 +33,11 @@ $(document).ready(function(){
         rules: {
             txtNombre: {
                 required: true,
-                minlength: 5
+                minlength: 3
             },
             txtApellido: {
                 required: true,
-                minlength: 5
+                minlength: 3
             },
             txtDireccion:{
                 required:true,
@@ -65,11 +65,11 @@ $(document).ready(function(){
         messages: {
             txtNombre: {
                 required: 'Este campo es obligatorio',
-                minlength: 'Debes ingresar 5 caracteres como minimo'
+                minlength: 'Debes ingresar 3 caracteres como minimo'
             },
             txtApellido: {
                 required: 'Este campo es obligatorio',
-                minlength: 'Debes ingresar 5 caracteres como minimo'
+                minlength: 'Debes ingresar 3 caracteres como minimo'
             },
             txtDireccion:{
                 required:'Este campo es obligatorio',
@@ -282,18 +282,7 @@ $(document).ready(function(){
         $('.sideDiv').css('right','-310px');
         $('#dimScreen').css('opacity','0');
         $('#dimScreen').css('visibility','hidden');
-    });
-    //Funcion para recuperar cuenta mediante envio de codigo al email o al telefono
-    $("#btnRecuperarCuenta").on("click", function(){
-        swal({
-            
-        }).then((confirm) =>{
-            if(confirm){
-                
-                
-            }
-        });
-    });
+    });    
 });
 
 //Funcion para cargar datos semanales del chart

@@ -26,8 +26,7 @@ public class accionesSocket {
         SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
         
         try{
-            System.out.println("TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY ");
-            HibernateUtil.openSessionFactory();
+            System.out.println("TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY TRY ");            
             System.out.println("pasó el open session factory AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             Session sesion = objSessionFactory.openSession();
             Usuario objUsuario = (Usuario)sesion.createQuery("FROM Usuario WHERE idUsuario="+idUsuario+"").uniqueResult();

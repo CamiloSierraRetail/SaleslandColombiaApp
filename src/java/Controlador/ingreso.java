@@ -79,9 +79,10 @@ public class ingreso extends HttpServlet {
     protected void usuarioIngreso(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
                     
-        try{            
+        try{          
+            System.out.println("METODO DE INGRESO, ANTES DE COMENZAR CON LOS ERRORES******************************");
             SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Session sesion = objSessionFactory.openSession();
             
             String Dia = request.getParameter("Dia");
             System.out.println(Dia);
@@ -1271,7 +1272,7 @@ public class ingreso extends HttpServlet {
             }
             int temprano = 0, tarde = 0, justo = 0;
             JSONArray usuarioJson = new JSONArray();
-            Query queryPromedioChartUsuarios = sesion.createQuery("SELECT Observacion ,COUNT(Observacion) FROM Ingreso WHERE Tipo = '"+Accion+"' AND Horario = '"+Horario+"' GROUP BY Observacion");
+            Query queryPromedioChartUsuarios = sesion.createQuery("SELECT Observacion ,COUNT(Observacion) FROM Ingreso WHERE Tipo = '"+Accion+"' AND Horario = '"+Horario+"' AND("+UsuariosQuery+") GROUP BY Observacion");
             List<Object[]> listaIngreso = queryPromedioChartUsuarios.list();
             for (Object[] datos : listaIngreso) {
 
@@ -1446,10 +1447,10 @@ public class ingreso extends HttpServlet {
                 countRows++;
             }
             
-            Query queryPromedioDias_A = sesion.createQuery("SELECT Horario, Dia, Tipo, SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM Ingreso WHERE Horario = 'A' GROUP BY Dia, Tipo");
+            Query queryPromedioDias_A = sesion.createQuery("SELECT Horario, Dia, Tipo, SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM Ingreso WHERE Horario = 'A' AND ("+UsuariosQuery+") GROUP BY Dia, Tipo");
             List<Object[]> listaPromedioDias_A = queryPromedioDias_A.list();
             
-            Query queryPromedioDias_B = sesion.createQuery("SELECT Horario, Dia, Tipo, SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM Ingreso WHERE Horario = 'B' GROUP BY Dia, Tipo");
+            Query queryPromedioDias_B = sesion.createQuery("SELECT Horario, Dia, Tipo, SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM Ingreso WHERE Horario = 'B' AND ("+UsuariosQuery+") GROUP BY Dia, Tipo");
             List<Object[]> listaPromedioDias_B = queryPromedioDias_B.list();
            
             for (Object[] datos : listaPromedioDias_A) {

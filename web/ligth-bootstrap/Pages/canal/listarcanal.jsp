@@ -78,7 +78,7 @@
                                     <i class="nc-icon nc-puzzle-10"></i>
                                 </div>
                             </div>
-                            <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmRegistrarCanal" name="frmRegistrarCanal">
+                            <form class="form-horizontal" novalidate="novalidate" id="frmRegistrarCanal" name="frmRegistrarCanal">
                                 <div class="modal-body text-center">
                                     <h5 class="category">INGRESA LOS DATOS DEL CANAL</h5>
                                     <div class="col-md-12 mr-auto ml-auto">
@@ -120,7 +120,7 @@
                 </div>
                 <!--  End Modal -->
                 
-                <!-- MODAL PARA EDITAR EL SECTOR -->
+                <!-- MODAL PARA EDITAR EL CANAL -->
                 <div class="modal fade modal-primary" id="ModalEditarCanal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -129,7 +129,7 @@
                                     <i class="nc-icon nc-puzzle-10"></i>
                                 </div>
                             </div>
-                            <form class="form-horizontal" action="" method="" novalidate="novalidate" id="frmEditarCanal" name="frmEditarSector">
+                            <form class="form-horizontal" novalidate="novalidate" id="frmEditarCanal" name="frmEditarSector">
                                 <div class="modal-body text-center">
                                     <h5 class="category">ACTUALIZA LOS DATOS DEL CANAL</h5>
                                     <div class="col-md-12 mr-auto ml-auto">

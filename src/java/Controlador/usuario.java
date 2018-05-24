@@ -72,6 +72,9 @@ public class usuario extends HttpServlet {
                 case "actualizarDatosBasicosUsuario":           
                     actualizarDatosBasiucosUsuario(request, response);
                     break;
+                case "recuperarContrasenia":
+                    recuperarContrasenia(request, response);
+                    break;
                 default:
                     response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/alertas/404.jsp");
                     break;
@@ -648,6 +651,7 @@ public class usuario extends HttpServlet {
             usuarioJson.add(rolUsuario);
             usuarioJson.add(objUsuario.getCargo().getNombreCargo() + ": " + objUsuario.getCargo().getDescripcion());
                         
+            response.setCharacterEncoding("UTF-8");
             response.getWriter().write(usuarioJson.toJSONString());
         
             sesion.close();
@@ -718,6 +722,56 @@ public class usuario extends HttpServlet {
             sesion.close();
             objSessionFactory.close();                        
         }catch(Exception ex){
+            System.err.println(ex);
+            response.getWriter().write("500");
+        }
+    
+    }
+    protected void recuperarContrasenia(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {            
+        try{
+        
+            String documento = request.getParameter("Documento");
+            String contrasenia = request.getParameter("Contrasenia");
+            
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();
+            
+            
+            Usuario objUsuario = (Usuario) sesion.createQuery("FROM Usuario WHERE Documento = '"+documento+"'").uniqueResult();
+            if (objUsuario == null || objUsuario.getDocumento().equals(null)) {
+                
+                response.getWriter().write("404");
+                
+            }else if (objUsuario.getEstado().equals("Inactivo")) {
+                
+                response.getWriter().write("403");
+                
+            } else{
+            
+                //DigestUtils.md5Hex(Contrasenia)
+                objUsuario.setContrasenia(DigestUtils.md5Hex(contrasenia));                
+                sesion.beginTransaction();
+                sesion.update(objUsuario);
+                sesion.getTransaction().commit();
+                
+                
+                String nombre [] = objUsuario.getNombre().split(" ");
+                String ContenidoCorreo = "<h2 style='font-family: sans-serif'>Hola "+nombre[0]+",</h2>"
+                                                +"<p style='font-family: sans-serif'>Te informamos que hemos restaurado tu contraseña de acceso a <a href='#'>Entry Salesland</a>. <br> Tu nueva contraseña es: <b>"+contrasenia+"</b></p>";
+                
+                correo objCorreo = new correo();                
+                objCorreo.enviarCorreo(objUsuario.getEmail(), ContenidoCorreo, "Recuperación de Contraseña - Entry Salesland");
+                
+                response.getWriter().write("200");
+            
+            }
+            
+            sesion.close();
+            objSessionFactory.close();            
+            
+        }catch(Exception ex){
+        
             System.err.println(ex);
             response.getWriter().write("500");
         }
