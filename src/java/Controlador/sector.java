@@ -6,7 +6,10 @@ import Modelo.Canal;
 import Modelo.Canal_Cargo;
 import Modelo.Cargo;
 import Modelo.Sector;
+import Modelo.Sector_Cargo;
+import Modelo.Usuario;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -17,6 +20,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.json.simple.JSONArray;
 
 
 public class sector extends HttpServlet {
@@ -49,6 +53,9 @@ public class sector extends HttpServlet {
                     break;
                 case "cargarcombosector":                    
                     cargarcombosector(request, response);
+                    break;
+                case "getSectorUsuario":                    
+                    getSectorUsuario(request, response);
                     break;
                 default:
                     response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/alertas/404.jsp");
@@ -273,6 +280,52 @@ public class sector extends HttpServlet {
         
         }
     
+    }
+    protected void getSectorUsuario(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+    
+        try{                   
+            JSONArray SectorJson = new JSONArray();            
+            Usuario objUsuario = (Usuario) request.getSession().getAttribute("UsuarioIngresado");
+            
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();
+            
+            if (objUsuario.getCargo().getTipo().equals("Gerente")) {
+                
+                Query query = sesion.createQuery("FROM Sector");
+                List<Sector> listaSector = query.list();
+                for(Sector sector : listaSector){
+                
+                    SectorJson.add(sector.getIdSector());
+                    SectorJson.add(sector.getNombreSector());
+                
+                }
+                  
+            }else if(objUsuario.getCargo().getTipo().equals("Director")){
+            
+                Query querySector_Cargo = sesion.createQuery("FROM Sector_Cargo WHERE Cargo="+objUsuario.getCargo().getIdCargo()+"");
+                List<Sector_Cargo> listaSecor_Cargo = querySector_Cargo.list();
+                for(Sector_Cargo sector_cargo : listaSecor_Cargo){
+                    
+                    SectorJson.add(sector_cargo.getSector().getIdSector());
+                    SectorJson.add(sector_cargo.getSector().getNombreSector());
+                                         
+                }                
+            
+            }
+             
+            
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(SectorJson.toJSONString());   
+            sesion.close();
+            objSessionFactory.close();                    
+        
+        }catch(Exception ex){
+            response.getWriter().write("500");
+            System.err.println(ex);
+        }
+        
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

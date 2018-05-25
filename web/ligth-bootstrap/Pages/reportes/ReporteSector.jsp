@@ -36,7 +36,7 @@
                                             <p class="card-category">Tenga en cuenta diligenciar correctamente los datos , para generar el reporte correctamente</p>
                                         </div>
                                         <div class="card-body">
-                                            <div class="card-body col-md-10 mr-auto ml-auto">
+                                            <div class="card-body col-md-10 mr-auto ml-auto">                                                
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <label class="control-label">Sector</label>                                                        
@@ -86,8 +86,8 @@
         <%@include file="../includes/jsInclude.jsp" %>
         <script>
              $(document).ready(function (){
-                cargarSectores();    
-                  
+                //cargarSectores();    
+                getSectorUsuario();
                                 
                 $("#ExamplesReportes").addClass("show");
                 $("#reporteSectores").addClass('active');

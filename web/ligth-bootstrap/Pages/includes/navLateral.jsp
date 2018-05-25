@@ -206,19 +206,28 @@ try{
                                 </p>
                             </a>
                             <div class="collapse " id="ExamplesReportes">
-                                <ul class="nav">                                    
-                                    <li class="nav-item" id="reporteSectores">
-                                        <a class="nav-link" href="../usuario/../reportes/ReporteSector.jsp">
-                                            <span class="sidebar-mini">S</span>
-                                            <span class="sidebar-normal">Sectores</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item" id="reporteCanales">
-                                        <a class="nav-link" href="../usuario/../reportes/ReporteCanal.jsp">
-                                            <span class="sidebar-mini">C</span>
-                                            <span class="sidebar-normal">Canales</span>
-                                        </a>
-                                    </li>
+                                <ul class="nav">                                     
+                                    <%
+                                        if (objUsuario.getCargo().getTipo().equals("Director")) {%>
+                                                 
+                                        <li class="nav-item" id="reporteSectores">
+                                            <a class="nav-link" href="../usuario/../reportes/ReporteSector.jsp">
+                                                <span class="sidebar-mini">S</span>
+                                                <span class="sidebar-normal">Sectores</span>
+                                            </a>
+                                        </li>
+                                    
+                                    <%}if(objUsuario.getCargo().getTipo().equals("Director") || objUsuario.getCargo().getTipo().equals("JefeCanal") || objUsuario.getCargo().getTipo().equals("CoordinadorCanal")){%>
+                                    
+                                        <li class="nav-item" id="reporteCanales">
+                                            <a class="nav-link" href="../usuario/../reportes/ReporteCanal.jsp">
+                                                <span class="sidebar-mini">C</span>
+                                                <span class="sidebar-normal">Canales</span>
+                                            </a>
+                                        </li>
+                                    
+                                    <%}%>
+                                    
                                     <li class="nav-item" id="reporteAreas">
                                         <a class="nav-link" href="../usuario/../reportes/ReporteArea.jsp">
                                             <span class="sidebar-mini">A</span>

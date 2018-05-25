@@ -150,6 +150,10 @@ public class ingreso extends HttpServlet {
                             
                         }else if(listaIngreso.size() == 1){
                             
+                            // HACER LA VALIDACION DE QUE SOLO SE PUEDA MARCAR SALIDA DESPUES DE 5 MINUTOS
+                            //DEJAR PENDIENTE PARA CUANDO ESTÉ DISPONIBLE EL LECTO DE CODIGOS DE BARRAS
+                            //Query queryValidarSalida = sesion.createQuery("FROM Ingreso WHERE Usuario="+usuario.getIdUsuario()+" AND Fecha='"+Fecha+"' AND Hora BETWEEN "")
+                            
                             for(Ingreso ingreso : listaIngreso){
                                 
                                 String observacionIngreso = "";

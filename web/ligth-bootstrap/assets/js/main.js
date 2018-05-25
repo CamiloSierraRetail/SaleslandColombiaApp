@@ -3153,7 +3153,7 @@ $(".permisoEstado").click(function (){
     }                     
 });
 //////////////////// FUNCION PARA RECUPERAR LA CONTRASEÑA ////////////////////////////////////////
-/*$('#frmRecuperarContrasenia').validate({
+$('#frmRecuperarContrasenia').validate({
     rules:{
         DocumentoRecuperarContrasenia:{
             
@@ -3195,7 +3195,7 @@ $(".permisoEstado").click(function (){
                    
                    
                     if (responseText == "500") {
-                        swal("Ocurrio un error", "Ocurrió un erro mientra intentebamos recuperar tu contraseña.", "error");
+                        swal("Ocurrio un error", "Ocurrió un error mientras intentebamos recuperar tu contraseña.", "error");
                     }else if (responseText == "403") {
                         swal("Usuario inactivo", "Lo sentimos, no podemos recuperar tu contraseña porque tu estado actual es inactivo.", "warning");
                     }else if (responseText == "404") {
@@ -3214,4 +3214,35 @@ $(".permisoEstado").click(function (){
             }
         });                                
     }        
-});*/
+});
+/////////////// FUNCION PARA OBTENER EL SECTOR DEL USUARIO ///////////////////////
+function getSectorUsuario(){
+    
+    $.post("/SaleslandColombiaApp/sector/getSectorUsuario",function (responseText) {
+       
+        if (responseText == "500") {
+            swal("Ocurrio un error", "Ocurrió un error mientras intentabamos obtener el sector del usuario", "error");
+        }else{            
+            $("#cmbEditarSector").html("");
+            $("#cmbSector").html("");
+            var dt = JSON.parse(responseText);
+            
+            var counta = 0;
+            for (var i = 0, max = dt.length; i < max; i++) {
+
+                if (counta == 1) {
+                    counta = 0;
+
+                } else {
+
+                    $("#cmbEditarSector").append("<option value='" + dt[i] + "'>" + dt[i + 1] + "</option>");
+                    $("#cmbSector").append("<option value='" + dt[i] + "'>" + dt[i + 1] + "</option>");                    
+                    counta++;
+                }
+
+            }
+            
+        }
+        
+    });    
+}
