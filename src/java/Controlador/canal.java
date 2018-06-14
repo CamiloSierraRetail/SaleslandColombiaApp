@@ -109,16 +109,10 @@ public class canal extends HttpServlet {
                                               + "<td>"+canal.getDescripcion()+"</td>"
                                               + "<td>"+canal.getSector().getNombreSector()+"</td>"
                                               + "<td class='text-right'>"+canal.getEstado()+ "</td>"
-                                              + "<td class='td-actions text-right'>"
-                                                /*+ "<a href='#' rel='tooltip' title='' class='btn btn-info btn-link btn-xs' data-original-title='Ver Canal'>"
-                                                    + "<i class='fa fa-eye blue-corp'></i>"
-                                                + "</a>"*/   
+                                              + "<td class='td-actions text-center'>"                                             
                                                 + "<button onclick='verDatosCanal("+canal.getIdCanal()+")' data-toggle='modal' data-target='#ModalEditarCanal' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-original-title='Editar'>"
-                                                    + "<i class='fa fa-edit gray-corp'></i>"
+                                                    + "<i class='fa fa-edit blue-corp'></i>"
                                                 + "</button>"
-                                                + "<a href='#' rel='tooltip' title='' class='btn btn-danger btn-link btn-xs' data-original-title='Estadisticas'>"
-                                                    + "<i class='fa fa-bar-chart orange-corp'></i>"
-                                                + "</a>"
                                               + "</td>"
                                          + "</tr>");
                 countRows++;

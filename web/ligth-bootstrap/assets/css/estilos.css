@@ -56,7 +56,7 @@ div.error{
     padding-bottom: 60px;
     background-color: #F7F7F8;
     z-index: 999;
-    overflow-y: auto;
+    overflow-y: hidden;
     will-change: left;
     right: -310px;
     transition: 0.4s;

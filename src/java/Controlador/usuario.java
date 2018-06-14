@@ -168,6 +168,38 @@ public class usuario extends HttpServlet {
             
             response.setCharacterEncoding("UTF-8");
             
+            Query queryCargoRecepcion = sesion.createQuery("FROM Cargo WHERE Tipo = 'Recepcion'");
+            List<Cargo> listaCargoRecepcion = queryCargoRecepcion.list();
+            
+            for(Cargo cargo : listaCargoRecepcion){
+            
+                String resultadoBusqueda = "", tipo = "";
+                if (cargo.getTipo().equals("Empleado")) {
+
+                    tipo="Usuario";
+                }else{
+
+                    tipo="Administrador";
+                }
+                resultadoBusqueda = "<tr>"
+                                          + "<td>"
+                                                +"<div class='form-check form-check-radio'>"
+                                                    + "<label class='form-check-label'>"
+                                                        + "<input class='form-check-input' type='radio' name='CargoUsuario' id='rbtnCargoUsuario' value='"+cargo.getIdCargo()+"'>"
+                                                        + "<span class='form-check-sign'></span>"                                                            
+                                                    + "</label>"
+                                                + "</div>"
+                                          + "</td>"
+                                          + "<td>"+cargo.getNombreCargo()+"</td>"
+                                          + "<td>"+cargo.getDescripcion()+"</td>"
+                                          + "<td>-</td>"  
+                                          + "<td>"+tipo+"</td>"
+                                     + "</tr>";
+            
+                response.getWriter().write(resultadoBusqueda);
+                
+            }
+            
             for(Sector sector : listaSector){
                             
                 Query querySector_Cargo = sesion.createQuery("FROM Sector_Cargo WHERE Sector="+sector.getIdSector()+"");
@@ -510,6 +542,37 @@ public class usuario extends HttpServlet {
                 }
                 
                 for(Usuario usuario : listaUsuario){
+            
+                    response.getWriter().write("<tr>"
+                                                  + "<td class='text-center'>"+countRows+"</td>"
+                                                  + "<td>"+usuario.getDocumento()+"</td>"
+                                                  + "<td>"+usuario.getNombre()+" "+usuario.getApellido()+"</td>"
+                                                  + "<td>"+usuario.getCelular()+"</td>"
+                                                  + "<td>"+usuario.getEmail()+"</td>"
+                                                  + "<td class='text-right'>"+usuario.getEstado()+ "</td>"
+                                                  + "<td class='td-actions text-center'>"
+                                                    + "<a href='#' onclick='VerUsuariosTabla("+usuario.getIdUsuario()+")' data-toggle='modal' data-target='#modalVerUsuario' rel='tooltip' title='' class='btn btn-success btn-link btn-xs' data-original-title='Ver Usuario'>"
+                                                        + "<i class='fa fa-eye blue-corp'></i>"
+                                                    + "</a>"   
+                                                    + "<a href='#' onclick='cargarDatosUsuario("+usuario.getIdUsuario()+")' rel='tooltip' title='' class='btn btn-warning btn-link btn-xs' data-toggle='modal' data-target='#ModalEditarUsuario' data-original-title='Editar'>"
+                                                        + "<i class='fa fa-edit gray-corp'></i>"
+                                                    + "</a>"
+                                                    +"<form action='/SaleslandColombiaApp/ligth-bootstrap/Pages/reportes/PdfMiReporte.jsp' target='_blank' method='POST'>"
+                                                        +"<input name='txtparametro' type='hidden' value='"+usuario.getIdUsuario()+"'>"
+                                                        +"<button class='btn btn-warning btn-link btn-xs' type='submit' rel='tooltip' title='' data-original-title='Reporte' > <i class='fa fa-bar-chart orange-corp'></i></button>"                                                        
+                                                    +"</form>"
+                                                  + "</td>"
+                                             + "</tr>");
+                    countRows++;
+
+                }
+                
+            }else if (objUsuario.getCargo().getTipo().equals("Recepcion")) {
+             
+                Query queryUsuariosRecepcion = sesion.createQuery("FROM Usuario WHERE idUsuario != "+objUsuario.getIdUsuario()+"");
+                List<Usuario> listaUsuarios = queryUsuariosRecepcion.list();
+                
+                for(Usuario usuario : listaUsuarios){
             
                     response.getWriter().write("<tr>"
                                                   + "<td class='text-center'>"+countRows+"</td>"

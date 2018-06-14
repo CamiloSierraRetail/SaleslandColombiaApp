@@ -107,7 +107,7 @@
                                                         <div class="col-md-4 pr-1">
                                                             <div class="form-group">
                                                                 <label>Foto</label> 
-                                                                <label class="btn btn-info btn-fill form-control" for="txtFotoFile">Selecciona un archivo</label>
+                                                                <label class="btn btn-outline btn-blue_corp btn-fill form-control" for="txtFotoFile">Selecciona un archivo</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-8 pl-1">

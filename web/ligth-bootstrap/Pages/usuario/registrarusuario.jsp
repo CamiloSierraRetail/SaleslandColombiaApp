@@ -226,7 +226,7 @@
                     $("#empleadoItemNav").addClass("show");
                     $("#registrarEmpleadosNav").addClass('active');
                     $("#tituloPagina").text("Empleados");
-                    cargarCargosSectores();
+                    cargarCargos();
                     InicializarFormularioRegistro();                    
                                         
                     var fullDate = new Date();

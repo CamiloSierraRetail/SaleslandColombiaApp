@@ -104,7 +104,8 @@
                                             <small class="control-label"><strong>Selecciona tipo de Usuario *</strong></small>
                                             <select name="opciones" id="cmbTipo" class="form-control" data-title="Seleccionar Tipo" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" >                                                      
                                             <option>Seleccione el tipo de usuario</option>
-                                            <option value="Director">Director</option>                                                       
+                                            <option value="Recepcion">Recepción</option>
+                                            <option value="Director">Director</option>
                                             <option value="JefeCanal">Jefe Canal</option>
                                             <option value="CoordinadorCanal">Coordinador</option>                                                       
                                             <option value="JefeArea">Jefe Area</option>

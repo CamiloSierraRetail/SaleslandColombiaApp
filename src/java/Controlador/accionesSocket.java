@@ -130,15 +130,15 @@ public class accionesSocket {
                 getJsonUsuarios(listaUsuarios, fecha);
                 
             }else if (objUsuario.getCargo().getTipo().equals("JefeArea")) {
-                                
+               
                 Query queryArea_Cargo1 = sesion.createQuery("FROM Area_Cargo WHERE Cargo="+objUsuario.getCargo().getIdCargo()+"");
                 List<Area_Cargo> listaArea_Cargo1 = queryArea_Cargo1.list();
                 for(Area_Cargo area_cargo1 : listaArea_Cargo1){
-                
+                                                 
                     Query queryArea_Cargo = sesion.createQuery("FROM Area_Cargo WHERE Area="+area_cargo1.getArea().getIdArea()+"");
                     List<Area_Cargo> listaArea_Cargo = queryArea_Cargo.list();
                     for(Area_Cargo area_cargo : listaArea_Cargo){
-                        
+                                                
                         
                         List<Usuario> listaUsuariosBuscados = getUsuarios(idUsuario, area_cargo.getCargo().getIdCargo());
                             
@@ -153,7 +153,90 @@ public class accionesSocket {
                          
                     }
                 
-                }                
+                }
+                getJsonUsuarios(listaUsuarios, fecha);
+                
+            }else if (objUsuario.getCargo().getTipo().equals("Recepcion")) {
+                
+                Query queryUsuariosRecepcion = sesion.createQuery("FROM Usuario WHERE idUsuario != "+objUsuario.getIdUsuario()+"");
+                List<Usuario> listaUsuariosRecepcion = queryUsuariosRecepcion.list();
+                
+                for(Usuario usuarios : listaUsuariosRecepcion){
+                
+                    String entrada = "Ingreso: 1970-01-0 00:00:00", salida = "Salida: 1970-01-0 00:00:00";
+
+                    Query queryIngreso = sesion.createQuery("FROM Ingreso WHERE Usuario="+usuarios.getIdUsuario()+" AND Fecha='"+fecha+"'");
+                    List<Ingreso> listaIngreso = queryIngreso.list();
+
+                    int contador = 0;
+
+                    if (listaIngreso.size() == 1) {
+
+                        for(Ingreso ingreso : listaIngreso){
+
+                            if (ingreso.getTipo().equals("Ingreso")) {
+
+                                entrada = "Ingreso: " + String.valueOf(ingreso.getHora());
+
+                            }else if (ingreso.getTipo().equals("Salida")) {
+
+
+                                salida = "Salida: " + String.valueOf(ingreso.getHora());
+                            }
+
+                            usuarioJson.add(usuarios.getIdUsuario());
+                            usuarioJson.add(usuarios.getNombre());
+                            usuarioJson.add(usuarios.getApellido());
+                            usuarioJson.add(usuarios.getFoto());
+                            usuarioJson.add(entrada);
+                            usuarioJson.add(salida);
+
+                        }
+
+                    }else if (listaIngreso.size() == 2) {
+
+                        for(Ingreso ingreso : listaIngreso){
+
+                            if (contador == 0) {
+                                if (ingreso.getTipo().equals("Ingreso")) {
+
+                                    entrada = "Ingreso: " + String.valueOf(ingreso.getHora());
+
+                                }
+
+                            }else if (contador == 1) {
+
+                                if (ingreso.getTipo().equals("Salida")) {
+
+
+                                    salida = "Salida: " + String.valueOf(ingreso.getHora());
+                                }
+
+                                usuarioJson.add(usuarios.getIdUsuario());
+                                usuarioJson.add(usuarios.getNombre());
+                                usuarioJson.add(usuarios.getApellido());
+                                usuarioJson.add(usuarios.getFoto());
+                                usuarioJson.add(entrada);
+                                usuarioJson.add(salida);
+
+
+                            }
+                            contador++;
+                        }
+
+                    }else if (listaIngreso.size() == 0){
+
+                        usuarioJson.add(usuarios.getIdUsuario());
+                        usuarioJson.add(usuarios.getNombre());
+                        usuarioJson.add(usuarios.getApellido());
+                        usuarioJson.add(usuarios.getFoto());
+                        usuarioJson.add(entrada);
+                        usuarioJson.add(salida);
+
+                    }                     
+
+                    
+                }
                 
             }
         sesion.close();

@@ -674,7 +674,7 @@ function cargarCargoOOOOOO(idSector){
     
 }
 //////////////////////// CARGAR TABLA PARA EL REGISTRO /////////////////////////////
-function cargarCargosSectores(){
+function cargarCargos(){
     
     $.post("/SaleslandColombiaApp/usuario/cargartablaregistro",function (responseText){
         if (responseText == "500") {
@@ -1374,6 +1374,20 @@ function ingreso(){
                     align: 'right'
                 }
             });
+        }else if (responseText == "300") {
+            
+            $.notify({
+                icon: "nc-icon nc-spaceship",
+                message: "Solo puedes registrar la salida hasta despues de 5 minutos."
+            },{
+                type: 'danger',
+                timer: 3000,
+                placement: {
+                    from: 'bottom',
+                    align: 'right'
+                }
+            });
+            
         }
         
     });
@@ -1870,6 +1884,11 @@ $('#frmRegistrarCargos').validate({
                 buttons: ["Cancelar", "Sí"]
             }).then((willDelete) => {
                 if (willDelete) {
+
+                    if ($("#cmbTipo").val() == "Recepcion") {
+                        
+                        realizarRegistro();
+                    }
 
                     if ($("#cmbTipo").val() == "Director") {
 
@@ -2733,7 +2752,7 @@ $('#frmSolicitarPermiso').validate({
         DescripcionPermiso: {
             required: true,
             minlength: 15,
-            maxlength: 80
+            maxlength: 500
         },
         InicioPermiso: {
             required: true
@@ -2753,11 +2772,10 @@ $('#frmSolicitarPermiso').validate({
         DescripcionPermiso: {
             required: "Este campo es requerido",
             minlength: "Ingresa 15 caracteres como minimo",
-            maxlength: "Ingresa 80 caracteres como maximo"
+            maxlength: "Ingresa 500 caracteres como máximo"
         },
         InicioPermiso: {
-            required: "Este campo es requerido",
-            minlength: "El salario minimo es de 781,242 "
+            required: "Este campo es requerido",           
         },
         FinPermiso: {
             required: "Este campo es requerido"
@@ -2816,7 +2834,7 @@ $('#frmSolicitarPermiso').validate({
 
                     }else if (responseText == "200") {
                     
-                        swal("Permiso solicitado", "El permiso ha sido solicitado, serás notificado cuando eas respondido.", "success").then((willDelete) => {
+                        swal("Permiso solicitado", "El permiso ha sido solicitado, serás notificado cuando sea respondido.", "success").then((willDelete) => {
                             if (willDelete) {
 
                                 $("#modalRegistrarPermiso").modal('toggle');
@@ -3246,3 +3264,204 @@ function getSectorUsuario(){
         
     });    
 }
+//////////////////////////////// FUNCION PARA HACER EL INGRESO MANUAL ////////////////////////////////////////
+    $('#frmIngresoManual').validate({
+    rules: {
+        TipoIngreso: {
+            required: true,            
+        },
+        DocumentoIngreso: {
+            required: true,
+            minlength: 5
+        },
+        HoraIngreso: {
+            required: true
+            
+        }
+    }, messages: {
+
+        TipoIngreso: {
+            required: "Este campo es requerido",      
+        },
+        DocumentoIngreso: {
+            required: "Este campo es requerido",
+            minlength: "Documento no valido",           
+        },
+        HoraIngreso: {
+            required: "Este campo es requerido"
+            
+        }
+    }, errorElement: 'div',
+    errorPlacement: function (error, element) {
+        var placement = $(element).data('error');
+        if (placement) {
+            $(placement).append(error);
+        } else {
+            error.insertAfter(element);
+        }
+    }, submitHandler: function () {
+
+        swal({
+        title: "Confirmar Datos",
+        text: "¿Estás seguro que desea registrar el ingreso?",
+        icon: "info",
+        buttons: true,
+        closeonconfirm: false,
+        buttons: ["Cancelar", "Sí"]
+        }).then((willDelete) => {
+            if (willDelete) {
+
+
+                var horaMilitar = moment(""+$("#datetimepicker").val()+"", "h:mm A").format('HH:mm');
+
+                var fullDate = new Date();
+                var weekday = new Array(7);
+                weekday[0] = "Domingo";
+                weekday[1] = "Lunes";
+                weekday[2] = "Martes";
+                weekday[3] = "Miercoles";
+                weekday[4] = "Jueves";
+                weekday[5] = "Viernes";
+                weekday[6] = "Sabado";
+                var n = weekday[fullDate.getDay()];
+
+                var hora = fullDate.getHours();
+                var minutos = fullDate.getMinutes();
+                //convert month to 2 digits
+                var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
+                var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
+
+
+                var UsuarioID = $("#txtDocumentoIngreso").val();                
+
+                $.post("/SaleslandColombiaApp/ingreso/ingresoManual",{UsuarioID:UsuarioID,Fecha:currentDate,Hora:hora,Minutos:minutos,HoraMilitar:horaMilitar, Dia:n},function (responseText) {
+                    //alert("FUNCION INGRESO  ------------>        "+responseText);
+                    websocket.send("IngresarUsuario-"+UsuarioID+"-"+currentDate);
+                    if (responseText == "500") {
+                        swal("Error", "Ocurrió un error mientras estabamos tratando de ingresa tus datos", "error");
+                    }else if (responseText == "302") {
+                        alert("Se hace el registro de la entrada o la salida");
+                    }else if (responseText == "406"){
+                        alert("Más de un suauario registrado");
+                    }else if (responseText == "407") {
+                        $.notify({
+                            icon: "nc-icon nc-spaceship",
+                            message: "El usuario ya registro entrada y salida en el dia de hoy."
+                        },{
+                            type: 'danger',
+                            timer: 3000,
+                            placement: {
+                                from: 'bottom',
+                                align: 'right'
+                            }
+                        });
+                    }else if (responseText == "404") {            
+                        $.notify({
+                            icon: "nc-icon nc-spaceship",
+                            message: "El ingreso del usuario no ha sido registrado, por favor confirme que este registrado."
+                        },{
+                            type: 'danger',
+                            timer: 3000,
+                            placement: {
+                                from: 'bottom',
+                                align: 'right'
+                            }
+                        });
+                    }else if(responseText == "IngresoTarde"){     
+                        $.notify({
+                            icon: "nc-icon nc-spaceship",
+                            message: "Usuario ingresado con retardo."
+                        },{
+                            type: 'danger',
+                            timer: 3000,
+                            placement: {
+                                from: 'bottom',
+                                align: 'right'
+                            }
+                        });            
+                    }else if(responseText == "IngresoTemprano"){                        
+                        $.notify({
+                            icon: "nc-icon nc-spaceship",
+                            message: "Usuario ingresado temprano"
+                        },{
+                            type: 'success',
+                            timer: 3000,
+                            placement: {
+                                from: 'bottom',
+                                align: 'right'
+                            }
+                        });
+                    }else if(responseText == "IngresoJusto"){                        
+                        $.notify({
+                            icon: "nc-icon nc-spaceship",
+                            message: "Usuario ingresado a tiempo"
+                        },{
+                            type: 'warning',
+                            timer: 3000,
+                            placement: {
+                                from: 'bottom',
+                                align: 'right'
+                            }
+                        });
+                    }else if(responseText == "SalidaTarde"){                        
+                        $.notify({
+                            icon: "nc-icon nc-spaceship",
+                            message: "Salida registrada."
+                        },{
+                            type: 'success',
+                            timer: 3000,
+                            placement: {
+                                from: 'bottom',
+                                align: 'right'
+                            }
+                        });
+                    }else if(responseText == "SalidaTemprano"){                        
+                        $.notify({
+                            icon: "nc-icon nc-spaceship",
+                            message: "Salida temprana."
+                        },{
+                            type: 'danger',
+                            timer: 3000,
+                            placement: {
+                                from: 'bottom',
+                                align: 'right'
+                            }
+                        });
+                    }else if(responseText == "SalidaJusto"){                        
+                        $.notify({
+                            icon: "nc-icon nc-spaceship",
+                            message: "Salida justo a tiempo."
+                        },{
+                            type: 'warning',
+                            timer: 3000,
+                            placement: {
+                                from: 'bottom',
+                                align: 'right'
+                            }
+                        });
+                    }else if (responseText == "300") {
+
+                        $.notify({
+                            icon: "nc-icon nc-spaceship",
+                            message: "Solo puedes registrar la salida hasta despues de 5 minutos."
+                        },{
+                            type: 'danger',
+                            timer: 3000,
+                            placement: {
+                                from: 'bottom',
+                                align: 'right'
+                            }
+                        });
+
+                    }
+
+
+                    $("#txtDocumentoIngreso").val("");
+                    $("#datetimepicker").val("");
+                    
+                });
+                    
+            }
+        });
+    }
+});

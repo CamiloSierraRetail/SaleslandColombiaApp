@@ -26,7 +26,7 @@
                 
                     </div>
                 </div>               
-            </ul>
+            </ul><br><br>
         </div>
     </div>
 <!-- Side div showing users -->

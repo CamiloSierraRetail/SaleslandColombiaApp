@@ -67,6 +67,7 @@ public class permiso extends HttpServlet {
     
         
         try{            
+            char comillas = '"';
             
             Usuario objUsuario = (Usuario) request.getSession().getAttribute("UsuarioIngresado");
             Usuario objJefeDirecto = new Usuario();
@@ -177,7 +178,7 @@ public class permiso extends HttpServlet {
                 
                 String nombre [] = objJefeDirecto.getNombre().split(" ");
                 String ContenidoCorreo = "<h2 style='font-family: sans-serif'>Hola "+nombre[0]+",</h2>"
-                                                +"<p style='font-family: sans-serif'>Te informamos que <b>"+objUsuario.getNombre()+" "+objUsuario.getApellido()+"</b> identificado con el número de "+objUsuario.getTipoDocumento()+" <b>"+objUsuario.getDocumento()+"</b> te ha enviado una solicitud de un permiso desde "+fechaInicio[2]+"-"+fechaInicio[0]+"-"+fechaInicio[1]+" "+InicioCompmplete[1]+" hasta "+fechaFin[2]+"-"+fechaFin[0]+"-"+fechaFin[1]+" "+FinCompmplete[1]+".<br><br> Por favor no olvides ingresar a <a href='#'>Entry Salesland</a> y revisar los permisos solicitados por tu equipo de trabajo.</p>";
+                                                +"<p style='font-family: sans-serif'>Te informamos que <b>"+objUsuario.getNombre()+" "+objUsuario.getApellido()+"</b> identificado con el número de "+objUsuario.getTipoDocumento()+" <b>"+objUsuario.getDocumento()+"</b> te ha enviado una solicitud de un permiso desde "+fechaInicio[2]+"-"+fechaInicio[0]+"-"+fechaInicio[1]+" "+InicioCompmplete[1]+" hasta "+fechaFin[2]+"-"+fechaFin[0]+"-"+fechaFin[1]+" "+FinCompmplete[1]+" con motivo <b>"+comillas+motivo+comillas+".</b><br><br> Por favor no olvides ingresar a <a href='#'>Entry Salesland</a> y revisar los permisos solicitados por tu equipo de trabajo.</p>";
                                                                                                                                                                             
                 correo objCorreo = new correo();
                 objCorreo.enviarCorreo(objJefeDirecto.getEmail(), ContenidoCorreo, "Solicitud de permiso - Entry Salesland");
@@ -392,6 +393,17 @@ public class permiso extends HttpServlet {
             Query query = sesion.createSQLQuery("UPDATE Permiso SET Estado='"+estado+"' WHERE idPermiso="+idPermiso+"");
             query.executeUpdate();
             sesion.getTransaction().commit();
+            
+            Permiso objPermiso = (Permiso) sesion.createQuery("FROM Permiso WHERE idPermiso = "+idPermiso+"").uniqueResult();
+            
+            String nombre [] = objPermiso.getUsuarioEnvia().getNombre().split(" ");
+                String ContenidoCorreo = "<h2 style='font-family: sans-serif'>Hola "+nombre[0]+",</h2>"
+                                                +"<p style='font-family: sans-serif'>Te informamos que tú permiso con motivo, <b>"+objPermiso.getMotivo()+"</b> ha sido <b>"+estado+"</b> por tu jefe directo.<br><br> Por favor no olvides ingresar a <a href='#'>Entry Salesland</a> y revisar las estadisticas de tus ingresos y salidas realizados a lo largo de tu estancia en la emplesa.</p>";
+                                                                                                                                                                            
+                correo objCorreo = new correo();
+                objCorreo.enviarCorreo(objPermiso.getUsuarioEnvia().getEmail(), ContenidoCorreo, "Permiso "+estado+" - Entry Salesland");
+                         
+            
             
             response.getWriter().write("200");
             sesion.close();

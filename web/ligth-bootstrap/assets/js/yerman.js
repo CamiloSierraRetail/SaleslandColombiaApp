@@ -5,12 +5,14 @@ $(document).ready(function(){
         minScrollbarLength: 250,
         maxScrollbarLength: 500,
         wheelSpeed: 1
-    });
+    });   
     $('.sideDiv').perfectScrollbar({
         minScrollbarLength: 250,
         maxScrollbarLength: 500,
         wheelSpeed: 1
     });
+    ///CODIGO PARA OCULTAR EL SCROLL EN EL EJE X (NO BORRAR (CAMILO)) ///
+    $(".ps-scrollbar-x-rail").html("");
     /// NO BORRAR (CAMILO) ///
     $("body").css({"overflow-y":"scroll"});
     
@@ -171,7 +173,11 @@ $(document).ready(function(){
                                             
                                         swal("Información actualizada", "Tus datos se actualizaron correctamente.", "success").then((willDelete) => {
                                             
-                                            window.location.href = "/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/editarperfilusuario.jsp";                                            
+                                            setTimeout(function (){
+                                                
+                                                this.window.location.href = "/SaleslandColombiaApp/ligth-bootstrap/Pages/usuario/editarperfilusuario.jsp";
+                                                
+                                            },2000);
                                             
                                         });
                                             

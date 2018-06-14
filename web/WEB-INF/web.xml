@@ -48,6 +48,10 @@
         <servlet-name>SubirArchivoPermiso</servlet-name>
         <servlet-class>Controlador.SubirArchivoPermiso</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ExcelServlet</servlet-name>
+        <servlet-class>Controlador.ExcelServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>administrador</servlet-name>
         <url-pattern>/administrador/*</url-pattern>
@@ -95,6 +99,10 @@
     <servlet-mapping>
         <servlet-name>SubirArchivoPermiso</servlet-name>
         <url-pattern>/SubirArchivoPermiso</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExcelServlet</servlet-name>
+        <url-pattern>/excelservlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>1500</session-timeout>

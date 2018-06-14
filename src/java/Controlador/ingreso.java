@@ -68,6 +68,9 @@ public class ingreso extends HttpServlet {
                 case "cargarChartPromedioDias":
                     cargarChartPromedioDias(request, response);
                     break;
+                case "ingresoManual":
+                    ingresoManual(request, response);
+                    break;
                 default:                    
                     response.sendRedirect("/SaleslandColombiaApp/ligth-bootstrap/Pages/alertas/404.jsp");
                     break;
@@ -92,10 +95,10 @@ public class ingreso extends HttpServlet {
             String Minutos = request.getParameter("Minutos");            
             Query query = sesion.createQuery("FROM Usuario WHERE Documento='"+UsuarioID+"'");
             List<Usuario> listaUsuario = query.list();
-            response.setCharacterEncoding("UTF-8");
+            response.setCharacterEncoding("UTF-8");            
             
             if (listaUsuario.size() == 1) {
-                for (Usuario usuario : listaUsuario){            
+                for (Usuario usuario : listaUsuario){    
                     if (usuario.getEstado().equals("Activo")) {
                
                         Query queryIngresos = sesion.createQuery("FROM Ingreso WHERE Usuario="+usuario.getIdUsuario()+" AND Fecha='"+Fecha+"'");
@@ -152,55 +155,92 @@ public class ingreso extends HttpServlet {
                             
                             // HACER LA VALIDACION DE QUE SOLO SE PUEDA MARCAR SALIDA DESPUES DE 5 MINUTOS
                             //DEJAR PENDIENTE PARA CUANDO ESTÉ DISPONIBLE EL LECTO DE CODIGOS DE BARRAS
-                            //Query queryValidarSalida = sesion.createQuery("FROM Ingreso WHERE Usuario="+usuario.getIdUsuario()+" AND Fecha='"+Fecha+"' AND Hora BETWEEN "")
                             
-                            for(Ingreso ingreso : listaIngreso){
+                            
+                                        
+                            //Query queryValidarSalida = sesion.createQuery("FROM Ingreso WHERE Usuario="+usuario.getIdUsuario()+" AND Fecha='"+new Date()+"' AND (Hora BETWEEN  )");
+                            String spaceSplit [] = String.valueOf(new Date()).split(" ");
+                            String horaSplit [] = String.valueOf(spaceSplit[3]).split(":");
+                            String horaQuery = "";
+                            String minutosQuery = "";
+
+                            if (Integer.parseInt(horaSplit[1]) <= 05) {
+
+                                horaQuery = String.valueOf(Integer.parseInt(horaSplit[0]) - 1);
+                                minutosQuery = "55";
+                            }else{
+
+                                horaQuery = String.valueOf(Integer.parseInt(horaSplit[0]));
+                                minutosQuery = String.valueOf(Integer.parseInt(Minutos) - 5);
+
+                            }
+                            System.out.println("######################################");
+                            System.out.println("######################################");
+                            System.out.println("######################################");
+                            System.out.println("######################################");
+                            System.out.println("######################################");
+                            System.out.println("######################################");
+                            System.out.println("######################################");System.out.println("######################################");
+                            System.out.println(Fecha);
+                            
+                            Query queryValidarSalida = sesion.createQuery("FROM Ingreso WHERE Usuario="+usuario.getIdUsuario()+" AND Fecha='"+Fecha+"' AND (Hora BETWEEN '"+horaQuery+":"+minutosQuery+"' AND '"+spaceSplit[3]+"')");
+                            List<Ingreso> listaIngresoReciente = queryValidarSalida.list();
+                            System.out.println("QUERY:  FROM Ingreso WHERE Usuario="+usuario.getIdUsuario()+" AND Fecha='"+Fecha+"' AND (Hora BETWEEN '"+horaQuery+":"+minutosQuery+"' AND '"+spaceSplit[3]+"')");
+                            System.out.println("tamaño del resultado  --->   " + listaIngresoReciente.size());
+                            if (listaIngresoReciente.size() == 0) {
+                             
+                                for(Ingreso ingreso : listaIngreso){
                                 
-                                String observacionIngreso = "";
-                                if (usuario.getHorario().equals("A")) {
-                                
-                                    if (Integer.parseInt(hora) >= 18 && Integer.parseInt(Minutos) > 5 || Integer.parseInt(hora) > 18) {
+                                    String observacionIngreso = "";
+                                    if (usuario.getHorario().equals("A")) {
 
-                                        observacionIngreso = "Tarde";
+                                        if (Integer.parseInt(hora) >= 18 && Integer.parseInt(Minutos) > 5 || Integer.parseInt(hora) > 18) {
 
-                                    }else if (Integer.parseInt(hora) <= 17 && Integer.parseInt(Minutos) < 55 || Integer.parseInt(hora) < 17) {
+                                            observacionIngreso = "Tarde";
 
-                                        observacionIngreso = "Temprano";
+                                        }else if (Integer.parseInt(hora) <= 17 && Integer.parseInt(Minutos) < 55 || Integer.parseInt(hora) < 17) {
 
-                                    }else{
+                                            observacionIngreso = "Temprano";
 
-                                        observacionIngreso = "Justo";
+                                        }else{
+
+                                            observacionIngreso = "Justo";
+                                        }
+
+                                    }else if (usuario.getHorario().equals("B")) {
+
+                                        if (Integer.parseInt(hora) >= 17 && Integer.parseInt(Minutos) > 5 || Integer.parseInt(hora) > 17) {
+
+                                            observacionIngreso = "Tarde";
+
+                                        }else if (Integer.parseInt(hora) <= 16 && Integer.parseInt(Minutos) < 55 || Integer.parseInt(hora) < 16) {
+
+                                            observacionIngreso = "Temprano";
+
+                                        }else{
+
+                                            observacionIngreso = "Justo";
+                                        }
+
                                     }
 
-                                }else if (usuario.getHorario().equals("B")) {
+                                    if (ingreso.getTipo().equals("Ingreso")) {
 
-                                    if (Integer.parseInt(hora) >= 17 && Integer.parseInt(Minutos) > 5 || Integer.parseInt(hora) > 17) {
+                                        Ingreso objIngreso = new Ingreso(Dia,new Date(), new Date(), "Salida", "Lector", observacionIngreso, usuario.getHorario(), objUsuario);
+                                        sesion.beginTransaction();
+                                        sesion.save(objIngreso);
+                                        sesion.getTransaction().commit();                                    
 
-                                        observacionIngreso = "Tarde";
 
-                                    }else if (Integer.parseInt(hora) <= 16 && Integer.parseInt(Minutos) < 55 || Integer.parseInt(hora) < 16) {
+                                        response.getWriter().write("Salida"+observacionIngreso);
 
-                                        observacionIngreso = "Temprano";
-
-                                    }else{
-
-                                        observacionIngreso = "Justo";
                                     }
 
                                 }
                                 
-                                if (ingreso.getTipo().equals("Ingreso")) {
-                                    
-                                    Ingreso objIngreso = new Ingreso(Dia,new Date(), new Date(), "Salida", "Lector", observacionIngreso, usuario.getHorario(), objUsuario);
-                                    sesion.beginTransaction();
-                                    sesion.save(objIngreso);
-                                    sesion.getTransaction().commit();                                    
-
-
-                                    response.getWriter().write("Salida"+observacionIngreso);
-                                    
-                                }
+                            }else{
                             
+                                response.getWriter().write("300");
                             }
                             
                         }else{
@@ -898,7 +938,118 @@ public class ingreso extends HttpServlet {
                 
                     response.getWriter().write("204");
                 
-                }                                                
+                }
+            }else if (objUsuario.getCargo().getTipo().equals("Recepcion")) {
+                
+                Query queryUsuarios = sesion.createQuery("FROM Usuario WHERE idUsuario != "+objUsuario.getIdUsuario()+"");                
+                listaUsuario = queryUsuarios.list();
+                
+                
+                for(Usuario usuario : listaUsuario){
+            
+                    if (contador == 0) {
+                        
+                        UsuariosQuery = "Usuario = "+usuario.getIdUsuario()+"";
+                        contador++;
+                        
+                    }else{
+                    
+                        UsuariosQuery = UsuariosQuery + " OR Usuario = "+usuario.getIdUsuario()+"";
+                    
+                    }
+                    countRows++;
+                }
+                
+                if (UsuariosQuery != "") {
+                    
+                    JSONArray usuarioJson = new JSONArray();
+                
+                    Query queryPromedioIngresoUsuario_A = sesion.createQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM Ingreso WHERE (Horario = 'A' AND Tipo = 'Ingreso' AND ("+UsuariosQuery+"))");
+                    List<Object> listaIngreso_A = queryPromedioIngresoUsuario_A.list();                
+                    for (Object datos : listaIngreso_A) {
+
+                        if (datos != null) {
+                            promedioEntradaA = datos.toString();
+                        }
+
+                    }
+
+                    Query queryPromedioIngresoUsuario_B = sesion.createQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM Ingreso WHERE (Horario = 'B' AND Tipo = 'Ingreso' AND ("+UsuariosQuery+"))");
+                    List<Object> listaIngreso_B = queryPromedioIngresoUsuario_B.list();
+                    for (Object datos : listaIngreso_B) {
+
+                        if (datos != null) {
+
+                            promedioEntradaB = datos.toString();
+
+                        }
+
+                    }
+
+                    Query queryPromedioSalidaUsuario_A = sesion.createSQLQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM ingreso WHERE (Horario = 'A' AND Tipo = 'Salida' AND ("+UsuariosQuery+"))");
+                    List<Object> listaSalida_A = queryPromedioSalidaUsuario_A.list();
+                    for (Object datos : listaSalida_A) {
+
+                        if (datos != null) {
+
+                            promedioSalidaA = datos.toString();
+
+                        }
+
+
+                    }
+
+                    Query queryPromedioSalidaUsuario_B = sesion.createSQLQuery("SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(Hora))) as Promedio_Ingreso FROM ingreso WHERE (Horario = 'B' AND Tipo = 'Salida' AND ("+UsuariosQuery+"))");
+                    List<Object> listaSalida_B = queryPromedioSalidaUsuario_B.list();
+                    for (Object datos : listaSalida_B) {
+
+                        if (datos != null) {
+
+                            promedioSalidaB = datos.toString();
+
+                        }
+
+                    }
+                    String horas_A = "0", horas_B = "0";
+                    ////////////////////_____________________________QUERY'S XD PARA SACAR LAS HORAS TRABAJADAS______________ //////////////////////////
+                    Query queryHorasTrabajadas_A = sesion.createSQLQuery("SELECT TIMESTAMPDIFF(HOUR, '2003-05-01 "+promedioEntradaA+"', '2003-05-01 "+promedioSalidaA+"')");
+                    List<Object> Horas_A = queryHorasTrabajadas_A.list();
+                    for (Object datos : Horas_A) {
+
+                        if (datos != null) {
+
+                            horas_A = datos.toString();
+                        }
+
+                    }
+
+                    Query queryHorasTrabajadas_B = sesion.createSQLQuery("SELECT TIMESTAMPDIFF(HOUR, '2003-05-01 "+promedioEntradaB+"', '2003-05-01 "+promedioSalidaB+"')");
+                    List<Object> Horas_B = queryHorasTrabajadas_B.list();
+                    for (Object datos : Horas_B) {
+
+                        if (datos != null) {
+
+                            horas_B = datos.toString();
+
+                        }
+
+                    }
+
+                    usuarioJson.add(promedioEntradaA);
+                    usuarioJson.add(promedioEntradaB);
+                    usuarioJson.add(promedioSalidaA);
+                    usuarioJson.add(promedioSalidaB);
+                    usuarioJson.add(horas_A);
+                    usuarioJson.add(horas_B);
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write(usuarioJson.toJSONString());
+                
+                }else{
+                
+                    response.getWriter().write("204");
+                
+                }
+                
             }
             sesion.close();
             objSessionFactory.close();
@@ -1072,6 +1223,10 @@ public class ingreso extends HttpServlet {
                 
                 }                
                 
+            }else if (objUsuario.getCargo().getTipo().equals("Recepcion")) {
+            
+                Query queryUsuarios = sesion.createQuery("FROM Usuario WHERE idUsuario != "+objUsuario.getIdUsuario()+"");
+                listaUsuario = queryUsuarios.list();
             }
             
             
@@ -1258,6 +1413,11 @@ public class ingreso extends HttpServlet {
                 
                 }                
                 
+            }else if (objUsuario.getCargo().getTipo().equals("Recepcion")) {
+                
+                Query queryUsuarios = sesion.createQuery("FROM Usuario WHERE idUsuario != "+objUsuario.getIdUsuario()+"");                
+                listaUsuario = queryUsuarios.list();
+                
             }
         
             for(Usuario usuario : listaUsuario){
@@ -1434,6 +1594,11 @@ public class ingreso extends HttpServlet {
                 
                 }                
                 
+            }else if (objUsuario.getCargo().getTipo().equals("Recepcion")) {
+                
+                Query queryUsuarios = sesion.createQuery("FROM Usuario WHERE idUsuario != "+objUsuario.getIdUsuario()+"");                
+                listaUsuario = queryUsuarios.list();
+                
             }
         
             for(Usuario usuario : listaUsuario){
@@ -1478,6 +1643,216 @@ public class ingreso extends HttpServlet {
             System.out.println(ex);
         }
     
+    }
+    protected void ingresoManual(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+       
+        try{
+            
+            SessionFactory objSessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Session sesion = objSessionFactory.openSession();
+            
+            
+            
+            
+            
+            
+            String Dia = request.getParameter("Dia");            
+            String UsuarioID = request.getParameter("UsuarioID");
+            String Fecha = request.getParameter("Fecha");
+            String hora = request.getParameter("Hora");
+            String Minutos = request.getParameter("Minutos");
+            String horaMilitar = request.getParameter("HoraMilitar");            
+            Query query = sesion.createQuery("FROM Usuario WHERE Documento='"+UsuarioID+"'");
+            List<Usuario> listaUsuario = query.list();
+            response.setCharacterEncoding("UTF-8");            
+            
+            if (listaUsuario.size() == 1) {
+                for (Usuario usuario : listaUsuario){    
+                    if (usuario.getEstado().equals("Activo")) {
+               
+                        Query queryIngresos = sesion.createQuery("FROM Ingreso WHERE Usuario="+usuario.getIdUsuario()+" AND Fecha='"+Fecha+"'");
+                        List<Ingreso> listaIngreso = queryIngresos.list();
+                        
+                        Usuario objUsuario = new Usuario();
+                        objUsuario.setIdUsuario(usuario.getIdUsuario());
+                        
+                        if (listaIngreso.size() == 0) {
+                            
+                            String observacionIngreso = "";
+                            if (usuario.getHorario().equals("A")) {
+                                
+                                if (Integer.parseInt(hora) == 8 && Integer.parseInt(Minutos) > 5 || Integer.parseInt(hora) >= 9) {
+                                
+                                    observacionIngreso = "Tarde";
+
+                                }else if (Integer.parseInt(hora) <= 7 && Integer.parseInt(Minutos) < 55 || Integer.parseInt(hora) < 7) {
+
+                                    observacionIngreso = "Temprano";
+
+                                }else{
+
+                                    observacionIngreso = "Justo";
+                                }
+                                
+                            }else if (usuario.getHorario().equals("B")) {
+                                
+                                if (Integer.parseInt(hora) >= 7 && Integer.parseInt(Minutos) > 5 || Integer.parseInt(hora) > 7) {
+                                
+                                    observacionIngreso = "Tarde";
+
+                                }else if (Integer.parseInt(hora) <= 6 && Integer.parseInt(Minutos) < 55 || Integer.parseInt(hora) < 6) {
+
+                                    observacionIngreso = "Temprano";
+
+                                }else{
+
+                                    observacionIngreso = "Justo";
+                                }
+                                
+                            }
+                            
+                            
+                            sesion.beginTransaction();
+                            Query queryIngresoManual = sesion.createSQLQuery("INSERT INTO ingreso (idIngreso, Dia, Fecha, Hora, Tipo, Modalidad, Observacion, Horario, Usuario) VALUES (NULL, '"+Dia+"', '"+Fecha+"', '"+horaMilitar+"', 'Ingreso', 'Manual', '"+observacionIngreso+"', '"+usuario.getHorario()+"', "+objUsuario.getIdUsuario()+")");
+                            queryIngresoManual.executeUpdate();
+                            
+                            
+                            //Ingreso objIngreso = new Ingreso(Dia, new Date(), new Date(), "Ingreso", "Lector", observacionIngreso, usuario.getHorario(), objUsuario);
+                            //sesion.beginTransaction();
+                            //sesion.save(objIngreso);
+                            sesion.getTransaction().commit();                            
+
+
+                            response.getWriter().write("Ingreso"+observacionIngreso);
+                            
+                        }else if(listaIngreso.size() == 1){
+                            
+                            // HACER LA VALIDACION DE QUE SOLO SE PUEDA MARCAR SALIDA DESPUES DE 5 MINUTOS
+                            //DEJAR PENDIENTE PARA CUANDO ESTÉ DISPONIBLE EL LECTO DE CODIGOS DE BARRAS
+                            
+                            
+                                        
+                            //Query queryValidarSalida = sesion.createQuery("FROM Ingreso WHERE Usuario="+usuario.getIdUsuario()+" AND Fecha='"+new Date()+"' AND (Hora BETWEEN  )");
+                            String spaceSplit [] = String.valueOf(new Date()).split(" ");
+                            String horaSplit [] = String.valueOf(spaceSplit[3]).split(":");
+                            String horaQuery = "";
+                            String minutosQuery = "";
+
+                            if (Integer.parseInt(horaSplit[1]) <= 05) {
+
+                                horaQuery = String.valueOf(Integer.parseInt(horaSplit[0]) - 1);
+                                minutosQuery = "55";
+                            }else{
+
+                                horaQuery = String.valueOf(Integer.parseInt(horaSplit[0]));
+                                minutosQuery = String.valueOf(Integer.parseInt(Minutos) - 5);
+
+                            }
+                            System.out.println("######################################");
+                            System.out.println("######################################");
+                            System.out.println("######################################");
+                            System.out.println("######################################");
+                            System.out.println("######################################");
+                            System.out.println("######################################");
+                            System.out.println("######################################");System.out.println("######################################");
+                            System.out.println(Fecha);
+                            
+                            Query queryValidarSalida = sesion.createQuery("FROM Ingreso WHERE Usuario="+usuario.getIdUsuario()+" AND Fecha='"+Fecha+"' AND (Hora BETWEEN '"+horaQuery+":"+minutosQuery+"' AND '"+spaceSplit[3]+"')");
+                            List<Ingreso> listaIngresoReciente = queryValidarSalida.list();
+                            System.out.println("QUERY:  FROM Ingreso WHERE Usuario="+usuario.getIdUsuario()+" AND Fecha='"+Fecha+"' AND (Hora BETWEEN '"+horaQuery+":"+minutosQuery+"' AND '"+spaceSplit[3]+"')");
+                            System.out.println("tamaño del resultado  --->   " + listaIngresoReciente.size());
+                            if (listaIngresoReciente.size() == 0) {
+                             
+                                for(Ingreso ingreso : listaIngreso){
+                                
+                                    String observacionIngreso = "";
+                                    if (usuario.getHorario().equals("A")) {
+
+                                        if (Integer.parseInt(hora) >= 18 && Integer.parseInt(Minutos) > 5 || Integer.parseInt(hora) > 18) {
+
+                                            observacionIngreso = "Tarde";
+
+                                        }else if (Integer.parseInt(hora) <= 17 && Integer.parseInt(Minutos) < 55 || Integer.parseInt(hora) < 17) {
+
+                                            observacionIngreso = "Temprano";
+
+                                        }else{
+
+                                            observacionIngreso = "Justo";
+                                        }
+
+                                    }else if (usuario.getHorario().equals("B")) {
+
+                                        if (Integer.parseInt(hora) >= 17 && Integer.parseInt(Minutos) > 5 || Integer.parseInt(hora) > 17) {
+
+                                            observacionIngreso = "Tarde";
+
+                                        }else if (Integer.parseInt(hora) <= 16 && Integer.parseInt(Minutos) < 55 || Integer.parseInt(hora) < 16) {
+
+                                            observacionIngreso = "Temprano";
+
+                                        }else{
+
+                                            observacionIngreso = "Justo";
+                                        }
+
+                                    }
+
+                                    if (ingreso.getTipo().equals("Ingreso")) {
+
+                                        
+                                        
+                                        sesion.beginTransaction();
+                                        Query queryIngresoManual = sesion.createSQLQuery("INSERT INTO ingreso (idIngreso, Dia, Fecha, Hora, Tipo, Modalidad, Observacion, Horario, Usuario) VALUES (NULL, '"+Dia+"', '"+Fecha+"', '"+horaMilitar+"', 'Salida', 'Manual', '"+observacionIngreso+"', '"+usuario.getHorario()+"', "+objUsuario.getIdUsuario()+")");
+                                        queryIngresoManual.executeUpdate();
+                                        
+                                        //Ingreso objIngreso = new Ingreso(Dia,new Date(), new Date(), "Salida", "Lector", observacionIngreso, usuario.getHorario(), objUsuario);
+                                        //sesion.beginTransaction();
+                                        //sesion.save(objIngreso);
+                                        sesion.getTransaction().commit();                                    
+
+
+                                        response.getWriter().write("Salida"+observacionIngreso);
+
+                                    }
+
+                                }
+                                
+                            }else{
+                            
+                                response.getWriter().write("300");
+                            }
+                            
+                        }else{
+                        
+                            response.getWriter().write("407");
+                        }
+                        
+                    }else{
+                        response.getWriter().write("Inactivo");
+                    }
+                }                
+            }else if (listaUsuario.size() > 1) {
+                response.getWriter().write("406");
+            }else if (listaUsuario.size() == 0) {
+                response.getWriter().write("404");
+            }
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            sesion.close();
+            objSessionFactory.close();        
+        }catch(Exception ex){
+            System.err.println(ex);
+        }
+        
     }
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

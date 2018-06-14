@@ -269,7 +269,7 @@ public class cargo extends HttpServlet {
             queryCargo.setMaxResults(1);
             List<Cargo> listaCargo = queryCargo.list();
             for(Cargo cargo : listaCargo){
-            
+                            
                 
                 if (cargo.getTipo().equals("Director") && !"Seleccione el sector".equals(Sector)) {
                     

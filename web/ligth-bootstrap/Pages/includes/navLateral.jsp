@@ -107,7 +107,7 @@ try{
                                             <span class="sidebar-normal">Editar Perfil</span>
                                         </a>
                                     </li>
-                                    <%if(!objUsuario.getCargo().getTipo().equals("Director")){%>
+                                    <%if((!objUsuario.getCargo().getTipo().equals("Director")) || (!objUsuario.getCargo().getTipo().equals("Recepcion"))){%>
                                     
                                         <li class="nav-item" id="misPermisos">
                                             <a class="nav-link profile-dropdown" href="../permiso/mispermisos.jsp">
@@ -182,12 +182,17 @@ try{
                                             <span class="sidebar-normal">Registrar</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item" id="permisosSolicitados">
-                                        <a class="nav-link" href="../permiso/permisosSolicitados.jsp">
-                                            <span class="sidebar-mini">P</span>
-                                            <span class="sidebar-normal">Permisos</span>
-                                        </a>
-                                    </li>
+                                    <%
+                                        if (!objUsuario.getCargo().getTipo().equals("Recepcion")) {%>
+                                            
+                                        <li class="nav-item" id="permisosSolicitados">
+                                            <a class="nav-link" href="../permiso/permisosSolicitados.jsp">
+                                                <span class="sidebar-mini">P</span>
+                                                <span class="sidebar-normal">Permisos</span>
+                                            </a>
+                                        </li>
+                                        
+                                    <%}%>                                    
                                     <li class="nav-item" id="monitorearEmpleadosNav">
                                         <a class="nav-link" href="../empleado/monitorearempleados.jsp">
                                             <span class="sidebar-mini">M</span>
@@ -208,7 +213,7 @@ try{
                             <div class="collapse " id="ExamplesReportes">
                                 <ul class="nav">                                     
                                     <%
-                                        if (objUsuario.getCargo().getTipo().equals("Director")) {%>
+                                        if (objUsuario.getCargo().getTipo().equals("Director") || objUsuario.getCargo().getTipo().equals("Recepcion")) {%>
                                                  
                                         <li class="nav-item" id="reporteSectores">
                                             <a class="nav-link" href="../usuario/../reportes/ReporteSector.jsp">
@@ -217,7 +222,7 @@ try{
                                             </a>
                                         </li>
                                     
-                                    <%}if(objUsuario.getCargo().getTipo().equals("Director") || objUsuario.getCargo().getTipo().equals("JefeCanal") || objUsuario.getCargo().getTipo().equals("CoordinadorCanal")){%>
+                                    <%}if(objUsuario.getCargo().getTipo().equals("Director") || objUsuario.getCargo().getTipo().equals("Recepcion") || objUsuario.getCargo().getTipo().equals("JefeCanal") || objUsuario.getCargo().getTipo().equals("CoordinadorCanal")){%>
                                     
                                         <li class="nav-item" id="reporteCanales">
                                             <a class="nav-link" href="../usuario/../reportes/ReporteCanal.jsp">
@@ -240,15 +245,34 @@ try{
                                             <span class="sidebar-normal">Usuarios</span>
                                         </a>
                                     </li>
+                                    
+                                    <%
+                                        if (objUsuario.getCargo().getTipo().equals("Recepcion")) {%>
+                                                
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="/SaleslandColombiaApp/excelservlet">
+                                                    <span class="sidebar-mini">R</span>
+                                                    <span class="sidebar-normal">Reporte General <small>(EXCEL)</small></span>
+                                                </a>
+                                            </li>
+
+                                    <%}%>
+                                     
                                 </ul>
                             </div>
-                        </li>                        
+                        </li>      
+                        <li class="nav-item" id="ingresoManual">
+                            <a class="nav-link"  href="../ingreso/ingresomanual.jsp">
+                                <i class="material-icons">transfer_within_a_station</i>
+                                <p>Ingreso Manual</p>
+                            </a>                                                        
+                        </li>
                         <li class="nav-item" id="cargosEmpleadosNav">
                             <a class="nav-link"  href="../cargo/listarcargo.jsp">
                                 <i class="material-icons">work</i>
                                 <p>Cargos</p>
                             </a>                                                        
-                        </li>
+                        </li>                        
                     </ul>
                 </div>        
             </div>

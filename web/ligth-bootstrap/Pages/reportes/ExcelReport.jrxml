@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReportExcel" pageWidth="1440" pageHeight="50000" orientation="Landscape" columnWidth="1400" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4e3ba226-8dd5-4bd3-90ed-8df7ed94dad5">
+	<property name="ireport.zoom" value="0.6830134553650705"/>
+	<property name="ireport.x" value="439"/>
+	<property name="ireport.y" value="79"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#E6F3FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="ExcelUser" uuid="f9ee44db-db15-4404-b486-fbdeae621dbb">
+		<queryString language="SQL">
+			<![CDATA[SELECT
+     usuario.`idUsuario` AS usuario_idUsuario,
+     usuario.`TipoDocumento` AS usuario_TipoDocumento,
+     usuario.`Documento` AS usuario_Documento,
+     usuario.`Nombre` AS usuario_Nombre,
+     usuario.`Apellido` AS usuario_Apellido,
+     usuario.`Direccion` AS usuario_Direccion,
+     usuario.`Telefono` AS usuario_Telefono,
+     usuario.`Celular` AS usuario_Celular,
+     usuario.`Genero` AS usuario_Genero,
+     usuario.`Email` AS usuario_Email,
+     usuario.`FechaNacimiento` AS usuario_FechaNacimiento,
+     usuario.`Contrasenia` AS usuario_Contrasenia,
+     usuario.`Foto` AS usuario_Foto,
+     usuario.`Estado` AS usuario_Estado,
+     usuario.`Horario` AS usuario_Horario,
+     usuario.`Cargo` AS usuario_Cargo,
+     ingreso.`idIngreso` AS ingreso_idIngreso,
+     ingreso.`Dia` AS ingreso_Dia,
+     ingreso.`Fecha` AS ingreso_Fecha,
+     ingreso.`Hora` AS ingreso_Hora,
+     ingreso.`Tipo` AS ingreso_Tipo,
+     ingreso.`Modalidad` AS ingreso_Modalidad,
+     ingreso.`Observacion` AS ingreso_Observacion,
+     ingreso.`Horario` AS ingreso_Horario,
+     ingreso.`Usuario` AS ingreso_Usuario,
+     cargo.`idCargo` AS cargo_idCargo,
+     cargo.`NombreCargo` AS cargo_NombreCargo,
+     cargo.`Descripcion` AS cargo_Descripcion,
+     cargo.`Tipo` AS cargo_Tipo,
+     cargo.`Estado` AS cargo_Estado
+FROM
+     `usuario` usuario INNER JOIN `ingreso` ingreso ON usuario.`idUsuario` = ingreso.`Usuario`
+     INNER JOIN `cargo` cargo ON usuario.`Cargo` = cargo.`idCargo`]]>
+		</queryString>
+		<field name="usuario_TipoDocumento" class="java.lang.String"/>
+		<field name="usuario_Documento" class="java.lang.String"/>
+		<field name="usuario_Nombre" class="java.lang.String"/>
+		<field name="usuario_Apellido" class="java.lang.String"/>
+		<field name="usuario_Estado" class="java.lang.String"/>
+		<field name="usuario_Horario" class="java.lang.String"/>
+		<field name="ingreso_Dia" class="java.lang.String"/>
+		<field name="ingreso_Fecha" class="java.sql.Date"/>
+		<field name="ingreso_Hora" class="java.sql.Time"/>
+		<field name="ingreso_Tipo" class="java.lang.String"/>
+		<field name="ingreso_Modalidad" class="java.lang.String"/>
+		<field name="ingreso_Observacion" class="java.lang.String"/>
+		<field name="cargo_NombreCargo" class="java.lang.String"/>
+	</subDataset>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     ingreso.`idIngreso` AS ingreso_idIngreso,
+     ingreso.`Dia` AS ingreso_Dia,
+     ingreso.`Fecha` AS ingreso_Fecha,
+     ingreso.`Hora` AS ingreso_Hora,
+     ingreso.`Tipo` AS ingreso_Tipo,
+     ingreso.`Modalidad` AS ingreso_Modalidad,
+     ingreso.`Observacion` AS ingreso_Observacion,
+     ingreso.`Horario` AS ingreso_Horario,
+     ingreso.`Usuario` AS ingreso_Usuario,
+     usuario.`idUsuario` AS usuario_idUsuario,
+     usuario.`TipoDocumento` AS usuario_TipoDocumento,
+     usuario.`Documento` AS usuario_Documento,
+     usuario.`Nombre` AS usuario_Nombre,
+     usuario.`Apellido` AS usuario_Apellido,
+     usuario.`Direccion` AS usuario_Direccion,
+     usuario.`Telefono` AS usuario_Telefono,
+     usuario.`Celular` AS usuario_Celular,
+     usuario.`Genero` AS usuario_Genero,
+     usuario.`Email` AS usuario_Email,
+     usuario.`FechaNacimiento` AS usuario_FechaNacimiento,
+     usuario.`Contrasenia` AS usuario_Contrasenia,
+     usuario.`Foto` AS usuario_Foto,
+     usuario.`Estado` AS usuario_Estado,
+     usuario.`Horario` AS usuario_Horario,
+     usuario.`Cargo` AS usuario_Cargo,
+     cargo.`idCargo` AS cargo_idCargo,
+     cargo.`NombreCargo` AS cargo_NombreCargo,
+     cargo.`Descripcion` AS cargo_Descripcion,
+     cargo.`Tipo` AS cargo_Tipo,
+     cargo.`Estado` AS cargo_Estado
+FROM
+     `usuario` usuario INNER JOIN `ingreso` ingreso ON usuario.`idUsuario` = ingreso.`Usuario`
+     INNER JOIN `cargo` cargo ON usuario.`Cargo` = cargo.`idCargo`]]>
+	</queryString>
+	<field name="ingreso_idIngreso" class="java.lang.Integer"/>
+	<field name="ingreso_Dia" class="java.lang.String"/>
+	<field name="ingreso_Fecha" class="java.sql.Date"/>
+	<field name="ingreso_Hora" class="java.sql.Time"/>
+	<field name="ingreso_Tipo" class="java.lang.String"/>
+	<field name="ingreso_Modalidad" class="java.lang.String"/>
+	<field name="ingreso_Observacion" class="java.lang.String"/>
+	<field name="ingreso_Horario" class="java.lang.String"/>
+	<field name="ingreso_Usuario" class="java.lang.Integer"/>
+	<field name="usuario_idUsuario" class="java.lang.Integer"/>
+	<field name="usuario_TipoDocumento" class="java.lang.String"/>
+	<field name="usuario_Documento" class="java.lang.String"/>
+	<field name="usuario_Nombre" class="java.lang.String"/>
+	<field name="usuario_Apellido" class="java.lang.String"/>
+	<field name="usuario_Direccion" class="java.lang.String"/>
+	<field name="usuario_Telefono" class="java.lang.String"/>
+	<field name="usuario_Celular" class="java.lang.String"/>
+	<field name="usuario_Genero" class="java.lang.String"/>
+	<field name="usuario_Email" class="java.lang.String"/>
+	<field name="usuario_FechaNacimiento" class="java.sql.Date"/>
+	<field name="usuario_Contrasenia" class="java.lang.String"/>
+	<field name="usuario_Foto" class="java.lang.String"/>
+	<field name="usuario_Estado" class="java.lang.String"/>
+	<field name="usuario_Horario" class="java.lang.String"/>
+	<field name="usuario_Cargo" class="java.lang.Integer"/>
+	<field name="cargo_idCargo" class="java.lang.Integer"/>
+	<field name="cargo_NombreCargo" class="java.lang.String"/>
+	<field name="cargo_Descripcion" class="java.lang.String"/>
+	<field name="cargo_Tipo" class="java.lang.String"/>
+	<field name="cargo_Estado" class="java.lang.String"/>
+	<summary>
+		<band height="411" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" style="table" x="-19" y="-19" width="1359" height="430" uuid="41dee838-4787-4d3a-870a-299edc22c427"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="ExcelUser" uuid="cfe3fd6e-0077-49e4-a61c-0b44ec18b487">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="06fb9594-6cfe-4175-85c5-389b278813d8">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="5884296e-8625-4a20-ada5-01488c6c6dca"/>
+								<textElement textAlignment="Center">
+									<font fontName="Arial" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+								</textElement>
+								<text><![CDATA[TIPO DOCUMENTO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="fae0b644-3628-48dc-9e08-9325d968edf3"/>
+								<textFieldExpression><![CDATA[$F{usuario_TipoDocumento}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="f8d71a1a-bc64-4c9f-802a-dba8015f0820">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="8994cd0b-1864-4aaa-9fda-3234dcc88ce8"/>
+								<textElement textAlignment="Center">
+									<font fontName="Arial" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+								</textElement>
+								<text><![CDATA[DOCUMENTO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="d810225d-41dc-44e8-abf2-bd6c143af37e"/>
+								<textFieldExpression><![CDATA[$F{usuario_Documento}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="b97a1ddd-9225-4753-b66c-778317b7cfa3">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="1e7e4553-9cbb-4fab-bdec-051e7f049ada"/>
+								<textElement textAlignment="Center">
+									<font fontName="Arial" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+								</textElement>
+								<text><![CDATA[NOMBRE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="ecf734b8-a56f-4f9a-ade1-abb35b98050c"/>
+								<textFieldExpression><![CDATA[$F{usuario_Nombre}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="054f7b47-f457-449c-80ad-19e14242c61e">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="5af4be53-cb8f-40d5-ac11-30981b41bef5"/>
+								<textElement textAlignment="Center">
+									<font fontName="Arial" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+								</textElement>
+								<text><![CDATA[APELLIDO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="3bf8bff1-21e3-46e1-9946-451b027f0485"/>
+								<textFieldExpression><![CDATA[$F{usuario_Apellido}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="8b85cb63-28fb-425a-b72c-4de059c3af0c">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="9ea233de-9780-4499-9d59-898a48513a75"/>
+								<textElement textAlignment="Center">
+									<font fontName="Arial" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+								</textElement>
+								<text><![CDATA[ESTADO USUARIO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="6ff38415-e848-4e35-b8aa-436270d6aca2"/>
+								<textFieldExpression><![CDATA[$F{usuario_Estado}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="7150bd8f-dd57-452b-b28f-bb15d547b936">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="36fff2c9-8ac2-4622-ab0c-5dd31eff2516"/>
+								<textElement textAlignment="Center">
+									<font fontName="Arial" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+								</textElement>
+								<text><![CDATA[HORARIO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="a5b3a42e-0cbe-439e-b302-d4ffcb65e81e"/>
+								<textFieldExpression><![CDATA[$F{usuario_Horario}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="d6862d95-f9cc-4b82-a306-1bce16fd9c3b">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="0f2827cd-8fa4-4ffb-8479-cc12a1d4d836"/>
+								<textElement textAlignment="Center">
+									<font fontName="Arial" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+								</textElement>
+								<text><![CDATA[DIA]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="d8641c20-0247-41ea-bd2d-b73fb594870a"/>
+								<textFieldExpression><![CDATA[$F{ingreso_Dia}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="e0522437-be4e-46fc-9687-71d7d33e4f84">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="33ebc2da-d46c-4c43-a8e3-a9017b8f12c7"/>
+								<textElement textAlignment="Center">
+									<font fontName="Arial" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+								</textElement>
+								<text><![CDATA[FECHA]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField pattern="dd/MM/yyyy">
+								<reportElement x="0" y="0" width="90" height="20" uuid="033c44f1-f3f2-4a3c-b36d-06a8c1b0535a"/>
+								<textFieldExpression><![CDATA[$F{ingreso_Fecha}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="afca2353-1959-48fb-a7f1-3babfebce573">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="e975f2fa-63b0-4e4e-9a1a-1ae9f1da37bf"/>
+								<textElement textAlignment="Center">
+									<font fontName="Arial" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+								</textElement>
+								<text><![CDATA[HORA]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField pattern="h:mm a">
+								<reportElement x="0" y="0" width="90" height="20" uuid="b831326f-73d6-448f-a123-f3f8d0f6f4a3"/>
+								<textFieldExpression><![CDATA[$F{ingreso_Hora}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="59567daa-48d1-4b93-b662-5f0777ebac88">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="301c0352-c0e9-48c9-87bf-a50494fc994c"/>
+								<textElement textAlignment="Center">
+									<font fontName="Arial" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+								</textElement>
+								<text><![CDATA[TIPO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="232177aa-0f49-4f2b-8c71-c796b0015a4f"/>
+								<textFieldExpression><![CDATA[$F{ingreso_Tipo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="2afbad72-4ff1-4e10-90da-98e8298563bd">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="7f3e55de-2cf0-40b1-a6f4-5df16876f1c1"/>
+								<textElement textAlignment="Center">
+									<font fontName="Arial" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+								</textElement>
+								<text><![CDATA[MODALIDAD]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="c4072a05-80ce-4bd4-befb-5f590df6ba8f"/>
+								<textFieldExpression><![CDATA[$F{ingreso_Modalidad}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="e83d2d26-616b-4976-ac7d-2e7b388047a4">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="ca83e921-d466-4b29-ba14-b412521ae43e"/>
+								<textElement textAlignment="Center">
+									<font fontName="Arial" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+								</textElement>
+								<text><![CDATA[OBSERVACIÓN]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="8062c7b0-99ee-474f-8ea1-e54f434a89b9"/>
+								<textFieldExpression><![CDATA[$F{ingreso_Observacion}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="efa80f9f-28b9-465e-8055-85380286e7af">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="767b12e4-b352-46c8-8da7-5c6c84a730ae"/>
+								<textElement textAlignment="Center">
+									<font fontName="Arial" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+								</textElement>
+								<text><![CDATA[NOMBRE CARGO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="2bcc6785-e042-4142-b178-d28425014232"/>
+								<textFieldExpression><![CDATA[$F{cargo_NombreCargo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</summary>
+</jasperReport>

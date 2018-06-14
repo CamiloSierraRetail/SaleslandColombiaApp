@@ -52,7 +52,7 @@
                                                     <th>Nombre</th>
                                                     <th>Descripción</th>
                                                     <th class="text-right">Estado</th>
-                                                    <th class="text-right">Acciones</th>
+                                                    <th class="text-center">Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="listadoSectores">
